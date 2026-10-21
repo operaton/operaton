@@ -3355,6 +3355,27 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
+  void testPutUpdateTaskWithFormRef() {
+    // PUT replaces the task, so a client sends back what GET returned — form reference included.
+    Map<String, Object> json = new HashMap<>();
+    json.put("name", "A Task");
+    json.put("operatonFormRef", Map.of("key", "aFormKey", "binding", "deployment"));
+
+    given()
+        .pathParam("id", EXAMPLE_TASK_ID)
+        .body(json)
+        .contentType(ContentType.JSON)
+        .header("accept", MediaType.APPLICATION_JSON)
+    .expect()
+        .statusCode(Status.NO_CONTENT.getStatusCode())
+    .when()
+        .put(SINGLE_TASK_URL);
+
+    verify(mockTask).setName("A Task");
+    verify(taskServiceMock).saveTask(mockTask);
+  }
+
+  @Test
   void testPutUpdateTaskNotFound() {
     when(mockQuery.singleResult()).thenReturn(null);
 

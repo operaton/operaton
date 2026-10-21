@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.db.entitymanager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -166,7 +167,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
     return filterLoadedObjects(loadedObjects);
   }
 
-  public Object selectOne(String statement, Object parameter) {
+  public @Nullable Object selectOne(String statement, Object parameter) {
     Object result = persistenceSession.selectOne(statement, parameter);
     if (result instanceof DbEntity loadedObject) {
       result = cacheFilter(loadedObject);
@@ -177,10 +178,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   @SuppressWarnings("unchecked")
   public boolean selectBoolean(String statement, Object parameter) {
     List<Object> result = (List<Object>) persistenceSession.selectList(statement, parameter);
-    if(result != null) {
-      return result.contains(1);
-    }
-    return false;
+    return result.contains(1);
   }
 
   public <T extends DbEntity> @Nullable T selectById(Class<T> entityClass, String id) {
@@ -625,13 +623,9 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   public <T extends DbEntity> List<T> pruneDeletedEntities(List<T> listToPrune) {
-    ArrayList<T> prunedList = new ArrayList<>();
-    for (T potentiallyDeleted : listToPrune) {
-      if(!isDeleted(potentiallyDeleted)) {
-        prunedList.add(potentiallyDeleted);
-      }
-    }
-    return prunedList;
+    return listToPrune.stream()
+        .filter(potentiallyDeleted -> !isDeleted(potentiallyDeleted))
+        .collect(Collectors.toList());
   }
 
   public boolean contains(DbEntity dbEntity) {

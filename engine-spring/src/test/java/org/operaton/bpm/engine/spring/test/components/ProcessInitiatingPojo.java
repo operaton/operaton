@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.spring.annotations.StartProcess;
  * simple class that demonstrates the annotations to implicitly handle annotation-driven process management
  *
  * @author Josh Long
- * @since 5.3
  */
 @SuppressWarnings("unused")
 public class ProcessInitiatingPojo {

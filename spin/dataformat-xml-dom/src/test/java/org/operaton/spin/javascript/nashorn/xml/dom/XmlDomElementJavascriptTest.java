@@ -31,7 +31,7 @@ class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
 
   /**
    * The Nashorn scripting engine cannot determine the method to call if the
-   * parameter is null.
+   * parameter is {@code null}.
    */
 
   @Override
@@ -50,7 +50,7 @@ class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
 
   /**
    * The Nashorn scripting engine cannot determine the method to call if the
-   * parameter is null.
+   * parameter is {@code null}.
    */
   @Override
   @Test

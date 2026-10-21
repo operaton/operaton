@@ -226,7 +226,7 @@ public class DecisionDefinitionQueryDto extends AbstractQueryDto<DecisionDefinit
       query.decisionDefinitionId(decisionDefinitionId);
     }
     if (decisionDefinitionIdIn != null && !decisionDefinitionIdIn.isEmpty()) {
-      query.decisionDefinitionIdIn(decisionDefinitionIdIn.toArray(new String[decisionDefinitionIdIn.size()]));
+      query.decisionDefinitionIdIn(decisionDefinitionIdIn.toArray(String[]::new));
     }
     if (category != null) {
       query.decisionDefinitionCategory(category);
@@ -277,7 +277,7 @@ public class DecisionDefinitionQueryDto extends AbstractQueryDto<DecisionDefinit
       query.withoutDecisionRequirementsDefinition();
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();

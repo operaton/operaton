@@ -35,7 +35,7 @@ public @NullMarked class SetTaskFollowUpDateCmd extends AbstractSetTaskPropertyC
    *
    * @param taskId the id of the referenced task, non-null
    * @param value  the followUpDate value to set, non-null
-   * @throws NullValueException in case the given taskId or the given followUpDate value are null
+   * @throws NullValueException in case the given taskId or the given followUpDate value are {@code null}
    */
   public SetTaskFollowUpDateCmd(String taskId, Date value) {
     super(taskId, value, true);

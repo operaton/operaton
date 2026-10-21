@@ -27,7 +27,7 @@ public interface DmnScriptEngineResolver {
    * Get a script engine by script engine language.
    *
    * @param language the language of the script engine
-   * @return the script engine or null if no script engine for this language exists
+   * @return the script engine or {@code null} if no script engine for this language exists
    */
   ScriptEngine getScriptEngineForLanguage(String language);
 

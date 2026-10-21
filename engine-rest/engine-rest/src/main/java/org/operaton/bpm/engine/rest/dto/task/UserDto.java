@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.rest.dto.task;
 
 /**
- * @author: drobisch
+ * @author drobisch
  */
 public class UserDto {
   private final String firstName;

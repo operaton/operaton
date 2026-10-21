@@ -16,15 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.tree.SingleReferenceWalker;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigratingScopeInstanceBottomUpWalker extends SingleReferenceWalker<MigratingScopeInstance> {
+public @NullMarked class MigratingScopeInstanceBottomUpWalker extends SingleReferenceWalker<MigratingScopeInstance> {
 
-  protected MigratingScopeInstance parent;
+  protected @Nullable MigratingScopeInstance parent;
 
   public MigratingScopeInstanceBottomUpWalker(MigratingScopeInstance initialElement) {
     super(initialElement);
@@ -33,7 +35,7 @@ public class MigratingScopeInstanceBottomUpWalker extends SingleReferenceWalker<
   }
 
   @Override
-  protected MigratingScopeInstance nextElement() {
+  protected @Nullable MigratingScopeInstance nextElement() {
     MigratingScopeInstance nextElement = parent;
     if (parent != null) {
       parent = parent.getParent();

@@ -219,7 +219,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       ListAssert<Execution> assertion = Assertions.assertThat(executions).overridingErrorMessage("Expecting %s " +
         (isWaitingFor ? "to be waiting for %s, ": "NOT to be waiting for %s, ") +
         "but actually did " + (isWaitingFor ? "not ": "") + "find it to be waiting for message [%s].",
-        actual, Arrays.asList(messageNames), messageName);
+        actual, List.of(messageNames), messageName);
       if (isWaitingFor) {
         assertion.isNotEmpty();
       } else {
@@ -359,7 +359,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
     MapAssert<String, Object> assertion = variables()
       .overridingErrorMessage(message.toString(), toString(actual),
-        shouldHaveSpecificVariables ? Arrays.asList(names) : vars.keySet(), vars.keySet());
+        shouldHaveSpecificVariables ? List.of(names) : vars.keySet(), vars.keySet());
     if (shouldHaveVariables) {
       if (shouldHaveSpecificVariables) {
         assertion.containsKeys(names);

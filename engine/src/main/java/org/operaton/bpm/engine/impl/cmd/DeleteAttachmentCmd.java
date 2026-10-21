@@ -48,7 +48,7 @@ public @NullMarked class DeleteAttachmentCmd implements Command<Object> {
 
   @Override
   public @Nullable Object execute(CommandContext commandContext) {
-    AttachmentEntity attachment = null;
+    AttachmentEntity attachment;
     if (hasText(taskId)) {
       attachment = (AttachmentEntity) commandContext
           .getAttachmentManager()

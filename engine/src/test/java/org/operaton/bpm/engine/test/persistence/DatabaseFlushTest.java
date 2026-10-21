@@ -50,17 +50,19 @@ public class DatabaseFlushTest extends ConcurrencyTestCase {
       .done();
 
   /**
-   * <p>This test reproduces a bug in which a batch of SQL operations
+   * This test reproduces a bug in which a batch of SQL operations
    * (here variable instance inserts) fail due to a constraint violation.
    * That constraint violation should be correctly treated as a case of
    * optimistic locking (variable name uniqueness in a scope).
    *
-   * <p>In older versions this was not the case. Instead, the constraint
+   * <p>
+   * In older versions this was not the case. Instead, the constraint
    * violation was incorrectly matched to a history
    * operation and therefore ignored, because we do not raise optimistic locking
    * exceptions for failed history operations. In consequence, we made an
    * incomplete runtime flush and the database got into an inconsistent
    * state.
+   * </p>
    */
   @RequiredDatabase(excludes = DbSqlSessionFactory.DB2)
   @Test

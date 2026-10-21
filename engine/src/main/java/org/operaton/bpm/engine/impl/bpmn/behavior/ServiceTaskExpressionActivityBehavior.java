@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
@@ -29,12 +31,12 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Slawomir Wojtasiak (Patch for ACT-1159)
  * @author Falko Menge
  */
-public class ServiceTaskExpressionActivityBehavior extends TaskActivityBehavior {
+public @NullMarked class ServiceTaskExpressionActivityBehavior extends TaskActivityBehavior {
 
   protected Expression expression;
-  protected String resultVariable;
+  protected @Nullable String resultVariable;
 
-  public ServiceTaskExpressionActivityBehavior(Expression expression, String resultVariable) {
+  public ServiceTaskExpressionActivityBehavior(Expression expression, @Nullable String resultVariable) {
     this.expression = expression;
     this.resultVariable = resultVariable;
   }

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 [state-circle] {
   display: inline-block;
   width: $state-circle-size;
@@ -40,7 +42,7 @@
   }
 
   &.circle-blue {
-    color: darken(#428bca, 6.5%);
+    color: color.adjust(#428bca, $lightness: -6.5%);
 
     &::before {
       @extend .bi-info-lg;

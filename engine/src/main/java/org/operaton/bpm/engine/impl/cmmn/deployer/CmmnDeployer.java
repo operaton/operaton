@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmmn.deployer;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.AbstractDefinitionDeployer;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionManager;
@@ -29,6 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
 
 /**
@@ -39,11 +42,11 @@ import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIX
  * @author Simon Zambrovski
  *
  */
-public class CmmnDeployer extends AbstractDefinitionDeployer<CaseDefinitionEntity> {
+public @NullMarked class CmmnDeployer extends AbstractDefinitionDeployer<CaseDefinitionEntity> {
 
 
-  protected ExpressionManager expressionManager;
-  protected CmmnTransformer transformer;
+  protected @Nullable ExpressionManager expressionManager;
+  protected @Nullable CmmnTransformer transformer;
 
   @Override
   protected String[] getResourcesSuffixes() {
@@ -52,16 +55,17 @@ public class CmmnDeployer extends AbstractDefinitionDeployer<CaseDefinitionEntit
 
   @Override
   protected List<CaseDefinitionEntity> transformDefinitions(DeploymentEntity deployment, ResourceEntity resource, Properties properties) {
+    requireNonNull(transformer);
     return transformer.createTransform().deployment(deployment).resource(resource).transform();
   }
 
   @Override
-  protected CaseDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  protected @Nullable CaseDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return getCaseDefinitionManager().findCaseDefinitionByDeploymentAndKey(deploymentId, definitionKey);
   }
 
   @Override
-  protected CaseDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
+  protected @Nullable CaseDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return getCaseDefinitionManager().findLatestCaseDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 
@@ -83,7 +87,7 @@ public class CmmnDeployer extends AbstractDefinitionDeployer<CaseDefinitionEntit
 
   // getters/setters ///////////////////////////////////////////////////////////////////////////////////
 
-  public ExpressionManager getExpressionManager() {
+  public @Nullable ExpressionManager getExpressionManager() {
     return expressionManager;
   }
 
@@ -91,7 +95,7 @@ public class CmmnDeployer extends AbstractDefinitionDeployer<CaseDefinitionEntit
     this.expressionManager = expressionManager;
   }
 
-  public CmmnTransformer getTransformer() {
+  public @Nullable CmmnTransformer getTransformer() {
     return transformer;
   }
 

@@ -44,7 +44,7 @@ public interface ExecutorService {
   boolean schedule(Runnable runnable, boolean isLongRunning);
 
   /**
-   * <p>Returns a runnable to be used for executing Jobs.
+   * Returns a runnable to be used for executing Jobs.
    *
    * @param jobIds
    * @param processEngine

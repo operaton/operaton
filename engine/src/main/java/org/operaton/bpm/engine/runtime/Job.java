@@ -75,7 +75,7 @@ public interface Job {
 
   /**
    * Returns the message of the exception that occurred, the last time the job was
-   * executed. Returns null when no exception occurred.
+   * executed. Returns {@code null} when no exception occurred.
    *
    * <p>
    * To get the full exception stacktrace,

@@ -18,20 +18,24 @@ package org.operaton.bpm.engine.impl.bpmn.helper;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.parser.ErrorEventDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<PvmScope> {
-  protected Exception exception;
-  protected String errorCode;
-  protected PvmActivity errorHandlerActivity;
-  protected ErrorEventDefinition errorEventDefinition;
+  protected @Nullable Exception exception;
+  protected @Nullable String errorCode;
+  protected @Nullable PvmActivity errorHandlerActivity;
+  protected @Nullable ErrorEventDefinition errorEventDefinition;
   protected PvmActivity currentActivity;
 
-  public ErrorDeclarationForProcessInstanceFinder(Exception exception, String errorCode, PvmActivity currentActivity) {
+  public ErrorDeclarationForProcessInstanceFinder(@Nullable Exception exception, @Nullable String errorCode, PvmActivity currentActivity) {
     this.exception = exception;
     this.errorCode = errorCode;
     this.currentActivity = currentActivity;
@@ -42,6 +46,9 @@ public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<Pvm
     List<ErrorEventDefinition> errorEventDefinitions = scope.getProperties().get(BpmnProperties.ERROR_EVENT_DEFINITIONS);
     for (ErrorEventDefinition definition : errorEventDefinitions) {
       PvmActivity activityHandler = scope.getProcessDefinition().findActivity(definition.getHandlerActivityId());
+      ensureNotNull("Activity Handler '%s' not found".formatted(definition.getHandlerActivityId()), "activityHandler", activityHandler);
+      requireNonNull(activityHandler);
+
       if ((!isReThrowingErrorEventSubprocess(activityHandler)) && ((exception != null && definition.catchesException(exception))
         || (exception == null && definition.catchesError(errorCode)))) {
 
@@ -57,11 +64,11 @@ public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<Pvm
     return activityHandlerScope.isAncestorFlowScopeOf((ScopeImpl)currentActivity);
   }
 
-  public PvmActivity getErrorHandlerActivity() {
+  public @Nullable PvmActivity getErrorHandlerActivity() {
     return errorHandlerActivity;
   }
 
-  public ErrorEventDefinition getErrorEventDefinition() {
+  public @Nullable ErrorEventDefinition getErrorEventDefinition() {
     return errorEventDefinition;
   }
 

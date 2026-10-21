@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 /**
  * @author Sebastian Menski
  */
-public abstract class AbstractPersistenceSession implements PersistenceSession {
+public abstract @NullMarked class AbstractPersistenceSession implements PersistenceSession {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
   protected List<EntityLoadListener> listeners = new ArrayList<>(1);

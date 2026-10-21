@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -57,13 +58,14 @@ public @NullMarked class SubmitStartFormCmd implements Command<ProcessInstance> 
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
-    ensureNotNull("No process definition found for id = '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkCreateProcessInstance(processDefinition);
     }
 
-    ExecutionEntity processInstance = null;
+    ExecutionEntity processInstance;
     if (businessKey != null) {
       processInstance = processDefinition.createProcessInstance(businessKey);
     } else {

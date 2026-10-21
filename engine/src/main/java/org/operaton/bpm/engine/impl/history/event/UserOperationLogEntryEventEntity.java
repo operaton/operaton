@@ -182,16 +182,6 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   }
 
   @Override
-  public String getRootProcessInstanceId() {
-    return rootProcessInstanceId;
-  }
-
-  @Override
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
-    this.rootProcessInstanceId = rootProcessInstanceId;
-  }
-
-  @Override
   public String getExternalTaskId() {
     return externalTaskId;
   }

@@ -73,7 +73,7 @@ public class CreateCaseInstanceCmd implements Command<CaseInstance> {
     DeploymentCache deploymentCache = commandContext.getProcessEngineConfiguration().getDeploymentCache();
 
     // Find the case definition
-    CaseDefinitionEntity caseDefinition = null;
+    CaseDefinitionEntity caseDefinition;
 
     if (caseDefinitionId!=null) {
       caseDefinition =  findById(deploymentCache, caseDefinitionId);

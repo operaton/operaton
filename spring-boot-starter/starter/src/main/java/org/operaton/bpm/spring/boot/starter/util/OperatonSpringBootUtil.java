@@ -60,8 +60,8 @@ public final class OperatonSpringBootUtil {
   }
 
   /**
-   * @param existing the current values (may be null or empty)
-   * @param add      the additional values (may be null or empty)
+   * @param existing the current values (may be {@code null} or empty)
+   * @param add      the additional values (may be {@code null} or empty)
    * @param <T>      type of elements
    * @return new non-null list containing all elements of existing and add.
    */

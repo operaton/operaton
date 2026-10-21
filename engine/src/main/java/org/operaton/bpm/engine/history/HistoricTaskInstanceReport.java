@@ -37,7 +37,7 @@ public interface HistoricTaskInstanceReport extends Report {
    * @param completedAfter A {@link Date} to define the granularity of the report
    *
    * @throws NotValidException
-   *          When the given date is null.
+   *          When the given date is {@code null}.
    */
   HistoricTaskInstanceReport completedAfter(Date completedAfter);
 
@@ -48,7 +48,7 @@ public interface HistoricTaskInstanceReport extends Report {
    * @param completedBefore A {@link Date} to define the granularity of the report
    *
    * @throws NotValidException
-   *          When the given date is null.
+   *          When the given date is {@code null}.
    */
   HistoricTaskInstanceReport completedBefore(Date completedBefore);
 

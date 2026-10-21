@@ -15,7 +15,7 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown:
+    cooldown:  # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
       exclude:
         - "org.springframework.boot:*"
         - "org.springframework:spring-framework-bom"
@@ -28,9 +28,6 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
       - dependency-name: "io.quarkus:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
-      # upgrade causes problems with bundled Scala module from feel-engine:scala shaded
-      - dependency-name: "version.jackson"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
     milestone: 23
@@ -42,9 +39,6 @@ updates:
         patterns:
           - "org.apache.httpcomponents.core5:*"
           - "org.apache.httpcomponents.client5:*"
-      httpcomponents4:
-        patterns:
-          - "org.apache.httpcomponents:*"
       jboss-weld:
         patterns:
           - "org.jboss.weld.servlet:weld-servlet-shaded"
@@ -59,6 +53,16 @@ updates:
       jaxb:
         patterns:
           - "org.glassfish.jaxb:*"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven.plugins:*"
+          - "org.apache.maven.extensions:maven-build-cache-extension"
+          - "org.apache.felix:maven-bundle-plugin"
+          - "org.codehaus.cargo:cargo-maven3-plugin"
+          - "org.codehaus.mojo:*"
+          - "org.jacoco:jacoco-maven-plugin"
+          - "org.openapitools:openapi-generator-maven-plugin"
+          - "org.sonatype.central:central-publishing-maven-plugin"
   - package-ecosystem: "maven"
     directory: "/spring-boot-starter/starter"
     schedule:
@@ -67,7 +71,7 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown:
+    cooldown:  # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
       exclude:
         - "org.springframework.boot:*"
         - "org.springframework:spring-framework-bom"

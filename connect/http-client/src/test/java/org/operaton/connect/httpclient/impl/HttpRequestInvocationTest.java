@@ -173,6 +173,7 @@ class HttpRequestInvocationTest {
    * Simulates real HttpClient 5 behavior: after {@code execute(request, handler)} returns,
    * the underlying response entity stream is closed. The response body must still be readable
    * because {@link HttpResponseImpl#collectResponseParameters} reads it lazily.
+   * </p>
    */
   @Test
   void invokeTarget_shouldReturnReadableResponse_whenStreamClosedAfterHandler() throws Exception {

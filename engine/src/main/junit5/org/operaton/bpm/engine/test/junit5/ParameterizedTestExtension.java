@@ -55,7 +55,9 @@ import static java.util.Arrays.asList;
  * with @Paramater(0), @Parameter(1). This extension implements the same
  * mechanism for JUnit 5.
  *
+ * <p>
  * To migrate the tests you can follow the following recipe:
+ * </p>
  *
  * <ol>
  * <li>Remove the junit 4 imports

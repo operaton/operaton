@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.OperatonFormDefinitionEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class OperatonFormDefinitionCache extends ResourceDefinitionCache<OperatonFormDefinitionEntity> {
+public @NullMarked class OperatonFormDefinitionCache extends ResourceDefinitionCache<OperatonFormDefinitionEntity> {
 
   private static final String VAR_OPERATON_FORM_DEFINITION = "operatonFormDefinition";
   private static final String VAR_OPERATON_FORM_DEFINITION_ID = "operatonFormDefinitionId";
@@ -43,42 +45,42 @@ public class OperatonFormDefinitionCache extends ResourceDefinitionCache<Operato
   }
 
   @Override
-  protected void checkDefinitionFound(String definitionId, OperatonFormDefinitionEntity definition) {
+  protected void checkDefinitionFound(String definitionId, @Nullable OperatonFormDefinitionEntity definition) {
     ensureNotNull("no deployed operaton form definition found with id '%s'".formatted(definitionId),
       VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKey(String definitionKey, OperatonFormDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKey(String definitionKey, @Nullable OperatonFormDefinitionEntity definition) {
     ensureNotNull("no deployed operaton form definition found with key '%s'".formatted(definitionKey),
       VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, OperatonFormDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId, @Nullable OperatonFormDefinitionEntity definition) {
     ensureNotNull("no deployed operaton form definition found with key '%s' and tenant-id '%s'".formatted(definitionKey, tenantId),
       VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, OperatonFormDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId, OperatonFormDefinitionEntity definition) {
     ensureNotNull("no deployed operaton form definition found with key '%s', version '%s' and tenant-id '%s'".formatted(definitionKey, definitionVersion, tenantId), VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId,
-      OperatonFormDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId,
+          @Nullable OperatonFormDefinitionEntity definition) {
     // version tag is currently not supported for OperatonFormDefinition
   }
 
   @Override
-  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, OperatonFormDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, @Nullable OperatonFormDefinitionEntity definition) {
     ensureNotNull("no deployed operaton form definition found with key '%s' in deployment '%s'".formatted(definitionKey, deploymentId),
       VAR_OPERATON_FORM_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, OperatonFormDefinitionEntity definition) {
+  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, @Nullable OperatonFormDefinitionEntity definition) {
     ensureNotNull("deployment '%s' didn't put operaton form definition '%s' in the cache".formatted(deploymentId, definitionId),
       VAR_CACHED_PROCESS_DEFINITION, definition);
   }

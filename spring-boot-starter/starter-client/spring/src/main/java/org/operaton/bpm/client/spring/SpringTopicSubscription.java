@@ -23,16 +23,17 @@ import org.operaton.bpm.client.spring.exception.NotOpenedException;
 import org.operaton.bpm.client.topic.TopicSubscription;
 
 /**
- * <p>
  * Represents a topic subscription of the External Task Client.
  * <p>
  * Existence of this bean means that the subscription has been created
  * but might have not been fully initialized or released to the External Task Client.
  * The {@link SubscriptionInitializedEvent} is emitted as soon as the subscription has been
  * fully initialized.
+ * </p>
  * <p>
  * You can check if the subscription has been released to the External Task Client
  * with {@link #isOpen()}
+ * </p>
  */
 public interface SpringTopicSubscription extends TopicSubscription {
 
@@ -50,7 +51,7 @@ public interface SpringTopicSubscription extends TopicSubscription {
    * @throws ExternalTaskClientException <ul>
    *                                     <li> if topic name is {@code null} or an empty string
    *                                     <li> if lock duration is not greater than zero
-   *                                     <li> if external task handler is null
+   *                                     <li> if external task handler is {@code null}
    *                                     <li> if topic name has already been subscribed
    *                                     </ul>
    * @throws NotInitializedException     if called before fully initialized

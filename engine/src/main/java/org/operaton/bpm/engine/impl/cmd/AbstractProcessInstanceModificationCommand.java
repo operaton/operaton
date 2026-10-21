@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -166,7 +167,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     ScopeImpl scope = getScopeForActivityInstance(processDefinition, activityInstance);
 
     Set<ExecutionEntity> executions = mapping.getExecutions(scope);
-    Set<String> activityInstanceExecutions = new HashSet<>(Arrays.asList(activityInstance.getExecutionIds()));
+    Set<String> activityInstanceExecutions = new HashSet<>(List.of(activityInstance.getExecutionIds()));
 
     for (String activityInstanceExecutionId : activityInstance.getExecutionIds()) {
       CommandContext commandContext = requireNonNull(Context.getCommandContext());
@@ -181,12 +182,9 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     }
 
     // find the scope execution for the given activity instance
-    Set<ExecutionEntity> retainedExecutionsForInstance = new HashSet<>();
-    for (ExecutionEntity execution : executions) {
-      if (activityInstanceExecutions.contains(execution.getId())) {
-        retainedExecutionsForInstance.add(execution);
-      }
-    }
+    Set<ExecutionEntity> retainedExecutionsForInstance = executions.stream()
+        .filter(execution -> activityInstanceExecutions.contains(execution.getId()))
+        .collect(Collectors.toSet());
 
     if (retainedExecutionsForInstance.size() != 1) {
       throw new ProcessEngineException("There are %s (!= 1) executions for activity instance %s".formatted(retainedExecutionsForInstance.size(), activityInstance.getId()));

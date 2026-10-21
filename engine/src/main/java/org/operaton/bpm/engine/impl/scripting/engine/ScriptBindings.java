@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,18 +34,18 @@ import org.operaton.bpm.engine.impl.context.Context;
 
 
 /**
- * <p>A {@link Bindings} implementation which wraps an existing binding and enhances the key / value map with
+ * A {@link Bindings} implementation which wraps an existing binding and enhances the key / value map with
  * <strong>read-only</strong> access to:
  * <ul>
  * <li>variables provided in a {@link VariableScope},</li>
  * <li>additional bindings provided through a set of {@link Resolver Resolvers}.</li>
  * </ul>
  *
- * <p><strong>Note on backwards compatibility:</strong> before 7.2 the Script
+ * <p>
+ * <strong>Note on backwards compatibility:</strong> before 7.2 the Script
  * bindings behaved in a way that all script variables were automatically exposed
  * as process variables. You can enable this behavior by setting {@link #autoStoreScriptVariables}.
  * </p>
- *
  *
  * @author Tom Baeyens
  * @author Daniel Meyer
@@ -63,7 +61,7 @@ public class ScriptBindings implements Bindings {
    * </p>
    */
   protected static final Set<String> UNSTORED_KEYS =
-    new HashSet<>(Arrays.asList(
+    Set.of(
       "out",
       "out:print",
       "lang:import",
@@ -78,7 +76,7 @@ public class ScriptBindings implements Bindings {
       "execution",
       "__doc__", // do not export python doc string
       "__builtins__" // python built-in functions
-      ));
+      );
 
   protected List<Resolver> scriptResolvers;
   protected VariableScope variableScope;

@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -139,13 +140,9 @@ public @NullMarked class DmnDecisionResultEntriesImpl implements DmnDecisionResu
 
   @Override
   public Collection<Object> values() {
-    List<Object> values = new ArrayList<>();
-
-    for (TypedValue typedValue : outputValues.values()) {
-      values.add(typedValue.getValue());
-    }
-
-    return values;
+    return outputValues.values().stream()
+      .map(TypedValue::getValue)
+      .collect(Collectors.toCollection(ArrayList::new));
   }
 
   @Override
@@ -200,7 +197,7 @@ public @NullMarked class DmnDecisionResultEntriesImpl implements DmnDecisionResu
     return entrySet;
   }
 
-  protected class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
+  protected static class DmnDecisionRuleOutputEntry implements Entry<String, Object> {
 
     protected final String key;
     protected final @Nullable TypedValue typedValue;

@@ -46,7 +46,7 @@ public class DueDateBusinessCalendar implements BusinessCalendar {
   public Date resolveDuedate(String duedate, Date startDate) {
     try {
       if (duedate.startsWith("P")){
-        DateTime start = null;
+        DateTime start;
         if (startDate == null) {
           start = DateTimeUtil.now();
         } else {

@@ -44,7 +44,7 @@ public abstract class HalCachingLinkResolver implements HalLinkResolver {
       List<HalResource<?>> resolvedResources = resolveCachedLinks(linkedIds, cache, notCachedLinkedIds);
 
       if (!notCachedLinkedIds.isEmpty()) {
-        List<HalResource<?>> notCachedResources = resolveNotCachedLinks(notCachedLinkedIds.toArray(new String[notCachedLinkedIds.size()]), processEngine);
+        List<HalResource<?>> notCachedResources = resolveNotCachedLinks(notCachedLinkedIds.toArray(String[]::new), processEngine);
         resolvedResources.addAll(notCachedResources);
         putIntoCache(notCachedResources);
       }

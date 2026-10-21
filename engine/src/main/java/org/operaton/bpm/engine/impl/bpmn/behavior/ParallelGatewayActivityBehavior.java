@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
@@ -59,7 +60,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Joram Barrez
  * @author Tom Baeyens
  */
-public class ParallelGatewayActivityBehavior extends GatewayActivityBehavior {
+public @NullMarked class ParallelGatewayActivityBehavior extends GatewayActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 

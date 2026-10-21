@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.task.TaskQuery;
-
-
 
 /**
  * Contains the possible properties that can be used in a {@link TaskQuery}.
  *
  * @author Joram Barrez
  */
-public final class TaskQueryProperty {
+public final @NullMarked class TaskQueryProperty {
 
   public static final QueryProperty TASK_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty NAME = new QueryPropertyImpl("NAME_");

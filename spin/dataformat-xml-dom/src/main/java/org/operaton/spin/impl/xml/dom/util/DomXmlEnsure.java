@@ -64,11 +64,11 @@ public class DomXmlEnsure extends EnsureUtil {
   }
 
   /**
-   * Ensure that the node is not null.
+   * Ensure that the node is not {@code null}.
    *
-   * @param node the node to ensure to be not null
+   * @param node the node to ensure to be not {@code null}
    * @param expression the expression was used to find the node
-   * @throws SpinXPathException if the node is null
+   * @throws SpinXPathException if the node is {@code null}
    */
   public static void ensureXPathNotNull(Node node, String expression) {
     if (node == null) {
@@ -77,11 +77,11 @@ public class DomXmlEnsure extends EnsureUtil {
   }
 
   /**
-   * Ensure that the nodeList is either null or empty.
+   * Ensure that the nodeList is either {@code null} or empty.
    *
-   * @param nodeList the nodeList to ensure to be either null or empty
+   * @param nodeList the nodeList to ensure to be either {@code null} or empty
    * @param expression the expression was used to fine the nodeList
-   * @throws SpinXPathException if the nodeList is either null or empty
+   * @throws SpinXPathException if the nodeList is either {@code null} or empty
    */
   public static void ensureXPathNotEmpty(NodeList nodeList, String expression) {
     if (nodeList == null || nodeList.getLength() == 0) {

@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.user;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -42,12 +42,9 @@ public class HalUserResolver extends HalIdResourceCacheLinkResolver {
       .userIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolvedUsers = new ArrayList<>();
-    for (User user : users) {
-      resolvedUsers.add(HalUser.fromUser(user));
-    }
-
-    return resolvedUsers;
+    return users.stream()
+      .map(HalUser::fromUser)
+      .collect(Collectors.toList());
   }
 
 }

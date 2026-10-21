@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 import java.io.InputStream;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessDefinitionQueryImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -27,10 +28,12 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
+
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
-public class BpmnModelInstanceCache extends ModelInstanceCache<BpmnModelInstance, ProcessDefinitionEntity> {
+public @NullMarked class BpmnModelInstanceCache extends ModelInstanceCache<BpmnModelInstance, ProcessDefinitionEntity> {
 
   public BpmnModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<ProcessDefinitionEntity> definitionCache) {
     super(factory, cacheCapacity, definitionCache);
@@ -54,8 +57,9 @@ public class BpmnModelInstanceCache extends ModelInstanceCache<BpmnModelInstance
   @Override
   protected List<ProcessDefinition> getAllDefinitionsForDeployment(final String deploymentId) {
     final CommandContext commandContext = Context.getCommandContext();
-    return commandContext.runWithoutAuthorization(() -> new ProcessDefinitionQueryImpl()
-        .deploymentId(deploymentId)
-        .list());
+    List<ProcessDefinition> processDefinitions = commandContext.runWithoutAuthorization(() -> new ProcessDefinitionQueryImpl()
+            .deploymentId(deploymentId)
+            .list());
+    return requireNonNull(processDefinitions);
   }
 }

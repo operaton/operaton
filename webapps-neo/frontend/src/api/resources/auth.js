@@ -3,6 +3,7 @@ import {
   _is_own_backend,
   _url_auth,
   _url_engine_rest,
+  basic_auth_header,
   set_request_headers,
   RESPONSE_STATE,
 } from "../helper.jsx";
@@ -35,7 +36,10 @@ const APP_NAME = "neo";
 const start_session = (state, username, password) => {
   const headers = new Headers();
   set_request_headers(headers, state);
-  headers.set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+  headers.set(
+    "Content-Type",
+    "application/x-www-form-urlencoded;charset=UTF-8",
+  );
 
   return fetch(`${_url_auth()}/login/${APP_NAME}`, {
     method: "POST",
@@ -50,6 +54,7 @@ const start_session = (state, username, password) => {
       // Once the session exists the password has no further use here, so make
       // sure nothing is left holding one.
       state.auth.credentials.value = { username: null, password: null };
+      state.auth.authorized_apps.value = result.authorizedApps ?? null;
       return result.userId ?? username;
     });
 };
@@ -61,7 +66,13 @@ const session_user = (state) => {
 
   return fetch(_url_auth(), { headers, credentials: "include" })
     .then((response) => (response.ok ? response.json() : null))
-    .then((result) => result?.userId ?? null)
+    .then((result) => {
+      // A reload restores the session from the cookie, so the applications have
+      // to be restored with it — otherwise the navigation would open up again
+      // after every refresh.
+      state.auth.authorized_apps.value = result?.authorizedApps ?? null;
+      return result?.userId ?? null;
+    })
     .catch(() => null);
 };
 
@@ -71,9 +82,14 @@ const session_user = (state) => {
  * Deliberately not a plain request to some endpoint with an Authorization
  * header: the REST API may be configured without authentication, in which case
  * every request succeeds and any password would be accepted. This endpoint
- * verifies the credentials whether or not the API itself demands them, and
- * answers with the resolved user, which the web apps need in order to load
- * anything user-specific.
+ * verifies the credentials in the body whether or not the API itself demands
+ * them, and answers with the resolved user, which the web apps need in order to
+ * load anything user-specific.
+ *
+ * The same credentials go into a Basic header as well: an API that does demand
+ * authentication rejects the request before the endpoint ever sees the body.
+ * (A browser that has cached the credentials for that origin would attach them
+ * itself, which is why the missing header went unnoticed for a while.)
  *
  * @param {Object} state - Application state
  * @returns {Promise<string>} the authenticated user id
@@ -81,7 +97,10 @@ const session_user = (state) => {
 const verify_credentials = (state, username, password) =>
   fetch(`${_url_engine_rest(state)}/identity/verify`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: basic_auth_header(username, password),
+    },
     credentials: "include",
     body: JSON.stringify({ username, password }),
   })
@@ -116,6 +135,9 @@ const login = (
 
   return authenticate
     .then((user_id) => {
+      // Not every sign-in follows a sign-out: a session can expire, or someone
+      // simply signs in as somebody else.
+      if (user_id !== state.auth.user.id.peek()) clear_api_state(state.api);
       state.auth.user.id.value = user_id;
       state.auth.logged_in.value = {
         status: RESPONSE_STATE.SUCCESS,
@@ -131,10 +153,31 @@ const login = (
     );
 };
 
+/**
+ * Drop every response cached under state.api.
+ *
+ * The signals outlive a session: nothing unmounts when one user signs out and
+ * another signs in, so the next user was shown the previous user's saved
+ * filters, task list and everything else until each page happened to refetch.
+ * Reload was the only way to clear it.
+ *
+ * Values are reset in place rather than replacing the tree, so components
+ * holding a reference to a signal keep writing to the one that is rendered.
+ */
+const clear_api_state = (node) => {
+  for (const entry of Object.values(node ?? {})) {
+    if (!entry || typeof entry !== "object") continue;
+    if (typeof entry.peek === "function") entry.value = null;
+    else clear_api_state(entry);
+  }
+};
+
 /** Forget everything this tab knows about who is signed in. */
 const clear_local_session = (state) => {
+  clear_api_state(state.api);
   state.auth.credentials.value = { username: null, password: null };
   state.auth.user.id.value = null;
+  state.auth.authorized_apps.value = null;
   state.auth.logged_in.value = {
     status: RESPONSE_STATE.ERROR,
     data: "unauthenticated",

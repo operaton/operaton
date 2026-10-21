@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
-import java.util.Arrays;
 import java.util.List;
 
 public final class CreateSetProcessInstanceVariablesBatchScenario {
@@ -48,7 +47,7 @@ public final class CreateSetProcessInstanceVariablesBatchScenario {
           .getId();
 
       String batchId = runtimeService.setVariablesAsync(
-          Arrays.asList(processInstanceIdOne, processInstanceIdTwo),
+          List.of(processInstanceIdOne, processInstanceIdTwo),
           Variables.createVariables().putValue("foo", "bar")).getId();
 
       engine.getManagementService().setProperty("createSeedCreatedScenario.batch.id", batchId);
@@ -71,7 +70,7 @@ public final class CreateSetProcessInstanceVariablesBatchScenario {
           .getId();
 
       Batch batch = runtimeService.setVariablesAsync(
-          Arrays.asList(processInstanceIdOne, processInstanceIdTwo),
+          List.of(processInstanceIdOne, processInstanceIdTwo),
           Variables.createVariables().putValue("foo", "bar"));
 
       List<Job> jobs = managementService.createJobQuery()

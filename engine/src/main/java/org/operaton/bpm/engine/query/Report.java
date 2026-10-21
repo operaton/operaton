@@ -48,7 +48,7 @@ public interface Report {
    *          If the user has no {@link Permissions#READ_HISTORY} permission
    *          on any {@link Resources#PROCESS_DEFINITION}.
    * @throws NotValidException
-   *          When the given period unit is null.
+   *          When the given period unit is {@code null}.
    */
   List<DurationReportResult> duration(PeriodUnit periodUnit);
 

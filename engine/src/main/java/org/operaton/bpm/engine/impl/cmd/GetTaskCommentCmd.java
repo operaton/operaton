@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.task.Comment;
@@ -25,7 +27,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author kristin.polenz@camunda.com
  */
-public class GetTaskCommentCmd implements Command<Comment> {
+public @NullMarked class GetTaskCommentCmd implements Command<Comment> {
   protected String taskId;
   protected String commentId;
 
@@ -35,7 +37,7 @@ public class GetTaskCommentCmd implements Command<Comment> {
   }
 
   @Override
-  public Comment execute(CommandContext commandContext) {
+  public @Nullable Comment execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
     ensureNotNull("commentId", commentId);
 

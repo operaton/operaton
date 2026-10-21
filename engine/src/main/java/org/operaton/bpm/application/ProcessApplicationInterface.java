@@ -32,18 +32,19 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 
 /**
- * <p>A Process Application is an ordinary Java Application that uses the operaton process engine for
+ * A Process Application is an ordinary Java Application that uses the operaton process engine for
  * BPM and Worklow functionality. Most such applications will start their own process engine (or use
  * a process engine provided by the runtime container), deploy some BPMN 2.0 process definitions and
  * interact with process instances derived from these process definitions. Since most process applications
  * perform very similar bootstrapping, deployment and runtime tasks, we generalized this functionality.
  * The concept is similar to the javax.ws.rs.core.Application class in JAX-RS: adding the process
- * application class allows you to bootstrap and configure the provided services.</p>
- *
- * <p>Adding a ProcessApplication class to your Java Application provides your applications with the
- * following services:
+ * application class allows you to bootstrap and configure the provided services.
  *
  * <p>
+ * Adding a ProcessApplication class to your Java Application provides your applications with the
+ * following services:
+ * </p>
+ *
  * <ul>
  * <li><strong>Bootstrapping</strong> embedded process engine(s) or looking up container managed process engine(s).
  * You can define multiple process engines in a file named processes.xml which is added to your application.
@@ -59,10 +60,11 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
  * process engine. This way you can start a single process engine that dispatches to multiple process
  * applications that can be (re-)deployed independently.</li>
  * </ul>
- * </p>
  *
- * <p>Transforming an existing Java Application into a Process Application is easy and non-intrusive.
+ * <p>
+ * Transforming an existing Java Application into a Process Application is easy and non-intrusive.
  * You simply have to add:
+ * </p>
  * <ul>
  * <li>A Process Application class: The Process Application class constitutes the interface between
  * your application and the process engine. There are different base classes you can extent to reflect
@@ -80,7 +82,6 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
  * configuration of the deployment(s) this process application makes to the process engine. It can be
  * empty and serve as simple marker file - but it must be present.</li>
  * </ul>
- * </p>
  *
  * @author Daniel Meyer
  *
@@ -88,15 +89,19 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
 public interface ProcessApplicationInterface {
 
   /**
-   * <p>Deploy this process application into the runtime container.</p>
+   * Deploy this process application into the runtime container.
    *
+   * <p>
    * <strong>NOTE:</strong> on some containers (like WildFly) the deployment of
    * the process application is performed asynchronously and via introspection at deployment
    * time. This means that there is no guarantee that the process application is fully
    * deployed after this method returns.
+   * </p>
    *
-   * <p>If you need a post deployment hook, use the {@literal @}{@link PostDeploy}
-   * annotation.</p>
+   * <p>
+   * If you need a post deployment hook, use the {@literal @}{@link PostDeploy}
+   * annotation.
+   * </p>
    */
   void deploy();
 
@@ -209,7 +214,7 @@ public interface ProcessApplicationInterface {
    *
    * <p>If this method returns 'null', the process application is not notified about execution events.</p>
    *
-   * @return an {@link ExecutionListener} or null.
+   * @return an {@link ExecutionListener} or {@code null}.
    */
   @Nullable ExecutionListener getExecutionListener();
 
@@ -219,7 +224,7 @@ public interface ProcessApplicationInterface {
    *
    * <p>If this method returns 'null', the process application is not notified about Task events.</p>
    *
-   * @return a {@link TaskListener} or null.
+   * @return a {@link TaskListener} or {@code null}.
    */
   @Nullable TaskListener getTaskListener();
 

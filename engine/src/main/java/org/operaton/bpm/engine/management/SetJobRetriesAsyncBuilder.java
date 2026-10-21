@@ -38,8 +38,8 @@ public interface SetJobRetriesAsyncBuilder {
    * job can be adjusted.
    * </p>
    *
-   * @param dueDate The new due date for the updated jobs. If it is null, the due date will be set to null. If
-   * {@link ProcessEngineConfiguration#isEnsureJobDueDateNotNull() ensureJobDueDateNotNull} is true, the due date will be set to the current date instead of null.
+   * @param dueDate The new due date for the updated jobs. If it is {@code null}, the due date will be set to {@code null}. If
+   * {@link ProcessEngineConfiguration#isEnsureJobDueDateNotNull() ensureJobDueDateNotNull} is true, the due date will be set to the current date instead of {@code null}.
    *
    * @return the builder instance
    */

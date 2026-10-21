@@ -31,35 +31,24 @@ class ScriptTaskNashornTest extends AbstractScriptTaskTest {
   @Test
   void testJavascriptProcessVarVisibility() {
 
-    deployProcess(NASHORN,
-
-        // GIVEN
-        // an execution variable 'foo'
-        "execution.setVariable('foo', 'a');"
-
-        // THEN
-        // there should be a script variable defined
-      + "if (typeof foo !== 'undefined') { "
-      + "  throw 'Variable foo should be defined as script variable.';"
-      + "}"
-
-        // GIVEN
-        // a script variable with the same name
-      + "var foo = 'b';"
-
-        // THEN
-        // it should not change the value of the execution variable
-      + "if(execution.getVariable('foo') != 'a') {"
-      + "  throw 'Execution should contain variable foo';"
-      + "}"
-
-        // AND
-        // it should override the visibility of the execution variable
-      + "if(foo != 'b') {"
-      + "  throw 'Script variable must override the visibility of the execution variable.';"
-      + "}"
-
-    );
+    deployProcess(NASHORN, """
+        // GIVEN: an execution variable 'foo'
+        execution.setVariable('foo', 'a');
+        // THEN: there should be a script variable defined
+        if (typeof foo !== 'undefined') {
+          throw 'Variable foo should be defined as script variable.';
+        }
+        // GIVEN: a script variable with the same name
+        var foo = 'b';
+        // THEN: it should not change the value of the execution variable
+        if(execution.getVariable('foo') != 'a') {
+          throw 'Execution should contain variable foo';
+        }
+        // AND: it should override the visibility of the execution variable
+        if(foo != 'b') {
+          throw 'Script variable must override the visibility of the execution variable.';
+        }
+        """);
 
     // GIVEN
     // that we start an instance of this process
@@ -76,21 +65,15 @@ class ScriptTaskNashornTest extends AbstractScriptTaskTest {
   @Test
   void testJavascriptFunctionInvocation() {
 
-    deployProcess(NASHORN,
-
-        // GIVEN
-        // a function named sum
-        "function sum(a,b){"
-      + "  return a+b;"
-      + "};"
-
-        // THEN
-        // I can call the function
-      + "var result = sum(1,2);"
-
-      + "execution.setVariable('foo', result);"
-
-    );
+    deployProcess(NASHORN, """
+        // GIVEN: a function named sum
+        function sum(a,b){
+          return a+b;
+        };
+        // THEN: I can call the function
+        var result = sum(1,2);
+        execution.setVariable('foo', result);
+        """);
 
     // GIVEN
     // that we start an instance of this process

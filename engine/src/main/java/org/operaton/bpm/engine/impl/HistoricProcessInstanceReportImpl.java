@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -138,7 +137,7 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
     List<String> processDefinitionKeys = new ArrayList<>();
 
     if (processDefinitionKeyIn != null) {
-      processDefinitionKeys.addAll(Arrays.asList(processDefinitionKeyIn));
+      processDefinitionKeys.addAll(List.of(processDefinitionKeyIn));
     }
 
     if (processDefinitionIdIn != null) {

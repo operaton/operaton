@@ -96,7 +96,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
     return ancestorActivityInstanceId;
   }
 
-  public void setAncestorActivityInstanceId(String ancestorActivityInstanceId) {
+  public void setAncestorActivityInstanceId(@Nullable String ancestorActivityInstanceId) {
     this.ancestorActivityInstanceId = ancestorActivityInstanceId;
   }
 
@@ -179,7 +179,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
     // walk until a scope is reached for which executions exist
     walker.walkWhile(element -> !mapping.getExecutions(element).isEmpty() || element == processDefinition);
 
-    Set<ExecutionEntity> flowScopeExecutions = mapping.getExecutions(walker.getCurrentElement());
+    Set<ExecutionEntity> flowScopeExecutions = mapping.getExecutions(walker.getRequiredCurrentElement());
 
     if (flowScopeExecutions.size() > 1) {
       throw new ProcessEngineException("Ancestor activity execution is ambiguous for activity %s".formatted(targetFlowScope));
@@ -210,7 +210,7 @@ public abstract @NullMarked class AbstractInstantiationCmd extends AbstractProce
         element -> (mapping.getExecutions(element).contains(ancestorScopeExecution) && element == ancestorScope)
             || element == processDefinition);
 
-    Set<ExecutionEntity> flowScopeExecutions = mapping.getExecutions(walker.getCurrentElement());
+    Set<ExecutionEntity> flowScopeExecutions = mapping.getExecutions(walker.getRequiredCurrentElement());
 
     if (!flowScopeExecutions.contains(ancestorScopeExecution)) {
       throw new NotValidException(describeFailure("Scope execution for '%s' cannot be found in parent hierarchy of flow element '%s'".formatted(ancestorActivityInstanceId, elementToInstantiate.getId())));

@@ -4,6 +4,7 @@ import {
   _url_server,
   _url_engine_rest,
   get_credentials,
+  basic_auth_header,
   get_auth_header,
   has_data,
   POST_FORM,
@@ -88,6 +89,19 @@ describe("api/helper", () => {
       });
       const result = get_credentials(state);
       expect(result).toBe(":");
+    });
+  });
+
+  describe("basic_auth_header", () => {
+    it("base64-encodes username and password", () => {
+      expect(basic_auth_header("bob", "secret")).toBe("Basic Ym9iOnNlY3JldA==");
+    });
+
+    it("encodes the UTF-8 bytes of non-ASCII credentials", () => {
+      // btoa alone throws on characters outside Latin-1.
+      expect(basic_auth_header("übör", "pä")).toBe(
+        `Basic ${btoa(String.fromCharCode(...new TextEncoder().encode("übör:pä")))}`,
+      );
     });
   });
 

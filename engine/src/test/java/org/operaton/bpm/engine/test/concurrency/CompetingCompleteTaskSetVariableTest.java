@@ -110,7 +110,6 @@ class CompetingCompleteTaskSetVariableTest extends ConcurrencyTestCase {
     thread1.waitUntilDone();
 
     //try to commit task completion
-    thread2.makeContinue();
     thread2.waitUntilDone();
 
     //variable was persisted

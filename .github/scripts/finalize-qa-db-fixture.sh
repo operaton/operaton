@@ -17,12 +17,12 @@
 DATABASE_VERSION=$1
 RELEASE_VERSION=$2
 
-if [ -z "$DATABASE_VERSION" ]; then
+if [[ -z "$DATABASE_VERSION" ]]; then
   echo "⚠️ You must provide the DATABASE_VERSION as the first argument (e.g. 7.25.0). Exiting..."
   exit 1
 fi
 
-if [ -z "$RELEASE_VERSION" ]; then
+if [[ -z "$RELEASE_VERSION" ]]; then
   echo "⚠️ You must provide the RELEASE_VERSION as the second argument. Exiting..."
   exit 1
 fi
@@ -39,7 +39,7 @@ fi
 
 POM_FILE="qa/test-db-instance-migration/test-fixture-${FIXTURE_SUFFIX}/pom.xml"
 
-if [ ! -f "$POM_FILE" ]; then
+if [[ ! -f "$POM_FILE" ]]; then
   echo "⚠️ Fixture pom.xml not found: $POM_FILE. Exiting..."
   exit 1
 fi

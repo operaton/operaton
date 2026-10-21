@@ -93,6 +93,7 @@ public @NullMarked class UpdateCommentCmd implements Command<Object> {
   protected TaskEntity updateTaskComment(String taskId, CommandContext commandContext, CommentEntity comment) {
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
     ensureNotNull("No task exists with taskId: %s".formatted(taskId), "task", task);
+    requireNonNull(task);
 
     checkTaskWork(task, commandContext);
     updateComment(commandContext, comment);

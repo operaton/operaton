@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * <p>Cache control filter setting "Cache-Control: no-cache" on all GET requests.
+ * Cache control filter setting "Cache-Control: no-cache" on all GET requests.
  *
  * @author Daniel Meyer
  *

@@ -51,8 +51,10 @@ import static org.assertj.core.api.Assertions.fail;
  * these tests hold actual row locks from a second transaction, so they prove or
  * disprove the vendor-specific SKIP LOCKED behavior itself.
  *
- * <p>The assertions state the desired contract for every database. A failure on a
+ * <p>
+ * The assertions state the desired contract for every database. A failure on a
  * specific vendor is a finding about that vendor's SQL variant, not a broken test.
+ * </p>
  */
 public abstract class AbstractJobExecutorSkipLockedRowLockTest extends ConcurrencyTestHelper {
 

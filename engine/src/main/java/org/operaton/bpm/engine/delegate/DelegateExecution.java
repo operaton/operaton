@@ -52,7 +52,7 @@ public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecu
   String getProcessDefinitionId();
 
   /**
-   * Gets the id of the parent of this execution. If null, the execution
+   * Gets the id of the parent of this execution. If {@code null}, the execution
    * represents a process-instance.
    */
   String getParentId();
@@ -92,7 +92,7 @@ public interface DelegateExecution extends BaseDelegateExecution, BpmnModelExecu
    * and this process instance was started by a call activity, this method
    * returns the execution which executed the call activity in the super process instance.
    *
-   * @return the super execution or null.
+   * @return the super execution or {@code null}.
    */
   @Nullable DelegateExecution getSuperExecution();
 

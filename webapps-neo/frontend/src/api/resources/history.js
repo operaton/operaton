@@ -7,12 +7,22 @@ const instance_url = (
   params = {},
   { unfinished = false } = {},
 ) => {
+  const { variables, ...rest } = params;
   const merged = {
     sortBy: "startTime",
     sortOrder: "asc",
     ...(unfinished ? { unfinished: true } : {}),
     processDefinitionId: definition_id,
-    ...params,
+    ...rest,
+    // The engine reads variable comparisons as name_operator_value, comma
+    // separated — not as the objects a saved filter stores them in.
+    ...(variables?.length
+      ? {
+          variables: variables
+            .map(({ name, operator, value }) => `${name}_${operator}_${value}`)
+            .join(","),
+        }
+      : {}),
   };
   return new URLSearchParams(merged).toString();
 };
@@ -97,9 +107,22 @@ const get_historic_called_instances = (state, instance_id) =>
 /**
  * Task History
  */
-const get_user_operation = (state, execution_id) =>
+/** What was done to a whole process instance. */
+const get_user_operation = (state, process_instance_id) =>
   GET(
-    `/history/user-operation?processInstanceId=${execution_id}&sortBy=timestamp&sortOrder=desc`,
+    `/history/user-operation?processInstanceId=${process_instance_id}&sortBy=timestamp&sortOrder=desc`,
+    state,
+    state.api.history.user_operation,
+  );
+
+/**
+ * What was done to one task. Not the same question as the instance's log: a
+ * task that belongs to no process has no instance to ask about, and an
+ * instance's log carries the operations on its other tasks too.
+ */
+const get_user_operation_by_task = (state, task_id) =>
+  GET(
+    `/history/user-operation?taskId=${task_id}&sortBy=timestamp&sortOrder=desc`,
     state,
     state.api.history.user_operation,
   );
@@ -169,6 +192,7 @@ const history = {
     one: get_historic_batch,
   },
   get_user_operation,
+  get_user_operation_by_task,
   set_user_operation_annotation,
   clear_user_operation_annotation,
 };

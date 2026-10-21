@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +91,7 @@ public class ExecutionManager extends AbstractManager {
     execution.deleteCascade(deleteReason, skipCustomListeners, skipIoMappings, externallyTerminated, skipSubprocesses);
 
     if (cascade) {
-      getHistoricProcessInstanceManager().deleteHistoricProcessInstanceByIds(Arrays.asList(processInstanceId));
+      getHistoricProcessInstanceManager().deleteHistoricProcessInstanceByIds(List.of(processInstanceId));
     }
   }
 
@@ -152,7 +151,7 @@ public class ExecutionManager extends AbstractManager {
     return getDbEntityManager().selectList("selectProcessInstanceDeploymentIdMappingsByQueryCriteria", processInstanceQuery);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<ExecutionEntity> findEventScopeExecutionsByActivityId(String activityRef, String parentExecutionId) {
     Map<String, String> parameters = new HashMap<>();
     parameters.put(ACTIVITY_ID, activityRef);

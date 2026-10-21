@@ -36,9 +36,8 @@ import org.jspecify.annotations.Nullable;
  * @author Daniel Meyer
  *
  */
-@NullMarked
 @SuppressWarnings("java:S5738")
-public class AuthorizationException extends ProcessEngineException {
+public @NullMarked class AuthorizationException extends ProcessEngineException {
 
   protected final @Nullable String userId;
   protected final transient List<MissingAuthorization> missingAuthorizations;

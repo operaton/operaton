@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.BpmnBehaviorLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.EscalationEventDefinition;
@@ -25,6 +26,8 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.tree.ActivityExecutionHierarchyWalker;
 import org.operaton.bpm.engine.impl.tree.ActivityExecutionMappingCollector;
 import org.operaton.bpm.engine.impl.tree.OutputVariablesPropagator;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Helper class handling the propagation of escalation.
@@ -48,7 +51,7 @@ public final class EscalationHandler {
    * Walks through the activity execution hierarchy, fetches and executes matching escalation catch event
    * @return the escalation event definition if found matching escalation catch event
    */
-  public static EscalationEventDefinition executeEscalation(ActivityExecution execution,
+  public static @Nullable EscalationEventDefinition executeEscalation(ActivityExecution execution,
       String escalationCode) {
     final PvmActivity currentActivity = execution.getActivity();
 
@@ -69,11 +72,12 @@ public final class EscalationHandler {
     return escalationEventDefinition;
   }
 
-  protected static void executeEscalationHandler(EscalationEventDefinition escalationEventDefinition, ActivityExecutionMappingCollector activityExecutionMappingCollector, String escalationCode) {
+  private static void executeEscalationHandler(EscalationEventDefinition escalationEventDefinition, ActivityExecutionMappingCollector activityExecutionMappingCollector, String escalationCode) {
 
     PvmActivity escalationHandler = escalationEventDefinition.getEscalationHandler();
     PvmScope escalationScope = getScopeForEscalation(escalationEventDefinition);
     ActivityExecution escalationExecution = activityExecutionMappingCollector.getExecutionForScope(escalationScope);
+    requireNonNull(escalationExecution);
 
     if (escalationEventDefinition.getEscalationCodeVariable() != null) {
       escalationExecution.setVariable(escalationEventDefinition.getEscalationCodeVariable(), escalationCode);
@@ -82,7 +86,7 @@ public final class EscalationHandler {
     escalationExecution.executeActivity(escalationHandler);
   }
 
-  protected static PvmScope getScopeForEscalation(EscalationEventDefinition escalationEventDefinition) {
+  private static PvmScope getScopeForEscalation(EscalationEventDefinition escalationEventDefinition) {
     PvmActivity escalationHandler = escalationEventDefinition.getEscalationHandler();
     if (escalationEventDefinition.isCancelActivity()) {
       return escalationHandler.getEventScope();

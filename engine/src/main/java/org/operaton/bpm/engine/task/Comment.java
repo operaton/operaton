@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.TaskService;
 
 /** User comments that form discussions around tasks.
  *
- * @see {@link TaskService#getTaskComments(String)
+ * @see TaskService#getTaskComments(String)
  * @author Tom Baeyens
  */
 public interface Comment {

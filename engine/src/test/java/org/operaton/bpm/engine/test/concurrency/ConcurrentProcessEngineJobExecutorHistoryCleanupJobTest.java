@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,17 +40,20 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 /**
- * <p>Tests a concurrent attempt of a bootstrapping Process Engine to reconfigure
- * the HistoryCleanupJob while the JobExecutor tries to execute it.</p>
- *
- * The steps are the following:
+ * Tests a concurrent attempt of a bootstrapping Process Engine to reconfigure
+ * the HistoryCleanupJob while the JobExecutor tries to execute it.
  *
  * <p>
+ * The steps are the following:
+ * </p>
+ *
+ *  <p>
  *  1. The (History Cleanup) JobExecution thread is started, and stopped before the job is executed.
  *  2. The Process Engine Bootstrap thread is started, and stopped before the HistoryCleanupJob is reconfigured.
  *  3. The JobExecution thread executes the HistoryCleanupJob and stops before flushing.
@@ -62,8 +67,7 @@ import static org.awaitility.Awaitility.await;
  *  6.3 In case the OptimisticLockingListener didn't handle the OLE,
  *      it's still caught and logged in <code>ProcessEngineImpl#executeSchemaOperations()</code>
  *  7. The Process Engine Bootstrap thread successfully builds and registers the new Process Engine.
- * </p>
- *
+ *  </p>
  *
  * @author Nikola Koevski
  */
@@ -158,9 +162,9 @@ class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Concurrenc
     assertThat(ProcessEngines.getProcessEngines().get(PROCESS_ENGINE_NAME)).isNotNull();
   }
 
-  protected static class ControllableProcessEngineBootstrapCommand extends ControllableCommand<Void> {
+  protected static @NullMarked class ControllableProcessEngineBootstrapCommand extends ControllableCommand<Void> {
 
-    protected ControllableBootstrapEngineCommand bootstrapCommand;
+    protected @Nullable ControllableBootstrapEngineCommand bootstrapCommand;
 
     @Override
     public Void execute(CommandContext commandContext) {
@@ -203,7 +207,7 @@ class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Concurrenc
     }
   }
 
-  protected static class ControllableBootstrapEngineCommand extends BootstrapEngineCommand implements Command<Void> {
+  protected static @NullMarked class ControllableBootstrapEngineCommand extends BootstrapEngineCommand implements Command<Void> {
 
     protected final ThreadControl monitor;
     protected CommandInvocationContext spy;
@@ -218,7 +222,7 @@ class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Concurrenc
       monitor.sync();
 
       super.createHistoryCleanupJob(commandContext);
-      spy = Context.getCommandInvocationContext();
+      spy = requireNonNull(Context.getCommandInvocationContext());
 
       monitor.sync();
     }

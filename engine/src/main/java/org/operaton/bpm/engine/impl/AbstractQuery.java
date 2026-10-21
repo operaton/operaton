@@ -234,7 +234,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
   /**
    * Executes the actual query to retrieve the list of results.
-   * @param page used if the results must be paged. If null, no paging will be applied.
+   * @param page used if the results must be paged. If {@code null}, no paging will be applied.
    */
   public abstract List<U> executeList(CommandContext commandContext, Page page);
 
@@ -354,7 +354,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   @SuppressWarnings("unchecked")
   public List<String> listIds() {
     this.resultType = ResultType.LIST_IDS;
-    List<String> ids = null;
+    List<String> ids;
     if (commandExecutor != null) {
       ids = (List<String>) commandExecutor.execute(this);
     } else {
@@ -371,7 +371,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   @SuppressWarnings("unchecked")
   public List<ImmutablePair<String, String>> listDeploymentIdMappings() {
     this.resultType = ResultType.LIST_DEPLOYMENT_ID_MAPPINGS;
-    List<ImmutablePair<String, String>> ids = null;
+    List<ImmutablePair<String, String>> ids;
     if (commandExecutor != null) {
       ids = (List<ImmutablePair<String, String>>) commandExecutor.execute(this);
     } else {

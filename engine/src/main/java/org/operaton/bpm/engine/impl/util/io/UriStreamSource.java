@@ -33,6 +33,9 @@ public class UriStreamSource implements StreamSource {
 
   URI uri;
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public UriStreamSource(URL url) {
     try {
       this.uri = url.toURI();

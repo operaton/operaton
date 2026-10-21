@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE schema SYSTEM "SchemaWithExternalDtd.dtd">
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://operaton.org/test/xml-model/external-dtd"
+        targetNamespace="http://operaton.org/test/xml-model/external-dtd"
+        elementFormDefault="qualified">
+  <element name="greeting" type="string"/>
+</schema>

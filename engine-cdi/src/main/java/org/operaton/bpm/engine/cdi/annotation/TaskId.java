@@ -28,16 +28,17 @@ import org.operaton.bpm.engine.task.Task;
  * Qualifier annotation for injecting the current taskId.
  * <p />
  * Example:
+ * </p>
  * <pre>
  * {@code @Inject} @TaskId String currentTaskId
  * </pre>
  *
  * <p>
  * Note that the current {@link Task} is also available for injection:
+ * </p>
  * <pre>
  * {@code @Inject} Task task;
  * </pre>
- * </p>
  *
  * @author Daniel Meyer
  */

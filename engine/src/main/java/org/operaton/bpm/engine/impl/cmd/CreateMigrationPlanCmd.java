@@ -44,6 +44,8 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -63,6 +65,8 @@ public @NullMarked class CreateMigrationPlanCmd implements Command<MigrationPlan
     ProcessDefinitionEntity sourceProcessDefinition = getProcessDefinition(commandContext, migrationBuilder.getSourceProcessDefinitionId(), "Source");
     ProcessDefinitionEntity targetProcessDefinition = getProcessDefinition(commandContext, migrationBuilder.getTargetProcessDefinitionId(), "Target");
 
+    requireNonNull(sourceProcessDefinition);
+    requireNonNull(targetProcessDefinition);
     checkAuthorization(commandContext, sourceProcessDefinition, targetProcessDefinition);
 
     MigrationPlanImpl migrationPlan = new MigrationPlanImpl(sourceProcessDefinition.getId(), targetProcessDefinition.getId());
@@ -125,7 +129,7 @@ public @NullMarked class CreateMigrationPlanCmd implements Command<MigrationPlan
     });
   }
 
-  protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String id, String type) {
+  protected @Nullable ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String id, String type) {
     EnsureUtil.ensureNotNull(BadUserRequestException.class, type + " process definition id", id);
 
     try {

@@ -24,12 +24,12 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 public interface DmnEvaluatedInput {
 
   /**
-   * @return the id of the evaluated input or null if not set
+   * @return the id of the evaluated input or {@code null} if not set
    */
   String getId();
 
   /**
-   * @return the name of the evaluated input or null if not set
+   * @return the name of the evaluated input or {@code null} if not set
    */
   String getName();
 
@@ -39,7 +39,7 @@ public interface DmnEvaluatedInput {
   String getInputVariable();
 
   /**
-   * @return the value of the evaluated input or null if non set
+   * @return the value of the evaluated input or {@code null} if non set
    */
   TypedValue getValue();
 

@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.xml.impl.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,7 +39,7 @@ public final class StringUtil {
    * contain expressions with commas in it.
    *
    * @param text  the comma separated list
-   * @return the Strings of the list or an empty List if text is empty or null
+   * @return the Strings of the list or an empty List if text is empty or {@code null}
    */
   public static List<String> splitCommaSeparatedList(@Nullable String text) {
     if (text == null || text.isEmpty()) {
@@ -58,7 +57,7 @@ public final class StringUtil {
    * Joins a list of Strings to a comma separated single String.
    *
    * @param list  the list to join
-   * @return the resulting comma separated string or null if the list is null
+   * @return the resulting comma separated string or {@code null} if the list is {@code null}
    */
   public static @Nullable String joinCommaSeparatedList(List<String> list) {
     return joinList(list, ", ");
@@ -69,7 +68,7 @@ public final class StringUtil {
     if (text != null) {
       result = text.split(separator);
     }
-    return new ArrayList<>(Arrays.asList(result));
+    return new ArrayList<>(List.of(result));
   }
 
   public static @Nullable String joinList(@Nullable List<String> list, String separator) {

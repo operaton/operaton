@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.dmn.feel.impl.scala.function.builder;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -37,7 +36,7 @@ public class CustomFunctionBuilderImpl implements CustomFunctionBuilder {
 
   @Override
   public CustomFunctionBuilder setParams(String... params) {
-    List<String> paramList = Arrays.asList(params);
+    List<String> paramList = List.of(params);
     customFunction.setParams(paramList);
     return this;
   }

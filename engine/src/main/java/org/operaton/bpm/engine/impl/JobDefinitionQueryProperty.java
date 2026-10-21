@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.management.JobDefinitionQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
 
@@ -24,7 +26,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  *
  * @author roman.smirnov
  */
-final class JobDefinitionQueryProperty {
+final @NullMarked class JobDefinitionQueryProperty {
 
   public static final QueryProperty JOB_DEFINITION_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty ACTIVITY_ID = new QueryPropertyImpl("ACT_ID_");

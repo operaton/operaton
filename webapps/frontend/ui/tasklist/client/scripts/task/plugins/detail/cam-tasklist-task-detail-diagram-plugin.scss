@@ -1,4 +1,6 @@
 
+@use "sass:color";
+
 .diagram-loader {
   background-color: rgba($body-bg, 0.4);
   position: absolute;
@@ -32,7 +34,7 @@
 
   .highlight {
     .djs-outline {
-      stroke: saturate(darken($success-border, 30%), 30%) !important;
+      stroke: color.adjust($success-border, $lightness: -30%, $saturation: 30%) !important;
       stroke-width: 2px !important;
       fill: $success-bg !important;
     }

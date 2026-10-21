@@ -33,13 +33,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.commons.logging.MdcAccess;
 
 /**
- * Holds the contextual process data.<br>
+ * Holds the contextual process data.
  *
  * <p>
  * New context properties are always part of a section that can be started by
  * {@link #pushSection(ExecutionEntity)}. The section keeps track of all pushed
  * properties. Those can easily be cleared by popping the section with
- * {@link #popSection()} afterwards, e.g. after the successful execution.<br>
+ * {@link #popSection()} afterwards, e.g. after the successful execution.
  * </p>
  *
  * <p>
@@ -47,6 +47,7 @@ import org.operaton.commons.logging.MdcAccess;
  * non-empty context name for it in the {@link ProcessEngineConfigurationImpl
  * process engine configuration}. The following configuration options are
  * available:
+ * </p>
  * <ul>
  * <li>loggingContextActivityId - the context property for the activity id</li>
  * <li>loggingContextApplicationName - the context property for the application name</li>
@@ -56,7 +57,6 @@ import org.operaton.commons.logging.MdcAccess;
  * <li>loggingContextRootProcessInstanceId - the context property for the root process instance id</li>
  * <li>loggingContextTenantId - the context property for the tenant id</li>
  * </ul>
- * </p>
  */
 public class ProcessDataContext {
 

@@ -25,12 +25,14 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 
 /**
- * <p>An {@link ExecutionListener} implementation that delegates to a
+ * An {@link ExecutionListener} implementation that delegates to a
  * {@link HistoryEventProducer}.
  *
- * <p>This allows plugging the history as an execution listener into process
+ * <p>
+ * This allows plugging the history as an execution listener into process
  * execution and make sure history events are generated as we move through the
  * process.
+ * </p>
  *
  * @author Daniel Meyer
  *

@@ -17,8 +17,8 @@
  */
 package org.operaton.bpm.webapp.neo.impl.security.filter.csrf;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -60,7 +60,7 @@ public class CsrfPreventionFilterTest {
   protected boolean isModifyingFetchRequest;
 
   public static Collection<Object[]> getRequestUrls() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
       {"/app/cockpit/default/", "/api/admin/auth/user/default/login/cockpit", true},
       {"/app/cockpit/engine1/", "/api/admin/auth/user/engine1/login/cockpit", true},
 

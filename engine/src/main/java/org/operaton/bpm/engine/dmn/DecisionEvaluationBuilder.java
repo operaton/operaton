@@ -65,7 +65,7 @@ public interface DecisionEvaluationBuilder {
    *           when no decision definition is deployed with the given id / key.
    *
    * @throws NotValidException
-   *           when the given decision definition id / key is null.
+   *           when the given decision definition id / key is {@code null}.
    *
    * @throws AuthorizationException
    *           if the user has no {@link Permissions#CREATE_INSTANCE} permission

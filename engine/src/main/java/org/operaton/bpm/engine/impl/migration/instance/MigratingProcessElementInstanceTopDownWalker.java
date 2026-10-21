@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.impl.migration.instance;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessElementInstanceTopDownWalker.MigrationContext;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
  *
  * @author Thorben Lindhauer
  */
-public class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalker<MigrationContext> {
+public @NullMarked class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalker<MigrationContext> {
 
   public MigratingProcessElementInstanceTopDownWalker(MigratingActivityInstance activityInstance) {
     super(new MigrationContext(activityInstance, new MigratingScopeInstanceBranch()));
@@ -40,7 +42,7 @@ public class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalke
 
     Collection<MigrationContext> nextElements = new LinkedList<>();
 
-    MigrationContext currentElement = getCurrentElement();
+    MigrationContext currentElement = getRequiredCurrentElement();
 
     // continue migration for non-leaf instances (i.e. scopes)
 
@@ -59,18 +61,8 @@ public class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalke
       childrenCompensationScopeBranch.visited(scopeInstance);
 
       for (MigratingProcessElementInstance child : scopeInstance.getChildren()) {
-        MigratingScopeInstanceBranch instanceBranch = null;
-
-        // compensation and non-compensation scopes cannot share the same scope instance branch
-        // e.g. when adding a sub process, we want to create a new activity instance as well
-        // as a new event scope instance for that sub process
-        if (child instanceof MigratingEventScopeInstance
-          || child instanceof MigratingCompensationEventSubscriptionInstance) {
-          instanceBranch = childrenCompensationScopeBranch;
-        }
-        else {
-          instanceBranch = childrenScopeBranch;
-        }
+        MigratingScopeInstanceBranch instanceBranch = getMigratingScopeInstanceBranch(child,
+                childrenCompensationScopeBranch, childrenScopeBranch);
         nextElements.add(new MigrationContext(
             child,
             instanceBranch));
@@ -80,20 +72,37 @@ public class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalke
     return nextElements;
   }
 
-  public static class MigrationContext {
+  private static @NonNull MigratingScopeInstanceBranch getMigratingScopeInstanceBranch(MigratingProcessElementInstance child,
+          MigratingScopeInstanceBranch childrenCompensationScopeBranch, MigratingScopeInstanceBranch childrenScopeBranch) {
+    MigratingScopeInstanceBranch instanceBranch;
+
+    // compensation and non-compensation scopes cannot share the same scope instance branch
+    // e.g. when adding a sub process, we want to create a new activity instance as well
+    // as a new event scope instance for that sub process
+    if (child instanceof MigratingEventScopeInstance
+      || child instanceof MigratingCompensationEventSubscriptionInstance) {
+      instanceBranch = childrenCompensationScopeBranch;
+    }
+    else {
+      instanceBranch = childrenScopeBranch;
+    }
+    return instanceBranch;
+  }
+
+  static class MigrationContext {
     protected MigratingProcessElementInstance processElementInstance;
     protected MigratingScopeInstanceBranch scopeInstanceBranch;
 
-    public MigrationContext(MigratingProcessElementInstance processElementInstance, MigratingScopeInstanceBranch scopeInstanceBranch) {
+    MigrationContext(MigratingProcessElementInstance processElementInstance, MigratingScopeInstanceBranch scopeInstanceBranch) {
       this.processElementInstance = processElementInstance;
       this.scopeInstanceBranch = scopeInstanceBranch;
     }
 
-    public MigratingProcessElementInstance getProcessElementInstance() {
+    MigratingProcessElementInstance getProcessElementInstance() {
       return processElementInstance;
     }
 
-    public MigratingScopeInstanceBranch getScopeInstanceBranch() {
+    MigratingScopeInstanceBranch getScopeInstanceBranch() {
       return scopeInstanceBranch;
     }
   }

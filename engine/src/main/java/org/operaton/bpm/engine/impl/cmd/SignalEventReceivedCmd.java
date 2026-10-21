@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -185,27 +184,15 @@ public @NullMarked class SignalEventReceivedCmd implements Command<Void> {
   }
 
   protected List<EventSubscriptionEntity> filterIntermediateSubscriptions(List<EventSubscriptionEntity> subscriptions) {
-    List<EventSubscriptionEntity> result = new ArrayList<>();
-
-    for (EventSubscriptionEntity subscription : subscriptions) {
-      if (subscription.getExecutionId() != null) {
-        result.add(subscription);
-      }
-    }
-
-    return result;
+    return subscriptions.stream()
+        .filter(subscription -> subscription.getExecutionId() != null)
+        .toList();
   }
 
   protected List<EventSubscriptionEntity> filterStartSubscriptions(List<EventSubscriptionEntity> subscriptions) {
-    List<EventSubscriptionEntity> result = new ArrayList<>();
-
-    for (EventSubscriptionEntity subscription : subscriptions) {
-      if (subscription.getExecutionId() == null) {
-        result.add(subscription);
-      }
-    }
-
-    return result;
+    return subscriptions.stream()
+        .filter(subscription -> subscription.getExecutionId() == null)
+        .toList();
   }
 
 }

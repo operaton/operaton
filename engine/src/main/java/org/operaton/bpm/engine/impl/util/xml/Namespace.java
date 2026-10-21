@@ -16,26 +16,26 @@
  */
 package org.operaton.bpm.engine.impl.util.xml;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * @author Ronny Bräunlich
  *
  */
+// TODO Replace by record
 public class Namespace {
 
-  private final String namespaceUri;
-  private final String alternativeUri;
+  private final @Nullable String namespaceUri;
+  private final @Nullable String alternativeUri;
 
-  public Namespace(String namespaceUri) {
+  public Namespace(@Nullable String namespaceUri) {
     this(namespaceUri, null);
   }
 
   /**
    * Creates a namespace with an alternative uri.
-   *
-   * @param namespaceUri
-   * @param alternativeUri
    */
-  public Namespace(String namespaceUri, String alternativeUri) {
+  public Namespace(@Nullable String namespaceUri, @Nullable String alternativeUri) {
     this.namespaceUri = namespaceUri;
     this.alternativeUri = alternativeUri;
   }
@@ -43,18 +43,16 @@ public class Namespace {
   /**
    * If a namespace has changed over time it could feel responsible for handling
    * the older one.
-   *
-   * @return
    */
   public boolean hasAlternativeUri() {
     return alternativeUri != null;
   }
 
-  public String getNamespaceUri() {
+  public @Nullable String getNamespaceUri() {
     return namespaceUri;
   }
 
-  public String getAlternativeUri() {
+  public @Nullable String getAlternativeUri() {
     return alternativeUri;
   }
 

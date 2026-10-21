@@ -37,7 +37,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   <li>if the class extends Testcase, run as Junit 3</li>
  *   <li>otherwise use Junit 4</li>
  * </ul>
+ * <p>
  * So this test can be included in the regular test suite without problems.
+ * </p>
  *
  * @author Joram Barrez
  */

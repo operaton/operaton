@@ -35,13 +35,14 @@ public interface FileValue extends TypedValue {
    * check if the saved encoding is known to the JVM and therefore could throw
    * every exception that {@link Charset#forName(String)} lists.
    * <p>
-   * If no encoding has been saved it will return null.
+   * If no encoding has been saved it will return {@code null}.
+   * </p>
    *
    */
   @Nullable Charset getEncodingAsCharset();
 
   /**
-   * @return the saved encoding or null if none has been saved
+   * @return the saved encoding or {@code null} if none has been saved
    */
   @Nullable String getEncoding();
 

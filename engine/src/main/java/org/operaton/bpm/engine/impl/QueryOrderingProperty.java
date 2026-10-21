@@ -19,21 +19,24 @@ package org.operaton.bpm.engine.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 
 /**
- * <p>A QueryOrderingProperty specifies a condition by which the results of a query should be
+ * A QueryOrderingProperty specifies a condition by which the results of a query should be
  * sorted. It can either specify a sorting by a property of the entities to be selected or
  * a sorting by a property of a related entity. For example in a {@link TaskQuery},
  * the entity to be selected is {@link Task} while a related entity could be a
- * {@link VariableInstance}.</p>
- *
- * <p>It is made up of the following:</p>
+ * {@link VariableInstance}.
  *
  * <p>
+ * It is made up of the following:
+ * </p>
+ *
  * <dl>
  *   <dt>relation</dt>
  *     <dd>A symbolic name that identifies a related entity. <code>null</code> if
@@ -51,7 +54,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
  *
  * @author Thorben Lindhauer
  */
-public class QueryOrderingProperty implements Serializable {
+public @NullMarked class QueryOrderingProperty implements Serializable {
 
   public static final String RELATION_VARIABLE = "variable";
   public static final String RELATION_PROCESS_DEFINITION = "process-definition";

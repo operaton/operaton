@@ -67,6 +67,23 @@ describe("api/resources/auth (basic mode)", () => {
         username: "bob",
         password: "secret",
       });
+      // The body is what verifies the password; the header gets the request
+      // past the REST API's own authentication, when it has any.
+      expect(options.headers.Authorization).toBe("Basic Ym9iOnNlY3JldA==");
+    });
+
+    it("is a wrong login when the REST API's authentication rejects the credentials", async () => {
+      state.auth.credentials.value = { username: null, password: null };
+      fetchMock.mockResolvedValue({ ok: false, status: 401 });
+      auth.login(state, "bob", "wrong");
+
+      await vi.waitFor(() =>
+        expect(state.auth.logged_in.value.data).toBe("wrong_login"),
+      );
+      expect(state.auth.credentials.value).toEqual({
+        username: null,
+        password: null,
+      });
     });
 
     it("records the user the identity service resolved", async () => {
@@ -122,6 +139,51 @@ describe("api/resources/auth (basic mode)", () => {
         status: RESPONSE_STATE.ERROR,
         data: "unauthenticated",
       });
+    });
+  });
+
+  // Nothing unmounts between two sessions, so whatever the previous user
+  // loaded stays in the signals until a page happens to refetch it.
+  describe("what one session leaves behind for the next", () => {
+    const fill = () => {
+      state.api.filter.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [{ id: "f1", name: "Everything the admin sees" }],
+      };
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [{ id: "t1" }],
+      };
+      state.api.user.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [{ id: "alice" }],
+      };
+    };
+
+    it("drops the cached responses when signing out", async () => {
+      fill();
+      await auth.logout(state);
+      expect(state.api.filter.list.value).toBeNull();
+      expect(state.api.task.list.value).toBeNull();
+      expect(state.api.user.list.value).toBeNull();
+    });
+
+    it("drops them when somebody else signs in", async () => {
+      state.auth.user.id.value = "alice";
+      fill();
+      fetchMock.mockResolvedValue(verified("bob"));
+      await auth.login(state, "bob", "secret");
+      expect(state.auth.user.id.value).toBe("bob");
+      expect(state.api.filter.list.value).toBeNull();
+    });
+
+    it("reaches signals nested deeper than one level", async () => {
+      state.api.process.instance.saved_filters.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [{ id: "f2" }],
+      };
+      await auth.logout(state);
+      expect(state.api.process.instance.saved_filters.value).toBeNull();
     });
   });
 
@@ -187,7 +249,10 @@ describe("api/resources/auth (own backend, session)", () => {
   afterEach(() => vi.unstubAllGlobals());
 
   it("logs in against the webapp's own auth resource and stores no password", async () => {
-    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ userId: "bob" }) });
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({ userId: "bob" }),
+    });
 
     await auth.login(state, "bob", "secret");
 
@@ -211,11 +276,16 @@ describe("api/resources/auth (own backend, session)", () => {
   });
 
   it("restores a session from the server rather than from stored credentials", async () => {
-    fetchMock.mockResolvedValue({ ok: true, json: async () => ({ userId: "carol" }) });
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: async () => ({ userId: "carol" }),
+    });
 
     await auth.is_authenticated(state);
 
-    expect(fetchMock.mock.calls[0][0]).toContain("/api/admin/auth/user/default");
+    expect(fetchMock.mock.calls[0][0]).toContain(
+      "/api/admin/auth/user/default",
+    );
     expect(state.auth.user.id.value).toBe("carol");
     expect(state.auth.logged_in.value.data).toBe("authenticated");
   });

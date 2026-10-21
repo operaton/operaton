@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -40,11 +41,11 @@ public final class ClassDelegateUtil {
   private ClassDelegateUtil() {
   }
 
-  public static Object instantiateDelegate(Class<?> clazz, List<FieldDeclaration> fieldDeclarations) {
+  public static Object instantiateDelegate(Class<?> clazz, @Nullable List<FieldDeclaration> fieldDeclarations) {
     return instantiateDelegate(clazz.getName(), fieldDeclarations);
   }
 
-  public static Object instantiateDelegate(String className, List<FieldDeclaration> fieldDeclarations) {
+  public static Object instantiateDelegate(String className, @Nullable List<FieldDeclaration> fieldDeclarations) {
     ArtifactFactory artifactFactory = Context.getProcessEngineConfiguration().getArtifactFactory();
 
     try {
@@ -84,6 +85,7 @@ public final class ClassDelegateUtil {
     else {
       Field field = ReflectUtil.getField(declaration.getName(), target);
       ensureNotNull("Field definition uses unexisting field '%s' on class %s".formatted(declaration.getName(), target.getClass().getName()), "field", field);
+      requireNonNull(field);
       // Check if the delegate field's type is correct
       if (!fieldTypeCompatible(declaration, field)) {
         throw LOG.incompatibleTypeForFieldDeclaration(declaration, target, field);

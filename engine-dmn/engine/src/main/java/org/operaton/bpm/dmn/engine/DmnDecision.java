@@ -31,14 +31,14 @@ public interface DmnDecision {
   /**
    * The unique identifier of the decision if exists.
    *
-   * @return the identifier or null if not set
+   * @return the identifier or {@code null} if not set
    */
   String getKey();
 
   /**
    * The human readable name of the decision if exists.
    *
-   * @return the name or null if not set
+   * @return the name or {@code null} if not set
    */
   String getName();
 

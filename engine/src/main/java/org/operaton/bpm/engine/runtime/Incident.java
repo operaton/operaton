@@ -23,19 +23,18 @@ import java.util.Date;
  * a process instance.
  *
  * <p>
- *
  * A possible failure could be for example a failed {@link Job}
  * during the execution, so that the job retry is equal zero
  * (<code>job.retries == 0</code>). In that case an incident
  * will be created an the <code>incidentType</code> will be set
  * to <code>failedJobs</code>.
+ * </p>
  *
  * <p>
- *
  * Furthermore, it is possible to create custom incidents with
  * an individually <code>incidentType</code> to indicate a failure
  * in the execution.
- *
+ * </p>
  *
  * @author roman.smirnov
  *
@@ -67,10 +66,10 @@ public interface Incident {
    * kind of incident.
    *
    * <p>
-   *
    * For example: <code>failedJobs</code> will be returned
    * in the case of an incident, which identify failed job
    * during the execution of a process instance.
+   * </p>
    *
    * @see Incident#FAILED_JOB_HANDLER_TYPE
    * @see Incident#EXTERNAL_TASK_HANDLER_TYPE

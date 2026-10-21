@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.group;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -38,12 +38,9 @@ public class HalGroupResolver extends HalIdResourceCacheLinkResolver {
       .groupIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolvedGroups = new ArrayList<>();
-    for (Group group : groups) {
-      resolvedGroups.add(HalGroup.fromGroup(group));
-    }
-
-    return resolvedGroups;
+    return groups.stream()
+      .map(HalGroup::fromGroup)
+      .collect(Collectors.toList());
   }
 
 }

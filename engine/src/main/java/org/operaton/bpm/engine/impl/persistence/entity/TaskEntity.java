@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 
@@ -83,6 +84,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Falko Menge
  * @author Deivarayan Azhagappan
  */
+@SuppressWarnings({"unused","UnusedReturnValue"})
 public class TaskEntity extends AbstractVariableScope implements Task, DelegateTask, DbEntity, HasDbRevision, HasDbReferences, CommandContextListener, VariablesProvider<VariableInstanceEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -93,8 +95,9 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @SuppressWarnings("rawtypes")
   private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new VariableInstanceEntityFactory();
 
+  @SuppressWarnings({"rawtypes", "unchecked"})
   protected static final List<VariableInstanceLifecycleListener<CoreVariableInstance>> DEFAULT_VARIABLE_LIFECYCLE_LISTENERS =
-      Arrays.asList(
+      List.of(
           (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
           (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER,
           (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER
@@ -161,7 +164,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected boolean attachmentExists;
   protected boolean commentExists;
 
-  @SuppressWarnings({ "unchecked" })
   protected transient VariableStore<VariableInstanceEntity> variableStore
   = new VariableStore<>(this, new TaskEntityReferencer(this));
 
@@ -296,6 +298,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
   }
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   protected boolean tenantIdIsSame(final TaskEntity otherTask) {
     final String otherTenantId = otherTask.getTenantId();
 
@@ -327,7 +330,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     // in the other case:
 
-    // ensure the the Task is not suspended
+    // ensure the Task is not suspended
     ensureTaskActive();
 
     // trigger TaskListener.complete event
@@ -343,11 +346,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       .getTaskManager()
       .deleteTask(this, TaskEntity.DELETE_REASON_COMPLETED, false, skipCustomListeners);
 
-      // if the task is associated with a
-      // execution (and not a case execution)
-      // and it's still in the same activity
-      // then call signal an the associated
-      // execution.
+      // if the task is associated with an execution (and not a case execution) and it's still in the same activity
+      // then call signal on the associated execution.
       if (executionId != null) {
         ExecutionEntity exec = getExecution();
         exec.removeTask(this);
@@ -357,7 +357,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   public void caseExecutionCompleted() {
-    // ensure the the Task is not suspended
+    // ensure the Task is not suspended
     ensureTaskActive();
 
     // trigger TaskListener.complete event for a case execution associated task
@@ -528,6 +528,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
+  @SuppressWarnings({ "unchecked" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
     return VARIABLE_INSTANCE_FACTORY;
   }
@@ -783,13 +784,9 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   @Override
   public Set<IdentityLink> getCandidates() {
-    Set<IdentityLink> potentialOwners = new HashSet<>();
-    for (IdentityLinkEntity identityLinkEntity : getIdentityLinks()) {
-      if (IdentityLinkType.CANDIDATE.equals(identityLinkEntity.getType())) {
-        potentialOwners.add(identityLinkEntity);
-      }
-    }
-    return potentialOwners;
+    return getIdentityLinks().stream()
+        .filter(identityLinkEntity -> IdentityLinkType.CANDIDATE.equals(identityLinkEntity.getType()))
+        .collect(Collectors.toSet());
   }
 
   @Override
@@ -862,7 +859,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     return taskIdentityLinkEntities;
   }
 
-  @SuppressWarnings("unchecked")
   public Map<String, Object> getActivityInstanceVariables() {
     if (execution != null) {
       return execution.getVariables();
@@ -1141,10 +1137,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
    * Tracks a property change. Therefore the original and new value are stored in a map.
    * It tracks multiple changes and if a property finally is changed back to the original
    * value, then the change is removed.
-   *
-   * @param propertyName
-   * @param orgValue
-   * @param newValue
    */
   protected void propertyChanged(String propertyName, Object orgValue, Object newValue) {
     if (propertyChanges.containsKey(propertyName)) { // update an existing change to save the original value
@@ -1186,21 +1178,17 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.lifecycleState = state;
     this.taskState = this.lifecycleState.name;
 
-    switch (state) {
-    case STATE_CREATED:
-      Context.findCommandContext().ifPresent(commandContext -> commandContext.getHistoricTaskInstanceManager().createHistoricTask(this));
-      return fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
-
-    case STATE_COMPLETED:
-      return fireEvent(TaskListener.EVENTNAME_COMPLETE) && TaskState.STATE_COMPLETED.equals(this.lifecycleState);
-
-    case STATE_DELETED:
-      return fireEvent(EVENTNAME_DELETE);
-
-    case STATE_INIT:
-    default:
-      throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
-    }
+    return switch (state) {
+      case STATE_CREATED -> {
+        Context.findCommandContext()
+            .ifPresent(commandContext -> commandContext.getHistoricTaskInstanceManager().createHistoricTask(this));
+        yield fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
+      }
+      case STATE_COMPLETED ->
+          fireEvent(TaskListener.EVENTNAME_COMPLETE) && TaskState.STATE_COMPLETED.equals(this.lifecycleState);
+      case STATE_DELETED -> fireEvent(EVENTNAME_DELETE);
+      default -> throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
+    };
   }
 
   public boolean triggerUpdateEvent() {
@@ -1321,7 +1309,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public TaskDefinition getTaskDefinition() {
     if (taskDefinition == null && taskDefinitionKey != null) {
 
-      Map<String, TaskDefinition> taskDefinitions = null;
+      Map<String, TaskDefinition> taskDefinitions;
       if (processDefinitionId != null) {
         ProcessDefinitionEntity processDefinition = Context
             .getProcessEngineConfiguration()
@@ -1711,13 +1699,10 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
     TaskEntity other = (TaskEntity) obj;
     if (id == null) {
-      if (other.id != null) {
-        return false;
-      }
-    } else if (!id.equals(other.id)) {
-      return false;
+      return other.id == null;
+    } else {
+      return id.equals(other.id);
     }
-    return true;
   }
 
   public void executeMetrics(String metricsName, CommandContext commandContext) {
@@ -1768,7 +1753,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public void bpmnError(String errorCode, @Nullable String errorMessage, @Nullable Map<String, Object> variables) {
     ensureTaskActive();
     ActivityExecution activityExecution = getExecution();
-    BpmnError bpmnError = null;
+    BpmnError bpmnError;
     if (errorMessage != null) {
       bpmnError = new BpmnError(errorCode, errorMessage);
     } else {
@@ -1812,7 +1797,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     STATE_DELETED("Deleted"),
     STATE_UPDATED("Updated");
 
-    private String name;
+    private final String name;
 
     TaskState(String name) {
       this.name = name;

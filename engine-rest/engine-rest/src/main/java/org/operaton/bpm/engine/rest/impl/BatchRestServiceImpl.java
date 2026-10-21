@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.core.UriInfo;
 
@@ -55,11 +54,9 @@ public class BatchRestServiceImpl extends AbstractRestProcessEngineAware impleme
 
     List<Batch> matchingBatches = QueryUtil.list(query, firstResult, maxResults);
 
-    List<BatchDto> batchResults = new ArrayList<>();
-    for (Batch matchingBatch : matchingBatches) {
-      batchResults.add(BatchDto.fromBatch(matchingBatch));
-    }
-    return batchResults;
+    return matchingBatches.stream()
+        .map(BatchDto::fromBatch)
+        .toList();
   }
 
   @Override
@@ -79,12 +76,9 @@ public class BatchRestServiceImpl extends AbstractRestProcessEngineAware impleme
 
     List<BatchStatistics> batchStatisticsList = QueryUtil.list(query, firstResult, maxResults);
 
-    List<BatchStatisticsDto> statisticsResults = new ArrayList<>();
-    for (BatchStatistics batchStatistics : batchStatisticsList) {
-      statisticsResults.add(BatchStatisticsDto.fromBatchStatistics(batchStatistics));
-    }
-
-    return statisticsResults;
+    return batchStatisticsList.stream()
+        .map(BatchStatisticsDto::fromBatchStatistics)
+        .toList();
   }
 
   @Override

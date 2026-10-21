@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 
 /**
- * <p>The producer for CMMN history events. The history event producer is
+ * The producer for CMMN history events. The history event producer is
  * responsible for extracting data from the runtime structures
  * (Executions, Tasks, ...) and adding the data to a {@link HistoryEvent}.
  *

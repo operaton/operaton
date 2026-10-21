@@ -22,17 +22,19 @@ import java.util.Map;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 
 /**
- * <p>Builds maps that fulfill the operaton variable json format.</p>
+ * Builds maps that fulfill the operaton variable json format.
  * <p>
  * For example, if VariablesBuilder.variable("aKey", "aValue").variable("anotherKey", "anotherValue", "String").getVariables()
  * a map is returned that is supposed to be mapped to JSON by rest-assured as follows:
  * </p>
+ * <p>
  * <code>
  * {
  *    "aKey" : {"value" : "aValue"},
  *    "anotherKey" : {"value" : "anotherValue", "type" : "String"}
  * }
  * </code>
+ * </p>
  *
  * @author Thorben Lindhauer
  *

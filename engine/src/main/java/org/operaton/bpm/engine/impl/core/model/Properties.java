@@ -21,7 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Properties that maps property keys to values. The properties cannot contain
@@ -30,7 +34,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  * @author Philipp Ossler
  *
  */
-public class Properties {
+public @NullMarked class Properties {
 
   protected final Map<String, Object> properties;
 
@@ -52,7 +56,7 @@ public class Properties {
    *         <code>null</code> if this properties contains no mapping for the property key
    */
   @SuppressWarnings("unchecked")
-  public <T> T get(PropertyKey<T> property) {
+  public <T> @Nullable T get(PropertyKey<T> property) {
     return (T) properties.get(property.name());
   }
 
@@ -92,7 +96,8 @@ public class Properties {
   @SuppressWarnings("unchecked")
   public <K, V> Map<K, V> get(PropertyMapKey<K, V> property) {
     if (contains(property)) {
-      return (Map<K, V>) properties.get(property.name());
+      Map<K, V> mapValue = (Map<K, V>) properties.get(property.name());
+      return mapValue != null ? mapValue : new HashMap<>();
     } else {
       return new HashMap<>();
     }
@@ -109,7 +114,8 @@ public class Properties {
    * @param value
    *          the value to be associated with the specified property key
    */
-  public <T> void set(PropertyKey<T> property, T value) {
+  @SuppressWarnings("ConstantConditions")
+  public <T> void set(PropertyKey<T> property, @Nullable T value) {
     properties.put(property.name(), value);
   }
 
@@ -124,7 +130,8 @@ public class Properties {
    * @param value
    *          the list to be associated with the specified property key
    */
-  public <T> void set(PropertyListKey<T> property, List<T> value) {
+  @SuppressWarnings("ConstantConditions")
+  public <T> void set(PropertyListKey<T> property, @Nullable List<T> value) {
     properties.put(property.name(), value);
   }
 
@@ -181,7 +188,7 @@ public class Properties {
    *          the value to be appended to list
    */
   public <K, V> void putMapEntry(PropertyMapKey<K, V> property, K key, V value) {
-    Map<K, V> map = get(property);
+    Map<K, V> map = requireNonNull(get(property));
 
     if (!property.allowsOverwrite() && map.containsKey(key)) {
       throw new ProcessEngineException("Cannot overwrite property key %s. Key already exists.".formatted(key));

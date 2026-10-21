@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.cmmn.CaseExecutionNotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -32,13 +34,13 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  * @author Daniel Meyer
  */
-public class GetCaseExecutionVariablesCmd implements Command<VariableMap> {
+public @NullMarked class GetCaseExecutionVariablesCmd implements Command<VariableMap> {
   protected String caseExecutionId;
-  protected Collection<String> variableNames;
+  protected @Nullable Collection<String> variableNames;
   protected boolean isLocal;
   protected boolean deserializeValues;
 
-  public GetCaseExecutionVariablesCmd(String caseExecutionId, Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
+  public GetCaseExecutionVariablesCmd(String caseExecutionId, @Nullable Collection<String> variableNames, boolean isLocal, boolean deserializeValues) {
     this.caseExecutionId = caseExecutionId;
     this.variableNames = variableNames;
     this.isLocal = isLocal;

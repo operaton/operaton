@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * @author roman.smirnov
  */
-public final class VariableInstanceQueryProperty {
+public final @NullMarked class VariableInstanceQueryProperty {
 
   public static final QueryProperty VARIABLE_NAME = new QueryPropertyImpl("NAME_");
   public static final QueryProperty VARIABLE_TYPE = new QueryPropertyImpl("TYPE_");

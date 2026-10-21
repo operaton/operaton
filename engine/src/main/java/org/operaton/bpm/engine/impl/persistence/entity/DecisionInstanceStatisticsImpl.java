@@ -28,6 +28,7 @@ public class DecisionInstanceStatisticsImpl implements HistoricDecisionInstanceS
     return evaluations;
   }
 
+  @SuppressWarnings("unused")
   public void setEvaluations(int evaluations) {
     this.evaluations = evaluations;
   }

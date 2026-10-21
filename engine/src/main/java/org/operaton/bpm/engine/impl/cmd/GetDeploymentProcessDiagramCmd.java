@@ -28,6 +28,9 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * Gives access to a deployed process diagram, e.g., a PNG image, through a
  * stream of bytes.
@@ -50,6 +53,8 @@ public @NullMarked class GetDeploymentProcessDiagramCmd implements Command<Input
             .getProcessEngineConfiguration()
             .getDeploymentCache()
             .findDeployedProcessDefinitionById(processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);

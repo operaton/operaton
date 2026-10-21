@@ -105,14 +105,14 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
   /**
    * Returns the type name for the deserialized object.
    *
-   * @param deserializedObject. Guaranteed not to be null
+   * @param deserializedObject. Guaranteed not to be {@code null}
    * @return the type name fot the object.
    */
   protected abstract String getTypeNameForDeserialized(Object deserializedObject);
 
   /**
    * Implementations must return a byte[] representation of the provided object.
-   * The object is guaranteed not to be null.
+   * The object is guaranteed not to be {@code null}.
    *
    * @param deserializedObject the object to serialize
    * @return the byte array value of the object

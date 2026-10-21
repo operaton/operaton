@@ -108,14 +108,4 @@ public class HistoricIdentityLinkLogEventEntity extends HistoryEvent {
     this.tenantId = tenantId;
   }
 
-  @Override
-  public String getRootProcessInstanceId() {
-    return rootProcessInstanceId;
-  }
-
-  @Override
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
-    this.rootProcessInstanceId = rootProcessInstanceId;
-  }
-
 }

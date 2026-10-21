@@ -37,7 +37,7 @@ public interface ReadOnlyIdentityProvider extends Session {
   // users ////////////////////////////////////////
 
   /**
-   * @return a {@link User} object for the given user id or null if no such user exists.
+   * @return a {@link User} object for the given user id or {@code null} if no such user exists.
    * @throws IdentityProviderException in case an error occurs
    */
   @Nullable User findUserById(String userId);
@@ -70,7 +70,7 @@ public interface ReadOnlyIdentityProvider extends Session {
   // groups //////////////////////////////////////
 
   /**
-   * @return a {@link Group} object for the given group id or null if no such group exists.
+   * @return a {@link Group} object for the given group id or {@code null} if no such group exists.
    * @throws IdentityProviderException in case an error occurs
    */
   @Nullable Group findGroupById(String groupId);
@@ -90,7 +90,7 @@ public interface ReadOnlyIdentityProvider extends Session {
   // tenants //////////////////////////////////////
 
   /**
-   * @return a {@link Tenant} object for the given id or null if no such tenant
+   * @return a {@link Tenant} object for the given id or {@code null} if no such tenant
    *         exists.
    * @throws IdentityProviderException
    *           in case an error occurs

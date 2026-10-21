@@ -51,6 +51,7 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences {
     }
   }
 
+  @SuppressWarnings("unused")
   public TaskMeterLogEntity() {
   }
 
@@ -72,10 +73,12 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences {
     this.timestamp = timestamp;
   }
 
+  @SuppressWarnings("unused")
   public long getAssigneeHash() {
     return assigneeHash;
   }
 
+  @SuppressWarnings("unused")
   public void setAssigneeHash(long assigneeHash) {
     this.assigneeHash = assigneeHash;
   }

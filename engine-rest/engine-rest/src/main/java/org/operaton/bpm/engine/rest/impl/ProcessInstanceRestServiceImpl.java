@@ -114,7 +114,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
 
   @Override
   public BatchDto updateSuspensionStateAsync(ProcessInstanceSuspensionStateAsyncDto dto){
-    Batch batch = null;
+    Batch batch;
     try {
       batch = dto.updateSuspensionStateAsync(getProcessEngine());
       return BatchDto.fromBatch(batch);
@@ -234,7 +234,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
   public BatchDto setVariablesAsync(SetVariablesAsyncDto setVariablesAsyncDto) {
     Map<String, VariableValueDto> variables = setVariablesAsyncDto.getVariables();
 
-    VariableMap variableMap = null;
+    VariableMap variableMap;
     try {
       variableMap = VariableValueDto.toMap(variables, getProcessEngine(), objectMapper);
 
@@ -250,7 +250,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
 
     RuntimeService runtimeService = getProcessEngine().getRuntimeService();
 
-    Batch batch = null;
+    Batch batch;
     try {
       batch = runtimeService.setVariablesAsync(ids, runtimeQuery, historyQuery, variableMap);
 
@@ -271,7 +271,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
   public BatchDto correlateMessageAsync(CorrelationMessageAsyncDto correlationMessageAsyncDto) {
     Map<String, VariableValueDto> variables = correlationMessageAsyncDto.getVariables();
 
-    VariableMap variableMap = null;
+    VariableMap variableMap;
     try {
       variableMap = VariableValueDto.toMap(variables, getProcessEngine(), objectMapper);
     } catch (RestException e) {
@@ -286,7 +286,7 @@ public class ProcessInstanceRestServiceImpl extends AbstractRestProcessEngineAwa
 
     RuntimeService runtimeService = getProcessEngine().getRuntimeService();
 
-    Batch batch = null;
+    Batch batch;
     try {
       MessageCorrelationAsyncBuilder messageCorrelationBuilder = runtimeService
         .createMessageCorrelationAsync(messageName)

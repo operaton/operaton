@@ -29,7 +29,7 @@ public interface MetricsReporterIdProvider {
 
   /**
    * Provides an id that identifies the metrics reported as part of the given engine's
-   * process execution. May return null.
+   * process execution. May return {@code null}.
    */
   String provideId(ProcessEngine processEngine);
 }

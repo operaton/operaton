@@ -16,25 +16,27 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import static java.util.Objects.requireNonNull;
+
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 
 /**
- * super class for all gateway activity implementations.
+ * Super class for all gateway activity implementations.
  *
  * @author Joram Barrez
  */
-public abstract class GatewayActivityBehavior extends FlowNodeActivityBehavior {
+public abstract @NullMarked class GatewayActivityBehavior extends FlowNodeActivityBehavior {
 
   protected void lockConcurrentRoot(ActivityExecution execution) {
-    ActivityExecution concurrentRoot = null;
+    ActivityExecution concurrentRoot;
     if (execution.isConcurrent()) {
-      concurrentRoot = execution.getParent();
+      concurrentRoot = requireNonNull(execution.getParent(), "concurrent execution must have a parent");
     } else {
       concurrentRoot = execution;
     }
-    ((ExecutionEntity)concurrentRoot).forceUpdate();
+    concurrentRoot.forceUpdate();
   }
 
 }

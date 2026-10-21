@@ -30,11 +30,11 @@ public class EnsureUtil {
   private static final EnsureUtilLogger LOG = UtilsLogger.ENSURE_UTIL_LOGGER;
 
   /**
-   * Ensures that the parameter is not null.
+   * Ensures that the parameter is not {@code null}.
    *
    * @param parameterName the parameter name
-   * @param value the value to ensure to be not null
-   * @throws IllegalArgumentException if the parameter value is null
+   * @param value the value to ensure to be not {@code null}
+   * @throws IllegalArgumentException if the parameter value is {@code null}
    */
   public static void ensureNotNull(String parameterName, @Nullable Object value) {
     if(value == null) {

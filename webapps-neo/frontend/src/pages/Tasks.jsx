@@ -1,6 +1,6 @@
 import { useSignal } from "@preact/signals";
 import { useLocation, useRoute } from "preact-iso";
-import { useContext, useEffect, useLayoutEffect } from "preact/hooks";
+import { useContext, useEffect, useLayoutEffect, useRef } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 
 import engine_rest, {
@@ -18,32 +18,39 @@ import {
   with_manage,
   without_manage,
   write_list_query,
+  keep_list_query,
 } from "../helper/list_query.js";
+import { resolve_user, set_request_headers } from "../api/helper.jsx";
+import { format_variable_value } from "../helper/variables.js";
 import { AppState } from "../state.js";
 import { StartProcessList } from "./StartProcessList.jsx";
+import { ConfirmDialog } from "../components/Dialog.jsx";
 import { TaskForm } from "../components/TaskForm.jsx";
-import { formatRelativeDate } from "../helper/date_formatter.js";
+import { RelativeTime } from "../components/RelativeTime.jsx";
+import {
+  formatTimestamp,
+  fromLocalParts,
+  toLocalParts,
+} from "../helper/date_formatter.js";
 import { app_path } from "../config.js";
 
 const TASK_PAGE_SIZE = 20;
 
+// Sorting by a variable is deliberately absent. The engine needs the variable's
+// name and type alongside the key, which neither the query string nor this
+// interface carries: GET refuses the key outright, and a request without those
+// two answers "variableName is null". Offering the choice only meant an error
+// whichever way it was taken. The five keys come back with the data path that
+// can express them.
 const SORT_OPTIONS = [
   { key: "priority", nameKey: "tasks.sort.priority" },
   { key: "dueDate", nameKey: "tasks.sort.due-date" },
   { key: "followUpDate", nameKey: "tasks.sort.follow-up-date" },
   { key: "name", nameKey: "tasks.sort.task-name" },
   { key: "assignee", nameKey: "tasks.sort.assignee" },
-  { key: "processVariable", nameKey: "tasks.sort.process-variable" },
-  { key: "executionVariable", nameKey: "tasks.sort.execution-variable" },
-  { key: "taskVariable", nameKey: "tasks.sort.task-variable" },
-  {
-    key: "caseExecutionVariable",
-    nameKey: "tasks.sort.case-execution-variable",
-  },
-  { key: "caseInstanceVariable", nameKey: "tasks.sort.case-instance-variable" },
 ];
 
-const FILTER_KEYS = [
+export const FILTER_KEYS = [
   { key: "assignee", nameKey: "tasks.filter_keys.assignee", type: "string" },
   {
     key: "assigneeLike",
@@ -140,6 +147,37 @@ const FILTER_KEYS = [
     nameKey: "tasks.filter_keys.createdAfter",
     type: "date",
   },
+  {
+    key: "processVariables",
+    nameKey: "tasks.filter_keys.processVariables",
+    type: "variable",
+  },
+  {
+    key: "taskVariables",
+    nameKey: "tasks.filter_keys.taskVariables",
+    type: "variable",
+  },
+  { key: "owner", nameKey: "tasks.filter_keys.owner", type: "string" },
+  {
+    key: "delegationState",
+    nameKey: "tasks.filter_keys.delegationState",
+    type: "enum",
+    options: [
+      { value: "PENDING", label: "PENDING" },
+      { value: "RESOLVED", label: "RESOLVED" },
+    ],
+  },
+  {
+    key: "includeAssignedTasks",
+    nameKey: "tasks.filter_keys.includeAssignedTasks",
+    type: "boolean",
+  },
+  { key: "tenantIdIn", nameKey: "tasks.filter_keys.tenantIdIn", type: "list" },
+  {
+    key: "withoutTenantId",
+    nameKey: "tasks.filter_keys.withoutTenantId",
+    type: "boolean",
+  },
   { key: "active", nameKey: "tasks.filter_keys.active", type: "boolean" },
   { key: "suspended", nameKey: "tasks.filter_keys.suspended", type: "boolean" },
 ];
@@ -159,7 +197,12 @@ const derive_query = (current_query, patch) => {
   return out;
 };
 
-const load_tasks = (state, query, firstResult = 0) => {
+const load_tasks = (
+  state,
+  query,
+  firstResult = 0,
+  pageSize = TASK_PAGE_SIZE,
+) => {
   const filterValue = query?.filter,
     sortBy = query?.sortBy ?? "name",
     sortOrder = query?.sortOrder ?? "asc",
@@ -169,28 +212,40 @@ const load_tasks = (state, query, firstResult = 0) => {
       state,
       filterValue,
       firstResult,
-      TASK_PAGE_SIZE,
+      pageSize,
       sorting,
     );
   } else {
     const filter =
-      filterValue === "my"
-        ? { assignee: state.api.user.profile.value?.id }
-        : {};
+      filterValue === "my" ? { assignee: resolve_user(state) } : {};
     void engine_rest.task.get_tasks(
       state,
       sortBy,
       sortOrder,
       firstResult,
-      TASK_PAGE_SIZE,
+      pageSize,
       filter,
     );
   }
 };
 
+// Reload the list from the top, keeping however many entries are already shown.
+// A plain reload starts at firstResult 0, which replaces the list and would undo
+// "load more"; asking for as many as are on screen refreshes all of them at once.
+const reload_tasks = (state, query) => {
+  const shown = state.api.task.list.value?.data?.length ?? 0;
+  load_tasks(state, query, 0, Math.max(shown, TASK_PAGE_SIZE));
+};
+
 const TasksPage = () => {
   const state = useContext(AppState);
   const { params, query } = useRoute();
+  const { route } = useLocation();
+  const open_task_id = useRef(undefined);
+  // Read only to re-run the effect below whenever the list is written — the
+  // answer object is a new one each time, where the first id often is not.
+  // What gets opened is read again inside the effect, see the comment there.
+  const list_answer = state.api.task.list.value;
 
   useEffect(() => {
     if (state.api.filter.list.value === null) {
@@ -206,18 +261,46 @@ const TasksPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.filter, query.sortBy, query.sortOrder]);
 
+  useEffect(() => {
+    // Completing a task routes back to /tasks, and so does navigating back by
+    // hand. Either way the list still holds what it fetched before, including
+    // the task that is now gone. Reload it on the way back — never on the way
+    // in, so opening a task costs no extra request.
+    const returned_to_list =
+      open_task_id.current !== undefined && params.task_id === undefined;
+    open_task_id.current = params.task_id;
+    if (returned_to_list) reload_tasks(state, query);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id]);
+
+  useEffect(() => {
+    // An empty detail pane is a wasted click: open the first task of the list
+    // as soon as there is one, as the old web apps do. Replacing the address
+    // rather than adding to it keeps the back button out of a redirect loop.
+    //
+    // The list is read here and not during render: coming back from a task
+    // that was just completed, the reload above has already been started by
+    // the time this runs, and the entries from before still name the finished
+    // task. Opening that one greets the user with "task is null".
+    const current = state.api.task.list.peek();
+    const first =
+      current?.status === RESPONSE_STATE.SUCCESS
+        ? current.data?.[0]?.id
+        : undefined;
+    const on_the_list =
+      params.task_id === undefined && query.filters !== "manage";
+    if (on_the_list && first)
+      route(
+        app_path(`/tasks/${first}/${task_tabs[0].id}${keep_list_query(query)}`),
+        true,
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id, list_answer]);
+
   if (params?.task_id === "start") {
     return (
       <main id="content" class="start-process-page fade-in">
         <StartProcessList />
-      </main>
-    );
-  }
-
-  if (params?.task_id === "filter") {
-    return (
-      <main id="content" class="fade-in">
-        <Filter />
       </main>
     );
   }
@@ -238,42 +321,79 @@ const TasksPage = () => {
   );
 };
 
+// A saved filter is private until someone is authorized to read it. The engine
+// expresses that as authorizations on the Filter resource: a global grant for
+// everyone (userId "*", type 0) or a grant per user or group (type 1).
+const FILTER_RESOURCE_TYPE = 5;
+
+// Returns the identities the engine refused to grant — creating an
+// authorization is itself a permission, and not every user holds it.
+const grant_access = async (state, filter_id, { readable_by_all, grants }) => {
+  const wanted = [
+    ...(readable_by_all ? [{ type: 0, userId: "*" }] : []),
+    ...grants
+      .map(({ type, id }) => ({ type, id: id.trim() }))
+      .filter(({ id }) => id)
+      .map(({ type, id }) => ({
+        type: 1,
+        [type === "group" ? "groupId" : "userId"]: id,
+      })),
+  ];
+  const refused = [];
+  for (const identity of wanted) {
+    const result = await engine_rest.authorization.create(state, {
+      permissions: ["READ"],
+      resourceType: FILTER_RESOURCE_TYPE,
+      resourceId: filter_id,
+      ...identity,
+    });
+    if (result?.status !== RESPONSE_STATE.SUCCESS)
+      refused.push(identity.groupId ?? identity.userId);
+  }
+  return refused;
+};
+
 const TasksManage = () => {
   const state = useContext(AppState),
     { route } = useLocation(),
-    [t] = useTranslation();
+    [t] = useTranslation(),
+    // Sharing a filter means creating an authorization, which is a permission
+    // of its own; the editor offers the section only to users who hold it.
+    may_share = useSignal(true);
 
   useEffect(() => {
     if (state.api.filter.list.value === null) {
       void engine_rest.filter.get_filters(state);
     }
+    void engine_rest.authorization
+      .may(state, "CREATE", "authorization", 4)
+      .then((allowed) => (may_share.value = allowed));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refresh = () => engine_rest.filter.get_filters(state);
-  const on_save = (filter) => {
-    const body = {
-      resourceType: "Task",
-      name: filter.name,
-      owner: state.api.user.profile.value?.id,
-      query: filter.query,
-      properties: {},
-    };
-    const result = engine_rest.filter.create_filter(state, body);
-    if (result && typeof result.then === "function") result.then(refresh);
-    else refresh();
+  const body_of = (filter) => ({
+    resourceType: "Task",
+    name: filter.name,
+    owner: resolve_user(state),
+    query: filter.query,
+    // Keep the columns and sort override the form produced; wiping these to {}
+    // is what dropped them on save.
+    properties: filter.properties ?? {},
+  });
+  const on_save = async (filter, sharing) => {
+    const result = await engine_rest.filter.create_filter(
+      state,
+      body_of(filter),
+    );
+    const id = result?.data?.id;
+    if (id && sharing) await grant_access(state, id, sharing);
+    refresh();
   };
-  const on_update = (id, filter) => {
-    const body = {
-      resourceType: "Task",
-      name: filter.name,
-      owner: state.api.user.profile.value?.id,
-      query: filter.query,
-      properties: {},
-    };
-    const result = engine_rest.filter.update_filter(state, id, body);
-    if (result && typeof result.then === "function") result.then(refresh);
-    else refresh();
+  const on_update = async (id, filter, sharing) => {
+    await engine_rest.filter.update_filter(state, id, body_of(filter));
+    if (sharing) await grant_access(state, id, sharing);
+    refresh();
   };
   const on_delete = (id) => {
     const result = engine_rest.filter.delete_filter(state, id);
@@ -292,11 +412,14 @@ const TasksManage = () => {
       on_delete={on_delete}
       on_close={() => route(without_manage(), true)}
       build_share_link={(f) => filter_share_link(window.location.href, f)}
-      advanced_editor_href={app_path("/tasks/filter")}
+      sharing={{ can_share: may_share.value }}
     />
   );
 };
 
+// A task that belongs to no process — a follow-up, a reminder, something the
+// model does not cover. The engine answers 204 without a body, so the id is
+// chosen here; otherwise the new task could not be opened afterwards.
 const TaskList = () => {
   const state = useContext(AppState),
     taskList = state.api.task.list,
@@ -322,6 +445,14 @@ const TaskList = () => {
     criteria: parse_list_query(query).criteria,
   };
 
+  // Columns a saved filter asks for, with the values HAL brought along.
+  const active_filter = (state.api.filter.list.value?.data ?? []).find(
+    (f) => f.id === query?.filter,
+  );
+  const filter_variables = active_filter?.properties?.variables ?? [];
+  const show_undefined =
+    active_filter?.properties?.showUndefinedVariable === true;
+
   return (
     <div id="task-list">
       <h2 class="screen-hidden">{t("tasks.title")}</h2>
@@ -341,9 +472,23 @@ const TaskList = () => {
         <table>
           <thead>
             <tr>
-              <th scope="col">{t("tasks.task-list.table-headings.task-name")}</th>
-              <th scope="col">{t("tasks.task-list.table-headings.assignee")}</th>
+              <th scope="col">
+                {t("tasks.task-list.table-headings.task-name")}
+              </th>
+              <th scope="col">
+                {t("tasks.task-list.table-headings.assignee")}
+              </th>
               <th scope="col">{t("tasks.task-list.table-headings.due-in")}</th>
+              {filter_variables.map((v) => (
+                <th
+                  scope="col"
+                  class="filter-variable"
+                  key={v.name}
+                  title={v.name}
+                >
+                  {v.label || v.name}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -354,6 +499,8 @@ const TaskList = () => {
                   <TaskRowEntry
                     key={task.id}
                     task={task}
+                    columns={filter_variables}
+                    show_undefined={show_undefined}
                     selected={task.id === selectedTaskId}
                   />
                 ))
@@ -369,15 +516,21 @@ const TaskList = () => {
           <small class="load-more-end">{t("tasks.no-more-items")}</small>
         ) : null}
       </div>
-      <a href={app_path("/tasks/start")} class="button start-process">
-        {t("tasks.start-process-label")}
-      </a>
+      <div class="list-actions">
+        <a href={app_path("/tasks/start")} class="button start-process">
+          {t("tasks.start-process-label")}
+        </a>
+      </div>
     </div>
   );
 };
 
-const TaskRowEntry = ({ task, selected }) => {
-  const { id, name, due, assignee } = task;
+const TaskRowEntry = ({ task, columns = [], show_undefined, selected }) => {
+  const { id, name, due, assignee } = task,
+    { query } = useRoute(),
+    // Opening a task must not drop the chosen filter and sorting: they live in
+    // the address, so a link without them returns to an unfiltered list.
+    list_query = keep_list_query(query);
 
   useLayoutEffect(() => {
     if (selected) {
@@ -390,12 +543,24 @@ const TaskRowEntry = ({ task, selected }) => {
   return (
     <tr id={id} key={id} aria-selected={selected}>
       <th scope="row">
-        <a href={app_path(`/tasks/${id}/${task_tabs[0].id}`)}>{name}</a>
+        <a href={app_path(`/tasks/${id}/${task_tabs[0].id}${list_query}`)}>
+          {name}
+        </a>
       </th>
       <td>{assignee ? assignee : "—"}</td>
-      <td>
-        {due ? <time datetime={due}>{formatRelativeDate(due)}</time> : "—"}
-      </td>
+      <td>{due ? <RelativeTime datetime={due} /> : "—"}</td>
+      {columns.map((column) => {
+        const held = task.filter_variables?.[column.name];
+        return (
+          <td class="filter-variable" key={column.name}>
+            {held
+              ? format_variable_value(held.value)
+              : show_undefined
+                ? "—"
+                : ""}
+          </td>
+        );
+      })}
     </tr>
   );
 };
@@ -413,6 +578,7 @@ const NoSelectedTask = () => {
 const Task = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
+    { params, query } = useRoute(),
     {
       api: {
         task: { one: task },
@@ -424,8 +590,15 @@ const Task = () => {
 
   const task_value = task.value;
   const task_data = task_value?.data;
+  // An error belongs to the task it was raised for. Without that, the error of
+  // a task that no longer exists would stand in front of every task opened
+  // afterwards: it renders in place of the tabs, and the tabs are what load a
+  // task, so nothing would ever be asked for again.
   const is_error =
-    task_value?.status === RESPONSE_STATE.ERROR && task_data === undefined;
+    task_value?.status === RESPONSE_STATE.ERROR &&
+    task_data === undefined &&
+    (task_value.requested_id === undefined ||
+      task_value.requested_id === params.task_id);
 
   if (is_error) {
     const status = task_value.error?.status;
@@ -442,7 +615,7 @@ const Task = () => {
               ? t("tasks.task-not-found-hint")
               : (task_value.error?.message ?? t("tasks.form.unknown-error"))}
           </p>
-          <a href={app_path("/tasks")} class="button">
+          <a href={app_path(`/tasks${keep_list_query(query)}`)} class="button">
             {t("tasks.back-to-list")}
           </a>
         </div>
@@ -456,10 +629,20 @@ const Task = () => {
         <header>
           <div>
             <h2>{task.value?.data?.name}</h2>
-            <a href={app_path(`/processes/${pd.value?.data?.id}`)}>
-              {pd.value?.data?.name} ({t("processes.version")}{" "}
-              {pd.value?.data?.version})
-            </a>
+            {/* A task created by hand belongs to no process, and the link
+                then pointed at /processes/undefined under the label
+                "(Version )". */}
+            {pd.value?.data?.id && (
+              <a href={app_path(`/processes/${pd.value.data.id}`)}>
+                {pd.value.data.name ?? pd.value.data.key} (
+                {t("processes.version")} {pd.value.data.version})
+              </a>
+            )}
+            {task.value?.data?.tenantId && (
+              <p class="tenant">
+                {t("tasks.tenant")}: {task.value.data.tenantId}
+              </p>
+            )}
             {state.api.task.one.value?.data !== undefined ? (
               <p>{state.api.task.one.value?.data.description}</p>
             ) : (
@@ -485,32 +668,57 @@ const Task = () => {
   );
 };
 
+/** Take one task out of the loaded list without refetching it. */
+const drop_from_list = (state, task_id) => {
+  const loaded = state.api.task.list.value;
+  const rows = loaded?.data;
+  if (!Array.isArray(rows) || !rows.some((t) => t.id === task_id)) return;
+  state.api.task.list.value = {
+    ...loaded,
+    data: rows.filter((t) => t.id !== task_id),
+  };
+};
+
 const load_task_chain = async (state, task_id) => {
   await engine_rest.task.get_task(state, task_id);
+  // Note which task the answer was about, so a failure cannot be mistaken for
+  // the state of the next task opened.
+  const answer = state.api.task.one.value;
+  if (answer?.status === RESPONSE_STATE.ERROR)
+    state.api.task.one.value = { ...answer, requested_id: task_id };
   const task = state.api.task.one.value?.data;
   if (!task?.id) {
-    // Task no longer exists (completed, deleted, or wrong id) — stop here so we
-    // don't feed `undefined` into downstream URLs.
+    // The task is gone — completed, deleted, or never there. Take it out of the
+    // list as well: the detail says so, but the entry would otherwise sit in
+    // the sidebar inviting another click that leads nowhere.
+    drop_from_list(state, task_id);
     return;
   }
-  await engine_rest.process_definition.one(state, task.processDefinitionId);
+  // A task created by hand belongs to no process definition; asking for one
+  // only answers 404 and leaves an error in the shared signal.
+  if (task.processDefinitionId) {
+    await engine_rest.process_definition.one(state, task.processDefinitionId);
+  }
   await engine_rest.task.get_identity_links(state, task.id);
-  await engine_rest.history.get_user_operation(state, task.executionId);
-  await engine_rest.task.get_comments(state, task.id);
 };
 
 const TaskTabs = () => {
   const state = useContext(AppState);
-  const { params } = useRoute();
+  const { params, query } = useRoute();
   const [t] = useTranslation();
 
-  // Load the task whenever the active task changes. Clean stale per-task data
-  // on unmount so the next task's panes don't render against the previous
-  // task's signals.
+  // Load the task whenever the active task changes, and clear the panes that
+  // belong to the previous one.
+  //
+  // task.one is deliberately not among them. A task that no longer exists puts
+  // the detail into its error state, and that state renders in place of these
+  // tabs — unmounting them, so clearing task.one here would wipe the very error
+  // that caused the unmount. The tabs would mount again, load again and fail
+  // again, without end. The request keeps the previous task visible until the
+  // next one arrives anyway, so nothing is gained by blanking it.
   useEffect(() => {
     void load_task_chain(state, params.task_id);
     return () => {
-      state.api.task.one.value = null;
       state.api.task.comment.list.value = null;
       state.api.task.identity_links.value = null;
       state.api.history.user_operation.value = null;
@@ -526,6 +734,7 @@ const TaskTabs = () => {
           base_url={app_path(`/tasks/${state.api.task.one.value.data.id}`)}
           className="fade-in"
           label={t("tasks.tabs.label")}
+          query={keep_list_query(query)}
         />
       ) : (
         t("common.loading")
@@ -536,7 +745,7 @@ const TaskTabs = () => {
 
 const SetDueDateButton = () => {
   const state = useContext(AppState),
-    { params } = useRoute(),
+    { params, query } = useRoute(),
     [t] = useTranslation(),
     {
       api: {
@@ -548,30 +757,30 @@ const SetDueDateButton = () => {
     due_date = task.value?.data?.due
       ? new Date(Date.parse(task.value?.data?.due))
       : null,
-    date_state = useSignal({
-      date:
-        due_date !== null
-          ? due_date?.toISOString().split("T")[0]
-          : new Date().toISOString().split("T")[0],
-      time:
-        due_date !== null
-          ? due_date?.toISOString().split("T")[1].substring(0, 5)
-          : new Date().toISOString().split("T")[1].substring(0, 5),
-    }),
+    date_state = useSignal(toLocalParts(due_date ?? new Date())),
+    // Close only once the engine has taken it; a rejected change must stay on
+    // screen, with what was typed still in the fields. The list shows the due
+    // date in its own column, so re-read it too — otherwise it lags until the
+    // next reload.
+    save = (value) =>
+      Promise.resolve(
+        engine_rest.task.update_task(state, { due: value }, params.task_id),
+      ).then((result) => {
+        if (result?.status === RESPONSE_STATE.SUCCESS) {
+          reload_tasks(state, query);
+          close();
+        }
+      }),
     submit = (event) => {
       event.preventDefault();
-      engine_rest.task
-        .update_task(
-          state,
-          {
-            due: `${date_state.value.date}T${date_state.value.time}:0.000+0000`,
-          },
-          params.task_id,
-        )
-        .then(() => {
-          close();
-        });
-    };
+      save(fromLocalParts(date_state.value.date, date_state.value.time));
+    },
+    set_now = () => {
+      const now = toLocalParts(new Date());
+      date_state.value = now;
+      save(fromLocalParts(now.date, now.time));
+    },
+    reset = () => save(null);
 
   return (
     <>
@@ -590,9 +799,7 @@ const SetDueDateButton = () => {
           <input
             type="date"
             id="due-date"
-            value={
-              due_date !== null ? due_date?.toISOString().split("T")[0] : null
-            }
+            value={date_state.value.date}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),
@@ -604,11 +811,7 @@ const SetDueDateButton = () => {
           <input
             type="time"
             id="due-time"
-            value={
-              due_date !== null
-                ? due_date?.toISOString().split("T")[1].substring(0, 5)
-                : null
-            }
+            value={date_state.value.time}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),
@@ -617,9 +820,21 @@ const SetDueDateButton = () => {
             }
           />
           <div class="button-group">
+            <button type="button" class="secondary" onClick={set_now}>
+              {t("tasks.dates.now")}
+            </button>
+            <button type="button" class="secondary" onClick={reset}>
+              {t("tasks.dates.reset")}
+            </button>
             <button type="submit">{t("common.submit")}</button>
           </div>
         </form>
+        {state.api.task.update_result.value?.status ===
+          RESPONSE_STATE.ERROR && (
+          <p role="alert" class="error">
+            {t("tasks.update-failed")}
+          </p>
+        )}
       </dialog>
     </>
   );
@@ -627,7 +842,7 @@ const SetDueDateButton = () => {
 
 const SetFollowUpDateButton = () => {
   const state = useContext(AppState),
-    { params } = useRoute(),
+    { params, query } = useRoute(),
     [t] = useTranslation(),
     {
       api: {
@@ -639,31 +854,33 @@ const SetFollowUpDateButton = () => {
     followUpDate = task.value?.data?.followUp
       ? new Date(Date.parse(task.value?.data?.followUp))
       : null,
-    date_state = useSignal({
-      date:
-        followUpDate !== null
-          ? followUpDate?.toISOString().split("T")[0]
-          : new Date().toISOString().split("T")[0],
-      time:
-        followUpDate !== null
-          ? followUpDate?.toISOString().split("T")[1].substring(0, 5)
-          : new Date().toISOString().split("T")[1].substring(0, 5),
-    }),
-    // due:	"2025-06-18T13:58:44.000+0000"
+    date_state = useSignal(toLocalParts(followUpDate ?? new Date())),
+    // Close only once the engine has taken it; a rejected change must stay on
+    // screen, with what was typed still in the fields. The list has its own
+    // follow-up column, so re-read it too — otherwise it lags until reload.
+    save = (value) =>
+      Promise.resolve(
+        engine_rest.task.update_task(
+          state,
+          { followUp: value },
+          params.task_id,
+        ),
+      ).then((result) => {
+        if (result?.status === RESPONSE_STATE.SUCCESS) {
+          reload_tasks(state, query);
+          close();
+        }
+      }),
     submit = (event) => {
       event.preventDefault();
-      engine_rest.task
-        .update_task(
-          state,
-          {
-            followUp: `${date_state.value.date}T${date_state.value.time}:0.000+0000`,
-          },
-          params.task_id,
-        )
-        .then(() => {
-          close();
-        });
-    };
+      save(fromLocalParts(date_state.value.date, date_state.value.time));
+    },
+    set_now = () => {
+      const now = toLocalParts(new Date());
+      date_state.value = now;
+      save(fromLocalParts(now.date, now.time));
+    },
+    reset = () => save(null);
 
   return (
     <>
@@ -687,11 +904,7 @@ const SetFollowUpDateButton = () => {
           <input
             type="date"
             id="follow-up-date"
-            value={
-              followUpDate !== null
-                ? followUpDate?.toISOString().split("T")[0]
-                : null
-            }
+            value={date_state.value.date}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),
@@ -703,11 +916,7 @@ const SetFollowUpDateButton = () => {
           <input
             type="time"
             id="follow-up-time"
-            value={
-              followUpDate !== null
-                ? followUpDate?.toISOString().split("T")[1].substring(0, 5)
-                : null
-            }
+            value={date_state.value.time}
             onInput={(e) =>
               (date_state.value = {
                 ...date_state.peek(),
@@ -716,9 +925,21 @@ const SetFollowUpDateButton = () => {
             }
           />
           <div class="button-group">
+            <button type="button" class="secondary" onClick={set_now}>
+              {t("tasks.dates.now")}
+            </button>
+            <button type="button" class="secondary" onClick={reset}>
+              {t("tasks.dates.reset")}
+            </button>
             <button type="submit">{t("common.submit")}</button>
           </div>
         </form>
+        {state.api.task.update_result.value?.status ===
+          RESPONSE_STATE.ERROR && (
+          <p role="alert" class="error">
+            {t("tasks.update-failed")}
+          </p>
+        )}
       </dialog>
     </>
   );
@@ -740,24 +961,43 @@ const SetGroupsButton = () => {
     close = () => document.getElementById("add_groups").close(),
     show = () => document.getElementById("add_groups").showModal(),
     group_state = useSignal(null),
+    // Both the card above and the table below read identity_links, and nothing
+    // re-read them after a change: an added or removed group only appeared
+    // after leaving the task and coming back. The dialog deliberately stays
+    // open — managing groups is usually several steps in a row.
+    refresh_groups = () =>
+      engine_rest.task.get_identity_links(
+        state,
+        state.api.task.one.value.data.id,
+      ),
     submit = (event) => {
       event.preventDefault();
+      // The engine takes an empty group id without complaint and the task then
+      // carries a candidate nobody can name, so it is refused here.
+      const group_id = (group_state.value ?? "").trim();
+      if (!group_id) return;
       engine_rest.task
-        .add_group(state, state.api.task.one.value.data.id, group_state.value)
+        .add_group(state, state.api.task.one.value.data.id, group_id)
         .then(() => {
           if (
             state.api.task.add_group.value.status === RESPONSE_STATE.SUCCESS
           ) {
             group_state.value = "";
+            void refresh_groups();
           }
         });
     },
     delete_group = (group_id) =>
-      engine_rest.task.delete_group(
-        state,
-        state.api.task.one.value.data.id,
-        group_id,
-      );
+      void Promise.resolve(
+        engine_rest.task.delete_group(
+          state,
+          state.api.task.one.value.data.id,
+          group_id,
+        ),
+      ).then((result) => {
+        if (result?.status !== RESPONSE_STATE.SUCCESS) return;
+        void refresh_groups();
+      });
 
   return (
     <>
@@ -789,6 +1029,7 @@ const SetGroupsButton = () => {
             id="group_id"
             key="group_id"
             required
+            value={group_state.value ?? ""}
             onInput={(e) => (group_state.value = e.currentTarget.value)}
           />
           <div class="button-group">
@@ -879,18 +1120,56 @@ const CommentButton = () => {
 const ClaimButton = () => {
   const state = useContext(AppState),
     [t] = useTranslation(),
+    { query } = useRoute(),
+    assignee_input = useSignal(""),
     task = state.api.task.one.value?.data,
-    user = state.api.user.profile.value?.data,
-    claim_result = state.api.task.claim_result.value?.data,
-    assign_result = state.api.task.assign_result.value?.data,
-    unclaim_result = state.api.task.unclaim_result.value?.data,
+    signed_in_user = resolve_user(state),
     close = () => document.getElementById("set_assignee").close(),
     show = () => document.getElementById("set_assignee").showModal(),
     user_is_assignee = task?.assignee,
-    assignee_is_different = task?.assignee && user?.id !== task?.assignee,
-    claimed = claim_result?.status === RESPONSE_STATE.SUCCESS,
-    assigned = assign_result?.status === RESPONSE_STATE.SUCCESS,
-    unclaimed = unclaim_result?.status === RESPONSE_STATE.SUCCESS;
+    assignee_is_different = task?.assignee && signed_in_user !== task?.assignee,
+    unknown_user = useSignal(false),
+    assign_failed =
+      state.api.task.assign_result.value?.status === RESPONSE_STATE.ERROR,
+    // Every action here changes who holds the task, and the answer carries no
+    // body. Re-read the task so the card and the dialog show the new state,
+    // and close — otherwise the dialog sits there unchanged and the click
+    // looks as though it did nothing. The list carries the holder in a column
+    // of its own and may well be filtered by it, so it is re-read too.
+    then_refresh = (request) =>
+      void Promise.resolve(request).then((result) => {
+        if (result?.status !== RESPONSE_STATE.SUCCESS) return;
+        void engine_rest.task.get_task(state, task.id);
+        reload_tasks(state, query);
+        // The engine logs the change, so the history tab is stale the moment
+        // it is open while this happens.
+        void engine_rest.history.get_user_operation_by_task(state, task.id);
+        close();
+      }),
+    assign_to_user = async (event) => {
+      event.preventDefault();
+      const user_id = assignee_input.value.trim();
+      if (!user_id) return;
+      unknown_user.value = false;
+
+      // Check the id before handing the task over. Assigning to an id that does
+      // not exist succeeds in the engine and leaves the task held by nobody: it
+      // drops out of every list and only "reset assignee" brings it back.
+      const found = await engine_rest.user.find(state, user_id);
+      if (
+        found?.status !== RESPONSE_STATE.SUCCESS ||
+        !(found.data?.length > 0)
+      ) {
+        unknown_user.value = true;
+        return;
+      }
+
+      then_refresh(
+        engine_rest.task
+          .assign_task(state, user_id, task.id)
+          .then((result) => ((assignee_input.value = ""), result)),
+      );
+    };
 
   return (
     <RequestState
@@ -907,32 +1186,79 @@ const ClaimButton = () => {
             <button type="button" onClick={close}>
               {t("common.close")}
             </button>
-            {assignee_is_different && !assigned ? (
-              <button
-                type="button"
-                onClick={() =>
-                  engine_rest.task.assign_task(state, null, task.id)
+            {/* The action on the task as it stands. Right-aligned like the
+                submit below, so the two blocks read as one dialog rather than
+                as a button loose beside the close button. */}
+            <div class="button-group">
+              {assignee_is_different ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    then_refresh(
+                      engine_rest.task.assign_task(state, null, task.id),
+                    )
+                  }
+                  class="secondary"
+                >
+                  <Icons.user_minus /> {t("tasks.reset-assignee")}
+                </button>
+              ) : user_is_assignee ? (
+                <button
+                  type="button"
+                  onClick={() =>
+                    then_refresh(engine_rest.task.unclaim_task(state, task.id))
+                  }
+                  class="secondary"
+                >
+                  <Icons.user_minus /> {t("tasks.unclaim")}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() =>
+                    then_refresh(engine_rest.task.claim_task(state, task.id))
+                  }
+                  class="secondary"
+                >
+                  <Icons.user_plus /> {t("tasks.claim")}
+                </button>
+              )}
+            </div>
+
+            {/* Heading outside the form on purpose: the global `form` rule is a
+                two-column label/input grid, and anything else placed in it
+                becomes a grid item — the heading would sit beside the field. */}
+            <h2>{t("tasks.assign-to")}</h2>
+            <form onSubmit={assign_to_user}>
+              <label for="assignee-input">{t("tasks.assign-to-label")}</label>
+              <input
+                id="assignee-input"
+                type="text"
+                autocomplete="off"
+                aria-describedby={
+                  unknown_user.value ? "assignee-error" : undefined
                 }
-                class="secondary"
-              >
-                <Icons.user_minus /> {t("tasks.reset-assignee")}
-              </button>
-            ) : (user_is_assignee || claimed) && !unclaimed ? (
-              <button
-                type="button"
-                onClick={() => engine_rest.task.unclaim_task(state, task.id)}
-                class="secondary"
-              >
-                <Icons.user_minus /> {t("tasks.unclaim")}
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => engine_rest.task.claim_task(state, task.id)}
-                class="secondary"
-              >
-                <Icons.user_plus /> {t("tasks.claim")}
-              </button>
+                value={assignee_input.value}
+                onInput={(e) => {
+                  assignee_input.value = e.target.value;
+                  unknown_user.value = false;
+                }}
+              />
+              <div class="button-group">
+                <button type="submit" disabled={!assignee_input.value.trim()}>
+                  <Icons.user_plus /> {t("tasks.assign")}
+                </button>
+              </div>
+            </form>
+            {unknown_user.value && (
+              <p id="assignee-error" role="alert" class="error">
+                {t("tasks.assign-unknown-user")}
+              </p>
+            )}
+            {assign_failed && (
+              <p role="alert" class="error">
+                {t("tasks.assign-failed")}
+              </p>
             )}
           </dialog>
         </>
@@ -977,286 +1303,6 @@ const Diagram = () => {
   );
 };
 
-const CRITERIA_KEYS = [
-  "assignee",
-  "assigneeLike",
-  "candidateGroup",
-  "candidateUser",
-  "involvedUser",
-  "unassigned",
-  "processDefinitionKey",
-  "processDefinitionName",
-  "processDefinitionNameLike",
-  "processInstanceBusinessKey",
-  "processInstanceBusinessKeyLike",
-  "taskDefinitionKey",
-  "taskDefinitionKeyLike",
-  "name",
-  "nameLike",
-  "description",
-  "descriptionLike",
-  "priority",
-  "dueBefore",
-  "dueAfter",
-  "followUpBefore",
-  "followUpAfter",
-  "createdBefore",
-  "createdAfter",
-  "active",
-  "suspended",
-];
-
-const Filter = () => {
-  const state = useContext(AppState),
-    [t] = useTranslation(),
-    { route } = useLocation(),
-    form = useSignal({
-      name: "",
-      description: "",
-      color: "#000000",
-      priority: 0,
-      refresh: false,
-      criteria: [],
-      variables: [],
-    }),
-    update = (key, value) => (form.value = { ...form.peek(), [key]: value }),
-    add_criteria = () =>
-      update("criteria", [
-        ...form.peek().criteria,
-        { key: CRITERIA_KEYS[0], value: "" },
-      ]),
-    remove_criteria = (index) =>
-      update(
-        "criteria",
-        form.peek().criteria.filter((_, i) => i !== index),
-      ),
-    update_criteria = (index, field, value) =>
-      update(
-        "criteria",
-        form
-          .peek()
-          .criteria.map((c, i) => (i === index ? { ...c, [field]: value } : c)),
-      ),
-    add_variable = () =>
-      update("variables", [...form.peek().variables, { name: "", label: "" }]),
-    remove_variable = (index) =>
-      update(
-        "variables",
-        form.peek().variables.filter((_, i) => i !== index),
-      ),
-    update_variable = (index, field, value) =>
-      update(
-        "variables",
-        form
-          .peek()
-          .variables.map((v, i) =>
-            i === index ? { ...v, [field]: value } : v,
-          ),
-      ),
-    submit = (event) => {
-      event.preventDefault();
-      const {
-          name,
-          description,
-          color,
-          priority,
-          refresh,
-          criteria,
-          variables,
-        } = form.value,
-        query = {};
-      criteria.forEach(({ key, value }) => {
-        if (key === "unassigned" || key === "active" || key === "suspended")
-          query[key] = true;
-        else if (key === "priority") query[key] = parseInt(value, 10);
-        else if (value) query[key] = value;
-      });
-      const body = {
-        resourceType: "Task",
-        name,
-        owner: state.api.user.profile.value?.id,
-        query,
-        properties: {
-          description,
-          color,
-          priority: parseInt(priority, 10) || 0,
-          refresh,
-          variables,
-        },
-      };
-      engine_rest.filter.create_filter(state, body).then(() => {
-        route(app_path("/tasks"));
-      });
-    };
-
-  return (
-    <div class="filter-editor">
-      <header>
-        <h2>{t("tasks.filter.title")}</h2>
-        <a href={app_path("/tasks")} class="button">
-          {t("common.back")}
-        </a>
-      </header>
-
-      <form onSubmit={submit}>
-        <fieldset>
-          <legend>{t("tasks.filter.general")}</legend>
-          <div class="filter-fields">
-            <label for="filter-name">{t("common.name")}</label>
-            <input
-              id="filter-name"
-              required
-              value={form.value.name}
-              onInput={(e) => update("name", e.currentTarget.value)}
-            />
-            <label for="filter-description">
-              {t("tasks.filter.description")}
-            </label>
-            <input
-              id="filter-description"
-              value={form.value.description}
-              onInput={(e) => update("description", e.currentTarget.value)}
-            />
-            <label for="filter-priority">
-              {t("tasks.task-list.table-headings.priority")}
-            </label>
-            <input
-              id="filter-priority"
-              type="number"
-              value={form.value.priority}
-              onInput={(e) => update("priority", e.currentTarget.value)}
-            />
-            <label for="filter-color">{t("tasks.filter.color")}</label>
-            <input
-              id="filter-color"
-              type="color"
-              value={form.value.color}
-              onInput={(e) => update("color", e.currentTarget.value)}
-            />
-            <label class="filter-checkbox" for="filter-auto-refresh">
-              <input
-                id="filter-auto-refresh"
-                type="checkbox"
-                checked={form.value.refresh}
-                onInput={(e) => update("refresh", e.currentTarget.checked)}
-              />
-              {t("tasks.filter.auto-refresh")}
-            </label>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>{t("tasks.filter.criteria")}</legend>
-          {form.value.criteria.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>{t("common.key")}</th>
-                  <th>{t("common.value")}</th>
-                  <th>{t("common.action")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {form.value.criteria.map((criterion, i) => (
-                  <tr key={i}>
-                    <td>
-                      <select
-                        value={criterion.key}
-                        onChange={(e) =>
-                          update_criteria(i, "key", e.currentTarget.value)
-                        }
-                      >
-                        {CRITERIA_KEYS.map((k) => (
-                          <option key={k} value={k}>
-                            {k}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      {criterion.key === "unassigned" ||
-                      criterion.key === "active" ||
-                      criterion.key === "suspended" ? (
-                        <em>{t("common.yes")}</em>
-                      ) : (
-                        <input
-                          value={criterion.value}
-                          onInput={(e) =>
-                            update_criteria(i, "value", e.currentTarget.value)
-                          }
-                        />
-                      )}
-                    </td>
-                    <td>
-                      <button type="button" onClick={() => remove_criteria(i)}>
-                        {t("common.remove")}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <button type="button" onClick={add_criteria}>
-            {t("tasks.filter.add-criteria")}
-          </button>
-        </fieldset>
-
-        <fieldset>
-          <legend>{t("tasks.filter.variables")}</legend>
-          <p>{t("tasks.filter.variables-hint")}</p>
-          {form.value.variables.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>{t("common.name")}</th>
-                  <th>{t("tasks.filter.label")}</th>
-                  <th>{t("common.action")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {form.value.variables.map((variable, i) => (
-                  <tr key={i}>
-                    <td>
-                      <input
-                        value={variable.name}
-                        onInput={(e) =>
-                          update_variable(i, "name", e.currentTarget.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        value={variable.label}
-                        onInput={(e) =>
-                          update_variable(i, "label", e.currentTarget.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <button type="button" onClick={() => remove_variable(i)}>
-                        {t("common.remove")}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <button type="button" onClick={add_variable}>
-            {t("tasks.filter.add-variable")}
-          </button>
-        </fieldset>
-
-        <div class="filter-actions">
-          <button type="submit">{t("common.save")}</button>
-          <a href={app_path("/tasks")}>{t("common.cancel")}</a>
-        </div>
-      </form>
-    </div>
-  );
-};
-
 const merge_history = (...sources) =>
   sources
     .flatMap((s) => s())
@@ -1280,6 +1326,7 @@ const history_from_comments = (signal) =>
 
 const HistoryTab = () => {
   const state = useContext(AppState),
+    { params } = useRoute(),
     [t] = useTranslation(),
     {
       api: {
@@ -1287,6 +1334,15 @@ const HistoryTab = () => {
         task: { comment },
       },
     } = state;
+
+  // Every other tab fetches what it shows when it is opened. These two were
+  // loaded once with the task instead, so the tab never caught up with a
+  // comment or an action taken since.
+  useEffect(() => {
+    void engine_rest.history.get_user_operation_by_task(state, params.task_id);
+    void engine_rest.task.get_comments(state, params.task_id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.task_id]);
 
   const ready =
     user_operation.value?.status === RESPONSE_STATE.SUCCESS &&
@@ -1318,7 +1374,7 @@ const HistoryTab = () => {
               <tr key={i}>
                 <td>
                   <time datetime={entry.timestamp}>
-                    {formatRelativeDate(entry.timestamp)}
+                    {formatTimestamp(entry.timestamp)}
                   </time>
                 </td>
                 <td>{entry.user}</td>
@@ -1343,7 +1399,8 @@ const AttachmentsTab = () => {
     [t] = useTranslation(),
     name = useSignal(""),
     description = useSignal(""),
-    file = useSignal(null);
+    file = useSignal(null),
+    form_ref = useRef(null);
 
   const load = () =>
     void engine_rest.task.get_attachments(state, params.task_id);
@@ -1364,10 +1421,18 @@ const AttachmentsTab = () => {
     fd.append("attachment-description", description.value);
     fd.append("attachment-type", file.value.type || "application/octet-stream");
     fd.append("content", file.value);
-    await engine_rest.task.create_attachment(state, params.task_id, fd);
+    const result = await engine_rest.task.create_attachment(
+      state,
+      params.task_id,
+      fd,
+    );
+    if (result?.status !== RESPONSE_STATE.SUCCESS) return;
     name.value = "";
     description.value = "";
     file.value = null;
+    // The file input is uncontrolled, so clearing the signal leaves the chosen
+    // file name standing. Only a reset puts it back to "no file selected".
+    form_ref.current?.reset();
     load();
   };
 
@@ -1375,6 +1440,34 @@ const AttachmentsTab = () => {
     await engine_rest.task.delete_attachment(state, params.task_id, id);
     load();
   };
+
+  // The engine serves the file as application/octet-stream with no
+  // Content-Disposition, and the webapp layer may add one of its own, so a
+  // plain <a download> is not enough to guarantee the extension. Fetch the
+  // bytes and download them from a blob URL, where the download name is
+  // authoritative — the file keeps its name and extension.
+  const download = async (a) => {
+    const headers = new Headers();
+    set_request_headers(headers, state);
+    const response = await fetch(
+      engine_rest.task.attachment_url(state, params.task_id, a.id),
+      { headers, credentials: "include" },
+    );
+    if (!response.ok) return;
+    const url = URL.createObjectURL(await response.blob()),
+      link = document.createElement("a");
+    link.href = url;
+    link.download = a.name ?? a.id;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const delete_open = useSignal(false),
+    pending_delete = useSignal(null),
+    ask_remove = (attachment) => {
+      pending_delete.value = attachment;
+      delete_open.value = true;
+    };
 
   return (
     <div class="task-attachments">
@@ -1397,16 +1490,24 @@ const AttachmentsTab = () => {
                 {rows.map((a) => (
                   <tr key={a.id}>
                     <td>
+                      {/* The href is a real link (right-click, middle-click,
+                          and a fallback if the click handler fails), but the
+                          click downloads via a blob so the filename — and its
+                          extension — is guaranteed regardless of the server's
+                          headers. */}
                       <a
                         href={engine_rest.task.attachment_url(
                           state,
                           params.task_id,
                           a.id,
                         )}
-                        target="_blank"
-                        rel="noreferrer"
+                        download={a.name ?? undefined}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          void download(a);
+                        }}
                       >
-                        {a.name ?? a.id}
+                        <Icons.link_out /> {a.name ?? a.id}
                       </a>
                     </td>
                     <td>{a.description}</td>
@@ -1414,9 +1515,11 @@ const AttachmentsTab = () => {
                       <button
                         type="button"
                         class="danger"
-                        onClick={() => remove(a.id)}
+                        onClick={() => ask_remove(a)}
+                        aria-label={t("common.delete")}
+                        title={t("common.delete")}
                       >
-                        {t("common.delete")}
+                        <Icons.trash />
                       </button>
                     </td>
                   </tr>
@@ -1426,32 +1529,58 @@ const AttachmentsTab = () => {
           );
         }}
       />
-      <form onSubmit={submit}>
-        <h3>{t("tasks.attachments.add")}</h3>
-        <div class="dialog-fields">
-          <label>
-            {t("common.name")}
-            <input
-              type="text"
-              value={name.value}
-              onInput={(e) => (name.value = e.currentTarget.value)}
-            />
+      <ConfirmDialog
+        open={delete_open}
+        message={t("tasks.attachments.delete-confirm", {
+          name: pending_delete.value?.name ?? "",
+        })}
+        confirm_label={t("tasks.attachments.confirm-delete")}
+        on_confirm={() => remove(pending_delete.value?.id)}
+      />
+
+      <h3>{t("tasks.attachments.add")}</h3>
+      <form onSubmit={submit} ref={form_ref}>
+        <label for="attachment-name">{t("common.name")}</label>
+        <input
+          id="attachment-name"
+          type="text"
+          value={name.value}
+          onInput={(e) => (name.value = e.currentTarget.value)}
+        />
+        <label for="attachment-description">
+          {t("tasks.attachments.description")}
+        </label>
+        <input
+          id="attachment-description"
+          type="text"
+          value={description.value}
+          onInput={(e) => (description.value = e.currentTarget.value)}
+        />
+        <label for="attachment-file">{t("tasks.attachments.file")}</label>
+        <div class="file-picker">
+          {/* The native control is kept for the file dialog and for assistive
+              technology, but hidden: its default rendering is the browser's
+              own and looks nothing like the rest of the page. The label opens
+              it just as the control itself would. */}
+          <label for="attachment-file" class="button">
+            {t("tasks.attachments.choose")}
           </label>
-          <label>
-            {t("tasks.attachments.description")}
-            <input
-              type="text"
-              value={description.value}
-              onInput={(e) => (description.value = e.currentTarget.value)}
-            />
-          </label>
-          <label>
-            {t("tasks.attachments.file")}
-            <input
-              type="file"
-              onChange={(e) => (file.value = e.currentTarget.files[0])}
-            />
-          </label>
+          <span class="file-name">
+            {file.value?.name ?? t("tasks.attachments.none-chosen")}
+          </span>
+          <input
+            id="attachment-file"
+            class="screen-hidden"
+            type="file"
+            onChange={(e) => {
+              const chosen = e.currentTarget.files[0];
+              file.value = chosen;
+              // The name is what the download is saved as, and the engine
+              // stores nothing else about the file. Starting from the file's
+              // own name keeps its extension; it stays editable.
+              if (chosen && !name.value.trim()) name.value = chosen.name;
+            }}
+          />
         </div>
         <div class="button-group">
           <button type="submit" disabled={!file.value}>
@@ -1479,13 +1608,13 @@ const task_tabs = [
   {
     nameKey: "tasks.tabs.attachments",
     id: "attachments",
-    pos: 2,
+    pos: 3,
     Component: AttachmentsTab,
   },
   {
     nameKey: "tasks.tabs.diagram",
     id: "diagram",
-    pos: 3,
+    pos: 4,
     Component: Diagram,
   },
 ];

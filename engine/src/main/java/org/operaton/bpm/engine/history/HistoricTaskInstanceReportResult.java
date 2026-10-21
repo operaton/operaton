@@ -45,7 +45,7 @@ public interface HistoricTaskInstanceReportResult {
    * <p>Returns the name of the task</p>
    *
    * @return A task name when the query is triggered with a 'countByTaskName'. Else the return
-   * value is null.
+   * value is {@code null}.
    */
   String getTaskName();
 

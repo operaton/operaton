@@ -37,7 +37,6 @@ import java.lang.annotation.Target;
  * Example usage:
  * </p>
  *
- * <p>
  * <pre>
  *   {@literal @}Test
  *   {@literal @}Script
@@ -74,8 +73,6 @@ import java.lang.annotation.Target;
  *       assertEquals("b", script.variables.get("a"))
  *   }
  * </pre>
- * </p>
- *
  *
  * @author Sebastian Menski
  */

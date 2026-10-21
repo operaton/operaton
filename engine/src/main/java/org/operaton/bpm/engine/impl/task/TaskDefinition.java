@@ -149,10 +149,16 @@ public class TaskDefinition {
     return taskListeners;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public Map<String, List<TaskListener>> getBuiltinTaskListeners() {
     return builtinTaskListeners;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public void setTaskListeners(Map<String, List<TaskListener>> taskListeners) {
     this.taskListeners = taskListeners;
   }

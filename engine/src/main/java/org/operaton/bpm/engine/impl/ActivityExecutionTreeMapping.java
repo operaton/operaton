@@ -58,7 +58,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   public ExecutionEntity getExecution(ActivityInstance activityInstance) {
-    ScopeImpl scope = null;
+    ScopeImpl scope;
 
     if (activityInstance.getId().equals(activityInstance.getProcessInstanceId())) {
       scope = processDefinition;
@@ -73,7 +73,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected ExecutionEntity intersect(Set<ExecutionEntity> executions, String[] executionIds) {
-    Set<String> executionIdSet = new HashSet<>(Arrays.asList(executionIds));
+    Set<String> executionIdSet = new HashSet<>(List.of(executionIds));
 
     return executions.stream()
       .filter(execution -> executionIdSet.contains(execution.getId()))
@@ -136,15 +136,9 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected List<ExecutionEntity> findLeaves(List<ExecutionEntity> executions) {
-    List<ExecutionEntity> leaves = new ArrayList<>();
-
-    for (ExecutionEntity execution : executions) {
-      if (isLeaf(execution)) {
-        leaves.add(execution);
-      }
-    }
-
-    return leaves;
+    return executions.stream()
+        .filter(this::isLeaf)
+        .toList();
   }
 
   /**

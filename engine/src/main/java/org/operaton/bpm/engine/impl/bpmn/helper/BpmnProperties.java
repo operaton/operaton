@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.bpmn.helper;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.ConditionalEventDefinition;
 import org.operaton.bpm.engine.impl.bpmn.parser.ErrorEventDefinition;
 import org.operaton.bpm.engine.impl.bpmn.parser.EscalationEventDefinition;
@@ -40,7 +41,7 @@ import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse.PROPERTYNAME_HA
  * @see Properties
  *
  */
-public final class BpmnProperties {
+public final @NullMarked class BpmnProperties {
   private BpmnProperties() {
   }
 

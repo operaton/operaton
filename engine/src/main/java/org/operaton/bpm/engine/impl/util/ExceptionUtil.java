@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -96,7 +97,7 @@ public final class ExceptionUtil {
     return result;
   }
 
-  protected static Throwable getPersistenceCauseException(PersistenceException persistenceException) {
+  private static Throwable getPersistenceCauseException(PersistenceException persistenceException) {
     Throwable cause = persistenceException.getCause();
     if (cause instanceof BatchExecutorException) {
       return cause.getCause();
@@ -109,11 +110,7 @@ public final class ExceptionUtil {
     Throwable cause = getPersistenceCauseException(persistenceException);
     if (cause instanceof SQLException sqlException) {
       SQLException nextException = sqlException.getNextException();
-      if (nextException != null) {
-        return nextException;
-      } else {
-        return sqlException;
-      }
+      return Objects.requireNonNullElse(nextException, sqlException);
     } else {
       return null;
     }
@@ -244,9 +241,9 @@ public final class ExceptionUtil {
     ORACLE(60, "61000"),
     POSTGRES(0, "40P01"),
     H2(40001, "40001");
-    protected final int errorCode;
+    private final int errorCode;
 
-    protected final String sqlState;
+    private final String sqlState;
 
     DEADLOCK_CODES(int errorCode, String sqlState) {
       this.errorCode = errorCode;
@@ -261,7 +258,7 @@ public final class ExceptionUtil {
       return sqlState;
     }
 
-    protected boolean equals(int errorCode, String sqlState) {
+    private boolean equals(int errorCode, String sqlState) {
       return this.getErrorCode() == errorCode && this.getSqlState().equals(sqlState);
     }
 

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.MapAssert;
@@ -708,7 +708,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     MapAssert<String, Object> assertion = variables().overridingErrorMessage(
         message.toString(),
         toString(actual),
-        shouldHaveSpecificVariables ? Arrays.asList(names)
+        shouldHaveSpecificVariables ? List.of(names)
             : vars.keySet(),
         vars.keySet());
     if (shouldHaveVariables) {

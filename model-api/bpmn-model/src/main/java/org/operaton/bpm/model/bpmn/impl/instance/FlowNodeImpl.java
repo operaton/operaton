@@ -19,6 +19,7 @@ package org.operaton.bpm.model.bpmn.impl.instance;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.model.bpmn.BpmnModelException;
 import org.operaton.bpm.model.bpmn.Query;
@@ -140,19 +141,17 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 
   @Override
   public Query<FlowNode> getPreviousNodes() {
-    Collection<FlowNode> previousNodes = new HashSet<>();
-    for (SequenceFlow sequenceFlow : getIncoming()) {
-      previousNodes.add(sequenceFlow.getSource());
-    }
+    Collection<FlowNode> previousNodes = getIncoming().stream()
+      .map(SequenceFlow::getSource)
+      .collect(Collectors.toCollection(HashSet::new));
     return new QueryImpl<>(previousNodes);
   }
 
   @Override
   public Query<FlowNode> getSucceedingNodes() {
-    Collection<FlowNode> succeedingNodes = new HashSet<>();
-    for (SequenceFlow sequenceFlow : getOutgoing()) {
-      succeedingNodes.add(sequenceFlow.getTarget());
-    }
+    Collection<FlowNode> succeedingNodes = getOutgoing().stream()
+      .map(SequenceFlow::getTarget)
+      .collect(Collectors.toCollection(HashSet::new));
     return new QueryImpl<>(succeedingNodes);
   }
 

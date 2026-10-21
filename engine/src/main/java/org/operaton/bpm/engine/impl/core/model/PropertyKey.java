@@ -23,7 +23,8 @@ package org.operaton.bpm.engine.impl.core.model;
  *
  * @author Philipp Ossler
  *
- * @see {@link PropertyListKey}, {@link PropertyMapKey}
+ * @see PropertyListKey
+ * @see PropertyMapKey
  *
  */
 public record PropertyKey<T>(String name) {

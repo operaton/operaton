@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.run.property;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class OperatonBpmRunAuthenticationProperties {
   public static final String PREFIX = OperatonBpmRunProperties.PREFIX + ".auth";
   public static final String DEFAULT_AUTH = "basic";
   public static final String OAUTH2_AUTH = "oauth2";
-  private static final List<String> AUTH_METHODS = Arrays.asList(DEFAULT_AUTH, OAUTH2_AUTH);
+  private static final List<String> AUTH_METHODS = List.of(DEFAULT_AUTH, OAUTH2_AUTH);
 
   boolean enabled;
   String authentication = DEFAULT_AUTH;

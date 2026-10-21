@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.handler;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmmn.behavior.ProcessOrCaseTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
@@ -29,11 +30,14 @@ import org.operaton.bpm.model.cmmn.instance.PlanItemDefinition;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.cmmn.instance.operaton.OperatonOut;
 
+import static java.util.Objects.requireNonNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * @author Roman Smirnov
  *
  */
-public abstract class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandler {
+public abstract @NullMarked class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandler {
 
   @Override
   protected CallableElement createCallableElement() {
@@ -133,6 +137,14 @@ public abstract class ProcessOrCaseTaskItemHandler extends CallingTaskItemHandle
       parameter.setTarget(target);
 
     }
+  }
+
+  @Override
+  protected PlanItemDefinition getDefinition(CmmnElement element) {
+    PlanItemDefinition definition = super.getDefinition(element);
+    ensureNotNull("Plan Item Definition '%s' not found".formatted(element.getId()), "planItemDefinition", definition);
+    requireNonNull(definition);
+    return definition;
   }
 
   protected List<OperatonIn> getInputs(CmmnElement element) {

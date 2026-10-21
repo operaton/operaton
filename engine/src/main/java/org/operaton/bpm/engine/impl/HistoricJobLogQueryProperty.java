@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * @author Roman Smirnov
  *
  */
-final class HistoricJobLogQueryProperty {
+final @NullMarked class HistoricJobLogQueryProperty {
 
   public static final QueryProperty JOB_ID = new QueryPropertyImpl("JOB_ID_");
   public static final QueryProperty JOB_DEFINITION_ID = new QueryPropertyImpl("JOB_DEF_ID_");

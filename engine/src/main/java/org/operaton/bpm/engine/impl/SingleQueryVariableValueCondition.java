@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -69,7 +68,7 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
     serializer.writeValue(typedValue, this);
     this.type = serializer.getName();
     if (ValueType.STRING.getName().equals(type) && DbSqlSessionFactory.ORACLE.equals(dbType)
-            && ("".equals(textValue)  && Arrays.asList(EQUALS, NOT_EQUALS).contains(wrappedQueryValue.getOperator()))) {
+            && ("".equals(textValue)  && List.of(EQUALS, NOT_EQUALS).contains(wrappedQueryValue.getOperator()))) {
       this.findNulledEmptyStrings = true;
     }
   }

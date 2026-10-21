@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -58,8 +58,8 @@ public @NullMarked class DeleteHistoricVariableInstancesByProcessInstanceIdCmd i
       checker.checkDeleteHistoricVariableInstancesByProcessInstance(instance);
     }
 
-    commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(Arrays.asList(processInstanceId));
-    commandContext.getHistoricVariableInstanceManager().deleteHistoricVariableInstanceByProcessInstanceIds(Arrays.asList(processInstanceId));
+    commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(List.of(processInstanceId));
+    commandContext.getHistoricVariableInstanceManager().deleteHistoricVariableInstanceByProcessInstanceIds(List.of(processInstanceId));
 
     // create user operation log
     ResourceDefinitionEntity<?> definition = null;

@@ -27,7 +27,7 @@ public class ProcessEngineConfigurationFactoryImpl implements ProcessEngineConfi
   private static final String BEAN_PROCESS_ENGINE_CONFIGURATION = "processEngineConfiguration";
 
   public ProcessEngineConfiguration createProcessEngineConfigurationFromResourceDefault() {
-    ProcessEngineConfiguration processEngineConfiguration = null;
+    ProcessEngineConfiguration processEngineConfiguration;
     try {
       processEngineConfiguration = createProcessEngineConfigurationFromResource("operaton.cfg.xml",
               BEAN_PROCESS_ENGINE_CONFIGURATION);

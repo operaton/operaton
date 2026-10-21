@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.task;
 import java.util.Date;
 import java.util.List;
 
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.history.UserOperationLogQuery;
  * @deprecated It has been replaced with the operation log. See {@link UserOperationLogEntry}
  * and {@link UserOperationLogQuery}.
  *
- * @see {@link TaskService#getTaskEvents(String)
+ * @see TaskService#getTaskEvents(String)
  * @author Tom Baeyens
  */
 @Deprecated(forRemoval = true, since = "1.0")

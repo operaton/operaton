@@ -44,7 +44,7 @@ import org.operaton.commons.utils.ServiceLoaderUtil;
  * </pre>
  * </p>
  *
- * <p>To create a process engine programatic, without a configuration file,
+ * <p>To create a process engine programmatic, without a configuration file,
  * the first option is {@link #createStandaloneProcessEngineConfiguration()}
  * <pre>ProcessEngine processEngine = ProcessEngineConfiguration
  *   .createStandaloneProcessEngineConfiguration()
@@ -87,6 +87,7 @@ import org.operaton.commons.utils.ServiceLoaderUtil;
  * @see ProcessEngines
  * @author Tom Baeyens
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public abstract class ProcessEngineConfiguration {
   private static final ProcessEngineConfigurationFactory PROCESS_ENGINE_CONFIGURATION_FACTORY;
 
@@ -180,10 +181,11 @@ public abstract class ProcessEngineConfiguration {
   /**
    * Always enables check for {@link Authorization#AUTH_TYPE_REVOKE revoke} authorizations.
    * This mode is equal to the &lt; 7.5 behavior.
-   *<p />
+   * <p />
    * *NOTE:* Checking revoke authorizations is very expensive for resources with a high potential
    * cardinality like tasks or process instances and can render authorized access to the process engine
    * effectively unusable on most databases. You are therefore strongly discouraged from using this mode.
+   * </p>
    *
    */
   public static final String AUTHORIZATION_CHECK_REVOKE_ALWAYS = "always";
@@ -200,10 +202,11 @@ public abstract class ProcessEngineConfiguration {
    * one revoke authorization currently exits for the current user or one of the groups the user is a member
    * of. To achieve this it is checked once per command whether potentially applicable revoke authorizations
    * exist. Based on the outcome, the authorization check then uses revoke or not.
-   *<p />
+   * <p />
    * *NOTE:* Checking revoke authorizations is very expensive for resources with a high potential
    * cardinality like tasks or process instances and can render authorized access to the process engine
    * effectively unusable on most databases.
+   * </p>
    */
   public static final String AUTHORIZATION_CHECK_REVOKE_AUTO = "auto";
 
@@ -281,11 +284,15 @@ public abstract class ProcessEngineConfiguration {
   /**
    * Provides the default task permission for the user related to a task
    * User can be related to a task in the following ways
-   * - Candidate user
-   * - Part of candidate group
-   * - Assignee
-   * - Owner
+   * <ul>
+   *   <li>Candidate user</li>
+   *   <li>Part of candidate group</li>
+   *   <li>Assignee</li>
+   *   <li>Owner</li>
+   * </ul>
+   * <p>
    * The default value is UPDATE.
+   * </p>
    */
   protected String defaultUserPermissionNameForTask = "UPDATE";
 

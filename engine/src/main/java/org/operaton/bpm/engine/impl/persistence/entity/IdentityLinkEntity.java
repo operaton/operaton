@@ -39,6 +39,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
  * @author Joram Barrez
  * @author Deivarayan Azhagappan
  */
+@SuppressWarnings("unused")
 public class IdentityLinkEntity implements IdentityLink, DbEntity, HasDbReferences {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 

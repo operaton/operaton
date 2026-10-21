@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Provides access to all the services that expose the BPM and workflow operations.
  *
- * <p>
  * <ul>
  * <li>
  * <b>{@link org.operaton.bpm.engine.RuntimeService}: </b> Allows the creation of
@@ -45,21 +46,21 @@ package org.operaton.bpm.engine;
  * <li><b>{@link org.operaton.bpm.engine.AuthorizationService}:</b> Service allowing
  * to manage access permissions for users and groups.</b>
  * </ul>
- * </p>
  *
- *
+ * <p>
  * Typically, there will be only one central ProcessEngine instance needed in a
  * end-user application. Building a ProcessEngine is done through a
  * {@link ProcessEngineConfiguration} instance and is a costly operation which should be
  * avoided. For that purpose, it is advised to store it in a static field or
  * JNDI location (or something similar). This is a thread-safe object, so no
  * special precautions need to be taken.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barrez
  * @author Daniel Meyer
  */
-public interface ProcessEngine extends ProcessEngineServices {
+public @NullMarked interface ProcessEngine extends ProcessEngineServices {
 
   /** the version of the process engine library */
   String VERSION = "fox";

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -300,7 +299,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
       ensureProcessDefinitionAndTenantIdNotSet();
       // only one result can be expected
       MessageCorrelationResult result = execute(new CorrelateMessageCmd(this, false, false, startMessagesOnly));
-      return Arrays.asList(result);
+      return List.of(result);
     } else {
       ensureProcessDefinitionIdNotSet();
       ensureProcessInstanceAndTenantIdNotSet();
@@ -315,7 +314,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
       ensureProcessDefinitionAndTenantIdNotSet();
       // only one result can be expected
       MessageCorrelationResultWithVariables result = execute(new CorrelateMessageCmd(this, true, deserializeValues, startMessagesOnly));
-      return Arrays.asList(result);
+      return List.of(result);
     } else {
       ensureProcessDefinitionIdNotSet();
       ensureProcessInstanceAndTenantIdNotSet();

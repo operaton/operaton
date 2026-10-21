@@ -65,6 +65,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     super(id, processDefinition);
   }
 
+  @SuppressWarnings("unused")
   public TransitionImpl createOutgoingTransition() {
     return createOutgoingTransition(null);
   }
@@ -89,17 +90,14 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     return namedOutgoingTransitions.get(transitionId);
   }
 
-  @Override
-  public String toString() {
-    return "Activity(%s)".formatted(id);
-  }
-
   // restricted setters ///////////////////////////////////////////////////////
 
+  @SuppressWarnings("unused")
   protected void setOutgoingTransitions(List<TransitionImpl> outgoingTransitions) {
     this.outgoingTransitions = outgoingTransitions;
   }
 
+  @SuppressWarnings("unused")
   protected void setIncomingTransitions(List<TransitionImpl> incomingTransitions) {
     this.incomingTransitions = incomingTransitions;
   }
@@ -107,7 +105,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   // getters and setters //////////////////////////////////////////////////////
 
   @Override
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "rawtypes"})
   public List<PvmTransition> getOutgoingTransitions() {
     return (List) outgoingTransitions;
   }
@@ -131,7 +129,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   }
 
   @Override
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "rawtypes"})
   public List<PvmTransition> getIncomingTransitions() {
     return (List) incomingTransitions;
   }
@@ -321,6 +319,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
    */
   protected transient AsyncAfterUpdate delegateAsyncAfterUpdate;
 
+  @SuppressWarnings("unused")
   public AsyncBeforeUpdate getDelegateAsyncBeforeUpdate() {
     return delegateAsyncBeforeUpdate;
   }
@@ -329,6 +328,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     this.delegateAsyncBeforeUpdate = delegateAsyncBeforeUpdate;
   }
 
+  @SuppressWarnings("unused")
   public AsyncAfterUpdate getDelegateAsyncAfterUpdate() {
     return delegateAsyncAfterUpdate;
   }

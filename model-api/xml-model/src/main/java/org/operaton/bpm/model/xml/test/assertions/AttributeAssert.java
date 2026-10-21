@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.model.xml.test.assertions;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.assertj.core.api.AbstractAssert;
@@ -198,7 +197,7 @@ public class AttributeAssert extends AbstractAssert<AttributeAssert, Attribute<?
   public AttributeAssert hasIncomingReferences(Reference<?>... references) {
     isNotNull();
 
-    List<Reference<?>> incomingReferences = Arrays.asList(references);
+    List<Reference<?>> incomingReferences = List.of(references);
     List<Reference<?>> actualIncomingReferences = actual.getIncomingReferences();
 
     if (!actualIncomingReferences.containsAll(incomingReferences)) {
@@ -235,7 +234,7 @@ public class AttributeAssert extends AbstractAssert<AttributeAssert, Attribute<?
   public AttributeAssert hasOutgoingReferences(Reference<?>... references) {
     isNotNull();
 
-    List<Reference<?>> outgoingReferences = Arrays.asList(references);
+    List<Reference<?>> outgoingReferences = List.of(references);
     List<Reference<?>> actualOutgoingReferences = actual.getOutgoingReferences();
 
     if (!actualOutgoingReferences.containsAll(outgoingReferences)) {

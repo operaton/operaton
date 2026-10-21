@@ -59,7 +59,7 @@ public interface PvmActivity extends PvmScope {
   /**
    * Finds and returns an outgoing sequence flow (transition) by it's id.
    * @param transitionId the id of the transition to find
-   * @return the transition or null in case it cannot be found
+   * @return the transition or {@code null} in case it cannot be found
    */
   @Nullable PvmTransition findOutgoingTransition(String transitionId);
 

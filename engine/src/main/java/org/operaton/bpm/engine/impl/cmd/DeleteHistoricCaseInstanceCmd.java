@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
@@ -66,7 +66,7 @@ public @NullMarked class DeleteHistoricCaseInstanceCmd implements Command<Object
 
     commandContext
       .getHistoricCaseInstanceManager()
-      .deleteHistoricCaseInstancesByIds(Arrays.asList(caseInstanceId));
+      .deleteHistoricCaseInstancesByIds(List.of(caseInstanceId));
 
     return null;
   }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 import jakarta.ejb.*;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.ProcessEngineService;
@@ -35,18 +35,18 @@ import org.operaton.bpm.engine.ProcessEngine;
 @Stateless(name = "ProcessEngineService", mappedName = "ProcessEngineService")
 @Local(ProcessEngineService.class)
 @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-public class EjbProcessEngineService implements ProcessEngineService {
+public @NullMarked class EjbProcessEngineService implements ProcessEngineService {
 
   @EJB
   protected EjbBpmPlatformBootstrap ejbBpmPlatform;
 
   @Override
-  public ProcessEngine getDefaultProcessEngine() {
+  public @Nullable ProcessEngine getDefaultProcessEngine() {
     return ejbBpmPlatform.getProcessEngineService().getDefaultProcessEngine();
   }
 
   @Override
-  public @NonNull List<ProcessEngine> getProcessEngines() {
+  public List<ProcessEngine> getProcessEngines() {
     return ejbBpmPlatform.getProcessEngineService().getProcessEngines();
   }
 

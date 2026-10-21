@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -46,11 +45,9 @@ public class ConditionRestServiceImpl extends AbstractRestProcessEngineAware imp
     ConditionEvaluationBuilder builder = createConditionEvaluationBuilder(conditionDto);
     List<ProcessInstance> processInstances = builder.evaluateStartConditions();
 
-    List<ProcessInstanceDto> result = new ArrayList<>();
-    for (ProcessInstance processInstance : processInstances) {
-      result.add(ProcessInstanceDto.fromProcessInstance(processInstance));
-    }
-    return result;
+    return processInstances.stream()
+        .map(ProcessInstanceDto::fromProcessInstance)
+        .toList();
   }
 
   protected ConditionEvaluationBuilder createConditionEvaluationBuilder(EvaluationConditionDto conditionDto) {

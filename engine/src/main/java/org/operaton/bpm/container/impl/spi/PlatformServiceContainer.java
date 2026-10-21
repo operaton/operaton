@@ -47,13 +47,13 @@ public interface PlatformServiceContainer {
   DeploymentOperationBuilder createUndeploymentOperation(String name);
 
   /**
-   * get a specific service by name or null if no such Service exists.
+   * get a specific service by name or {@code null} if no such Service exists.
    *
    */
   <S> @Nullable S getService(ServiceType type, String localName);
 
   /**
-   * get the service value for a specific service by name or null if no such
+   * get the service value for a specific service by name or {@code null} if no such
    * Service exists.
    *
    */

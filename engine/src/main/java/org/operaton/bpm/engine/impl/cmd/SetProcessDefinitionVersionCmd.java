@@ -130,6 +130,10 @@ public @NullMarked class SetProcessDefinitionVersionCmd implements Command<Void>
 
     ProcessDefinitionEntity newProcessDefinition = deploymentCache
       .findDeployedProcessDefinitionByKeyVersionAndTenantId(currentProcessDefinition.getKey(), processDefinitionVersion, currentProcessDefinition.getTenantId());
+    ensureNotNull("Process Definition with key '%s', version '%s' and tenant '%s' not found"
+        .formatted(currentProcessDefinition.getKey(), processDefinitionVersion, currentProcessDefinition.getTenantId()),
+        "newProcessDefinition", newProcessDefinition);
+    requireNonNull(newProcessDefinition);
 
     validateAndSwitchVersionOfExecution(commandContext, processInstance, newProcessDefinition);
 

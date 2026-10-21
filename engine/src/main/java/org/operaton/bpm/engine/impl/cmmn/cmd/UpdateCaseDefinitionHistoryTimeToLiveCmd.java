@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureGreaterThanOrEqual;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -53,6 +54,8 @@ public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void> {
     validate(historyTimeToLive, context);
 
     CaseDefinitionEntity caseDefinitionEntity = context.getCaseDefinitionManager().findLatestDefinitionById(caseDefinitionId);
+    ensureNotNull("Case Definition '%s' not found".formatted(caseDefinitionId), "caseDefinition", caseDefinitionEntity);
+    requireNonNull(caseDefinitionEntity);
 
     for (CommandChecker checker : context.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateCaseDefinition(caseDefinitionEntity);

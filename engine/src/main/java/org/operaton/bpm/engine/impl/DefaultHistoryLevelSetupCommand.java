@@ -31,9 +31,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
 /**
  * Default implementation of {@link HistoryLevelSetupCommand}.
  *
- * <p>Verifies that the history level configured in
+ * <p>
+ * Verifies that the history level configured in
  * {@link ProcessEngineConfigurationImpl#getHistoryLevel()} matches the one persisted in the
  * database, writing the configured level to the database if none is present yet.
+ * </p>
  *
  * @since 2.1
  */

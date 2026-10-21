@@ -19,7 +19,7 @@ package org.operaton.bpm.model.xml.impl.type.attribute;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
 /**
- * <p>Base class for String attributes
+ * Base class for String attributes
  *
  * @author Daniel Meyer
  *

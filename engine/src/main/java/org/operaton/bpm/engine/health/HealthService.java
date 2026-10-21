@@ -18,9 +18,11 @@ package org.operaton.bpm.engine.health;
 /**
  * SPI for obtaining Operaton health information independent of the runtime.
  *
- * <p>Implementations are discovered via framework-specific dependency injection rather than
+ * <p>
+ * Implementations are discovered via framework-specific dependency injection rather than
  * {@link java.util.ServiceLoader}. This is intentional: each supported runtime already provides a
  * lifecycle-aware DI mechanism that is preferable to a raw ServiceLoader:
+ * </p>
  * <ul>
  *   <li><b>Spring Boot</b> – a default implementation is registered via
  *       {@code @ConditionalOnMissingBean}, allowing applications to supply a custom bean that

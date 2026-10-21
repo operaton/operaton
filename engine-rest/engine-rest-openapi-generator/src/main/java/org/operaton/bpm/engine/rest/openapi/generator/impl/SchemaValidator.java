@@ -32,7 +32,9 @@ import com.networknt.schema.SpecificationVersion;
  * Utility class to validate a JSON instance against a JSON Schema using the
  * <a href="https://github.com/networknt/json-schema-validator">networknt JSON Schema validator</a>.
  *
- * <p>Usage:
+ * <p>
+ * Usage:
+ * </p>
  * <pre>
  * java org.operaton.bpm.engine.rest.openapi.generator.impl.SchemaValidator &lt;json schema&gt; &lt;file to validate&gt;
  * </pre>

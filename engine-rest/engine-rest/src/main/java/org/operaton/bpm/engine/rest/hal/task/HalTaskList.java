@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.task;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.TaskRestService;
@@ -46,10 +46,9 @@ public class HalTaskList extends HalCollectionResource<HalTaskList> {
     HalTaskList taskList = new HalTaskList();
 
     // embed tasks
-    List<HalResource<?>> embeddedTasks = new ArrayList<>();
-    for (Task task : tasks) {
-      embeddedTasks.add(HalTask.fromTask(task));
-    }
+    List<HalResource<?>> embeddedTasks = tasks.stream()
+      .map(HalTask::fromTask)
+      .collect(Collectors.toList());
 
     taskList.addEmbedded("task", embeddedTasks);
 

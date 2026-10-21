@@ -33,7 +33,7 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    *
    * @param caseInstanceId the id of the case instance
    *
-   * @throws NotValidException when the given case instance id is null
+   * @throws NotValidException when the given case instance id is {@code null}
    */
   CaseInstanceQuery caseInstanceId(String caseInstanceId);
 
@@ -42,7 +42,7 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    *
    * @param caseInstanceBusinessKey the business key of the case instance
    *
-   * @throws NotValidException when the given case instance business key is null
+   * @throws NotValidException when the given case instance business key is {@code null}
    */
   CaseInstanceQuery caseInstanceBusinessKey(String caseInstanceBusinessKey);
 
@@ -52,7 +52,7 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    *
    * @param caseDefinitionKey the key of the case definition
    *
-   * @throws NotValidException when the given case definition key is null
+   * @throws NotValidException when the given case definition key is {@code null}
    */
   CaseInstanceQuery caseDefinitionKey(String caseDefinitionKey);
 
@@ -62,7 +62,7 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    *
    * @param caseDefinitionId the id of the case definition
    *
-   * @throws NotValidException when the given case definition id is null
+   * @throws NotValidException when the given case definition id is {@code null}
    */
   CaseInstanceQuery caseDefinitionId(String caseDefinitionId);
 
@@ -131,10 +131,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * are not supported.
    * </p>
    *
-   * @param name the name of the variable, cannot be null
+   * @param name the name of the variable, cannot be {@code null}
    * @param value the value of the variable
    *
-   * @throws NotValidException when the given name is null
+   * @throws NotValidException when the given name is {@code null}
    */
   CaseInstanceQuery variableValueEquals(String name, Object value);
 
@@ -147,10 +147,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * are not supported.
    * </p>
    *
-   * @param name name of the variable, cannot be null
+   * @param name name of the variable, cannot be {@code null}
    * @param value the value of the variable
    *
-   * @throws NotValidException when the given name is null
+   * @throws NotValidException when the given name is {@code null}
    *
    */
   CaseInstanceQuery variableValueNotEquals(String name, Object value);
@@ -164,10 +164,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * are not supported.
    * </p>
    *
-   * @param name variable name, cannot be null
-   * @param value variable value, cannot be null
+   * @param name variable name, cannot be {@code null}
+   * @param value variable value, cannot be {@code null}
    *
-   * @throws NotValidException when the given name is null or a null-value or a boolean-value is used
+   * @throws NotValidException when the given name is {@code null} or a null-value or a boolean-value is used
    *
    */
   CaseInstanceQuery variableValueGreaterThan(String name, Object value);
@@ -181,10 +181,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * are not primitive type wrappers) are not supported.
    * </p>
    *
-   * @param name variable name, cannot be null
-   * @param value variable value, cannot be null
+   * @param name variable name, cannot be {@code null}
+   * @param value variable value, cannot be {@code null}
    *
-   * @throws NotValidException when the given name is null or a null-value or a boolean-value is used
+   * @throws NotValidException when the given name is {@code null} or a null-value or a boolean-value is used
    *
    */
   CaseInstanceQuery variableValueGreaterThanOrEqual(String name, Object value);
@@ -197,10 +197,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * are not supported.
    * </p>
    *
-   * @param name variable name, cannot be null
-   * @param value variable value, cannot be null
+   * @param name variable name, cannot be {@code null}
+   * @param value variable value, cannot be {@code null}
    *
-   * @throws NotValidException when the given name is null or a null-value or a boolean-value is used
+   * @throws NotValidException when the given name is {@code null} or a null-value or a boolean-value is used
    *
    */
   CaseInstanceQuery variableValueLessThan(String name, Object value);
@@ -213,10 +213,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * are not supported.
    * </p>
    *
-   * @param name variable name, cannot be null
-   * @param value variable value, cannot be null
+   * @param name variable name, cannot be {@code null}
+   * @param value variable value, cannot be {@code null}
    *
-   * @throws NotValidException when the given name is null or a null-value or a boolean-value is used
+   * @throws NotValidException when the given name is {@code null} or a null-value or a boolean-value is used
    *
    */
   CaseInstanceQuery variableValueLessThanOrEqual(String name, Object value);
@@ -225,12 +225,12 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * Only select cases instances which have a global variable value like the given value.
    * This can be used on string variables only.
    *
-   * @param name variable name, cannot be null
-   * @param value variable value, cannot be null. The string can include the
+   * @param name variable name, cannot be {@code null}
+   * @param value variable value, cannot be {@code null}. The string can include the
    *              wildcard character '%' to express like-strategy:
    *              starts with (string%), ends with (%string) or contains (%string%).
    *
-   * @throws NotValidException when the given name is null or a null-value or a boolean-value is used
+   * @throws NotValidException when the given name is {@code null} or a null-value or a boolean-value is used
    *
    */
   CaseInstanceQuery variableValueLike(String name, String value);
@@ -243,7 +243,7 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * @param value the value of the variable, it can include the wildcard character '%'
    *              to express like-strategy: starts with (string%), ends with (%string),
    *              contains (%string%)
-   * @throws NotValidException if the name or value is null or a null-value or a boolean-value is used
+   * @throws NotValidException if the name or value is {@code null} or a null-value or a boolean-value is used
    */
   CaseInstanceQuery variableValueNotLike(String name, String value);
 

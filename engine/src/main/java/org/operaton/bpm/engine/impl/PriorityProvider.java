@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 public interface PriorityProvider<T> {
 
   /**
-   * @param execution may be null when the job is not created in the context of a
+   * @param execution may be {@code null} when the job is not created in the context of a
    *   running process instance (e.g. a timer start event)
    * @param param extra parameter to determine priority on
    * @param jobDefinitionId the job definition id if related to a job

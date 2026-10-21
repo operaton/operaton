@@ -130,7 +130,7 @@ public class TopicSubscriptionManager implements Runnable {
   }
 
   protected FetchAndLockResponseDto fetchAndLock(List<TopicRequestDto> subscriptions) {
-    List<ExternalTask> externalTasks = null;
+    List<ExternalTask> externalTasks;
 
     try {
       LOG.fetchAndLock(subscriptions);

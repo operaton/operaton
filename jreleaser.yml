@@ -44,7 +44,8 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     prerelease:
       enabled: true
     issues:
-      enabled: true
+      # Temporarily disabled due to https://github.com/jreleaser/jreleaser/issues/2172
+      enabled: false
       comment: '🎉 This issue has been resolved in `{{tagName}}` ([Release Notes]({{releaseNotesUrl}}))'
       applyMilestone: ALWAYS
     changelog:

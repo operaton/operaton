@@ -22,21 +22,22 @@ import org.operaton.bpm.application.impl.ProcessApplicationContextImpl;
 import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
 
 /**
- * <p>A utility to declare the process application in which subsequent engine API calls
+ * A utility to declare the process application in which subsequent engine API calls
  * are executed. Process application context is important for the engine
  * to access custom classes as well as process-application-level entities like
  * script engines or Spin data formats.
  *
- * <p>By default, the process engine only guarantees to switch into the context
+ * <p>
+ * By default, the process engine only guarantees to switch into the context
  * of the process application when it executes custom code (e.g. a JavaDelegate).
  * This utility allows to declare a process application into which the process engine
  * then switches as soon as it begins executing a command.
+ * </p>
  *
  * <p>
  * Example using a variable that is serialized with a Operaton Spin data format:
  * </p>
  *
- * <p>
  * <pre>
  *  try {
  *    ProcessApplicationContext.setCurrentProcessApplication("someProcessApplication");
@@ -48,14 +49,17 @@ import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
  *    ProcessApplicationContext.clear();
  *  }
  * </pre>
- * </p>
  *
- * <p>Declaring the process application context allows the engine to access the Spin JSON data format
+ * <p>
+ * Declaring the process application context allows the engine to access the Spin JSON data format
  * as configured in that process application to serialize the object value. Without declaring the context,
  * the global json data format is used.
+ * </p>
  *
- * <p>Declaring the context process application affects only engine API invocations. It DOES NOT affect
+ * <p>
+ * Declaring the context process application affects only engine API invocations. It DOES NOT affect
  * the context class loader for subsequent code.
+ * </p>
  *
  * @author Thorben Lindhauer
  */
@@ -108,10 +112,12 @@ public final class ProcessApplicationContext {
   }
 
   /**
-   * <p>Takes a callable and executes all engine API invocations within that callable in the context
+   * Takes a callable and executes all engine API invocations within that callable in the context
    * of the given process application
    *
-   * <p>Equivalent to
+   * <p>
+   * Equivalent to
+   * </p>
    * <pre>
    *   try {
    *     ProcessApplicationContext.setCurrentProcessApplication("someProcessApplication");
@@ -135,10 +141,12 @@ public final class ProcessApplicationContext {
   }
 
   /**
-   * <p>Takes a callable and executes all engine API invocations within that callable in the context
+   * Takes a callable and executes all engine API invocations within that callable in the context
    * of the given process application
    *
-   * <p>Equivalent to
+   * <p>
+   * Equivalent to
+   * </p>
    * <pre>
    *   try {
    *     ProcessApplicationContext.setCurrentProcessApplication("someProcessApplication");
@@ -162,10 +170,12 @@ public final class ProcessApplicationContext {
   }
 
   /**
-   * <p>Takes a callable and executes all engine API invocations within that callable in the context
+   * Takes a callable and executes all engine API invocations within that callable in the context
    * of the given process application
    *
-   * <p>Equivalent to
+   * <p>
+   * Equivalent to
+   * </p>
    * <pre>
    *   try {
    *     ProcessApplicationContext.setCurrentProcessApplication("someProcessApplication");

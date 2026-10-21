@@ -17,9 +17,9 @@
 package org.operaton.bpm.engine.impl.repository;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -57,14 +57,12 @@ public class DefaultDeploymentHandler implements DeploymentHandler {
   public Set<String> determineDeploymentsToResumeByProcessDefinitionKey(
       String[] processDefinitionKeys) {
 
-    Set<String> deploymentIds = new HashSet<>();
     List<ProcessDefinition> processDefinitions = Context.getCommandContext().getProcessDefinitionManager()
         .findProcessDefinitionsByKeyIn(processDefinitionKeys);
-    for (ProcessDefinition processDefinition : processDefinitions) {
-      deploymentIds.add(processDefinition.getDeploymentId());
-    }
 
-    return deploymentIds;
+    return processDefinitions.stream()
+        .map(ProcessDefinition::getDeploymentId)
+        .collect(Collectors.toSet());
   }
 
   @Override
@@ -75,12 +73,9 @@ public class DefaultDeploymentHandler implements DeploymentHandler {
         .deploymentName(candidateDeployment.getName())
         .list();
 
-    Set<String> deploymentIds = new HashSet<>();
-    for (Deployment deployment : previousDeployments) {
-      deploymentIds.add(deployment.getId());
-    }
-
-    return deploymentIds;
+    return previousDeployments.stream()
+        .map(Deployment::getId)
+        .collect(Collectors.toSet());
   }
 
   protected boolean resourcesDiffer(Resource resource, Resource existing) {

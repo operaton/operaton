@@ -37,9 +37,9 @@ import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
  * <p/>
  * The first major component is the state handlers. For this to work, a BeanFactoryPostProcessor is registered which in turn registers a
  * {@link org.operaton.bpm.engine.test.spring.components.registry.ActivitiStateHandlerRegistry} if none exists.
+ * </p>
  *
  * @author Josh Long
- * @since 5.3
  */
 public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 

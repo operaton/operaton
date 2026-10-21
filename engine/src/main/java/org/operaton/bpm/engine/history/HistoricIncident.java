@@ -48,10 +48,10 @@ public interface HistoricIncident {
    * kind of incident.
    *
    * <p>
-   *
    * For example: <code>failedJobs</code> will be returned
    * in the case of an incident, which identify failed job
    * during the execution of a process instance.
+   * </p>
    */
   String getIncidentType();
 

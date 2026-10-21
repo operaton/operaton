@@ -507,7 +507,7 @@ class CallActivityTest {
   }
 
   /**
-   * Test case for handing over a null process variables to a sub process
+   * Test case for handing over a {@code null} process variables to a sub process
    */
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutput.bpmn20.xml",
@@ -555,7 +555,7 @@ class CallActivityTest {
   }
 
   /**
-   * Test case for handing over a null process variables to a sub process
+   * Test case for handing over a {@code null} process variables to a sub process
    */
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testSubProcessDataInputOutputAsExpression.bpmn20.xml",

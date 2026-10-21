@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.tree;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.Collection;
 import java.util.Collections;
 
@@ -40,5 +42,5 @@ public abstract class SingleReferenceWalker<T> extends ReferenceWalker<T> {
     }
   }
 
-  protected abstract T nextElement();
+  protected abstract @Nullable T nextElement();
 }

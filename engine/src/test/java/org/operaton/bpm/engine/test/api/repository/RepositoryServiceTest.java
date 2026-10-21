@@ -1153,7 +1153,7 @@ class RepositoryServiceTest {
     assertThat(repositoryService.createProcessDefinitionQuery().orderByProcessDefinitionName().asc().count()).isEqualTo(4);
     assertThat(repositoryService.createProcessDefinitionQuery().latestVersion().orderByProcessDefinitionName().asc().count()).isEqualTo(2);
 
-    deleteDeployments(Arrays.asList(deployment1Id, deployment2Id));
+    deleteDeployments(List.of(deployment1Id, deployment2Id));
   }
 
   @Test

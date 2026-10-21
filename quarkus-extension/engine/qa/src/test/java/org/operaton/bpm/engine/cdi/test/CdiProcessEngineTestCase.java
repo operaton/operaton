@@ -25,7 +25,7 @@ import jakarta.enterprise.inject.spi.BeanManager;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.InjectableInstance;
 import io.quarkus.arc.InstanceHandle;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.AfterEach;
@@ -81,7 +81,7 @@ public abstract class CdiProcessEngineTestCase {
 
 
   @RegisterExtension
-  protected static final QuarkusUnitTest unitTest = new QuarkusUnitTest()
+  protected static final QuarkusExtensionTest unitTest = new QuarkusExtensionTest()
           .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
                   .addAsResource("application.properties")
                   .addPackages(true, CdiProcessEngineTestCase.class.getPackage())
@@ -205,7 +205,7 @@ public abstract class CdiProcessEngineTestCase {
 
   protected String deploy(Class<?> testClass, String methodName, String[] resources) {
     if (resources != null) {
-      return TestHelper.annotationDeploymentSetUp(processEngine, resources, testClass, methodName);
+      return TestHelper.annotationDeploymentSetUp(processEngine, resources, testClass, true, methodName);
     }
     return null;
   }

@@ -27,7 +27,7 @@ public final class LocalMessages {
 	}
 
 	public static String get(String key, Object... args) {
-		String template = null;
+		String template;
 		try {
 			template = RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {

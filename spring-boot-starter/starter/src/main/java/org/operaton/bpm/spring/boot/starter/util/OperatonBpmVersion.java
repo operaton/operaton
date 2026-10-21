@@ -32,6 +32,7 @@ import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmPropertie
  * {@code null} if it cannot be determined.
  * <p/>
  * return the version of Operaton or {@code null}
+ * </p>
  *
  * @see Package#getImplementationVersion()
  */

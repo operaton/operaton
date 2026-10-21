@@ -19,8 +19,8 @@ package org.operaton.bpm.integrationtest;
 import java.util.concurrent.TimeUnit;
 import jakarta.ws.rs.core.MediaType;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.Unirest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 

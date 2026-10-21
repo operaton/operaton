@@ -57,21 +57,21 @@ public interface DomElement {
   /**
    * Returns the DOM document which contains this element.
    *
-   * @return the DOM document or null if the element itself is a document
+   * @return the DOM document or {@code null} if the element itself is a document
    */
   @Nullable DomDocument getDocument();
 
   /**
    * Returns the root element of the document which contains this element.
    *
-   * @return the root element of the document or null if non exists
+   * @return the root element of the document or {@code null} if non exists
    */
   @Nullable DomElement getRootElement();
 
   /**
    * Returns the parent element of this element.
    *
-   * @return the parent element or null if not part of a tree
+   * @return the parent element or {@code null} if not part of a tree
    */
   @Nullable DomElement getParentElement();
 
@@ -129,10 +129,10 @@ public interface DomElement {
 
   /**
    * Inserts the new child element after another child element. If the child element to
-   * insert after is null the new child element will be inserted at the beginning.
+   * insert after is {@code null} the new child element will be inserted at the beginning.
    *
    * @param elementToInsert  the new element to insert
-   * @param insertAfter  the existing child element to insert after or null
+   * @param insertAfter  the existing child element to insert after or {@code null}
    */
   void insertChildElementAfter(DomElement elementToInsert, DomElement insertAfter);
 
@@ -243,7 +243,7 @@ public interface DomElement {
   /**
    * Returns the {@link ModelElementInstance} which is associated with this element.
    *
-   * @return the {@link ModelElementInstance} or null if non is associated
+   * @return the {@link ModelElementInstance} or {@code null} if non is associated
    */
   ModelElementInstance getModelElementInstance();
 
@@ -275,7 +275,7 @@ public interface DomElement {
    * The default namespace has the prefix {@code null}.
    *
    * @param namespaceUri  the namespaceUri of the namespace
-   * @return the prefix or null if non is defined
+   * @return the prefix or {@code null} if non is defined
    */
   String lookupPrefix(String namespaceUri);
 }

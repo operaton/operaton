@@ -25,7 +25,9 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  * Listener interface implemented by user code which wants to be notified
  * when a state transition happens on a {@link CaseExecution}.
  *
- * <p>The following state transition are supported on a {@link CaseInstance}:
+ * <p>
+ * The following state transition are supported on a {@link CaseInstance}:
+ * </p>
  * <ul>
  * <li>{@link #CREATE}</li>
  * <li>{@link #COMPLETE}</li>
@@ -34,11 +36,12 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  * <li>{@link #RE_ACTIVATE}</li>
  * <li>{@link #CLOSE}</li>
  * </ul>
- * </p>
  *
- * <p>And on a {@link CaseExecution} which is not a {@link CaseInstance} and which
+ * <p>
+ * And on a {@link CaseExecution} which is not a {@link CaseInstance} and which
  * is associated with a {@link Task} or a {@link Stage} the following state transition
  * are supported:
+ * </p>
  * <ul>
  * <li>{@link #CREATE}</li>
  * <li>{@link #ENABLE}</li>
@@ -54,7 +57,6 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  * <li>{@link #PARENT_SUSPEND}</li>
  * <li>{@link #PARENT_RESUME}</li>
  * </ul>
- * </p>
  *
  * @author Roman Smirnov
  *

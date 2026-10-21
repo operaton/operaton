@@ -21,12 +21,12 @@ import org.springframework.context.ApplicationEvent;
 import org.operaton.bpm.client.spring.SpringTopicSubscription;
 
 /**
- * <p>
  * Event to be published after the {@link SpringTopicSubscription} was initialized.
  *
  * <p>
  * When this event has been emitted, you can call {@link SpringTopicSubscription#open()}
  * when the topic subscription is not opened automatically.
+ * </p>
  */
 public class SubscriptionInitializedEvent extends ApplicationEvent {
 

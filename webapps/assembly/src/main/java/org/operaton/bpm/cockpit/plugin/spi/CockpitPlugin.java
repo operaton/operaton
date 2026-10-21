@@ -44,13 +44,13 @@ public interface CockpitPlugin extends AppPlugin {
    * provided by this plugin.
    *
    * <p>
-   *
    * The mapping files define additional MyBatis queries that can be executed by the plugin.
+   * </p>
    *
    * <p>
-   *
    * Inside the plugin the queries may be executed via the {@link org.operaton.bpm.cockpit.db.QueryService} that may be obtained through
    * {@link org.operaton.bpm.cockpit.Cockpit#getQueryService(java.lang.String) }.
+   * </p>
    *
    * @return the list of additional mapping files
    */

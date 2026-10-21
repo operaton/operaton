@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Sebastian Menski
  * @author Daniel Meyer
  */
-public class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommand {
+public @NullMarked class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommand {
 
   @Override
   public @Nullable Void execute(CommandContext commandContext) {

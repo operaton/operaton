@@ -216,7 +216,7 @@ public class DbSqlSessionFactory implements SessionFactory {
 
     // mysql specific
     // use the same specific for mariadb since it based on mysql and work with the exactly same statements
-    for(String mysqlLikeDatabase : Arrays.asList(MYSQL, MARIADB)) {
+    for(String mysqlLikeDatabase : List.of(MYSQL, MARIADB)) {
 
       databaseSpecificLimitBeforeStatements.put(mysqlLikeDatabase, "");
       optimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements.put(mysqlLikeDatabase, "");

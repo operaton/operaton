@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,13 +57,13 @@ public final class BpmnTestConstants {
   public static final String TEST_DELEGATE_EXPRESSION_XML = "${" + TEST_CLASS_XML + "}";
   public static final String TEST_DELEGATE_EXPRESSION_API = "${" + TEST_CLASS_API + "}";
   public static final String TEST_GROUPS_XML = "group1, ${group2(a, b)}, group3";
-  public static final List<String> TEST_GROUPS_LIST_XML = Arrays.asList("group1", "${group2(a, b)}", "group3");
+  public static final List<String> TEST_GROUPS_LIST_XML = List.of("group1", "${group2(a, b)}", "group3");
   public static final String TEST_GROUPS_API = "#{group1( c,d)}, group5";
-  public static final List<String> TEST_GROUPS_LIST_API = Arrays.asList("#{group1( c,d)}", "group5");
+  public static final List<String> TEST_GROUPS_LIST_API = List.of("#{group1( c,d)}", "group5");
   public static final String TEST_USERS_XML = "user1, ${user2(a, b)}, user3";
-  public static final List<String> TEST_USERS_LIST_XML = Arrays.asList("user1", "${user2(a, b)}", "user3");
+  public static final List<String> TEST_USERS_LIST_XML = List.of("user1", "${user2(a, b)}", "user3");
   public static final String TEST_USERS_API = "#{user1( c,d)}, user5";
-  public static final List<String> TEST_USERS_LIST_API = Arrays.asList("#{user1( c,d)}", "user5");
+  public static final List<String> TEST_USERS_LIST_API = List.of("#{user1( c,d)}", "user5");
   public static final String TEST_DUE_DATE_XML = "2014-02-27";
   public static final String TEST_DUE_DATE_API = "2015-03-28";
   public static final String TEST_FOLLOW_UP_DATE_API = "2015-01-01";
@@ -88,7 +87,7 @@ public final class BpmnTestConstants {
   public static final String TEST_CONDITION = "${true}";
   public static final String TEST_CONDITIONAL_VARIABLE_NAME = "variable";
   public static final String TEST_CONDITIONAL_VARIABLE_EVENTS = "create, update";
-  public static final List<String> TEST_CONDITIONAL_VARIABLE_EVENTS_LIST = Arrays.asList("create", "update");
+  public static final List<String> TEST_CONDITIONAL_VARIABLE_EVENTS_LIST = List.of("create", "update");
 
   public static final String TEST_STRING_FORM_REF_BINDING = "version";
   public static final String TEST_STRING_FORM_REF_VERSION = "2";

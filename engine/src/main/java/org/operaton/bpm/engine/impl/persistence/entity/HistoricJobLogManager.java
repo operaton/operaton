@@ -50,7 +50,7 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
     return (HistoricJobLogEventEntity) getDbEntityManager().selectOne("selectHistoricJobLog", historicJobLogId);
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "unused"})
   public List<HistoricJobLog> findHistoricJobLogsByDeploymentId(String deploymentId) {
     return getDbEntityManager().selectList("selectHistoricJobLogByDeploymentId", deploymentId);
   }

@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import org.operaton.bpm.engine.query.QueryProperty;
+import org.jspecify.annotations.NullMarked;
 
-final class HistoricIdentityLinkLogQueryProperty {
+import org.operaton.bpm.engine.query.QueryProperty;
+final @NullMarked class HistoricIdentityLinkLogQueryProperty {
 
   public static final QueryProperty ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty TIME = new QueryPropertyImpl("TIMESTAMP_");

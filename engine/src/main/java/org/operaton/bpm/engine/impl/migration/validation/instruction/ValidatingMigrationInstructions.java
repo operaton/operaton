@@ -89,13 +89,9 @@ public class ValidatingMigrationInstructions {
   }
 
   public void filterWith(List<MigrationInstructionValidator> validators) {
-    List<ValidatingMigrationInstruction> validInstructions = new ArrayList<>();
-
-    for (ValidatingMigrationInstruction instruction : instructions) {
-      if (isValidInstruction(instruction, this, validators)) {
-        validInstructions.add(instruction);
-      }
-    }
+    List<ValidatingMigrationInstruction> validInstructions = instructions.stream()
+        .filter(instruction -> isValidInstruction(instruction, this, validators))
+        .toList();
 
     instructionsBySourceScope.clear();
     instructionsByTargetScope.clear();
@@ -107,13 +103,9 @@ public class ValidatingMigrationInstructions {
   }
 
   public List<MigrationInstruction> asMigrationInstructions() {
-    List<MigrationInstruction> migrationInstructions = new ArrayList<>();
-
-    for (ValidatingMigrationInstruction instruction : this.instructions) {
-      migrationInstructions.add(instruction.toMigrationInstruction());
-    }
-
-    return migrationInstructions;
+    return instructions.stream()
+        .map(ValidatingMigrationInstruction::toMigrationInstruction)
+        .toList();
   }
 
   public boolean contains(ValidatingMigrationInstruction instruction) {

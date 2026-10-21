@@ -22,11 +22,13 @@ import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.task.ExternalTask;
 
 /**
- * <p>Provides an exponential backoff strategy when an error occurs fetching external tasks.
+ * Provides an exponential backoff strategy when an error occurs fetching external tasks.
  *
- * <p>Note this strategy does not provide any backoff when no external tasks are received. It
+ * <p>
+ * Note this strategy does not provide any backoff when no external tasks are received. It
  * should therefore only be used with long polling (asyncResponseTimeout) to ensure appropriate
  * throttling of requests.
+ * </p>
  */
 public class ExponentialErrorBackoffStrategy implements ErrorAwareBackoffStrategy {
 

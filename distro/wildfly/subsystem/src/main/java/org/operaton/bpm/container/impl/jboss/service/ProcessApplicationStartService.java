@@ -131,7 +131,7 @@ public class ProcessApplicationStartService implements Service<ProcessApplicatio
     try {
 
       // get the process application component
-      ProcessApplicationInterface processApplication = null;
+      ProcessApplicationInterface processApplication;
       if(paComponentViewSupplier != null) {
         ComponentView componentView = paComponentViewSupplier.get();
         reference = componentView.createInstance();
@@ -207,7 +207,7 @@ public class ProcessApplicationStartService implements Service<ProcessApplicatio
     try {
 
       // get the process application component
-      ProcessApplicationInterface processApplication = null;
+      ProcessApplicationInterface processApplication;
       if (paComponentViewSupplier != null) {
         ComponentView componentView = paComponentViewSupplier.get();
         reference = componentView.createInstance();

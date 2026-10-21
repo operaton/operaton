@@ -22,7 +22,7 @@ import jakarta.inject.Named;
 import jakarta.transaction.Status;
 import jakarta.transaction.UserTransaction;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class UserTransactionIntegrationTest {
 
   @RegisterExtension
-  static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  static QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
   @Inject

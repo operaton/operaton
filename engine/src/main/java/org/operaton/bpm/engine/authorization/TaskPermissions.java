@@ -56,7 +56,7 @@ public enum TaskPermissions implements Permission {
   DELETE("DELETE", 16),
 
   /**
-   * <p>Indicates that READ_HISTORY interactions are permitted.
+   * Indicates that READ_HISTORY interactions are permitted.
    *
    * @deprecated since the permission is not used by any built-in functionality of Operaton.
    */

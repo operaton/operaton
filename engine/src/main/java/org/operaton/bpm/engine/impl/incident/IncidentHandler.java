@@ -24,9 +24,9 @@ import org.operaton.bpm.engine.runtime.Incident;
  * execution of a process instance.
  *
  * <p>
- *
  * Custom implementations of this interface may be wired through
  * {@link org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl#setCustomIncidentHandlers(java.util.List)}.
+ * </p>
  *
  * @see FailedJobIncidentHandler
  * @see org.operaton.bpm.engine.runtime.Incident

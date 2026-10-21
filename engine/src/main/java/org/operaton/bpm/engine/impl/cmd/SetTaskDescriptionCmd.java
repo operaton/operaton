@@ -33,7 +33,7 @@ public @NullMarked class SetTaskDescriptionCmd extends AbstractSetTaskPropertyCm
    *
    * @param taskId      the id of the task whose description should be changed
    * @param description the new description value to change to
-   * @throws NullValueException in case the given taskId or the given description are null
+   * @throws NullValueException in case the given taskId or the given description are {@code null}
    */
   public SetTaskDescriptionCmd(String taskId, String description) {
     super(taskId, description, true);

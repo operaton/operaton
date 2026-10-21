@@ -91,7 +91,7 @@ public class ExecutionResourceImpl implements ExecutionResource {
 
   @Override
   public IncidentDto createIncident(CreateIncidentDto createIncidentDto) {
-    Incident newIncident = null;
+    Incident newIncident;
 
     try {
       newIncident = engine.getRuntimeService()

@@ -46,7 +46,7 @@ public class LaunchTask extends Task {
       throw new BuildException("script attribute is required with the launch task");
     }
 
-    String[] cmd = null;
+    String[] cmd;
     String executable = getExecutable();
     if (args!=null) {
       List<String> pieces = new ArrayList<>();
@@ -55,7 +55,7 @@ public class LaunchTask extends Task {
       while (tokenizer.hasMoreTokens()) {
         pieces.add(tokenizer.nextToken());
       }
-      cmd = pieces.toArray(new String[pieces.size()]);
+      cmd = pieces.toArray(String[]::new);
 
     } else {
       cmd = new String[]{executable};

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.sub.runtime.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import jakarta.ws.rs.core.Response.Status;
@@ -53,12 +52,9 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
 
     List<Comment> processInstanceComments = engine.getTaskService().getProcessInstanceComments(processInstanceId);
 
-    List<CommentDto> comments = new ArrayList<>();
-    for (Comment comment : processInstanceComments) {
-      comments.add(CommentDto.fromComment(comment));
-    }
-
-    return comments;
+    return processInstanceComments.stream()
+        .map(CommentDto::fromComment)
+        .toList();
   }
 
   /**

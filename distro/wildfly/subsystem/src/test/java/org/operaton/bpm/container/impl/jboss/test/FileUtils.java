@@ -31,7 +31,7 @@ public final class FileUtils {
 
   public static String readFile(String name) throws Exception {
     InputStream is = null;
-    BufferedReader reader = null;
+    BufferedReader reader;
 
     StringBuilder fileContents = new StringBuilder();
 

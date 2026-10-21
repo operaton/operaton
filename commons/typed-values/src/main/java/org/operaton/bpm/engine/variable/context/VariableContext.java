@@ -39,7 +39,7 @@ public interface VariableContext {
    * Resolve a value in this context.
    *
    * @param variableName the name of the variable to resolve.
-   * @return the value of the variable or null in case the variable does not exist.
+   * @return the value of the variable or {@code null} in case the variable does not exist.
    */
   @Nullable TypedValue resolve(@Nullable String variableName);
 

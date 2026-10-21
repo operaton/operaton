@@ -29,15 +29,16 @@ import org.operaton.bpm.model.dmn.impl.DmnParser;
  *
  * <p>
  * Example:
+ * </p>
  * <pre>
  * // In your implementation JAR:
  * // File: META-INF/services/org.operaton.bpm.model.dmn.DmnParserFactory
  * com.example.MyCustomDmnParserFactory
  * </pre>
- * </p>
  *
  * <p>
  * To obtain an instance, use:
+ * </p>
  * <pre>
  * ServiceLoader&lt;DmnParserFactory&gt; loader = ServiceLoader.load(DmnParserFactory.class);
  * for (DmnParserFactory factory : loader) {
@@ -45,7 +46,6 @@ import org.operaton.bpm.model.dmn.impl.DmnParser;
  *   // use parser
  * }
  * </pre>
- * </p>
  */
 public interface DmnParserFactory {
   DmnParser newInstance();

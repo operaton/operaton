@@ -50,6 +50,7 @@ public class PropertyChange {
     return propertyName;
   }
 
+  @SuppressWarnings("unused")
   public void setPropertyName(String propertyName) {
     this.propertyName = propertyName;
   }
@@ -58,6 +59,7 @@ public class PropertyChange {
     return orgValue;
   }
 
+  @SuppressWarnings("unused")
   public void setOrgValue(@Nullable Object orgValue) {
     this.orgValue = orgValue;
   }

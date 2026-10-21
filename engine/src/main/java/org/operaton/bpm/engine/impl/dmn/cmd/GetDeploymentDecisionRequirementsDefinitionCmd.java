@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -41,6 +42,8 @@ public class GetDeploymentDecisionRequirementsDefinitionCmd implements Command<D
     ensureNotNull("decisionRequirementsDefinitionId", decisionRequirementsDefinitionId);
     DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
     DecisionRequirementsDefinitionEntity decisionRequirementsDefinition = deploymentCache.findDeployedDecisionRequirementsDefinitionById(decisionRequirementsDefinitionId);
+    ensureNotNull("Decision Requirements Definition '%s' not found".formatted(decisionRequirementsDefinitionId), "decisionRequirementsDefinition", decisionRequirementsDefinition);
+    requireNonNull(decisionRequirementsDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadDecisionRequirementsDefinition(decisionRequirementsDefinition);

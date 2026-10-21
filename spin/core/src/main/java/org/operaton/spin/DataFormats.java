@@ -79,7 +79,7 @@ public class DataFormats {
    * Returns the registered data format for the given name.
    *
    * @param dataFormatName the name of the data format
-   * @return the data format or null if non is registered for this name
+   * @return the data format or {@code null} if non is registered for this name
    */
   public static DataFormat<? extends Spin<?>> getDataFormat(String dataFormatName) {
     return INSTANCE.getDataFormatByName(dataFormatName);

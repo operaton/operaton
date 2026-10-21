@@ -42,12 +42,14 @@ import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuild
 import org.operaton.bpm.engine.variable.value.builder.TypedValueBuilder;
 
 /**
- * <p>This class is the entry point to the process engine's typed variables API.
- * Users can import the methods provided by this class using a static import:</p>
+ * This class is the entry point to the process engine's typed variables API.
+ * Users can import the methods provided by this class using a static import:
  *
+ * <p>
  * <code>
  * import static org.operaton.bpm.engine.variable.Variables.*;
  * </code>
+ * </p>
  *
  * @author Daniel Meyer
  *

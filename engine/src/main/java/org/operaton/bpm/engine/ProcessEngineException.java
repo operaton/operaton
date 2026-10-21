@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode;
 import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
  *
  * @author Tom Baeyens
  */
-public class ProcessEngineException extends RuntimeException {
+public @NullMarked class ProcessEngineException extends RuntimeException {
 
   protected int code = BuiltinExceptionCode.FALLBACK.getCode();
 
@@ -51,28 +52,36 @@ public class ProcessEngineException extends RuntimeException {
   }
 
   /**
-   * <p>The exception code can be set via delegation code.
+   * The exception code can be set via delegation code.
    *
-   * <p>Setting an error code on the exception in delegation code always overrides
+   * <p>
+   * Setting an error code on the exception in delegation code always overrides
    * the exception code from a custom {@link ExceptionCodeProvider}.
+   * </p>
    *
-   * <p>Your business logic can react to the exception code exposed
+   * <p>
+   * Your business logic can react to the exception code exposed
    * via {@link #getCode} when calling Operaton Java API and is
    * even exposed to the REST API when an error occurs.
+   * </p>
    */
   public void setCode(int code) {
     this.code = code;
   }
 
   /**
-   * <p>Accessor of the exception error code.
+   * Accessor of the exception error code.
    *
-   * <p>If not changed via {@link #setCode}, default code is {@link BuiltinExceptionCode#FALLBACK}
+   * <p>
+   * If not changed via {@link #setCode}, default code is {@link BuiltinExceptionCode#FALLBACK}
    * which is always overridden by a custom or built-in error code provider.
+   * </p>
    *
-   * <p>You can implement a custom {@link ExceptionCodeProvider}
+   * <p>
+   * You can implement a custom {@link ExceptionCodeProvider}
    * and register it in the {@link ProcessEngineConfigurationImpl}
    * via the {@code customExceptionCodeProvider} property.
+   * </p>
    */
   public int getCode() {
     return code;

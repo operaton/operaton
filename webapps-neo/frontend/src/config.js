@@ -67,6 +67,22 @@ const parse_backends = (raw) => {
   }
 }
 
+// Branding arrives as a JSON string from the env (VITE_BRANDING) or as an object
+// from config.json. Values are validated later, at apply time (see branding.js),
+// so a malformed block is simply ignored rather than breaking boot.
+const as_branding = (value) =>
+  value && typeof value === "object" && !Array.isArray(value) ? value : undefined
+
+const parse_branding = (raw) => {
+  const value = clean(raw)
+  if (!value) return undefined
+  try {
+    return as_branding(JSON.parse(value))
+  } catch {
+    return undefined
+  }
+}
+
 /**
  * Configuration from the build-time environment. Used by the dev server, and as
  * the fallback when no config.json is served.
@@ -97,7 +113,7 @@ const from_env = () => {
     // is opt-in. See `remote_plugins_allow_origins` for cross-origin sources.
     remote_plugins_enabled: clean(import.meta.env.VITE_REMOTE_PLUGINS_ENABLED) === "true",
     remote_plugins_allow_origins: split_origins(clean(import.meta.env.VITE_REMOTE_PLUGINS_ALLOW_ORIGINS)),
-    hide_release_warning: clean(import.meta.env.VITE_HIDE_RELEASE_WARNING) === "true",
+    branding: parse_branding(import.meta.env.VITE_BRANDING),
     user: undefined,
   }
 }
@@ -142,8 +158,7 @@ const from_document = (json) => {
     remote_plugins_allow_origins: Array.isArray(json.remotePluginsAllowOrigins)
       ? json.remotePluginsAllowOrigins.map(clean).filter(Boolean)
       : split_origins(clean(json.remotePluginsAllowOrigins)),
-    hide_release_warning:
-      json.hideReleaseWarning === true || clean(json.hideReleaseWarning) === "true",
+    branding: as_branding(json.branding),
     user: json.user?.id ? { id: json.user.id } : undefined,
   }
 }

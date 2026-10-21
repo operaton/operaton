@@ -177,7 +177,7 @@ public class SubscriptionConfiguration {
     setLockDuration(isNull(configuredLockDuration) ? null : configuredLockDuration);
 
     String[] configuredVariableNames = config.variableNames();
-    setVariableNames(isNull(configuredVariableNames) ? null : Arrays.asList(configuredVariableNames));
+    setVariableNames(isNull(configuredVariableNames) ? null : List.of(configuredVariableNames));
 
     setLocalVariables(config.localVariables());
 
@@ -189,14 +189,14 @@ public class SubscriptionConfiguration {
 
     String[] configuredProcessDefinitionIdIn = config.processDefinitionIdIn();
     setProcessDefinitionIdIn(isNull(configuredProcessDefinitionIdIn) ? null :
-        Arrays.asList(configuredProcessDefinitionIdIn));
+        List.of(configuredProcessDefinitionIdIn));
 
     String configuredProcessDefinitionKey = config.processDefinitionKey();
     setProcessDefinitionKey(isNull(configuredProcessDefinitionKey) ? null : configuredProcessDefinitionKey);
 
     String[] configuredProcessDefinitionKeyIn = config.processDefinitionKeyIn();
     setProcessDefinitionKeyIn(isNull(configuredProcessDefinitionKeyIn) ? null :
-        Arrays.asList(configuredProcessDefinitionKeyIn));
+        List.of(configuredProcessDefinitionKeyIn));
 
     String configuredProcessDefinitionVersionTag = config.processDefinitionVersionTag();
     setProcessDefinitionVersionTag(isNull(configuredProcessDefinitionVersionTag) ? null :
@@ -209,7 +209,7 @@ public class SubscriptionConfiguration {
     setWithoutTenantId(config.withoutTenantId());
 
     String[] configuredTenantIdIn = config.tenantIdIn();
-    setTenantIdIn(isNull(configuredTenantIdIn) ? null : Arrays.asList(configuredTenantIdIn));
+    setTenantIdIn(isNull(configuredTenantIdIn) ? null : List.of(configuredTenantIdIn));
 
     setIncludeExtensionProperties(config.includeExtensionProperties());
   }

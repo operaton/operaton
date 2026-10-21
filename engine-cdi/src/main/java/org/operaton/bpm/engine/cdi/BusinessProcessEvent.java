@@ -33,7 +33,7 @@ public interface BusinessProcessEvent {
 
   /**
    * @return the process definition in which the event is happening / has
-   *         happened or null the event was not related to a process definition
+   *         happened or {@code null} the event was not related to a process definition
    */
   ProcessDefinition getProcessDefinition();
 
@@ -44,7 +44,7 @@ public interface BusinessProcessEvent {
   String getActivityId();
 
   /**
-   * @return the name of the transition being taken / that was taken. (null, if
+   * @return the name of the transition being taken / that was taken. ({@code null}, if
    *         this event is not of type {@link BusinessProcessEventType#TAKE}
    */
   String getTransitionName();
@@ -76,12 +76,12 @@ public interface BusinessProcessEvent {
   DelegateTask getTask();
 
   /**
-   * @return the task id of the current task or null if this is not a task event.
+   * @return the task id of the current task or {@code null} if this is not a task event.
    */
   String getTaskId();
 
   /**
-   * @return the id of the task in the process definition (BPMN XML) or null if this is not a task event.
+   * @return the id of the task in the process definition (BPMN XML) or {@code null} if this is not a task event.
    */
   String getTaskDefinitionKey();
 }

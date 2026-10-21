@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -40,9 +41,9 @@ public @NullMarked class CreateIncidentCmd implements Command<Incident> {
   protected String incidentType;
   protected String executionId;
   protected String configuration;
-  protected String message;
+  protected @Nullable String message;
 
-  public CreateIncidentCmd(String incidentType, String executionId, String configuration, String message) {
+  public CreateIncidentCmd(String incidentType, String executionId, String configuration, @Nullable String message) {
     this.incidentType = incidentType;
     this.executionId = executionId;
     this.configuration = configuration;

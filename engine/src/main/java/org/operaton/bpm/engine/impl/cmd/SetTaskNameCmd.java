@@ -32,7 +32,7 @@ public @NullMarked class SetTaskNameCmd extends AbstractSetTaskPropertyCmd<Strin
    *
    * @param taskId the id of the referenced task, non-null
    * @param name   the new name value to set, non-null
-   * @throws NullValueException in case the given taskId or the given name value are null
+   * @throws NullValueException in case the given taskId or the given name value are {@code null}
    */
   public SetTaskNameCmd(String taskId, String name) {
     super(taskId, name);

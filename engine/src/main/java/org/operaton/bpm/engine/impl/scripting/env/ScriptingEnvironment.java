@@ -146,7 +146,7 @@ public class ScriptingEnvironment {
    * Returns the env scripts for the given language. Performs lazy initialization of the env scripts.
    *
    * @param scriptLanguage the language
-   * @return a list of executable environment scripts. Never null.
+   * @return a list of executable environment scripts. Never {@code null}.
    */
   protected List<ExecutableScript> getEnvScripts(String scriptLanguage) {
     Map<String, List<ExecutableScript>> environment = getEnv(scriptLanguage);
@@ -163,7 +163,7 @@ public class ScriptingEnvironment {
    * Initializes the env scripts for a given language.
    *
    * @param language the language
-   * @return the list of env scripts. Never null.
+   * @return the list of env scripts. Never {@code null}.
    */
   protected List<ExecutableScript> initEnvForLanguage(String language) {
 

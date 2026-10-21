@@ -45,6 +45,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -78,16 +79,15 @@ public @NullMarked class RestartProcessInstancesCmd extends AbstractRestartProce
     ensureNotContainsNull(BadUserRequestException.class,
         "Process instance ids cannot be null", "Process instance ids", processInstanceIds);
 
-    ProcessDefinitionEntity processDefinition =
-        getProcessDefinition(commandContext, builder.getProcessDefinitionId());
-    ensureNotNull("Process definition cannot be found",
-        "processDefinition", processDefinition);
+    final String processDefinitionId = builder.getProcessDefinitionId();
+    ProcessDefinitionEntity processDefinition = getProcessDefinition(commandContext, processDefinitionId);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
+    requireNonNull(processDefinition);
 
     checkAuthorization(commandContext, processDefinition);
 
     writeUserOperationLog(commandContext, processDefinition, processInstanceIds.size(), false);
 
-    final String processDefinitionId = builder.getProcessDefinitionId();
 
     Runnable runnable = () -> {
 

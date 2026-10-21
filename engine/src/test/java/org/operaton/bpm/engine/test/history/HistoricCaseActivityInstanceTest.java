@@ -971,7 +971,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     assertCount(stateCounts.get(TERMINATED), historicQuery().terminated());
   }
 
-  protected class CaseExecutionStateCountMap extends HashMap<CaseExecutionState, Long> {
+  static class CaseExecutionStateCountMap extends HashMap<CaseExecutionState, Long> {
     private static final Collection<CaseExecutionState> ALL_STATES = Arrays.asList(CaseExecutionState.values());
     private static final Collection<CaseExecutionState> ENDED_STATES = Arrays.asList(COMPLETED, TERMINATED);
     private static final Collection<CaseExecutionState> NOT_ENDED_STATES = new ArrayList<>(ALL_STATES);

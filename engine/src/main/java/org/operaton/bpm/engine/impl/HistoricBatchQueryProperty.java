@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
 import org.operaton.bpm.engine.query.QueryProperty;
 
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * Contains the possible properties that can be used in a {@link HistoricBatchQuery}.
  *
  */
-public final class HistoricBatchQueryProperty {
+public final @NullMarked class HistoricBatchQueryProperty {
 
   public static final QueryProperty ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty TENANT_ID = new QueryPropertyImpl("TENANT_ID_");

@@ -99,7 +99,7 @@ public class ModificationExecutionAsyncTest {
 
   @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { false, null },
       { true, START_DATE }
     });
@@ -1155,7 +1155,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .startBeforeActivity("user2")
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     helper.completeSeedJobs(batch);
@@ -1188,7 +1188,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .cancelAllForActivity("user2")
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipCustomListeners()
       .executeAsync();
 
@@ -1215,7 +1215,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .startAfterActivity("user2")
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     helper.completeSeedJobs(batch);
@@ -1248,7 +1248,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .startBeforeActivity("user2")
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipIoMappings()
       .executeAsync();
 

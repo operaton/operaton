@@ -21,10 +21,11 @@ import jakarta.enterprise.inject.spi.BeanManager;
 
 import io.quarkus.arc.InjectableContext;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.cdi.impl.context.BusinessProcessContext;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 
-public class InjectableBusinessProcessContext extends BusinessProcessContext implements InjectableContext {
+public @NullMarked class InjectableBusinessProcessContext extends BusinessProcessContext implements InjectableContext {
 
   @Override
   protected BeanManager getBeanManager() {

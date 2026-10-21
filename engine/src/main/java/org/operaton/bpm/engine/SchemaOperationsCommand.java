@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 
-public interface SchemaOperationsCommand extends Command<Void> {
+public @NullMarked interface SchemaOperationsCommand extends Command<Void> {
 }

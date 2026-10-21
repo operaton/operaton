@@ -18,6 +18,7 @@ package org.operaton.bpm.model.bpmn.impl.instance;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.model.bpmn.Query;
 import org.operaton.bpm.model.bpmn.impl.QueryImpl;
 import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
@@ -37,7 +38,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_E
  * @author Daniel Meyer
  * @author Sebastian Menski
  */
-public class ExtensionElementsImpl extends BpmnModelElementInstanceImpl implements ExtensionElements {
+public @NullMarked class ExtensionElementsImpl extends BpmnModelElementInstanceImpl implements ExtensionElements {
 
   public static void registerType(ModelBuilder modelBuilder) {
 

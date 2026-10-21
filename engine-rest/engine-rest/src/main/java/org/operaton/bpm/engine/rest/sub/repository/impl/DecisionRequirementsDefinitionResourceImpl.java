@@ -55,7 +55,7 @@ public class DecisionRequirementsDefinitionResourceImpl implements DecisionRequi
   public DecisionRequirementsDefinitionDto getDecisionRequirementsDefinition() {
     RepositoryService repositoryService = engine.getRepositoryService();
 
-    DecisionRequirementsDefinition definition = null;
+    DecisionRequirementsDefinition definition;
 
     try {
       definition = repositoryService.getDecisionRequirementsDefinition(decisionRequirementsDefinitionId);

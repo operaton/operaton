@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.identitylink;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.core.Response;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -47,12 +47,9 @@ public class HalIdentityLinkResolver extends HalCachingLinkResolver {
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(linkedIds[0]);
 
-    List<HalResource<?>> resolvedIdentityLinks = new ArrayList<>();
-    for (IdentityLink identityLink : identityLinks) {
-      resolvedIdentityLinks.add(HalIdentityLink.fromIdentityLink(identityLink));
-    }
-
-    return resolvedIdentityLinks;
+    return identityLinks.stream()
+      .map(HalIdentityLink::fromIdentityLink)
+      .collect(Collectors.toList());
   }
 
   @Override

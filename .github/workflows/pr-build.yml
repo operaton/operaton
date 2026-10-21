@@ -10,6 +10,7 @@ on:
     branches:
       - main
       - release/**
+      - staging/**
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/pr-build.yml'
@@ -18,6 +19,7 @@ on:
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
       - '.github/workflows/auto-merge.yml'
+      - '.claude/**'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -171,20 +173,14 @@ jobs:
           path: ~/.m2/build-cache
           key: "${{ runner.os }}-build-cache-${{ github.sha }}"
           restore-keys: ${{ runner.os }}-build-cache-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
       - name: Setup Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
       - name: Setup mvnd
-        uses: ./.github/actions/mvnd-setup
+        uses: $/.github/actions/mvnd-setup
       - name: Maven Build
         id: maven-build
         shell: bash
@@ -214,17 +210,78 @@ jobs:
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d #v6.6.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/TEST-*.xml
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
           retention-days: 30
+      - name: Stage build output for Sonar analysis
+        if: github.event.pull_request.head.repo.fork == false
+        shell: bash
+        run: find . -type d -name target -not -path '*/node_modules/*' -print0 | tar -czf /tmp/sonar-workspace.tar.gz --null -T -
+      - name: Upload Sonar workspace artifact
+        if: github.event.pull_request.head.repo.fork == false
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sonar-workspace
+          path: /tmp/sonar-workspace.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+      # Handed off as a run-scoped artifact, NOT via actions/cache: the repo cache
+      # pool is a shared 10 GB LRU and run-id-keyed entries both get evicted
+      # mid-run and evict the reusable m2/sonar caches. Tarred first because the
+      # subtree holds thousands of small files, which upload-artifact transfers
+      # individually.
+      - name: Stage artifacts for integration tests
+        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
+        run: tar -czf /tmp/it-stage.tar.gz -C ~/.m2/repository org/operaton
+      - name: Upload staged artifacts
+        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: it-stage
+          path: /tmp/it-stage.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+
+  static-analysis:
+    name: Static Code Analysis
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    needs: build
+    if: github.event.pull_request.head.repo.fork == false
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Restore Maven packages
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+      - name: Cache SonarCloud packages
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Download Sonar workspace artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: sonar-workspace
+          path: /tmp
+      - name: Restore build output
+        run: tar -xzf /tmp/sonar-workspace.tar.gz
       - name: Sonarqube Analysis
         # SONAR_TOKEN is not available on PRs from forks — the step skips itself there
         if: env.SONAR_TOKEN
@@ -238,22 +295,6 @@ jobs:
           "-Dsonar.exclusions=webapps/assembly/**,webapps-neo/assembly/**,qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**" \
           "-Dsonar.coverage.exclusions=qa/performance-tests-engine/**,qa/integration-tests-webapps/**,qa/integration-tests-engine/**,webapps/**"
         continue-on-error: true
-      # Handed off as a run-scoped artifact, NOT via actions/cache: the repo cache
-      # pool is a shared 10 GB LRU and run-id-keyed entries both get evicted
-      # mid-run and evict the reusable m2/sonar caches. Tarred first because the
-      # subtree holds thousands of small files, which upload-artifact transfers
-      # individually.
-      - name: Stage artifacts for integration tests
-        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
-        run: tar -czf /tmp/it-stage.tar.gz -C ~/.m2/repository org/operaton
-      - name: Upload staged artifacts
-        if: needs.determine-pr-config.outputs.needs_integration_build == 'true' || needs.determine-pr-config.outputs.needs_spring_boot_starter_tests == 'true' || needs.determine-pr-config.outputs.needs_quarkus_tests == 'true'
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: it-stage
-          path: /tmp/it-stage.tar.gz
-          retention-days: 1
-          if-no-files-found: error
 
   integration-tests:
     name: Integration Tests
@@ -283,14 +324,14 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Restore staged artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: it-stage
           path: /tmp
       - name: Unpack staged artifacts
         run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
       - name: Set up Java
-        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -322,7 +363,7 @@ jobs:
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${MATRIX_DATABASE} --no-build
       - name: Publish Test Report
         if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
-        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d #v6.6.1
         with:
           # TEST-*.xml only: the glob must not match failsafe-summary.xml,
           # which has no testsuite root and makes the action emit annotations
@@ -330,7 +371,7 @@ jobs:
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
@@ -363,14 +404,14 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Restore staged artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: it-stage
           path: /tmp
       - name: Unpack staged artifacts
         run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
       - name: Set up Java
-        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -380,13 +421,13 @@ jobs:
           .devenv/scripts/build/build-and-run-spring-boot-starter.sh
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d #v6.6.1
         with:
           report_paths: ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/TEST-*.xml
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: failsafe-reports-spring-boot-starter
           path: |
@@ -417,14 +458,14 @@ jobs:
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Restore staged artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: it-stage
           path: /tmp
       - name: Unpack staged artifacts
         run: mkdir -p ~/.m2/repository && tar -xzf /tmp/it-stage.tar.gz -C ~/.m2/repository
       - name: Set up Java
-        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -437,13 +478,13 @@ jobs:
           ./mvnw -Pquarkus-tests -f quarkus-extension test
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d #v6.6.1
         with:
           report_paths: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/TEST-*.xml
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: surefire-reports-quarkus
           path: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/**
@@ -467,7 +508,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Setup Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24
           cache: 'npm'

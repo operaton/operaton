@@ -111,7 +111,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
   /**
    * @return an array of length two with the following contents:
    * <ul><li>First element: pvm atomic operation name
-   * <li>Second element: transition id (may be null)
+   * <li>Second element: transition id (may be {@code null})
    */
   protected String[] tokenizeJobConfiguration(String jobConfiguration) {
 

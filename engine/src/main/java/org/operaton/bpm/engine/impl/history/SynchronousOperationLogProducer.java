@@ -62,7 +62,7 @@ public interface SynchronousOperationLogProducer<T> {
    *
    * @param commandContext the current command context
    * @param result An object resulting from the operation for which this method produces the operation log. In case the operation produced
-   * multiple objects, depending on the implementation a representative object from the list of results or null can be passed.
+   * multiple objects, depending on the implementation a representative object from the list of results or {@code null} can be passed.
    * @param propChanges property changes to be attached to the operation log
    * @param isSummary indicates whether the implementation should produce a summary log or a detailed log
    */

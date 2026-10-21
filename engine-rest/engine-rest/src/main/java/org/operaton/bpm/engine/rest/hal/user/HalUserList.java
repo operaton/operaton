@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest.hal.user;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import jakarta.ws.rs.core.UriBuilder;
 
 import org.operaton.bpm.engine.identity.User;
@@ -33,10 +33,9 @@ public class HalUserList extends HalResource<HalUserList> {
   public static HalUserList fromUserList(List<User> users) {
     HalUserList result = new HalUserList();
 
-    List<HalResource<?>> halUsers = new ArrayList<>();
-    for (User user : users) {
-      halUsers.add(HalUser.fromUser(user));
-    }
+    List<HalResource<?>> halUsers = users.stream()
+      .map(HalUser::fromUser)
+      .collect(Collectors.toList());
 
     // embedd the user list
     result.addEmbedded("users", halUsers);

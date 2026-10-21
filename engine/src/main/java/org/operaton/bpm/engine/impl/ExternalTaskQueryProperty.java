@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import org.jspecify.annotations.NullMarked;
+
 import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public final class ExternalTaskQueryProperty {
+public final @NullMarked class ExternalTaskQueryProperty {
 
   public static final QueryProperty ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty LOCK_EXPIRATION_TIME = new QueryPropertyImpl("LOCK_EXP_TIME_");

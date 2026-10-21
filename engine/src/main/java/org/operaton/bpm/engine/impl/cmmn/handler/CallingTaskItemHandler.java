@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CallingTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
@@ -35,7 +37,7 @@ import static org.operaton.bpm.engine.impl.util.StringUtil.isCompositeExpression
  * @author Roman Smirnov
  *
  */
-public abstract class CallingTaskItemHandler extends TaskItemHandler {
+public abstract @NullMarked class CallingTaskItemHandler extends TaskItemHandler {
 
   @Override
   protected void initializeActivity(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
@@ -109,7 +111,7 @@ public abstract class CallingTaskItemHandler extends TaskItemHandler {
     callableElement.setTenantIdProvider(tenantIdProvider);
   }
 
-  protected ParameterValueProvider createParameterValueProvider(String value, ExpressionManager expressionManager) {
+  protected ParameterValueProvider createParameterValueProvider(@Nullable String value, ExpressionManager expressionManager) {
     if (value == null) {
       return new NullValueProvider();
 
@@ -124,7 +126,7 @@ public abstract class CallingTaskItemHandler extends TaskItemHandler {
 
   protected abstract BaseCallableElement createCallableElement();
 
-  protected abstract String getDefinitionKey(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context);
+  protected abstract @Nullable String getDefinitionKey(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context);
 
   protected abstract String getBinding(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context);
 

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.xml;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXParseException;
 
@@ -30,12 +31,12 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class ProblemImpl implements Problem {
+public @NullMarked class ProblemImpl implements Problem {
 
-  protected String message;
+  protected @Nullable String message;
   protected int line;
   protected int column;
-  protected String mainElementId;
+  protected @Nullable String mainElementId;
   protected List<String> elementIds = new ArrayList<>();
 
   public ProblemImpl(SAXParseException e) {
@@ -44,12 +45,12 @@ public class ProblemImpl implements Problem {
     this.column = e.getColumnNumber();
   }
 
-  public ProblemImpl(String errorMessage, Element element) {
+  public ProblemImpl(String errorMessage, @Nullable Element element) {
     this.message = errorMessage;
     extractElementDetails(element);
   }
 
-  public ProblemImpl(String errorMessage, Element element, String... elementIds) {
+  public ProblemImpl(String errorMessage, @Nullable Element element, @Nullable String... elementIds) {
     this(errorMessage, element);
     this.mainElementId = elementIds[0];
     for (String elementId : elementIds) {
@@ -85,7 +86,7 @@ public class ProblemImpl implements Problem {
     message = concatenatedMessage.toString();
   }
 
-  protected void extractElementDetails(Element element) {
+  protected void extractElementDetails(@Nullable Element element) {
     if (element != null) {
       this.line = element.getLine();
       this.column = element.getColumn();
@@ -100,7 +101,7 @@ public class ProblemImpl implements Problem {
   // getters
 
   @Override
-  public String getMessage() {
+  public @Nullable String getMessage() {
     return message;
   }
 
@@ -115,7 +116,7 @@ public class ProblemImpl implements Problem {
   }
 
   @Override
-  public String getMainElementId() {
+  public @Nullable String getMainElementId() {
     return mainElementId;
   }
 

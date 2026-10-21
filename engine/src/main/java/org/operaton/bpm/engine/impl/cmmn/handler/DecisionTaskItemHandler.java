@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.handler;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.DmnDecisionTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -32,7 +34,7 @@ import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.getDecisi
  * @author Roman Smirnov
  *
  */
-public class DecisionTaskItemHandler extends CallingTaskItemHandler {
+public @NullMarked class DecisionTaskItemHandler extends CallingTaskItemHandler {
 
   @Override
   protected void initializeActivity(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
@@ -75,7 +77,7 @@ public class DecisionTaskItemHandler extends CallingTaskItemHandler {
   }
 
   @Override
-  protected String getDefinitionKey(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
+  protected @Nullable String getDefinitionKey(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     DecisionTask definition = getDefinition(element);
     String decision = definition.getDecision();
 

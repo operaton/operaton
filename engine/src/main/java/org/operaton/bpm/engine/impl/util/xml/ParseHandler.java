@@ -19,21 +19,23 @@ package org.operaton.bpm.engine.impl.util.xml;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Tom Baeyens
  */
 public class ParseHandler extends DefaultHandler {
 
-  protected String defaultNamespace;
+  protected @Nullable String defaultNamespace;
   protected Parse parse;
-  protected Locator locator;
+  protected @Nullable Locator locator;
   protected Deque<Element> elementStack = new ArrayDeque<>();
 
   public ParseHandler(Parse parse) {
@@ -53,7 +55,9 @@ public class ParseHandler extends DefaultHandler {
 
   @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
-    elementStack.peek().appendText(String.valueOf(ch, start, length));
+    Element peek = elementStack.peek();
+    requireNonNull(peek, "Element stack is empty. Cannot add characters.");
+    peek.appendText(String.valueOf(ch, start, length));
   }
 
   @Override
@@ -84,6 +88,5 @@ public class ParseHandler extends DefaultHandler {
   public void setDefaultNamespace(String defaultNamespace) {
     this.defaultNamespace = defaultNamespace;
   }
-
 
 }

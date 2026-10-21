@@ -98,11 +98,11 @@ public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
     final WarMetaData warMetaData = deploymentUnit.getAttachment(WarMetaData.ATTACHMENT_KEY);
 
     // extract deployment metadata
-    List<AnnotationInstance> processApplicationAnnotations = null;
-    List<AnnotationInstance> postDeployAnnnotations = null;
-    List<AnnotationInstance> preUndeployAnnnotations = null;
-    Set<ClassInfo> servletProcessApplications = null;
-    Set<ClassInfo> unsupportedClasses = null;
+    List<AnnotationInstance> processApplicationAnnotations;
+    List<AnnotationInstance> postDeployAnnnotations;
+    List<AnnotationInstance> preUndeployAnnnotations;
+    Set<ClassInfo> servletProcessApplications;
+    Set<ClassInfo> unsupportedClasses;
 
     if(compositeIndex != null) {
       // allow coexistence of Javax- and Jakarta-based servlet process applications in deployments but only consider Jakarta-based ones here
@@ -132,7 +132,7 @@ public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
       ClassInfo paClassInfo = (ClassInfo) annotationInstance.target();
       String paClassName = paClassInfo.name().toString();
 
-      ComponentDescription paComponent = null;
+      ComponentDescription paComponent;
 
       // it can either be a Servlet Process Application or a Singleton Session Bean Component or
       if(servletProcessApplications.contains(paClassInfo)) {

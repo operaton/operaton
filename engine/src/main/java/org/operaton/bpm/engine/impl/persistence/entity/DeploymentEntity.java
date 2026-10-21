@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 
 import org.jspecify.annotations.Nullable;
@@ -37,7 +38,8 @@ import org.operaton.bpm.engine.repository.*;
 /**
  * @author Tom Baeyens
  */
-public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
+@SuppressWarnings("rawtypes")
+public @NullUnmarked class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
 
   protected String id;
   protected String name;
@@ -50,7 +52,7 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
 
   /**
    * Will only be used during actual deployment to pass deployed artifacts (eg process definitions).
-   * Will be null otherwise.
+   * Will be {@code null} otherwise.
    */
   protected Map<Class<?>, List> deployedArtifacts;
 
@@ -104,10 +106,13 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
 
     Class<?> clazz = deployedArtifact.getClass();
     deployedArtifacts
-      .computeIfAbsent(clazz, k -> new ArrayList())
+      .computeIfAbsent(clazz, k -> new ArrayList<>())
       .add(deployedArtifact);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public Map<Class<?>, List> getDeployedArtifacts() {
     return deployedArtifacts;
   }
@@ -123,7 +128,7 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
 
   public void removeArtifact(ResourceDefinitionEntity notDeployedArtifact) {
     if (deployedArtifacts != null) {
-      List artifacts = deployedArtifacts.get(notDeployedArtifact.getClass());
+      List<?> artifacts = deployedArtifacts.get(notDeployedArtifact.getClass());
       if (artifacts != null) {
         artifacts.remove(notDeployedArtifact);
         if (artifacts.isEmpty()) {
@@ -171,6 +176,7 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
     return validatingSchema;
   }
 
+  @SuppressWarnings("unused")
   public void setValidatingSchema(boolean validatingSchema) {
     this.validatingSchema = validatingSchema;
   }
@@ -193,30 +199,34 @@ public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
   }
 
   @Override
-  public String getTenantId() {
+  public @Nullable String getTenantId() {
     return tenantId;
   }
 
-  public void setTenantId(String tenantId) {
+  public void setTenantId(@Nullable String tenantId) {
     this.tenantId = tenantId;
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public @Nullable List<ProcessDefinition> getDeployedProcessDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(ProcessDefinitionEntity.class);
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public @Nullable List<CaseDefinition> getDeployedCaseDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(CaseDefinitionEntity.class);
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public @Nullable List<DecisionDefinition> getDeployedDecisionDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(DecisionDefinitionEntity.class);
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public @Nullable List<DecisionRequirementsDefinition> getDeployedDecisionRequirementsDefinitions() {
     return deployedArtifacts == null ? null : deployedArtifacts.get(DecisionRequirementsDefinitionEntity.class);
   }

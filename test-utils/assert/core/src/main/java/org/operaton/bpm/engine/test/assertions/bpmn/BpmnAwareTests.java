@@ -312,7 +312,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * instance.
    *
    * @return  the only task of the last asserted process
-   *          instance. May return null if no such task exists.
+   *          instance. May return {@code null} if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one task is delivered by the underlying
    *          query or in case no process instance was asserted
@@ -329,7 +329,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
    * @return  the only task of the process instance. May
-   *          return null if no such task exists.
+   *          return {@code null} if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one task is delivered by the underlying
    *          query.
@@ -346,7 +346,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   taskDefinitionKey the key of the task that should
    *          be retrieved.
    * @return  the only task of the last asserted process
-   *          instance. May return null if no such task exists.
+   *          instance. May return {@code null} if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one task is delivered by the underlying
    *          query or in case no process instance was asserted
@@ -367,7 +367,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
    * @return  the only task of the given process instance. May
-   *          return null if no such task exists.
+   *          return {@code null} if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one task is delivered by the underlying
    *          query.
@@ -386,7 +386,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    *          be retrieved. This query will be further narrowed
    *          to the last asserted process instance.
    * @return  the only task of the last asserted process instance
-   *          and compliant to the given query. May return null
+   *          and compliant to the given query. May return {@code null}
    *          in case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one task is delivered by the underlying
@@ -412,7 +412,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
    * @return  the only task of the given process instance and
-   *          compliant to the given query. May return null in
+   *          compliant to the given query. May return {@code null} in
    *          case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one task is delivered by the underlying
@@ -427,7 +427,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * available in the context of the last asserted process instance.
    *
    * @return the only external task of the last asserted process instance.
-   *         May return null if no such external task exists.
+   *         May return {@code null} if no such external task exists.
    * @throws java.lang.IllegalStateException
    *           in case more than one external task is delivered by the underlying
    *           query or in case no process instance was asserted yet.
@@ -443,7 +443,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          an external task should be retrieved.
    * @return  the only external task of the process instance.
-   *          May return null if no such external task exists.
+   *          May return {@code null} if no such external task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one external task is delivered by the underlying
    *          query.
@@ -460,7 +460,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   activityId the key of the external task that should
    *          be retrieved.
    * @return  the only external task of the last asserted process
-   *          instance. May return null if no such external task exists.
+   *          instance. May return {@code null} if no such external task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one external task is delivered by the underlying
    *          query or in case no process instance was asserted
@@ -481,7 +481,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a external task should be retrieved.
    * @return  the only external task of the given process instance. May
-   *          return null if no such external task exists.
+   *          return {@code null} if no such external task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one external task is delivered by the underlying
    *          query.
@@ -500,7 +500,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    *          be retrieved. This query will be further narrowed
    *          to the last asserted process instance.
    * @return  the only external task of the last asserted process instance
-   *          and compliant to the given query. May return null
+   *          and compliant to the given query. May return {@code null}
    *          in case no such external task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one external task is delivered by the underlying
@@ -529,7 +529,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a external task should be retrieved.
    * @return  the only external task of the given process instance and
-   *          compliant to the given query. May return null in
+   *          compliant to the given query. May return {@code null} in
    *          case no such external task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one external task is delivered by the underlying
@@ -580,7 +580,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processDefinitionKey the key of the process definition
    *          that should be retrieved.
    * @return  the process definition with the given key.
-   *          May return null if no such process definition exists.
+   *          May return {@code null} if no such process definition exists.
    */
   public static ProcessDefinition processDefinition(String processDefinitionKey) {
     Assertions.assertThat(processDefinitionKey).isNotNull();
@@ -594,7 +594,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processDefinitionQuery the query with which the process
    *          definition should be retrieved.
    * @return  the process definition compliant to the given query. May
-   *          return null in case no such process definition exists.
+   *          return {@code null} in case no such process definition exists.
    * @throws  org.operaton.bpm.engine.ProcessEngineException in case more
    *          than one process definition is delivered by the underlying
    *          query.
@@ -609,7 +609,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * instance.
    *
    * @return  the only called process instance called by the last asserted process
-   *          instance. May return null if no such process instance exists.
+   *          instance. May return {@code null} if no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one process instance is delivered by the underlying
    *          query or in case no process instance was asserted
@@ -626,7 +626,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
    * @return  the only called process instance called by the given process
-   *          instance. May return null if no such process instance exists.
+   *          instance. May return {@code null} if no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one process instance is delivered by the underlying
    *          query.
@@ -643,7 +643,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processDefinitionKey the key of the process instance that should
    *          be retrieved.
    * @return  the only such process instance called by the last asserted process
-   *          instance. May return null if no such process instance exists.
+   *          instance. May return {@code null} if no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one process instance is delivered by the underlying
    *          query or in case no process instance was asserted
@@ -664,7 +664,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
    * @return  the only such process instance called by the given process instance.
-   *          May return null if no such process instance exists.
+   *          May return {@code null} if no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one process instance is delivered by the underlying
    *          query.
@@ -683,7 +683,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    *          be retrieved. This query will be further narrowed to the last asserted
    *          process instance.
    * @return  the only such process instance called by the last asserted process instance and
-   *          compliant to the given query. May return null in case no such task exists.
+   *          compliant to the given query. May return {@code null} in case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one process instance is delivered by the underlying query or in case no
    *          process instance was asserted yet.
@@ -710,7 +710,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
    * @return  the only such process instance called by the given process instance and
-   *          compliant to the given query. May return null in
+   *          compliant to the given query. May return {@code null} in
    *          case no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one instance is delivered by the underlying
@@ -726,7 +726,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * instance.
    *
    * @return  the only job of the last asserted process
-   *          instance. May return null if no such job exists.
+   *          instance. May return {@code null} if no such job exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one job is delivered by the underlying
    *          query or in case no process instance was asserted
@@ -743,7 +743,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
    * @return  the only job of the process instance. May
-   *          return null if no such task exists.
+   *          return {@code null} if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one job is delivered by the underlying
    *          query.
@@ -760,7 +760,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   activityId the id of the job that should
    *          be retrieved.
    * @return  the only job of the last asserted process
-   *          instance. May return null if no such job exists.
+   *          instance. May return {@code null} if no such job exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one job is delivered by the underlying
    *          query or in case no process instance was asserted
@@ -787,7 +787,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
    * @return  the only job of the given process instance. May
-   *          return null if no such job exists.
+   *          return {@code null} if no such job exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one job is delivered by the underlying
    *          query.
@@ -805,7 +805,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    *          be retrieved. This query will be further narrowed
    *          to the last asserted process instance.
    * @return  the only job of the last asserted process instance
-   *          and compliant to the given query. May return null
+   *          and compliant to the given query. May return {@code null}
    *          in case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one job is delivered by the underlying
@@ -834,7 +834,7 @@ public class BpmnAwareTests extends AbstractAssertions {
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
    * @return  the only job of the given process instance and
-   *          compliant to the given query. May return null in
+   *          compliant to the given query. May return {@code null} in
    *          case no such job exists.
    * @throws  java.lang.IllegalStateException in case more
    *          than one job is delivered by the underlying

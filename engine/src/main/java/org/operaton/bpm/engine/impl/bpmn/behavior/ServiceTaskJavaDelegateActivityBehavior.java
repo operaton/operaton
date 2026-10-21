@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -28,12 +29,9 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 /**
  * @author Tom Baeyens
  */
-public class ServiceTaskJavaDelegateActivityBehavior extends TaskActivityBehavior implements ActivityBehavior, ExecutionListener {
+public @NullMarked class ServiceTaskJavaDelegateActivityBehavior extends TaskActivityBehavior implements ActivityBehavior, ExecutionListener {
 
   protected JavaDelegate javaDelegate;
-
-  protected ServiceTaskJavaDelegateActivityBehavior() {
-  }
 
   public ServiceTaskJavaDelegateActivityBehavior(JavaDelegate javaDelegate) {
     this.javaDelegate = javaDelegate;

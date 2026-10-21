@@ -91,7 +91,7 @@ public final class VariableUtil {
     if (variables != null) {
       for (var vars : variables.entrySet()) {
         String variableName = vars.getKey();
-        Object value = null;
+        Object value;
         if (variables instanceof VariableMap map) {
           value = map.getValueTyped(variableName);
 

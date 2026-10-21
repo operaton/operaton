@@ -95,7 +95,7 @@ public class SpinFactoryImpl extends SpinFactory {
   /**
    *
    * @throws SpinDataFormatException in case the parameter cannot be read using this data format
-   * @throws IllegalArgumentException in case the parameter is null or dd:
+   * @throws IllegalArgumentException in case the parameter is {@code null} or dd:
    */
   public <T extends Spin<?>> T createSpinFromSpin(T parameter) {
     ensureNotNull("parameter", parameter);

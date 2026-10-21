@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -82,7 +81,7 @@ public class CaseExecutionManager extends AbstractManager {
       Context
         .getCommandContext()
         .getHistoricCaseInstanceManager()
-        .deleteHistoricCaseInstancesByIds(Arrays.asList(caseInstanceId));
+        .deleteHistoricCaseInstancesByIds(List.of(caseInstanceId));
     }
   }
 

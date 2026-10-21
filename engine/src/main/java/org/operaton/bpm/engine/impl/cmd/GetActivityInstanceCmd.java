@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -47,7 +48,7 @@ import org.operaton.commons.utils.CollectionUtil;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
- * <p>Creates an activity instance tree according to the following strategy:
+ * Creates an activity instance tree according to the following strategy:
  *
  * <ul>
  *   <li> Event scope executions are not considered at all
@@ -260,8 +261,8 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
       }
     }
 
-    actInst.setExecutionIds(executionIds.toArray(new String[executionIds.size()]));
-    actInst.setIncidentIds(incidentIds.toArray(new String[incidentIds.size()]));
+    actInst.setExecutionIds(executionIds.toArray(String[]::new));
+    actInst.setIncidentIds(incidentIds.toArray(String[]::new));
     actInst.setIncidents(incidents.toArray(new Incident[0]));
 
     return actInst;
@@ -320,7 +321,7 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
       childTransitionInstances.entrySet()) {
       ActivityInstanceImpl instance = entry.getKey();
       List<TransitionInstanceImpl> childInstances = entry.getValue();
-      instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
+      instance.setChildTransitionInstances(childInstances.toArray(TransitionInstanceImpl[]::new));
     }
   }
 
@@ -330,7 +331,7 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
       ActivityInstanceImpl instance = entry.getKey();
       List<ActivityInstanceImpl> childInstances = entry.getValue();
       if (childInstances != null) {
-        instance.setChildActivityInstances(childInstances.toArray(new ActivityInstanceImpl[childInstances.size()]));
+        instance.setChildActivityInstances(childInstances.toArray(ActivityInstanceImpl[]::new));
       }
     }
   }
@@ -379,25 +380,17 @@ public @NullMarked class GetActivityInstanceCmd implements Command<ActivityInsta
   }
 
   protected List<ExecutionEntity> filterLeaves(List<ExecutionEntity> executionList) {
-    List<ExecutionEntity> leaves = new ArrayList<>();
-    for (ExecutionEntity execution : executionList) {
-      // although executions executing throwing compensation events are not leaves in the tree,
-      // they are treated as leaves since their child executions are logical children of their parent scope execution
-      if (execution.getNonEventScopeExecutions().isEmpty() || CompensationBehavior.isCompensationThrowing(execution)) {
-        leaves.add(execution);
-      }
-    }
-    return leaves;
+    // although executions executing throwing compensation events are not leaves in the tree,
+    // they are treated as leaves since their child executions are logical children of their parent scope execution
+    return executionList.stream()
+        .filter(execution -> execution.getNonEventScopeExecutions().isEmpty() || CompensationBehavior.isCompensationThrowing(execution))
+        .collect(Collectors.toList());
   }
 
   protected List<ExecutionEntity> filterNonEventScopeExecutions(List<ExecutionEntity> executionList) {
-    List<ExecutionEntity> nonEventScopeExecutions = new ArrayList<>();
-    for (ExecutionEntity execution : executionList) {
-      if (!execution.isEventScope()) {
-        nonEventScopeExecutions.add(execution);
-      }
-    }
-    return nonEventScopeExecutions;
+    return executionList.stream()
+        .filter(execution -> !execution.isEventScope())
+        .toList();
   }
 
   protected List<ExecutionEntity> loadProcessInstance(String processInstanceId, CommandContext commandContext) {

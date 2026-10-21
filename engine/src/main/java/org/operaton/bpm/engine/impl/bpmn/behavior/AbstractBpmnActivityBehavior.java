@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnExceptionHandler;
 import org.operaton.bpm.engine.impl.bpmn.helper.ErrorPropagationException;
@@ -40,7 +42,7 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior {
+public @NullMarked class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
@@ -79,10 +81,6 @@ public class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior {
    * the call to the Callable with the proper error propagation. This method
    * also makes sure that exceptions not caught by following activities in the
    * process will be thrown and not propagated.
-   *
-   * @param execution
-   * @param toExecute
-   * @throws Exception
    */
   protected void executeWithErrorPropagation(ActivityExecution execution, Callable<Void> toExecute) throws Exception {
     String activityInstanceId = execution.getActivityInstanceId();
@@ -109,7 +107,7 @@ public class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior {
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object signalData) throws Exception {
     if(SIGNAL_COMPENSATION_DONE.equals(signalName)) {
       signalCompensationDone(execution);
     } else {
@@ -130,7 +128,7 @@ public class AbstractBpmnActivityBehavior extends FlowNodeActivityBehavior {
         parent.signal(SIGNAL_COMPENSATION_DONE, null);
       }
     } else {
-      ((ExecutionEntity)execution).forceUpdate();
+      execution.forceUpdate();
     }
 
   }

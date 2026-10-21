@@ -60,7 +60,7 @@ public class ScriptEngineRule implements BeforeAllCallback, TestInstancePostProc
    * script engines will be cached to speed up subsequent creations.
    *
    * @param context the {@link ExtensionContext} of the test method
-   * @return the script engine or null if none suitable is found
+   * @return the script engine or {@code null} if none suitable is found
    */
   private ScriptEngine createScriptEngine(ExtensionContext context) {
     org.operaton.spin.impl.test.ScriptEngine annotation = context.getRequiredTestClass().getAnnotation(org.operaton.spin.impl.test.ScriptEngine.class);
@@ -85,7 +85,7 @@ public class ScriptEngineRule implements BeforeAllCallback, TestInstancePostProc
   /**
    * Get the script engine defined by the {@literal @}{@link org.operaton.spin.impl.test.ScriptEngine} annotation.
    *
-   * @return the script engine or null if no script engine was found
+   * @return the script engine or {@code null} if no script engine was found
    */
   public ScriptEngine getScriptEngine() {
     return scriptEngine;

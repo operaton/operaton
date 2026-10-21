@@ -39,7 +39,7 @@ public class StartBeforeInstructionDto extends ProcessInstanceModificationInstru
   public void applyTo(ProcessInstanceModificationBuilder builder, ProcessEngine engine, ObjectMapper mapper) {
     checkValidity();
 
-    ProcessInstanceModificationInstantiationBuilder activityBuilder = null;
+    ProcessInstanceModificationInstantiationBuilder activityBuilder;
 
     if (ancestorActivityInstanceId != null) {
       activityBuilder = builder.startBeforeActivity(activityId, ancestorActivityInstanceId);

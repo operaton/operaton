@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -32,7 +33,7 @@ public @NullMarked class ExecuteFilterListCmd extends AbstractExecuteFilterCmd i
     super(filterId);
   }
 
-  public ExecuteFilterListCmd(String filterId, Query<?, ?> extendingQuery) {
+  public ExecuteFilterListCmd(String filterId, @Nullable Query<?, ?> extendingQuery) {
     super(filterId, extendingQuery);
   }
 

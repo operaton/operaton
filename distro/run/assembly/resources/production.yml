@@ -17,7 +17,6 @@ operaton.bpm:
       # "basic" or "oauth2".
       auth-mode: ${OPERATON_BPM_RUN_WEBAPPS_NEO_AUTH_MODE:auto}
       plugins-url: ${OPERATON_BPM_RUN_WEBAPPS_NEO_PLUGINS_URL:}
-      hide-release-warning: ${OPERATON_BPM_RUN_WEBAPPS_NEO_HIDE_RELEASE_WARNING:false}
     csrf:
       # The CSRF filter always validates a synchroniser token. It can additionally check
       # that the Origin/Referer of a modifying request matches this deployment, but only

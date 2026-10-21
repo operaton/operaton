@@ -217,7 +217,7 @@ public class ManagedProcessEngineMetadata {
   }
 
   private Map<String, String> selectProperties(Map<String, String> allProperties, boolean selectFoxProperties) {
-    Map<String, String> result = null;
+    Map<String, String> result;
     if (selectFoxProperties) {
       result = new HashMap<>();
       String isAutoSchemaUpdate = allProperties.get(PROP_IS_AUTO_SCHEMA_UPDATE);

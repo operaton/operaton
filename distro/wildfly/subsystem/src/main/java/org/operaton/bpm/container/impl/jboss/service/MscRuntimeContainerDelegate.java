@@ -37,6 +37,8 @@ import org.jboss.msc.service.StartContext;
 import org.jboss.msc.service.StartException;
 import org.jboss.msc.service.StopContext;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.ProcessEngineService;
@@ -54,23 +56,24 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * <p>A {@link RuntimeContainerDelegate} implementation for JBoss AS 7</p>
  *
  * @author Daniel Meyer
  */
-public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerDelegate>, RuntimeContainerDelegate, ProcessEngineService, ProcessApplicationService {
+public @NullMarked class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerDelegate>, RuntimeContainerDelegate, ProcessEngineService, ProcessApplicationService {
 
   // used for installing services
-  protected ServiceTarget childTarget;
+  protected @Nullable ServiceTarget childTarget;
   // used for looking up services
-  protected ServiceContainer serviceContainer;
+  protected @Nullable ServiceContainer serviceContainer;
 
-  protected ServiceTracker<ProcessEngine> processEngineServiceTracker;
+  protected @Nullable ServiceTracker<ProcessEngine> processEngineServiceTracker;
   protected Set<ProcessEngine> processEngines = new CopyOnWriteArraySet<>();
 
-  protected ServiceTracker<MscManagedProcessApplication> processApplicationServiceTracker;
+  protected @Nullable ServiceTracker<MscManagedProcessApplication> processApplicationServiceTracker;
   protected Set<MscManagedProcessApplication> processApplications = new CopyOnWriteArraySet<>();
   protected Consumer<RuntimeContainerDelegate> provider;
 
@@ -107,7 +110,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   // RuntimeContainerDelegate implementation /////////////////////////////
 
   @Override
-  public void registerProcessEngine(ProcessEngine processEngine) {
+  public void registerProcessEngine(@Nullable ProcessEngine processEngine) {
 
     if(processEngine == null) {
       throw new ProcessEngineException("Cannot register process engine with Msc Runtime Container: process engine is 'null'");
@@ -119,6 +122,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
       MscManagedProcessEngine processEngineRegistration = new MscManagedProcessEngine(processEngine);
 
       // install the service asynchronously.
+      requireNonNull(childTarget);
       ServiceBuilder<?> serviceBuilder = childTarget.addService(serviceName);
       serviceBuilder.requires(ServiceNames.forMscRuntimeContainerDelegate());
       serviceBuilder.provides(serviceName);
@@ -226,7 +230,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   // ProcessApplicationService implementation //////////////////////////////
 
   @Override
-  public ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
+  public @Nullable ProcessApplicationInfo getProcessApplicationInfo(String processApplicationName) {
     MscManagedProcessApplication managedProcessApplication = getManagedProcessApplication(processApplicationName);
 
     if (managedProcessApplication == null) {
@@ -247,7 +251,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   }
 
   @Override
-  public ProcessApplicationReference getDeployedProcessApplication(String name) {
+  public @Nullable ProcessApplicationReference getDeployedProcessApplication(String name) {
     MscManagedProcessApplication managedPa = getManagedProcessApplication(name);
     if(managedPa == null) {
       return null;
@@ -269,6 +273,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
       .append(BpmPlatform.PROCESS_ENGINE_SERVICE_NAME);
 
     // bind process engine service
+    requireNonNull(childTarget);
     BindingUtil.createJndiBindings(childTarget, processEngineServiceBindingServiceName, BpmPlatform.PROCESS_ENGINE_SERVICE_JNDI_NAME, managedReferenceFactory);
 
     final ServiceName processApplicationServiceBindingServiceName = ContextNames.GLOBAL_CONTEXT_SERVICE_NAME
@@ -281,7 +286,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
 
   }
 
-  protected ProcessEngine getProcessEngineService(ServiceName processEngineServiceName) {
+  protected @Nullable ProcessEngine getProcessEngineService(ServiceName processEngineServiceName) {
     try {
       ServiceController<ProcessEngine> serviceController = getProcessEngineServiceController(processEngineServiceName);
       return serviceController.getValue();
@@ -292,7 +297,9 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
 
   @SuppressWarnings("unchecked")
   protected ServiceController<ProcessEngine> getProcessEngineServiceController(ServiceName processEngineServiceName) {
-    return (ServiceController<ProcessEngine>) serviceContainer.getRequiredService(processEngineServiceName);
+    ServiceController<?> service = serviceContainer.getRequiredService(processEngineServiceName);
+    requireNonNull(service);
+    return (ServiceController<ProcessEngine>) service;
   }
 
   protected void startTrackingServices() {
@@ -325,7 +332,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   }
 
   @SuppressWarnings("unchecked")
-  protected MscManagedProcessApplication getManagedProcessApplication(String name) {
+  protected @Nullable MscManagedProcessApplication getManagedProcessApplication(String name) {
     ServiceController<MscManagedProcessApplication> serviceController = (ServiceController<MscManagedProcessApplication>) serviceContainer
         .getService(ServiceNames.forManagedProcessApplication(name));
 

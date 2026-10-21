@@ -9,6 +9,7 @@ import {
   PUT,
   DELETE,
   set_request_headers,
+  resolve_user,
 } from "../helper.jsx";
 import engine_rest from "../engine_rest.jsx";
 
@@ -32,16 +33,24 @@ const get_task = (state, task_id) =>
  * @returns {Promise<{status: RESPONSE_STATE, data: *} | *>}
  */
 const update_task = (state, task, task_id) => {
-  return state.api.task.one.value?.data !== undefined
-    ? PUT(
-        `/task/${state.api.task.one.value.data.id}`,
-        { ...state.api.task.one.value.data, ...task },
-        state,
-        state.api.task.one,
-      ).then(() => engine_rest.task.get_task(state, task_id))
-    : () => {
-        throw new Error("Task in state undefined or null, can not merge");
-      };
+  const loaded = state.api.task.one.value?.data;
+  if (loaded === undefined) {
+    return Promise.resolve({
+      status: RESPONSE_STATE.ERROR,
+      error: new Error("Task in state undefined or null, can not merge"),
+    });
+  }
+  return PUT(
+    `/task/${loaded.id}`,
+    { ...loaded, ...task },
+    state,
+    state.api.task.update_result,
+  ).then((result) => {
+    if (result?.status === RESPONSE_STATE.SUCCESS) {
+      void engine_rest.task.get_task(state, task_id);
+    }
+    return result;
+  });
 };
 
 const get_task_form = (state, form_id) =>
@@ -67,15 +76,10 @@ const get_task_form_variables = (state, task_id) =>
 
 // The profile signal holds the login placeholder ({ id }) until a page fetches
 // the profile, after which it holds a response envelope ({ data: { id } }).
-const current_user_id = (state) => {
-  const profile = state.api.user.profile.value;
-  return profile?.data?.id ?? profile?.id;
-};
-
 const claim_task = (state, task_id) =>
   POST(
     `/task/${task_id}/claim`,
-    { userId: current_user_id(state) },
+    { userId: resolve_user(state) },
     state,
     state.api.task.claim_result,
   );
@@ -83,7 +87,7 @@ const claim_task = (state, task_id) =>
 const unclaim_task = (state, task_id) =>
   POST(
     `/task/${task_id}/unclaim`,
-    { userId: current_user_id(state) },
+    { userId: resolve_user(state) },
     state,
     state.api.task.unclaim_result,
   );
@@ -135,7 +139,42 @@ const tasks_with_process_definitions = async (tasks, state) => {
   return tasks;
 };
 
-const get_tasks = (state, sort_key = "name", sort_order = "asc", firstResult = 0, maxResults = 3, filter = {}) => {
+/**
+ * How many open tasks there are, and how they are shared out: assigned, waiting
+ * for someone to take them, and — the interesting one — waiting on nobody at
+ * all, with neither an assignee nor a candidate group.
+ */
+const get_task_summary = async (state) => {
+  const count = (query) =>
+    GET(
+      `/task/count?${new URLSearchParams(query)}`,
+      state,
+      state.api.task.scratch,
+    ).then((result) => result?.data?.count ?? 0);
+
+  const [total, assigned, unattended] = await Promise.all([
+    count({}),
+    count({ assigned: true }),
+    count({ unassigned: true, withoutCandidateGroups: true }),
+  ]);
+
+  return (state.api.task.summary.value = {
+    status: "SUCCESS",
+    data: { total, assigned, unassigned: total - assigned, unattended },
+  });
+};
+
+const get_task_counts_by_group = (state) =>
+  GET("/task/report/candidate-group-count", state, state.api.task.by_group);
+
+const get_tasks = (
+  state,
+  sort_key = "name",
+  sort_order = "asc",
+  firstResult = 0,
+  maxResults = 3,
+  filter = {},
+) => {
   const prev = state.api.task.list.value;
   state.api.task.list.value = {
     status: RESPONSE_STATE.LOADING,
@@ -152,26 +191,21 @@ const get_tasks = (state, sort_key = "name", sort_order = "asc", firstResult = 0
     ...filter,
   });
 
-  fetch(
-    `${_url_engine_rest(state)}/task?${params}`,
-    { headers },
-  )
+  fetch(`${_url_engine_rest(state)}/task?${params}`, { headers })
     .then((response) =>
       response.ok ? response.json() : Promise.reject(response),
     )
     .then((tasks) => tasks_with_process_definitions(tasks, state))
-    .then(
-      (json) => {
-        const existing = firstResult > 0 ? (prev?.data ?? []) : [];
-        const existingIds = new Set(existing.map((t) => t.id));
-        const newTasks = json.filter((t) => !existingIds.has(t.id));
-        state.api.task.list.value = {
-          status: RESPONSE_STATE.SUCCESS,
-          data: [...existing, ...newTasks],
-          hasMore: json.length === maxResults,
-        };
-      },
-    )
+    .then((json) => {
+      const existing = firstResult > 0 ? (prev?.data ?? []) : [];
+      const existingIds = new Set(existing.map((t) => t.id));
+      const newTasks = json.filter((t) => !existingIds.has(t.id));
+      state.api.task.list.value = {
+        status: RESPONSE_STATE.SUCCESS,
+        data: [...existing, ...newTasks],
+        hasMore: json.length === maxResults,
+      };
+    })
     .catch(
       (error) =>
         (state.api.task.list.value = { status: RESPONSE_STATE.ERROR, error }),
@@ -199,7 +233,12 @@ const create_comment = (state, task_id, message) =>
   );
 
 const post_task_form = (state, task_id, data) =>
-  POST(`/task/${task_id}/submit-form`, { variables: data, withVariablesInReturn: true, }, state, state.api.task.submit_form );
+  POST(
+    `/task/${task_id}/submit-form`,
+    { variables: data, withVariablesInReturn: true },
+    state,
+    state.api.task.submit_form,
+  );
 
 /**
  * Complete a task directly (without a form), optionally passing variables.
@@ -237,6 +276,8 @@ const attachment_url = (state, task_id, attachment_id) =>
 
 const task = {
   get_tasks,
+  summary: get_task_summary,
+  by_group: get_task_counts_by_group,
   get_task,
   update_task,
   get_task_form,

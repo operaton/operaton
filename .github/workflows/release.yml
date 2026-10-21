@@ -46,7 +46,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up JDK
-        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -124,7 +124,7 @@ jobs:
           persist-credentials: true
 
       - name: Set up JDK
-        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -134,38 +134,16 @@ jobs:
         shell: bash
         env:
           GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER: ${{github.event.inputs.preliminary_release_qualifier}}
-        run: |
-          BASE_RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
-          QUALIFIER="${GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER}"
-          if [ -n "$QUALIFIER" ]; then
-            if [[ ! "$QUALIFIER" =~ ^(M[0-9]|RC[0-9])$ ]]; then
-              echo "::error::Preliminary Release Qualifier '$QUALIFIER' must match M[0-9] or RC[0-9]."
-              exit 1
-            fi
-            if [[ ! "$BASE_RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.0$ ]]; then
-              echo "::error::Preliminary Release Qualifier can only be used for .0 versions. Current version is '$BASE_RELEASE_VERSION'."
-              exit 1
-            fi
-            RELEASE_VERSION="${BASE_RELEASE_VERSION}-${QUALIFIER}"
-            echo "⚙ Releasing version '$RELEASE_VERSION' (Preliminary Release)"
-            echo "is_prerelease=true" >> $GITHUB_OUTPUT
-          else
-            RELEASE_VERSION="$BASE_RELEASE_VERSION"
-            echo "⚙ Releasing version '$RELEASE_VERSION'"
-            echo "is_prerelease=false" >> $GITHUB_OUTPUT
-          fi
-          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          echo "base_version=$BASE_RELEASE_VERSION" >> $GITHUB_OUTPUT
-          DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
-          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
-          echo "database_version=$DATABASE_VERSION"
-          .github/scripts/set-project-version.sh $RELEASE_VERSION
-          if [ -z "$QUALIFIER" ]; then
-            .github/scripts/finalize-qa-db-fixture.sh $DATABASE_VERSION $RELEASE_VERSION
-          else
-            # prevent deployment of non-final sql scripts - a db schemaa can only deployed once
-            touch distro/sql-script/.skip-deploy
-          fi
+        run: .github/scripts/prepare-release-version.sh
+
+      - name: Generate SBOMs
+        # Must run after the release version is applied and before the Maven
+        # build: the distribution assemblies copy
+        # distro/*/assembly/resources/sbom.cdx.json into the archives, so the
+        # SBOM has to describe the release version and dependencies before the
+        # archives are assembled. The regenerated files are part of the
+        # release commit below. See https://github.com/operaton/operaton/issues/3852
+        run: .devenv/scripts/build/build-sbom.sh
 
       - name: Maven Build
         run: |
@@ -189,14 +167,16 @@ jobs:
           .github/scripts/prepare-deploy.sh
           ./mvnw -Dmaven.build.cache.enabled=false -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
-      - name: Documentation
-        if: always()
+      - name: Verify SBOMs in release archives
+        env:
+          VERSION: ${{steps.version.outputs.version}}
         run: |
-          .devenv/scripts/build/javadoc.sh
-          .devenv/scripts/build/check-api-compatibility.sh
-          .devenv/scripts/build/rest-api-doc.sh
-          .devenv/scripts/build/build-sbom.sh
-          pip install --only-binary :all: pystache==0.6.8
+          for ARCHIVE in distro/run/distro/target/operaton-bpm-$VERSION.zip \
+                         distro/tomcat/distro/target/operaton-bpm-tomcat-$VERSION.zip \
+                         distro/wildfly/distro/target/operaton-bpm-wildfly-$VERSION.zip; do
+            ACTUAL=$(unzip -p "$ARCHIVE" sbom.cdx.json | jq -r .metadata.component.version)
+            [[ "$ACTUAL" == "$VERSION" ]] || { echo "::error::$ARCHIVE ships SBOM version '$ACTUAL', expected '$VERSION'"; exit 1; }
+          done
       - name: Commit changes
         uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         if: ${{github.event.inputs.dry_run == 'false' }}
@@ -216,10 +196,56 @@ jobs:
             target/*.zip
           key: ${{ github.run_id }}-build-artifacts
 
+  documentation:
+    name: Documentation
+    needs:
+      - prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up JDK
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Version
+        shell: bash
+        env:
+          GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER: ${{github.event.inputs.preliminary_release_qualifier}}
+        run: .github/scripts/prepare-release-version.sh
+
+      - name: Documentation
+        run: |
+          .devenv/scripts/build/javadoc.sh
+          .devenv/scripts/build/check-api-compatibility.sh
+          .devenv/scripts/build/rest-api-doc.sh
+          pip install --only-binary :all: pystache==0.6.8
+
+      - name: Cache documentation artifacts
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            target/javadoc.zip
+            target/javadoc/**
+            target/clirr-reports.zip
+            target/rest-api.zip
+            target/rest-api/**
+            **/target/reports/**
+          key: ${{ github.run_id }}-documentation-artifacts
+
   release:
     name: Release
     needs:
       - release_build
+      - documentation
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -243,6 +269,19 @@ jobs:
             target/sbom/**
             target/*.zip
           key: ${{ github.run_id }}-build-artifacts
+          fail-on-cache-miss: true
+
+      - name: Restore documentation cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            target/javadoc.zip
+            target/javadoc/**
+            target/clirr-reports.zip
+            target/rest-api.zip
+            target/rest-api/**
+            **/target/reports/**
+          key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 
       - name: Modify jreleaser.yml for release
@@ -273,20 +312,20 @@ jobs:
 
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@d9f48fc87bc235f7e214acf696ca5abc0a986f16 #v6.4.2
+        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d #v6.6.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: staging
           path: |
@@ -309,11 +348,13 @@ jobs:
           DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
           NEEDS_RELEASE_BUILD_OUTPUTS_VERSION: ${{ needs.release_build.outputs.version}}
         run: |
+          PAYLOAD=$(jq -n --arg version "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION" \
+            '{ref: "main", inputs: {version: $version, snapshot: "false"}}')
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"ref":"main","inputs":{"version": "${NEEDS_RELEASE_BUILD_OUTPUTS_VERSION}","snapshot": "false"}}' \
+            -d "$PAYLOAD" \
             https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
           if [ "$response" -ne 204 ]; then
             echo "Failed to notify Docker repository. HTTP response code: $response"

@@ -80,7 +80,7 @@ public class ProcessesXmlProcessor implements DeploymentUnitProcessor {
       VirtualFile processesXmlFile = getFile(processesXmlResource);
 
       // parse processes.xml metadata.
-      ProcessesXml processesXml = null;
+      ProcessesXml processesXml;
       if(isEmptyFile(processesXmlResource)) {
         processesXml = ProcessesXml.EMPTY_PROCESSES_XML;
       } else {
@@ -95,7 +95,7 @@ public class ProcessesXmlProcessor implements DeploymentUnitProcessor {
   protected List<URL> getDeploymentDescriptorUrls(final Module module, String[] deploymentDescriptors) throws DeploymentUnitProcessingException {
     List<URL> deploymentDescriptorURLs = new ArrayList<>();
     for (String deploymentDescriptor : deploymentDescriptors) {
-      Enumeration<URL> resources = null;
+      Enumeration<URL> resources;
       try {
         resources = module.getClassLoader().getResources(deploymentDescriptor);
       } catch (IOException e) {
@@ -113,11 +113,11 @@ public class ProcessesXmlProcessor implements DeploymentUnitProcessor {
     final ComponentDescription processApplicationComponent = ProcessApplicationAttachments.getProcessApplicationComponent(deploymentUnit);
     final String paClassName = processApplicationComponent.getComponentClassName();
 
-    String[] deploymentDescriptorResourceNames = null;
+    String[] deploymentDescriptorResourceNames;
 
     Module module = deploymentUnit.getAttachment(MODULE);
 
-    Class<?> paClass = null;
+    Class<?> paClass;
     try {
       paClass = module.getClassLoader().loadClass(paClassName);
     } catch (ClassNotFoundException e) {

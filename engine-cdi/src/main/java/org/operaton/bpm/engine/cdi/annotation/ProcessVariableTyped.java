@@ -32,8 +32,10 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * <li>{@code @Inject @ProcessVariableTyped TypedValue accountNumber}</li>
  * <li>{@code @Inject @ProcessVariableTyped("accountNumber") TypedValue account}</li>
  * </ul>
+ * <p>
  * In both cases, the process variable with the name 'accountNumber' is injected
  * as TypedValue. NOTE: injection points must be of type 'TypedValue'.
+ * </p>
  *
  * @author Michael Scholz
  *

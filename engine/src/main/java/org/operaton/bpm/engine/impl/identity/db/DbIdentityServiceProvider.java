@@ -67,7 +67,7 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
     // encrypt password
     userEntity.encryptPassword();
 
-    String operation = null;
+    String operation;
     if(userEntity.getRevision() == 0) {
       operation = IdentityOperationResult.OPERATION_CREATE;
       checkAuthorization(Permissions.CREATE, Resources.USER, null);
@@ -195,7 +195,7 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
   @Override
   public IdentityOperationResult saveGroup(Group group) {
     GroupEntity groupEntity = (GroupEntity) group;
-    String operation = null;
+    String operation;
     if(groupEntity.getRevision() == 0) {
       operation = IdentityOperationResult.OPERATION_CREATE;
       checkAuthorization(Permissions.CREATE, Resources.GROUP, null);
@@ -244,7 +244,7 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
   @Override
   public IdentityOperationResult saveTenant(Tenant tenant) {
     TenantEntity tenantEntity = (TenantEntity) tenant;
-    String operation = null;
+    String operation;
     if (tenantEntity.getRevision() == 0) {
       operation = IdentityOperationResult.OPERATION_CREATE;
       checkAuthorization(Permissions.CREATE, Resources.TENANT, null);

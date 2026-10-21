@@ -21,15 +21,19 @@ import java.util.List;
 import org.operaton.bpm.engine.variable.VariableMap;
 
 /**
- * <p>Specifies how process instances from one process definition (the <i>source process definition</i>)
+ * Specifies how process instances from one process definition (the <i>source process definition</i>)
  * should be migrated to another process definition (the <i>target process definition</i>).
  *
- * <p>A migration plan consists of a number of {@link MigrationInstruction}s that tell which
+ * <p>
+ * A migration plan consists of a number of {@link MigrationInstruction}s that tell which
  *   activity maps to which. The set of instructions is complete, i.e. the migration logic does not perform
  *   migration steps that are not given by the instructions
+ * </p>
  *
- * <p>A migration plan can include variables which will be set into the process instance scope
+ * <p>
+ * A migration plan can include variables which will be set into the process instance scope
  * after the migration.
+ * </p>
  *
  * @author Thorben Lindhauer
  */

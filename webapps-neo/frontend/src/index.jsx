@@ -16,6 +16,7 @@ import { AdminPage } from "./pages/Admin.jsx";
 import { DeploymentsPage } from "./pages/Deployments.jsx";
 import { BatchesPage } from "./pages/Batches.jsx";
 import { NotFound } from "./pages/_404.jsx";
+import { require_app } from "./components/RequireApp.jsx";
 import { SetupPage } from "./pages/Setup.jsx";
 import { AccountPage } from "./pages/Account.jsx";
 
@@ -28,6 +29,7 @@ import engine_rest from "./api/engine_rest.jsx";
 import { useSignal } from "@preact/signals";
 import { is_oauth } from "./api/oauth.js";
 import { app_path, get_config, load_config } from "./config.js";
+import { apply_branding, logo_url, logo_alt } from "./branding.js";
 import { useTranslation } from "react-i18next";
 import { load_plugins } from "./plugins/loader.js";
 import { install_plugin_host } from "./plugins/host.js";
@@ -35,6 +37,16 @@ import { plugins_for } from "./plugins/registry.js";
 import { PLUGIN_POINTS } from "./plugins/points.js";
 
 ("use strict");
+
+// Wrapped once at module scope: a component created during render would be a
+// new type on every pass and remount the page underneath it.
+const TasksGuarded = require_app(TasksPage, "tasklist");
+const ProcessesGuarded = require_app(ProcessesPage, "cockpit");
+const DecisionsGuarded = require_app(DecisionsPage, "cockpit");
+const DeploymentsGuarded = require_app(DeploymentsPage, "cockpit");
+const BatchesGuarded = require_app(BatchesPage, "cockpit");
+const MigrationsGuarded = require_app(MigrationsPage, "cockpit");
+const AdminGuarded = require_app(AdminPage, "admin");
 
 export const App = () => {
   return (
@@ -103,23 +115,33 @@ const Routing = () => {
           <Route path={app_path("/")} component={DashboardPage} />
           <Route
             path={app_path("/decisions/:decision_id?/:panel?")}
-            component={DecisionsPage}
+            component={DecisionsGuarded}
           />
           {/*<Route path={app_path("/tasks/start/:id")} component={TasksPage} />*/}
-          <Route path={app_path("/tasks/:task_id?/:tab?")} component={TasksPage} />
           <Route
-            path={app_path("/processes/:definition_id?/:panel?/:selection_id?/:sub_panel?")}
-            component={ProcessesPage}
+            path={app_path("/tasks/:task_id?/:tab?")}
+            component={TasksGuarded}
           />
-          <Route path={app_path("/migrations")} component={MigrationsPage} />
+          <Route
+            path={app_path(
+              "/processes/:definition_id?/:panel?/:selection_id?/:sub_panel?",
+            )}
+            component={ProcessesGuarded}
+          />
+          <Route path={app_path("/migrations")} component={MigrationsGuarded} />
           <Route
             path={app_path("/deployments/:deployment_id?/:resource_name?")}
-            component={DeploymentsPage}
+            component={DeploymentsGuarded}
           />
-          <Route path={app_path("/batches/:batch_id?")} component={BatchesPage} />
           <Route
-            path={app_path("/admin/:page_id?/:selection_id?/:sub_selection_id?")}
-            component={AdminPage}
+            path={app_path("/batches/:batch_id?")}
+            component={BatchesGuarded}
+          />
+          <Route
+            path={app_path(
+              "/admin/:page_id?/:selection_id?/:sub_selection_id?",
+            )}
+            component={AdminGuarded}
           />
           <Route
             path={app_path("/account/:page_id?/:selection_id?")}
@@ -168,7 +190,7 @@ const Routing = () => {
 
     return (
       <section class="login-page">
-        <img class="login-logo" src={app_path("/operaton-logo.svg")} alt="Operaton" />
+        <img class="login-logo" src={logo_url()} alt={logo_alt()} />
 
         <div class="login-content">
           <h1>{t("login.title")}</h1>
@@ -287,5 +309,9 @@ install_plugin_host();
 // The runtime configuration must be in place before anything reads it, and the
 // plugin loader needs it to know where the manifest lives.
 load_config()
+  .then((cfg) => {
+    apply_branding();
+    return cfg;
+  })
   .then(load_plugins)
   .finally(() => render(<App />, document.getElementById("app")));

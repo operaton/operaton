@@ -118,7 +118,7 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
 
     Set<String> deploymentIds = getAllDeploymentIds(deploymentBuilder);
     if (!deploymentIds.isEmpty()) {
-      String[] deploymentIdArray = deploymentIds.toArray(new String[deploymentIds.size()]);
+      String[] deploymentIdArray = deploymentIds.toArray(String[]::new);
       List<DeploymentEntity> deployments = deploymentManager.findDeploymentsByIds(deploymentIdArray);
       ensureDeploymentsWithIdsExists(deploymentIds, deployments);
     }
@@ -404,13 +404,9 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
   // getters
 
   protected List<String> getMissingElements(Set<String> expected, Map<String, ?> actual) {
-    List<String> missingElements = new ArrayList<>();
-    for (String value : expected) {
-      if (!actual.containsKey(value)) {
-        missingElements.add(value);
-      }
-    }
-    return missingElements;
+    return expected.stream()
+        .filter(value -> !actual.containsKey(value))
+        .toList();
   }
 
   protected List<ResourceEntity> getResources(final DeploymentBuilderImpl deploymentBuilder, final CommandContext commandContext) {
@@ -457,7 +453,7 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
       String deploymentId = resourceEntry.getKey();
       Set<String> resourceIds = resourceEntry.getValue();
 
-      String[] resourceIdArray = resourceIds.toArray(new String[resourceIds.size()]);
+      String[] resourceIdArray = resourceIds.toArray(String[]::new);
       List<ResourceEntity> resources = resourceManager.findResourceByDeploymentIdAndResourceIds(deploymentId, resourceIdArray);
 
       ensureResourcesWithIdsExist(deploymentId, resourceIds, resources);
@@ -477,7 +473,7 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
       String deploymentId = entry.getKey();
       Set<String> resourceNames = entry.getValue();
 
-      String[] resourceNameArray = resourceNames.toArray(new String[resourceNames.size()]);
+      String[] resourceNameArray = resourceNames.toArray(String[]::new);
       List<ResourceEntity> resources = resourceManager.findResourceByDeploymentIdAndResourceNames(deploymentId, resourceNameArray);
 
       ensureResourcesWithNamesExist(deploymentId, resourceNames, resources);
@@ -515,7 +511,7 @@ public @NullMarked class DeployCmd implements Command<DeploymentWithDefinitions>
       }
     }
 
-    return processDefinitionKeys.toArray(new String[processDefinitionKeys.size()]);
+    return processDefinitionKeys.toArray(String[]::new);
   }
 
   protected Set<String> parseProcessDefinitionKeys(Collection<Resource> resources) {

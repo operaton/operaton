@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -88,11 +87,9 @@ public class UserOperationLogEntryDto {
   }
 
   public static List<UserOperationLogEntryDto> map(List<UserOperationLogEntry> entries) {
-    List<UserOperationLogEntryDto> result = new ArrayList<>();
-    for (UserOperationLogEntry entry : entries) {
-      result.add(map(entry));
-    }
-    return result;
+    return entries.stream()
+        .map(UserOperationLogEntryDto::map)
+        .toList();
   }
 
   public String getId() {

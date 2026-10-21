@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.delegate;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -25,7 +27,7 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
  * @author Roman Smirnov
  *
  */
-public class ScriptInvocation extends DelegateInvocation {
+public @NullMarked class ScriptInvocation extends DelegateInvocation {
 
   protected ExecutableScript script;
   protected VariableScope scope;
@@ -34,7 +36,7 @@ public class ScriptInvocation extends DelegateInvocation {
     this(script, scope, null);
   }
 
-  public ScriptInvocation(ExecutableScript script, VariableScope scope, BaseDelegateExecution contextExecution) {
+  public ScriptInvocation(ExecutableScript script, VariableScope scope, @Nullable BaseDelegateExecution contextExecution) {
     super(contextExecution, null);
     this.script = script;
     this.scope = scope;

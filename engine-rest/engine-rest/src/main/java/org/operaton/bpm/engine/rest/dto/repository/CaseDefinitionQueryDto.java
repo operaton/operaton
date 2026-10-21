@@ -190,7 +190,7 @@ public class CaseDefinitionQueryDto extends AbstractQueryDto<CaseDefinitionQuery
       query.caseDefinitionId(caseDefinitionId);
     }
     if (caseDefinitionIdIn != null && !caseDefinitionIdIn.isEmpty()) {
-      query.caseDefinitionIdIn(caseDefinitionIdIn.toArray(new String[caseDefinitionIdIn.size()]));
+      query.caseDefinitionIdIn(caseDefinitionIdIn.toArray(String[]::new));
     }
     if (category != null) {
       query.caseDefinitionCategory(category);
@@ -226,7 +226,7 @@ public class CaseDefinitionQueryDto extends AbstractQueryDto<CaseDefinitionQuery
       query.latestVersion();
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();

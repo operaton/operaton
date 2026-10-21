@@ -47,7 +47,7 @@ public interface BpmnModelElementInstance extends ModelElementInstance {
    * Gets the element which is the scope of this element. Like
    * the parent process or sub-process.
    *
-   * @return the scope element or null if non is found
+   * @return the scope element or {@code null} if non is found
    */
   @Nullable BpmnModelElementInstance getScope();
 

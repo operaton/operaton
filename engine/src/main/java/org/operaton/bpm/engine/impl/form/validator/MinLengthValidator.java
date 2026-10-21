@@ -25,7 +25,7 @@ public class MinLengthValidator extends AbstractTextValueValidator {
 
   @Override
   protected boolean validate(String submittedValue, String configuration) {
-    Integer maxLength = null;
+    Integer maxLength;
     try {
       maxLength = Integer.parseInt(configuration);
     } catch (NumberFormatException e) {

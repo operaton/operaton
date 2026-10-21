@@ -46,9 +46,11 @@ class JobEntityTest {
   /**
    * Note: This does not test a message with 4-byte Unicode supplementary
    * characters for two reasons:
-   * - MySQL 5.1 does not support 4-byte supplementary characters (support from 5.5.3 onwards)
-   * - {@link String#length()} counts these characters twice (since they are represented by two
-   * chars), so essentially the cutoff would be half the actual cutoff for such a string
+   * <ul>
+   *   <li>MySQL 5.1 does not support 4-byte supplementary characters (support from 5.5.3 onwards)</li>
+   *   <li>{@link String#length()} counts these characters twice (since they are represented by two
+   *     chars), so essentially the cutoff would be half the actual cutoff for such a string</li>
+   * </ul>
    */
   @Test
   void testInsertJobWithExceptionMessage() {

@@ -31,9 +31,11 @@ import org.operaton.bpm.application.impl.EjbProcessApplication;
 import org.operaton.bpm.engine.spring.ApplicationContextElResolver;
 
 /**
- * <p>ProcessApplicationElResolver implementation providing support for the Spring Framework.</p>
+ * ProcessApplicationElResolver implementation providing support for the Spring Framework.
  *
- * <p>This implementation supports the following environments:
+ * <p>
+ * This implementation supports the following environments:
+ * </p>
  *  <ul>
  *    <li>Bootstrapping through {@link SpringProcessApplication}. In this case the spring application context
  *        is retrieved from the {@link SpringProcessApplication} class.</li>
@@ -41,9 +43,10 @@ import org.operaton.bpm.engine.spring.ApplicationContextElResolver;
  *        which allows accessing the web application's application context through the WebApplicationContextUtils class.</li>
  *    </li>
  *  </ul>
- * </p>
  *
- * <p><strong>Limitation</strong>: The {@link EjbProcessApplication} is currently unsupported.</p>
+ * <p>
+ * <strong>Limitation</strong>: The {@link EjbProcessApplication} is currently unsupported.
+ * </p>
  *
  * @author Daniel Meyer
  *

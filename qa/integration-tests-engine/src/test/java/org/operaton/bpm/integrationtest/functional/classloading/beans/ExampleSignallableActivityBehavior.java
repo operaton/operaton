@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.beans;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Daniel Meyer
  *
  */
-public class ExampleSignallableActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class ExampleSignallableActivityBehavior extends AbstractBpmnActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
@@ -33,7 +35,7 @@ public class ExampleSignallableActivityBehavior extends AbstractBpmnActivityBeha
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalEvent, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalEvent, @Nullable Object signalData) throws Exception {
 
     // leave waitstate
     leave(execution);

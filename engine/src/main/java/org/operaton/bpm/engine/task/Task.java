@@ -88,16 +88,16 @@ public interface Task {
   /** The current {@link DelegationState} for this task. */
   void setDelegationState(DelegationState delegationState);
 
-  /** Reference to the process instance or null if it is not related to a process instance. */
+  /** Reference to the process instance or {@code null} if it is not related to a process instance. */
   @Nullable String getProcessInstanceId();
 
-  /** Reference to the path of execution or null if it is not related to a process instance. */
+  /** Reference to the path of execution or {@code null} if it is not related to a process instance. */
   @Nullable String getExecutionId();
 
-  /** Reference to the process definition or null if it is not related to a process. */
+  /** Reference to the process definition or {@code null} if it is not related to a process. */
   @Nullable String getProcessDefinitionId();
 
-  /** Reference to the case instance or null if it is not related to a case instance. */
+  /** Reference to the case instance or {@code null} if it is not related to a case instance. */
   @Nullable String getCaseInstanceId();
 
   /**
@@ -105,10 +105,10 @@ public interface Task {
    */
   void setCaseInstanceId(String caseInstanceId);
 
-  /** Reference to the path of case execution or null if it is not related to a case instance. */
+  /** Reference to the path of case execution or {@code null} if it is not related to a case instance. */
   @Nullable String getCaseExecutionId();
 
-  /** Reference to the case definition or null if it is not related to a case. */
+  /** Reference to the case definition or {@code null} if it is not related to a case. */
   @Nullable String getCaseDefinitionId();
 
   /** The date/time when this task was created */
@@ -117,11 +117,11 @@ public interface Task {
   /**
    * The date/time when this task was last updated.
    * All operations that fire {@link TaskListener#EVENTNAME_UPDATE} count as an update to the task.
-   * Returns null if the task was never updated before (i.e. it was only created).
+   * Returns {@code null} if the task was never updated before (i.e. it was only created).
    * */
   Date getLastUpdated();
 
-  /** The id of the activity in the process defining this task or null if this is not related to a process */
+  /** The id of the activity in the process defining this task or {@code null} if this is not related to a process */
   @Nullable String getTaskDefinitionKey();
 
   /** Due date of the task. */
@@ -174,9 +174,9 @@ public interface Task {
   OperatonFormRef getOperatonFormRef();
 
   /**
-   * Returns the task's tenant id or null in case this task does not belong to a tenant.
+   * Returns the task's tenant id or {@code null} in case this task does not belong to a tenant.
    *
-   * @return the task's tenant id or null
+   * @return the task's tenant id or {@code null}
    *
    */
   @Nullable String getTenantId();

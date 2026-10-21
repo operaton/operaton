@@ -23,7 +23,7 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 
 /**
- * {@link IdGenerator} implementation based on the current time and the ethernet
+ * {@link IdGenerator} implementation based on the current time and the Ethernet
  * address of the machine it is running on.
  *
  * @author Daniel Meyer

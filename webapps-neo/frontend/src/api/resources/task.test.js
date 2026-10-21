@@ -93,21 +93,37 @@ describe("api/resources/task", () => {
     });
   });
 
-  it("claim_task POSTs the current user id", () => {
+  it("claim_task POSTs the signed-in user id", () => {
+    state.auth.user.id.value = "alice";
     task.claim_task(state, "t1");
     expect_api_call(POST, {
       url: "/task/t1/claim",
-      body: { userId: "demo" },
+      body: { userId: "alice" },
       state,
       signal: state.api.task.claim_result,
     });
   });
 
-  it("unclaim_task POSTs the current user id", () => {
+  it("claim_task ignores whichever profile the admin page last loaded", () => {
+    // The Admin page loads the profile of the user being edited into the same
+    // signal, so it must not be the source of "me".
+    state.auth.user.id.value = "alice";
+    state.api.user.profile.value = { data: { id: "bob" } };
+    task.claim_task(state, "t1");
+    expect_api_call(POST, {
+      url: "/task/t1/claim",
+      body: { userId: "alice" },
+      state,
+      signal: state.api.task.claim_result,
+    });
+  });
+
+  it("unclaim_task POSTs the signed-in user id", () => {
+    state.auth.user.id.value = "alice";
     task.unclaim_task(state, "t1");
     expect_api_call(POST, {
       url: "/task/t1/unclaim",
-      body: { userId: "demo" },
+      body: { userId: "alice" },
       state,
       signal: state.api.task.unclaim_result,
     });
@@ -229,6 +245,7 @@ describe("api/resources/task", () => {
 
   describe("update_task", () => {
     it("merges the changeset onto the cached task and re-fetches afterwards", async () => {
+      PUT.mockResolvedValueOnce({ status: RESPONSE_STATE.SUCCESS });
       state.api.task.one.value = {
         data: { id: "t1", name: "Old", assignee: null },
       };
@@ -238,7 +255,7 @@ describe("api/resources/task", () => {
         url: "/task/t1",
         body: { id: "t1", name: "Old", assignee: "alice" },
         state,
-        signal: state.api.task.one,
+        signal: state.api.task.update_result,
       });
       // After the PUT resolves it re-fetches the task via engine_rest.
       expect(engine_rest.task.get_task).toHaveBeenCalled();
@@ -246,6 +263,24 @@ describe("api/resources/task", () => {
         engine_rest.task.get_task.mock.lastCall;
       expect(refetch_state).toBe(state);
       expect(refetch_id).toBe("t1");
+    });
+
+    it("does not re-fetch when the change was rejected", async () => {
+      engine_rest.task.get_task.mockClear();
+      PUT.mockResolvedValueOnce({ status: RESPONSE_STATE.ERROR });
+      state.api.task.one.value = { data: { id: "t1", name: "Old" } };
+
+      const result = await task.update_task(state, { name: "New" }, "t1");
+
+      expect(result.status).toBe(RESPONSE_STATE.ERROR);
+      expect(engine_rest.task.get_task).not.toHaveBeenCalled();
+    });
+
+    it("reports an error instead of throwing when no task is loaded", async () => {
+      state.api.task.one.value = null;
+      const result = await task.update_task(state, { name: "New" }, "t1");
+      expect(result.status).toBe(RESPONSE_STATE.ERROR);
+      expect(PUT).not.toHaveBeenCalled();
     });
   });
 

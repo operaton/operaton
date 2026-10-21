@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingCalledProcessInstance;
@@ -38,7 +40,7 @@ import static org.operaton.bpm.engine.impl.util.CallableElementUtil.getProcessDe
  * @author Joram Barrez
  * @author Roman Smirnov
  */
-public class CallActivityBehavior extends CallableElementActivityBehavior implements MigrationObserverBehavior {
+public @NullMarked class CallActivityBehavior extends CallableElementActivityBehavior implements MigrationObserverBehavior {
 
   public CallActivityBehavior() {
   }
@@ -52,7 +54,7 @@ public class CallActivityBehavior extends CallableElementActivityBehavior implem
   }
 
   @Override
-  protected void startInstance(ActivityExecution execution, VariableMap variables, String businessKey) {
+  protected void startInstance(ActivityExecution execution, VariableMap variables, @Nullable String businessKey) {
     ExecutionEntity executionEntity = (ExecutionEntity) execution;
 
     ProcessDefinitionImpl definition = getProcessDefinitionToCall(

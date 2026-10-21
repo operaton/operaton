@@ -166,16 +166,6 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
   }
 
   @Override
-  public String getRootProcessInstanceId() {
-    return rootProcessInstanceId;
-  }
-
-  @Override
-  public void setRootProcessInstanceId(String rootProcessInstanceId) {
-    this.rootProcessInstanceId = rootProcessInstanceId;
-  }
-
-  @Override
   public String toString() {
     return this.getClass().getSimpleName()
            + "[activityId=" + activityId

@@ -110,7 +110,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
   /**
    * Enables authorization and (optionally) sets the authenticated user.
    *
-   * @param userId the user ID to authenticate (can be null)
+   * @param userId the user ID to authenticate (can be {@code null})
    */
   public void enableAuthorization(@Nullable String userId) {
     processEngineExtension.getProcessEngine().getProcessEngineConfiguration().setAuthorizationEnabled(true);
@@ -186,7 +186,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    * Creates a grant authorization.
    *
    * @param resource the resource type.
-   * @param resourceId the resource id (can be null).
+   * @param resourceId the resource id (can be {@code null}).
    * @param userId the user id.
    * @param permissions the permissions to grant.
    */
@@ -204,7 +204,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    * Creates a revoke authorization.
    *
    * @param resource the resource type.
-   * @param resourceId the resource id (can be null).
+   * @param resourceId the resource id (can be {@code null}).
    * @param userId the user id.
    * @param permissions the permissions to revoke.
    */
@@ -223,7 +223,7 @@ public class AuthorizationTestExtension implements BeforeEachCallback, AfterEach
    *
    * @param type the type of authorization (grant or revoke).
    * @param resource the resource type.
-   * @param resourceId the resource id (can be null).
+   * @param resourceId the resource id (can be {@code null}).
    * @return the new authorization.
    */
   protected Authorization createAuthorization(int type, Resource resource, String resourceId) {

@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -28,6 +27,10 @@ import org.operaton.bpm.engine.externaltask.UpdateExternalTaskRetriesBuilder;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNull;
+import static java.util.Objects.requireNonNullElse;
 
 /**
  * @author smirnov
@@ -56,35 +59,41 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
   }
 
   @Override
-  public UpdateExternalTaskRetriesBuilder externalTaskIds(List<String> externalTaskIds) {
-    this.externalTaskIds = externalTaskIds;
-    return this;
-  }
-
-  @Override
-  public UpdateExternalTaskRetriesBuilder externalTaskIds(String @Nullable... externalTaskIds) {
+  public UpdateExternalTaskRetriesBuilder externalTaskIds(@Nullable List<@Nullable String> externalTaskIds) {
     if (externalTaskIds == null) {
-      this.externalTaskIds = Collections.emptyList();
-    }
-    else {
-      this.externalTaskIds = Arrays.asList(externalTaskIds);
+      this.externalTaskIds = emptyList();
+    } else {
+      this.externalTaskIds = externalTaskIds.stream().toList();
     }
     return this;
   }
 
   @Override
-  public UpdateExternalTaskRetriesBuilder processInstanceIds(List<String> processInstanceIds) {
-    this.processInstanceIds = processInstanceIds;
+  public UpdateExternalTaskRetriesBuilder externalTaskIds(@Nullable String @Nullable... externalTaskIds) {
+    if (externalTaskIds == null) {
+      this.externalTaskIds = emptyList();
+    } else {
+      this.externalTaskIds = Stream.of(externalTaskIds).toList();
+    }
     return this;
   }
 
   @Override
-  public UpdateExternalTaskRetriesBuilder processInstanceIds(String @Nullable... processInstanceIds) {
+  public UpdateExternalTaskRetriesBuilder processInstanceIds(@Nullable List<@Nullable String> processInstanceIds) {
     if (processInstanceIds == null) {
-      this.processInstanceIds = Collections.emptyList();
+      this.processInstanceIds = emptyList();
+    } else {
+      this.processInstanceIds = processInstanceIds.stream().toList();
     }
-    else {
-      this.processInstanceIds = Arrays.asList(processInstanceIds);
+    return this;
+  }
+
+  @Override
+  public UpdateExternalTaskRetriesBuilder processInstanceIds(@Nullable String @Nullable... processInstanceIds) {
+    if (processInstanceIds == null) {
+      this.processInstanceIds = emptyList();
+    } else {
+      this.processInstanceIds = Stream.of(processInstanceIds).toList();
     }
     return this;
   }
@@ -110,25 +119,29 @@ public @NullMarked class UpdateExternalTaskRetriesBuilderImpl implements UpdateE
   @Override
   public void set(int retries) {
     this.retries = retries;
-    commandExecutor.execute(new SetExternalTasksRetriesCmd(this));
+    requireNonNull(commandExecutor)
+            .execute(new SetExternalTasksRetriesCmd(this));
   }
 
   @Override
   public Batch setAsync(int retries) {
     this.retries = retries;
-    return commandExecutor.execute(new SetExternalTasksRetriesBatchCmd(this));
+    return requireNonNull(commandExecutor)
+            .execute(new SetExternalTasksRetriesBatchCmd(this));
   }
 
   public int getRetries() {
     return retries;
   }
 
-  public @Nullable List<String> getExternalTaskIds() {
-    return externalTaskIds;
+  @SuppressWarnings("java:S2637") // can't return null
+  public List<String> getExternalTaskIds() {
+    return requireNonNullElse(externalTaskIds, emptyList());
   }
 
-  public @Nullable List<String> getProcessInstanceIds() {
-    return processInstanceIds;
+  @SuppressWarnings("java:S2637") // can't return null
+  public List<String> getProcessInstanceIds() {
+    return requireNonNullElse(processInstanceIds, emptyList());
   }
 
   public @Nullable ExternalTaskQuery getExternalTaskQuery() {

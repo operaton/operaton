@@ -19,6 +19,8 @@ package org.operaton.bpm.engine;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
 import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
@@ -78,13 +80,15 @@ import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricProcessInstancesB
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.repository.CaseDefinition;
+import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 
 /**
  * Service exposing information about ongoing and past process instances.  This is different
  * from the runtime information in the sense that this runtime information only contains
- * the actual runtime state at any given moment and it is optimized for runtime
+ * the actual runtime state at any given moment, and it is optimized for runtime
  * process execution performance.  The history information is optimized for easy
  * querying and remains permanent in the persistent storage.
  *
@@ -92,12 +96,14 @@ import org.operaton.bpm.engine.runtime.Job;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public interface HistoryService {
+public @NullMarked interface HistoryService {
 
   /**
    * Creates a new programmatic query to search for {@link HistoricProcessInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -105,14 +111,15 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricProcessInstanceQuery createHistoricProcessInstanceQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricActivityInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -120,7 +127,6 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricActivityInstanceQuery createHistoricActivityInstanceQuery();
 
@@ -143,7 +149,9 @@ public interface HistoryService {
   /**
    * Creates a new programmatic query to search for {@link HistoricTaskInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -154,14 +162,15 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricTaskInstanceQuery createHistoricTaskInstanceQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricDetail}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *       {@link Resources#PROCESS_DEFINITION} OR
@@ -180,14 +189,15 @@ public interface HistoryService {
    *       {@code enableHistoricInstancePermissions}
    *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricDetailQuery createHistoricDetailQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricVariableInstance}s.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *       {@link Resources#PROCESS_DEFINITION} OR
@@ -206,14 +216,15 @@ public interface HistoryService {
    *       {@code enableHistoricInstancePermissions}
    *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricVariableInstanceQuery createHistoricVariableInstanceQuery();
 
   /**
    * Creates a new programmatic query to search for {@link UserOperationLogEntry} instances.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -224,14 +235,15 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   UserOperationLogQuery createUserOperationLogQuery();
 
   /**
    * Creates a new programmatic query to search for {@link HistoricIncident historic incidents}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -239,7 +251,6 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricIncidentQuery createHistoricIncidentQuery();
 
@@ -247,7 +258,9 @@ public interface HistoryService {
    * Creates a new programmatic query to search for
    * {@link HistoricIdentityLinkLog historic identity links}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -255,7 +268,6 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricIdentityLinkLogQuery createHistoricIdentityLinkLogQuery();
 
@@ -310,7 +322,7 @@ public interface HistoryService {
    * historic details (variable updates, form properties) are deleted as well.
    *
    * @throws BadUserRequestException
-   *          when no process instances are found with the given ids or ids are null.
+   *          when no process instances are found with the given ids or ids are {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
    */
@@ -328,12 +340,12 @@ public interface HistoryService {
 
   /**
    * Deletes historic process instances and all related historic data in bulk manner. DELETE SQL statement will be created for each entity type. They will have list
-   * of given process instance ids in IN clause. Therefore, DB limitation for number of values in IN clause must be taken into account.
+   * of given process instance ids in an IN clause. Therefore, DB limitation for number of values in an IN clause must be taken into account.
    *
    * @param processInstanceIds list of process instance ids for removal
    *
    * @throws BadUserRequestException
-   *          when no process instances are found with the given ids or ids are null or when some of the process instances are not finished yet
+   *          when no process instances are found with the given ids or ids are {@code null} or when some of the process instances are not finished yet
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
    */
@@ -347,9 +359,9 @@ public interface HistoryService {
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}
-   * @return history cleanup job. NB! As of v. 7.9.0, method does not guarantee to return a job. Use {@link #findHistoryCleanupJobs()} instead.
+   * @return history cleanup job. NB! Method does not guarantee to return a job. Use {@link #findHistoryCleanupJobs()} instead.
    */
-  Job cleanUpHistoryAsync();
+  @Nullable Job cleanUpHistoryAsync();
 
   /**
    * Schedules history cleanup job at batch window start time. The job will delete historic data for
@@ -363,7 +375,7 @@ public interface HistoryService {
    * @return history cleanup job. Job id can be used to check job logs, incident etc.
    *
    */
-  Job cleanUpHistoryAsync(boolean immediatelyDue);
+  @Nullable Job cleanUpHistoryAsync(boolean immediatelyDue);
 
   /**
    * Finds history cleanup job, if present.
@@ -372,7 +384,7 @@ public interface HistoryService {
    * @return history cleanup job entity
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  Job findHistoryCleanupJob();
+  @Nullable Job findHistoryCleanupJob();
 
   /**
    * Finds history cleanup jobs if present.
@@ -385,24 +397,24 @@ public interface HistoryService {
    * historic details (variable updates, form properties) are deleted as well.
    *
    * @throws BadUserRequestException
-   *          when no process instances is found with the given ids or ids are null.
+   *          when no process instances is found with the given ids or ids are {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, String deleteReason);
+  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, @Nullable String deleteReason);
 
   /**
    * Deletes historic process instances asynchronously based on query. All historic activities, historic task and
    * historic details (variable updates, form properties) are deleted as well.
    *
    * @throws BadUserRequestException
-   *          when no process instances is found with the given ids or ids are null.
+   *          when no process instances is found with the given ids or ids are {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricProcessInstancesAsync(HistoricProcessInstanceQuery query, String deleteReason);
+  Batch deleteHistoricProcessInstancesAsync(HistoricProcessInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes historic process instances asynchronously based on query and a list of process instances. Query result and
@@ -410,12 +422,12 @@ public interface HistoryService {
    * All historic activities, historic task and historic details (variable updates, form properties) are deleted as well.
    *
    * @throws BadUserRequestException
-   *          when no process instances is found with the given ids or ids are null.
+   *          when no process instances is found with the given ids or ids are {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_FINISHED_PROCESS_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, HistoricProcessInstanceQuery query, String deleteReason);
+  Batch deleteHistoricProcessInstancesAsync(List<String> processInstanceIds, @Nullable HistoricProcessInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes a user operation log entry. Does not cascade to any related entities.
@@ -440,7 +452,7 @@ public interface HistoryService {
 
   /**
    * Deletes historic case instances and all related historic data in bulk manner. DELETE SQL statement will be created for each entity type. They will have list
-   * of given case instance ids in IN clause. Therefore, DB limitation for number of values in IN clause must be taken into account.
+   * of given case instance ids in an IN clause. Therefore, DB limitation for number of values in an IN clause must be taken into account.
    *
    * @param caseInstanceIds list of case instance ids for removal
    */
@@ -465,7 +477,7 @@ public interface HistoryService {
 
   /**
    * Deletes decision instances and all related historic data in bulk manner. DELETE SQL statement will be created for each entity type. They will have list
-   * of given decision instance ids in IN clause. Therefore, DB limitation for number of values in IN clause must be taken into account.
+   * of given decision instance ids in an IN clause. Therefore, DB limitation for number of values in an IN clause must be taken into account.
    *
    * @param decisionInstanceIds list of decision instance ids for removal.
    *
@@ -502,35 +514,35 @@ public interface HistoryService {
    * Deletes historic decision instances asynchronously based on a list of decision instances.
    *
    * @throws BadUserRequestException
-   *          when no decision instances are found with the given ids or ids are null.
+   *          when no decision instances are found with the given ids or ids are {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_DECISION_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, String deleteReason);
+  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, @Nullable String deleteReason);
 
   /**
    * Deletes historic decision instances asynchronously based on query of decision instances.
    *
    * @throws BadUserRequestException
-   *          when no decision instances are found with the given ids or ids are null.
+   *          when no decision instances are found with the given ids or ids are {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_DECISION_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricDecisionInstancesAsync(HistoricDecisionInstanceQuery query, String deleteReason);
+  Batch deleteHistoricDecisionInstancesAsync(HistoricDecisionInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes historic decision instances asynchronously based on query and a list of decision instances, whereby query result and
    * list of ids will be merged.
    *
    * @throws BadUserRequestException
-   *          when no decision instances are found with the given ids or ids are null.
+   *          when no decision instances are found with the given ids or ids are {@code null}.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#CREATE} or
    *          {@link BatchPermissions#CREATE_BATCH_DELETE_DECISION_INSTANCES} permission on {@link Resources#BATCH}.
    */
-  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, HistoricDecisionInstanceQuery query, String deleteReason);
+  Batch deleteHistoricDecisionInstancesAsync(List<String> decisionInstanceIds, @Nullable HistoricDecisionInstanceQuery query, @Nullable String deleteReason);
 
   /**
    * Deletes a historic variable instance by its id. All related historic
@@ -540,7 +552,7 @@ public interface HistoryService {
    *          the id of the variable instance
    * @throws BadUserRequestException
    *           when the historic variable instance is not found by the given id
-   *           or if id is null
+   *           or if id is {@code null}
    * @throws AuthorizationException
    *           If the variable instance has a process definition key and
    *           the user has no {@link Permissions#DELETE_HISTORY} permission on
@@ -594,9 +606,11 @@ public interface HistoryService {
   NativeHistoricVariableInstanceQuery createNativeHistoricVariableInstanceQuery();
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricJobLog historic job logs}.
+   * Creates a new programmatic query to search for {@link HistoricJobLog historic job logs}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -609,10 +623,10 @@ public interface HistoryService {
 
   /**
    * Returns the full stacktrace of the exception that occurs when the
-   * historic job log with the given id was last executed. Returns null
+   * historic job log with the given id was last executed. Returns {@code null}
    * when the historic job log has no exception stacktrace.
    *
-   * @param historicJobLogId id of the historic job log, cannot be null.
+   * @param historicJobLogId id of the historic job log, cannot be {@code null}.
    * @throws ProcessEngineException when no historic job log exists with the given id.
    *
    * @throws AuthorizationException
@@ -688,7 +702,9 @@ public interface HistoryService {
    * Creates a new programmatic query to search for
    * {@link HistoricExternalTaskLog historic external task logs}.
    *
-   * <p>The result of the query is empty in the following cases:
+   * <p>
+   * The result of the query is empty in the following cases:
+   * </p>
    * <ul>
    *   <li>The user has no {@link Permissions#READ_HISTORY} permission on
    *   {@link Resources#PROCESS_DEFINITION} OR
@@ -696,16 +712,15 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    * </ul>
-   * </p>
    */
   HistoricExternalTaskLogQuery createHistoricExternalTaskLogQuery();
 
   /**
    * Returns the full error details that occurs when the
-   * historic external task log with the given id was last executed. Returns null
+   * historic external task log with the given id was last executed. Returns {@code null}
    * when the historic external task log contains no error details.
    *
-   * @param historicExternalTaskLogId id of the historic external task log, cannot be null.
+   * @param historicExternalTaskLogId id of the historic external task log, cannot be {@code null}.
    * @throws ProcessEngineException when no historic external task log exists with the given id.
    *
    * @throws AuthorizationException

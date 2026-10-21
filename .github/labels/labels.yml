@@ -15,6 +15,10 @@
   color: "#0075ca"
   description: "Improvements or additions to documentation"
 
+- name: "documentation:adr"
+  color: "#0075ca"
+  description: "Architectural Decision Record (ADR) documentation"
+
 - name: "idea"
   color: "#9BDF57"
   description: "New feature idea for Operaton"

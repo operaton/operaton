@@ -30,7 +30,7 @@ validation_failed=0
 echo "Starting Wildfly module.xml validation in $MODULES_DIR..."
 
 # Check if the modules directory exists
-if [ ! -d "$MODULES_DIR" ]; then
+if [[ ! -d "$MODULES_DIR" ]]; then
     echo "WARNING: Module directory '$MODULES_DIR' not found. Skipping validation."
     exit 0
 fi
@@ -53,7 +53,7 @@ while IFS= read -r module_file; do
     resource_paths_output=$(xmllint --xpath "//*[local-name()='module']/*[local-name()='resources']/*[local-name()='resource-root']/@path" "$module_file" 2>/dev/null | \
                             sed 's/path="//;s/"$//;s/^[[:space:]]*//;s/[[:space:]]*$//')
 
-    if [ -z "$resource_paths_output" ]; then
+    if [[ -z "$resource_paths_output" ]]; then
         echo "    No <resource-root> paths found in $module_file. Skipping resource existence check."
         continue # Move to the next module.xml file
     fi
@@ -63,7 +63,7 @@ while IFS= read -r module_file; do
     # preventing it from running in a separate subshell that would lose 'validation_failed' context.
     while IFS= read -r relative_path; do
         # Skip empty lines that might result from sed processing
-        if [ -z "$relative_path" ]; then
+        if [[ -z "$relative_path" ]]; then
             continue
         fi
 
@@ -72,7 +72,7 @@ while IFS= read -r module_file; do
         absolute_resource_path="$module_dir/$relative_path"
 
         # Check if the referenced file exists and is a regular file
-        if [ ! -f "$absolute_resource_path" ]; then
+        if [[ ! -f "$absolute_resource_path" ]]; then
             echo "    ERROR: Resource not found for $module_file:"
             echo "      Referenced path: '$relative_path'"
             echo "      Expected absolute path: '$absolute_resource_path'"
@@ -85,7 +85,7 @@ while IFS= read -r module_file; do
 done < <(find "$MODULES_DIR" -name "module.xml")
 
 # After checking all module.xml files, determine the script's exit status
-if [ "$validation_failed" -eq 1 ]; then
+if [[ "$validation_failed" -eq 1 ]]; then
     echo "----------------------------------------------------------------------"
     echo "Wildfly module.xml validation FAILED: One or more referenced resources were not found."
     echo "----------------------------------------------------------------------"

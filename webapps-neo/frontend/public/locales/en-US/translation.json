@@ -34,7 +34,11 @@
     "activate": "Activate",
     "load-more": "Load more",
     "breadcrumb": "Breadcrumb",
-    "confirmation": "Confirmation"
+    "confirmation": "Confirmation",
+    "search": "Search",
+    "ok": "OK",
+    "date": "Date",
+    "time": "Time"
   },
   "nav": {
     "tasks": "Tasks",
@@ -54,11 +58,7 @@
     "skip-to-content": "Skip to content",
     "go-to": "Go To",
     "server": "Server",
-    "choose-server": "Choose a server",
-    "release-warning": "Public Alpha Release – Untested and not ready for production – Share your feedback with an",
-    "release-warning-issue": "issue",
-    "release-warning-or": "or in the",
-    "release-warning-forum": "forum"
+    "choose-server": "Choose a server"
   },
   "goto": {
     "title": "Go To",
@@ -119,7 +119,14 @@
     "process-definitions": "Process Definitions",
     "see-all-processes": "See all processes",
     "no-process-definitions": "No process definitions.",
-    "instances": "Instances"
+    "instances": "Instances",
+    "tasks-assigned": "Assigned",
+    "tasks-unassigned": "Unassigned",
+    "tasks-unattended": "Nobody responsible",
+    "tasks-by-group": "Open tasks by group",
+    "group": "Group",
+    "no-group": "No group",
+    "multiple-groups-hint": "A task can belong to more than one group, so the counts can add up to more than the total."
   },
   "tasks": {
     "title": "Task List",
@@ -133,13 +140,24 @@
     "no-description": "No description provided.",
     "select-task": "Select a task from the task list above to show its details.",
     "task-not-found": "Task not found",
+    "tenant": "Tenant",
+    "dates": {
+      "now": "Now",
+      "reset": "Clear"
+    },
     "task-not-found-hint": "This task no longer exists. It may have been completed or cancelled.",
     "task-load-failed": "Could not load task",
     "back-to-list": "Back to task list",
     "claim": "Claim",
     "unclaim": "Unclaim",
+    "update-failed": "The change could not be saved.",
     "you": "You",
     "reset-assignee": "Reset Assignee",
+    "assign-to": "Assign to",
+    "assign-to-label": "User ID",
+    "assign": "Assign",
+    "assign-failed": "Could not assign the task.",
+    "assign-unknown-user": "Unknown user id, or you do not have the permissions required for this action",
     "assignee-menu": "Assignee actions",
     "comment": "Comment",
     "comment-add": "Add Comment",
@@ -194,6 +212,7 @@
       "required-field": "(*) required field",
       "no-form": "No form available for this task.",
       "complete-task": "Complete Task",
+      "claim-first": "Claim the task to work on it.",
       "save-form": "Save Form",
       "unknown-error": "An unknown error occurred.",
       "form-title": "Form",
@@ -202,7 +221,10 @@
       "complete-directly": "Complete without form",
       "legacy-html-unsupported": "Legacy AngularJS forms are not supported by the new web applications. Please switch to form-js.",
       "legacy-html-migrate-link": "How to migrate",
-      "unsupported": "This start form type is not supported yet."
+      "unsupported": "This start form type is not supported yet.",
+      "add-variable": "Add a variable",
+      "duplicate-variable": "Each variable can be named only once.",
+      "submit-failed": "The task could not be completed."
     },
     "start-process": {
       "title": "Start Task",
@@ -218,23 +240,6 @@
       "business-key": "Business Key (optional)"
     },
     "filter": {
-      "title": "Filter Editor",
-      "general": "General",
-      "description": "Description",
-      "color": "Color",
-      "auto-refresh": "Auto Refresh",
-      "criteria": "Criteria",
-      "add-criteria": "Add Criteria",
-      "permissions": "Permissions",
-      "accessible-by-all": "Accessible by all users",
-      "add-permission": "Add Permission",
-      "group-user": "Group / User",
-      "identifier": "Identifier",
-      "variables": "Variables",
-      "variables-hint": "The variables you set here will be shown in the task list view.",
-      "show-undefined": "Show undefined variables",
-      "add-variable": "Add Variable",
-      "label": "Label",
       "manage_title": "Manage task filters"
     },
     "sort": {
@@ -279,14 +284,25 @@
       "createdBefore": "createdBefore",
       "createdAfter": "createdAfter",
       "active": "active",
-      "suspended": "suspended"
+      "suspended": "suspended",
+      "processVariables": "Process variable",
+      "taskVariables": "Task variable",
+      "owner": "Owner",
+      "delegationState": "Delegation state",
+      "includeAssignedTasks": "Include assigned tasks",
+      "tenantIdIn": "Tenant",
+      "withoutTenantId": "Without tenant"
     },
     "attachments": {
       "empty": "No attachments.",
       "add": "Add attachment",
       "description": "Description",
       "file": "File",
-      "upload": "Upload"
+      "choose": "Choose…",
+      "none-chosen": "No file chosen",
+      "upload": "Upload",
+      "delete-confirm": "Delete the attachment “{{name}}”?",
+      "confirm-delete": "Delete attachment"
     }
   },
   "processes": {
@@ -353,7 +369,8 @@
       "suspend": "Suspend",
       "select-all": "Select all",
       "count": "{{count}} selected",
-      "confirm-remove": "Delete {{count}} process definition(s) and all their data? This cannot be undone."
+      "confirm-remove": "Delete {{count}} process definition(s) and all their data? This cannot be undone.",
+      "failed": "The action was refused for {{count}} definition(s): {{reason}}"
     },
     "incidents": {
       "message": "Message",
@@ -436,7 +453,8 @@
         "withoutIncidents": "withoutIncidents",
         "startedBefore": "startedBefore",
         "startedAfter": "startedAfter",
-        "finished": "finished"
+        "finished": "finished",
+        "variables": "Variable"
       },
       "manage_title": "Manage process-instance filters",
       "suspend": "Suspend",
@@ -452,7 +470,9 @@
     "variables": {
       "add": "Add variable",
       "edit": "Edit variable",
-      "confirm-delete": "Delete variable \"{{name}}\"?"
+      "confirm-delete": "Delete variable \"{{name}}\"?",
+      "scope": "Scope",
+      "scope-instance": "Process instance"
     },
     "external-tasks": {
       "topic": "Topic",
@@ -480,7 +500,22 @@
       "clear-annotation": "Clear",
       "annotation-placeholder": "Add a note for this operation…",
       "confirm-clear": "Clear the annotation for this operation?"
-    }
+    },
+    "version-tag": "Version tag",
+    "suspension": {
+      "suspend": "Suspend process definition",
+      "activate": "Activate process definition",
+      "instances-hint": "Including the instances changes the state of every existing instance of this definition as well.",
+      "jobs-hint": "Including the jobs changes the state of every existing job of this job definition as well.",
+      "include-instances": "Include running instances",
+      "include-jobs": "Include existing jobs",
+      "when": "When",
+      "immediately": "Immediately",
+      "delayed": "At a set time"
+    },
+    "super-instance": "Calling instance",
+    "root-instance": "Root instance",
+    "removal-time": "Removal time"
   },
   "decisions": {
     "title": "Decisions",
@@ -561,7 +596,14 @@
       "duplicate-filtering": "Enable duplicate filtering",
       "deploy-changed-only": "Deploy changed resources only",
       "submit": "Deploy"
-    }
+    },
+    "delete": {
+      "title": "Delete deployment",
+      "message": "The deployment and everything it deployed will be removed.",
+      "cascade": "Also remove running process instances and their history",
+      "failed": "The engine refused to delete this deployment. Running instances need the option above."
+    },
+    "download": "Download"
   },
   "batches": {
     "title": "Batches",
@@ -702,7 +744,12 @@
       "add-to-group": "Add to group",
       "no-tenants": "User is currently not a member of any tenant.",
       "delete": "Delete User",
-      "confirm-delete": "Do you really want to delete this user?"
+      "confirm-delete": "Do you really want to delete this user?",
+      "unlock": "Unlock user",
+      "unlock-success": "The user was unlocked.",
+      "unlock-hint": "The engine locks an account after too many failed sign-ins. Unlocking lets the user sign in again.",
+      "own-password": "Your own password",
+      "own-password-hint": "The engine asks for the signed-in user's password as confirmation — also when changing somebody else's."
     },
     "group": {
       "title": "Groups",
@@ -760,7 +807,13 @@
       "available-permissions": "Available Permissions",
       "confirm-delete": "Do you really want to delete this authorization?",
       "success-created": "Successfully created new authorization.",
-      "select-resource": "Select a authorization resource"
+      "select-resource": "Select a authorization resource",
+      "identity-type": "Holder",
+      "group": "Group",
+      "user": "User",
+      "group-id": "Group id",
+      "user-id": "User id",
+      "already-exists": "An authorization for this combination of type, user or group and resource already exists, holding {{permissions}}. The engine allows only one — add to the existing row in the table below via “Edit”."
     },
     "authorization-resources": {
       "application": "Application",
@@ -784,6 +837,33 @@
       "dashboard": "Dashboard",
       "user-operation-log": "User Operation Log Category",
       "system": "System"
+    },
+    "search-title": "Search",
+    "search-id": "Id",
+    "search-name": "Name",
+    "search-first-name": "First name",
+    "search-last-name": "Last name",
+    "search-email": "E-mail",
+    "system-info": {
+      "product": "Product",
+      "version": "Version",
+      "edition": "Edition",
+      "installation": "Installation",
+      "database": "Database",
+      "application-server": "Application server",
+      "jdk": "JDK",
+      "integration": "Integration",
+      "webapps": "Web apps",
+      "raw": "Raw telemetry data"
+    },
+    "password-policy": {
+      "title": "The password has to satisfy these rules:",
+      "PASSWORD_POLICY_LENGTH": "at least {{minLength}} characters",
+      "PASSWORD_POLICY_LOWERCASE": "at least {{minLowerCase}} lowercase characters",
+      "PASSWORD_POLICY_UPPERCASE": "at least {{minUpperCase}} uppercase characters",
+      "PASSWORD_POLICY_DIGIT": "at least {{minDigit}} digits",
+      "PASSWORD_POLICY_SPECIAL": "at least {{minSpecial}} special characters",
+      "PASSWORD_POLICY_USER_DATA": "nothing taken from the user's own data"
     }
   },
   "account": {
@@ -847,6 +927,11 @@
     "goto-hint-prefix": "Using the \"Go To\" function in the top right or pressing",
     "goto-hint-suffix": "you can quickly navigate to a resource if you know its ID."
   },
+  "no-access": {
+    "title": "No access to this area",
+    "text": "Your account is not authorized for the {{app}} application.",
+    "hint": "An administrator has to grant your group access to it."
+  },
   "bpmn": {
     "zoom-in": "Zoom in",
     "zoom-out": "Zoom out",
@@ -874,7 +959,7 @@
   "list_filter": {
     "saved_filter": "Filter",
     "all": "All",
-    "my": "Mine",
+    "my": "My tasks",
     "sort_by": "Sort by",
     "sort_order": "Sort order",
     "asc": "Ascending",
@@ -899,7 +984,33 @@
     "duplicate": "Duplicate",
     "duplicate_suffix": "(copy)",
     "share_link_copied": "Link copied",
-    "empty": "No saved filters yet."
+    "empty": "No saved filters yet.",
+    "variable_name": "Variable name",
+    "variable_operator": "Comparison",
+    "variable_operators": {
+      "eq": "is",
+      "neq": "is not",
+      "gt": "greater than",
+      "gteq": "greater than or equal",
+      "lt": "less than",
+      "lteq": "less than or equal",
+      "like": "contains",
+      "notLike": "does not contain"
+    },
+    "duplicate_criterion": "Each criterion may be used once. Used twice: {{keys}}",
+    "columns": "Columns",
+    "add_column": "Add a column",
+    "column_label": "Heading",
+    "show_undefined": "Show tasks that do not carry the variable",
+    "columns_hint": "Variables named here appear as extra columns of the task list.",
+    "share_section": "Sharing",
+    "share_hint": "Who may see this filter. Without a grant it stays visible to you alone.",
+    "share_denied": "Sharing requires permission to create authorizations. The filter stays visible to you alone for now.",
+    "share_all": "Everyone may use it",
+    "share_user": "User",
+    "share_group": "Group",
+    "share_add": "Add a person or group",
+    "select_hint": "Pick a filter on the left, or create a new one."
   },
   "login": {
     "title": "Login",

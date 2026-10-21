@@ -29,30 +29,38 @@ import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 public interface ModificationBuilder extends InstantiationBuilder<ModificationBuilder>{
 
   /**
-   * <p><i>Submits the instruction:</i></p>
+   * <i>Submits the instruction:</i>
    *
-   * <p>Cancel all instances of the given activity in an arbitrary order, which are:
+   * <p>
+   * Cancel all instances of the given activity in an arbitrary order, which are:
+   * </p>
    * <ul>
    *   <li>activity instances of that activity
    *   <li>transition instances entering or leaving that activity
    * </ul></p>
    *
-   * <p>The cancellation order of the instances is arbitrary</p>
+   * <p>
+   * The cancellation order of the instances is arbitrary
+   * </p>
    *
    * @param activityId the activity for which all instances should be cancelled
    */
   ModificationBuilder cancelAllForActivity(String activityId);
 
   /**
-   * <p><i>Submits the instruction:</i></p>
+   * <i>Submits the instruction:</i>
    *
-   * <p>Cancel all instances of the given activity in an arbitrary order, which are:
+   * <p>
+   * Cancel all instances of the given activity in an arbitrary order, which are:
+   * </p>
    * <ul>
    *   <li>activity instances of that activity
    *   <li>transition instances entering or leaving that activity
    * </ul></p>
    *
-   * <p>The cancellation order of the instances is arbitrary</p>
+   * <p>
+   * The cancellation order of the instances is arbitrary
+   * </p>
    *
    * @param activityId the activity for which all instances should be cancelled
    * @param cancelCurrentActiveActivityInstances

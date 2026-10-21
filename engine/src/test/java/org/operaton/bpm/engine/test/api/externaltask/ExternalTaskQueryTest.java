@@ -286,7 +286,7 @@ class ExternalTaskQueryTest {
     // when
     List<ExternalTask> tasks = externalTaskService
       .createExternalTaskQuery()
-      .processInstanceIdIn(processInstances.toArray(new String[processInstances.size()]))
+      .processInstanceIdIn(processInstances.toArray(String[]::new))
       .list();
 
     // then

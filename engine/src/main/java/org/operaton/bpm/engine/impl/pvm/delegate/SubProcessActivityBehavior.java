@@ -39,8 +39,6 @@ public interface SubProcessActivityBehavior extends ActivityBehavior {
   /**
    * Called after the process instance is destroyed for
    * this activity to perform its outgoing control flow logic.
-   *
-   * @param execution
    */
   void completed(ActivityExecution execution);
 }

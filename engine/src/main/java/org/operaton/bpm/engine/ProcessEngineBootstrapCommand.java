@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 
 /**
  * @author Nikola Koevski
  */
-public interface ProcessEngineBootstrapCommand extends Command<Void> {
+public @NullMarked interface ProcessEngineBootstrapCommand extends Command<Void> {
 }

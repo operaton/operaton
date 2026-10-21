@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.client.impl;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +119,7 @@ public class EngineClient {
 
     String resourceUrl = getBaseUrl() + FETCH_AND_LOCK_RESOURCE_PATH;
     ExternalTask[] externalTasks = engineInteraction.postRequest(resourceUrl, payload, ExternalTaskImpl[].class);
-    return Arrays.asList(externalTasks);
+    return List.of(externalTasks);
   }
 
   public void lock(String taskId, long lockDuration) {

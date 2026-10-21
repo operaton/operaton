@@ -78,11 +78,6 @@ public class NeoWebappProperty {
    */
   protected String pluginsUrl = "";
 
-  /**
-   * Hides the pre-release warning banner in the SPA.
-   */
-  protected boolean hideReleaseWarning = false;
-
   public boolean isEnabled() {
     return enabled;
   }
@@ -159,14 +154,6 @@ public class NeoWebappProperty {
     this.pluginsUrl = pluginsUrl == null ? "" : pluginsUrl;
   }
 
-  public boolean isHideReleaseWarning() {
-    return hideReleaseWarning;
-  }
-
-  public void setHideReleaseWarning(boolean hideReleaseWarning) {
-    this.hideReleaseWarning = hideReleaseWarning;
-  }
-
   @Override
   public String toString() {
     return joinOn(this.getClass())
@@ -177,7 +164,6 @@ public class NeoWebappProperty {
       .add("indexRedirectEnabled=" + indexRedirectEnabled)
       .add("authMode='" + authMode + '\'')
       .add("pluginsUrl='" + pluginsUrl + '\'')
-      .add("hideReleaseWarning=" + hideReleaseWarning)
       .toString();
   }
 }

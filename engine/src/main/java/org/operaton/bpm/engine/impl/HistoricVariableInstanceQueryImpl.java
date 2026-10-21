@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -98,7 +97,7 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
   @Override
   public HistoricVariableInstanceQuery variableNameIn(String... names) {
     ensureNotNull("Variable names", (Object[]) names);
-    variableNameIn = Arrays.asList(names);
+    variableNameIn = List.of(names);
     return this;
   }
 

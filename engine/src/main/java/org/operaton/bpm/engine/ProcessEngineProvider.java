@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
-public interface ProcessEngineProvider {
+import org.jspecify.annotations.NullMarked;
+
+public @NullMarked interface ProcessEngineProvider {
   ProcessEngine getProcessEngine();
 }

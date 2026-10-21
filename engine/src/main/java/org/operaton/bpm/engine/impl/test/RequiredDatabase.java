@@ -24,15 +24,19 @@ import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 /**
- * <p>This only works if {@link ProcessEngineRule} or {@link AbstractProcessEngineTestCase} is used.
+ * This only works if {@link ProcessEngineRule} or {@link AbstractProcessEngineTestCase} is used.
  * Furthermore, it only checks against the engines managed by these classes, e.g. it cannot prevent
  * that a test builds a custom engine against any database.
  *
- * <p>Check the constants in {@link DbSqlSessionFactory} for valid database names.
+ * <p>
+ * Check the constants in {@link DbSqlSessionFactory} for valid database names.
+ * </p>
  *
- * <p>Note that this uses the process engine to check the database type. If the test
+ * <p>
+ * Note that this uses the process engine to check the database type. If the test
  * builds its own process engine, it may be a better idea to exclude the test via maven,
  * to avoid the overhead of unnecessarily build the engine.
+ * </p>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.identity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.identity.Tenant;
@@ -50,11 +49,9 @@ public class TenantDto {
   }
 
   public static List<TenantDto> fromTenantList(List<Tenant> tenants) {
-    List<TenantDto> dtos = new ArrayList<>();
-    for (Tenant tenant : tenants) {
-      dtos.add(fromTenant(tenant));
-    }
-    return dtos;
+    return tenants.stream()
+        .map(TenantDto::fromTenant)
+        .toList();
   }
 
   public void update(Tenant tenant) {

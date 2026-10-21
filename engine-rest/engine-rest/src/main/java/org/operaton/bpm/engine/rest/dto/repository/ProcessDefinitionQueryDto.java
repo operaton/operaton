@@ -297,7 +297,7 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
       query.processDefinitionId(processDefinitionId);
     }
     if (processDefinitionIdIn != null && !processDefinitionIdIn.isEmpty()) {
-      query.processDefinitionIdIn(processDefinitionIdIn.toArray(new String[processDefinitionIdIn.size()]));
+      query.processDefinitionIdIn(processDefinitionIdIn.toArray(String[]::new));
     }
     if (category != null) {
       query.processDefinitionCategory(category);
@@ -328,7 +328,7 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
     }
 
     if (keys != null && !keys.isEmpty()) {
-      query.processDefinitionKeyIn(keys.toArray(new String[keys.size()]));
+      query.processDefinitionKeyIn(keys.toArray(String[]::new));
     }
     if (version != null) {
       query.processDefinitionVersion(version);
@@ -364,7 +364,7 @@ public class ProcessDefinitionQueryDto extends AbstractQueryDto<ProcessDefinitio
       query.incidentMessageLike(incidentMessageLike);
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();

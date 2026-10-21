@@ -79,6 +79,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     return finishedDecisionInstanceCount;
   }
 
+  @SuppressWarnings("unused")
   public void setFinishedDecisionInstanceCount(long finishedDecisionInstanceCount) {
     this.finishedDecisionInstanceCount = finishedDecisionInstanceCount;
   }
@@ -88,6 +89,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     return cleanableDecisionInstanceCount;
   }
 
+  @SuppressWarnings("unused")
   public void setCleanableDecisionInstanceCount(long cleanableDecisionInstanceCount) {
     this.cleanableDecisionInstanceCount = cleanableDecisionInstanceCount;
   }

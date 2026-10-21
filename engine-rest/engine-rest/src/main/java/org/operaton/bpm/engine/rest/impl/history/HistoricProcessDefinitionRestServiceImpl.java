@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl.history;
 
-import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.core.UriInfo;
 
@@ -47,15 +46,11 @@ public class HistoricProcessDefinitionRestServiceImpl extends AbstractRestProces
 
     HistoricActivityStatisticsQuery query = queryDto.toQuery(getProcessEngine());
 
-    List<HistoricActivityStatisticsDto> result = new ArrayList<>();
-
     List<HistoricActivityStatistics> statistics = query.unlimitedList();
 
-    for (HistoricActivityStatistics currentStatistics : statistics) {
-      result.add(HistoricActivityStatisticsDto.fromHistoricActivityStatistics(currentStatistics));
-    }
-
-    return result;
+    return statistics.stream()
+        .map(HistoricActivityStatisticsDto::fromHistoricActivityStatistics)
+        .toList();
   }
 
   @Override

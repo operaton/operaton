@@ -16,21 +16,29 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate.helper;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
 
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
  */
-public class WaitStateUndoService extends AbstractBpmnActivityBehavior implements SignallableActivityBehavior {
+public @NullMarked class WaitStateUndoService extends AbstractBpmnActivityBehavior implements SignallableActivityBehavior {
 
-  private Expression counterName;
+  private @Nullable Expression counterName;
+
+  public void setCounterName(Expression counterName) {
+    this.counterName = counterName;
+  }
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
+    requireNonNull(counterName);
     String variableName = (String) counterName.getValue(execution);
     Object variable = execution.getVariable(variableName);
     if(variable == null) {
@@ -42,7 +50,7 @@ public class WaitStateUndoService extends AbstractBpmnActivityBehavior implement
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalEvent, Object signalData) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalEvent, @Nullable Object signalData) throws Exception {
     leave(execution);
   }
 

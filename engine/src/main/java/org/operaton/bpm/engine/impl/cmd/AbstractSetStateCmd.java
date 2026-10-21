@@ -158,7 +158,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
 
   protected @Nullable String getDeploymentIdByProcessDefinitionKey(CommandContext commandContext, String processDefinitionKey,
       boolean tenantIdSet, String tenantId) {
-    ProcessDefinitionEntity definition = null;
+    ProcessDefinitionEntity definition;
     if (tenantIdSet) {
       definition = commandContext.getProcessDefinitionManager().findLatestProcessDefinitionByKeyAndTenantId(processDefinitionKey, tenantId);
     } else {

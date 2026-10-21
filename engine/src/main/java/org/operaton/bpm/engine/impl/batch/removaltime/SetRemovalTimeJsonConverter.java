@@ -24,6 +24,7 @@ import java.util.Set;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappings;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 /**
  * @author Tassilo Weidner
  */
-public class SetRemovalTimeJsonConverter
+public @NullMarked class SetRemovalTimeJsonConverter
   extends AbstractBatchConfigurationObjectConverter<SetRemovalTimeBatchConfiguration> {
 
   protected static final String IDS = "ids";

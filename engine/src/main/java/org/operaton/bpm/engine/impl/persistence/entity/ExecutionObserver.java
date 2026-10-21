@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 /**
- * Represents an observer for the exeuction.
+ * Represents an observer for the execution.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
@@ -26,7 +26,7 @@ public interface ExecutionObserver {
   /**
    * Callback which is called in the clearExecution method of the ExecutionEntity.
    *
-   * @param execution the execution which is been observed
+   * @param execution the execution which has been observed
    */
   void onClear(ExecutionEntity execution);
 }

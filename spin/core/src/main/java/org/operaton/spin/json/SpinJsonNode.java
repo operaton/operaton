@@ -294,9 +294,9 @@ public abstract class SpinJsonNode extends Spin<SpinJsonNode> {
   public abstract String stringValue();
 
   /**
-   * Check if this node represents a null value.
+   * Check if this node represents a {@code null} value.
    *
-   * @return true if this node is a null value, false otherwise
+   * @return true if this node is a {@code null} value, false otherwise
    */
   public abstract Boolean isNull();
 
@@ -309,7 +309,7 @@ public abstract class SpinJsonNode extends Spin<SpinJsonNode> {
 
   /**
    * Gets the actual value of the node, in case it is a Boolean/String/Number/Null node.
-   * In that case a Java Boolean/String/Number or null is returned.
+   * In that case a Java Boolean/String/Number or {@code null} is returned.
    *
    * @return the value of this node
    * @throws SpinDataFormatException if this node is not a Boolean/String/Number/Nul value

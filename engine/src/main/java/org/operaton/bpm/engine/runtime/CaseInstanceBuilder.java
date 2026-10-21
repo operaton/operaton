@@ -73,7 +73,7 @@ public interface CaseInstanceBuilder {
    *
    * @return the builder
    *
-   * @throws NotValidException when the given variable name is null
+   * @throws NotValidException when the given variable name is {@code null}
    */
   CaseInstanceBuilder setVariable(String variableName, Object variableValue);
 
@@ -90,7 +90,7 @@ public interface CaseInstanceBuilder {
   /**
    * <p>Creates a new {@link CaseInstance}, which will be in the <code>ACTIVE</code> state.</p>
    *
-   * @throws NotValidException when the given case definition key or id is null or
+   * @throws NotValidException when the given case definition key or id is {@code null} or
    * @throws NotFoundException when no case definition is deployed with the given key or id.
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */

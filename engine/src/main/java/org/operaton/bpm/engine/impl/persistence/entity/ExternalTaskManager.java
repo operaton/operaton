@@ -170,10 +170,16 @@ public class ExternalTaskManager extends AbstractManager {
     return getTenantManager().configureQuery(parameter);
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   protected boolean shouldApplyOrdering(boolean usePriority, boolean useCreateTime) {
     return usePriority || useCreateTime;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   protected boolean useCreateTime(List<QueryOrderingProperty> orderingProperties) {
     return orderingProperties.stream()
         .anyMatch(orderingProperty -> CREATE_TIME.getName().equals(orderingProperty.getQueryProperty().getName()));

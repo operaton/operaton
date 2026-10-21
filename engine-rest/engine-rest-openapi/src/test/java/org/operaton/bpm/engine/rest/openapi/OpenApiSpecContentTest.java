@@ -147,16 +147,20 @@ class OpenApiSpecContentTest {
    * 404 Not Found descriptions must not mention "negative" (that is a 400 validation condition).
    * Acceptance gate for Phase 1.
    *
-   * <p>This checks two specific patterns:
+   * <p>
+   * This checks two specific patterns:
+   * </p>
    * <ol>
    *   <li>When BOTH 400 and 404 are defined and the 400 description says "does not exist" while
    *       the 404 description mentions "negative" — a clear inversion.</li>
    *   <li>A 404 description that mentions "negative" (which belongs in 400).</li>
    * </ol>
    *
-   * <p>Note: Some endpoints define only a 400 for resource-not-found conditions. While these are
+   * <p>
+   * Note: Some endpoints define only a 400 for resource-not-found conditions. While these are
    * semantically imprecise, they are not inversions (no 404 defined to swap with). Those are
    * tracked separately and will be addressed when 404 responses are added.
+   * </p>
    */
   @Test
   void statusCode400And404SemanticsNotInverted() {

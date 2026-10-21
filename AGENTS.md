@@ -67,6 +67,10 @@ If you get compilation errors like "package org.operaton.bpm.dmn.engine does not
 ./mvnw test -PtestExceptBpmn -pl engine
 ```
 
+### Coding conventions:
+
+- New source files must use license header from CONTRIBUTING.md, year = current year (not hardcoded old year)
+
 ### Code Cleanup
 
 Before submitting changes, run the code cleanup script to ensure compliance with coding standards:

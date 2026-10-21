@@ -48,10 +48,8 @@ class RetriesDtoObjectMapperTest {
   @Test
   void shouldIncludeDueDateSetPropertyRetriesDto() throws Exception {
     // given
-    String json = "{"
-        + "\"retries\":4,"
-        + "\"dueDate\":1675752840000"
-        + "}";
+    String json = """
+        {"retries":4,"dueDate":1675752840000}""";
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -65,9 +63,8 @@ class RetriesDtoObjectMapperTest {
   @Test
   void shouldIgnoreDueDateSetPropertyRetriesDto() throws Exception {
     // given
-    String json = "{"
-        + "\"retries\":4"
-        + "}";
+    String json = """
+        {"retries":4}""";
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -99,12 +96,8 @@ class RetriesDtoObjectMapperTest {
   @Test
   void shouldIncludeDueDateSetPropertySetJobRetriesDto() throws Exception {
     // given
-    String json = "{"
-        + "\"retries\":4,"
-        + "\"dueDate\":1675752840000,"
-        + "\"jobIds\":[],"
-        + "\"jobQuery\":{\"sorting\":null}"
-        + "}";
+    String json = """
+        {"retries":4,"dueDate":1675752840000,"jobIds":[],"jobQuery":{"sorting":null}}""";
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -118,11 +111,8 @@ class RetriesDtoObjectMapperTest {
   @Test
   void shouldIgnoreDueDateSetPropertySetJobRetriesDto() throws Exception {
     // given
-    String json = "{"
-        + "\"retries\":4,"
-        + "\"jobIds\":[],"
-        + "\"jobQuery\":{\"sorting\":null}"
-        + "}";
+    String json = """
+        {"retries":4,"jobIds":[],"jobQuery":{"sorting":null}}""";
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -155,14 +145,9 @@ class RetriesDtoObjectMapperTest {
   @Test
   void shouldIncludeDueDateSetPropertySetJobRetriesByProcessDto() throws Exception {
     // given
-    String json = "{"
-        + "\"retries\":4,"
-        + "\"dueDate\":1675752840000,"
-        + "\"jobIds\":null,"
-        + "\"jobQuery\":null,"
-        + "\"processInstances\":[],"
-        + "\"historicProcessInstanceQuery\":{\"processDefinitionId\":null,\"incidentType\":null,\"orQueries\":null,\"sorting\":null}"
-        + "}";
+    String json = """
+        {"retries":4,"dueDate":1675752840000,"jobIds":null,"jobQuery":null,"processInstances":[],
+        "historicProcessInstanceQuery":{"processDefinitionId":null,"incidentType":null,"orQueries":null,"sorting":null}}""";
 
     ObjectMapper mapper = new ObjectMapper();
 

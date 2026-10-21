@@ -33,12 +33,14 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 
 /**
- * <p>This class is responsible for wiring history as execution listeners into process execution.
+ * This class is responsible for wiring history as execution listeners into process execution.
  *
- * <p>NOTE: the role of this class has changed since 7.0: in order to customize history behavior it is
+ * <p>
+ * NOTE: the role of this class has changed since 7.0: in order to customize history behavior it is
  * usually not necessary to override this class but rather the {@link HistoryEventProducer} for
  * customizing data acquisition and {@link HistoryEventHandler} for customizing the persistence behavior
  * or if you need a history event stream.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barrez

@@ -243,9 +243,9 @@ public class FetchAndLockHandlerImpl implements Runnable, FetchAndLockHandler {
 
   protected FetchAndLockResult tryFetchAndLock(FetchAndLockRequest request) {
 
-    ProcessEngine processEngine = null;
+    ProcessEngine processEngine;
     IdentityService identityService = null;
-    FetchAndLockResult result = null;
+    FetchAndLockResult result;
 
     try {
       processEngine = getProcessEngine(request);

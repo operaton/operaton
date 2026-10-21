@@ -136,7 +136,7 @@ public @NullMarked class StartProcessInstanceAtActivitiesCmd implements Command<
 
   /**
    * get the activity that is started by the first instruction, if exists;
-   * return null if the first instruction is a start-transition instruction
+   * return {@code null} if the first instruction is a start-transition instruction
    */
   protected @Nullable ActivityImpl determineFirstActivity(ProcessDefinitionImpl processDefinition,
       ProcessInstanceModificationBuilderImpl modificationBuilder) {

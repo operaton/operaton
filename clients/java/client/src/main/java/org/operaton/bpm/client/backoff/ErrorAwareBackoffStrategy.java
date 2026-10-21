@@ -26,10 +26,12 @@ import org.operaton.bpm.client.exception.UnknownHttpErrorException;
 import org.operaton.bpm.client.task.ExternalTask;
 
 /**
- * <p>Provides a way to define a back off between fetch and lock requests.
+ * Provides a way to define a back off between fetch and lock requests.
  *
- * <p>Note: Since an implementation of this interface may be executed by multiple threads,
+ * <p>
+ * Note: Since an implementation of this interface may be executed by multiple threads,
  * it is recommended to implement the custom backoff strategy in a thread-safe manner.
+ * </p>
  */
 public interface ErrorAwareBackoffStrategy extends BackoffStrategy {
 
@@ -46,10 +48,12 @@ public interface ErrorAwareBackoffStrategy extends BackoffStrategy {
   }
 
   /**
-   * <p>Reconfigures the back off strategy based on the fetched external tasks and any error that
+   * Reconfigures the back off strategy based on the fetched external tasks and any error that
    * might have occurred. It is invoked before {@link #calculateBackoffTime}.
    *
-   * <p>The implementation might count the amount of invocations and realize a strategy reset.
+   * <p>
+   * The implementation might count the amount of invocations and realize a strategy reset.
+   * </p>
    *
    * @param externalTasks which have been fetched
    * @param exception can be of the following types: <ul>
@@ -61,7 +65,7 @@ public interface ErrorAwareBackoffStrategy extends BackoffStrategy {
   void reconfigure(List<ExternalTask> externalTasks, ExternalTaskClientException exception);
 
   /**
-   * <p>Calculates the back off time and is invoked after {@link #reconfigure(List, ExternalTaskClientException)}.
+   * Calculates the back off time and is invoked after {@link #reconfigure(List, ExternalTaskClientException)}.
    *
    * @return the back off time between fetch and lock requests in milliseconds
    */

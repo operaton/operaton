@@ -18,8 +18,6 @@ package org.operaton.bpm.client.client;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -164,7 +162,7 @@ class ClientIT {
 
       final ObjectValue[] objectValue = { null };
       RecordingExternalTaskHandler recordingHandler = new RecordingExternalTaskHandler((t, s) -> {
-        List<String> list = new ArrayList<>(Arrays.asList("lorem", "ipsum", "dolor", "sit"));
+        List<String> list = List.of("lorem", "ipsum", "dolor", "sit");
         objectValue[0] = Variables.objectValue(list).create();
         s.complete(t, Collections.singletonMap("variable", objectValue[0]));
       });

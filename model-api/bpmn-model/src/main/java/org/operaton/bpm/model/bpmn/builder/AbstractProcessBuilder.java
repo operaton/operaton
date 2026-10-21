@@ -81,7 +81,7 @@ public abstract class AbstractProcessBuilder<B extends AbstractProcessBuilder<B>
   /**
    * Sets the operaton history time to live.
    *
-   * @param historyTimeToLive value for history time to live, must be either null or non-negative integer.
+   * @param historyTimeToLive value for history time to live, must be either {@code null} or non-negative integer.
    * @return the builder object
    */
   public B operatonHistoryTimeToLive(Integer historyTimeToLive) {
@@ -92,7 +92,7 @@ public abstract class AbstractProcessBuilder<B extends AbstractProcessBuilder<B>
   /**
    * Sets the operaton history time to live string.
    *
-   * @param historyTimeToLive string value of history time to live, can be null or a valid ISO-8601 value.
+   * @param historyTimeToLive string value of history time to live, can be {@code null} or a valid ISO-8601 value.
    * @return the builder object
    */
   public B operatonHistoryTimeToLiveString(String historyTimeToLive) {

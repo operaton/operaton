@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import java.util.Arrays;
 import java.util.List;
 
 import ch.martinelli.oss.testcontainers.mailpit.Message;
@@ -50,7 +49,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
     testRule.assertProcessEnded(procId);
   }
 
@@ -70,7 +69,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
   }
 
 }

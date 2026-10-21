@@ -22,8 +22,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.SAXParser;
+
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -39,28 +41,24 @@ import org.operaton.bpm.engine.impl.util.io.StringStreamSource;
 import org.operaton.bpm.engine.impl.util.io.UriStreamSource;
 import org.operaton.bpm.engine.impl.xml.ProblemImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Tom Baeyens
  */
-public abstract class Parse extends DefaultHandler {
+public abstract @NullMarked class Parse extends DefaultHandler {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  protected static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
-  protected static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-  protected static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-
   protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA = "http://javax.xml.XMLConstants/property/accessExternalSchema";
-  protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY = "javax.xml.accessExternalSchema";
-  protected static final String JAXP_ACCESS_EXTERNAL_SCHEMA_ALL = "all";
 
   protected Parser parser;
-  protected String name;
-  protected StreamSource streamSource;
-  protected Element rootElement;
+  protected @Nullable String name;
+  protected @Nullable StreamSource streamSource;
+  protected @Nullable Element rootElement;
   protected List<Problem> errors = new ArrayList<>();
   protected List<Problem> warnings = new ArrayList<>();
-  protected String schemaResource;
+  protected @Nullable String schemaResource;
 
   protected Parse(Parser parser) {
     this.parser = parser;
@@ -103,7 +101,7 @@ public abstract class Parse extends DefaultHandler {
     }
   }
 
-  public Parse sourceResource(String resource, ClassLoader classLoader) {
+  public Parse sourceResource(String resource, @Nullable ClassLoader classLoader) {
     if (name == null) {
       name(resource);
     }
@@ -126,26 +124,19 @@ public abstract class Parse extends DefaultHandler {
     this.streamSource = streamSource;
   }
 
-  public void setSchemaResource(String schemaResource) {
-    boolean schemaResourceSet = schemaResource != null;
-    parser.enableSchemaValidation(schemaResourceSet);
-
+  public void setSchemaResource(@Nullable String schemaResource) {
     this.schemaResource = schemaResource;
   }
 
   public Parse execute() {
     try {
-      InputStream inputStream = streamSource.getInputStream();
+      InputStream inputStream = requireNonNull(streamSource).getInputStream();
 
-      SAXParser saxParser = parser.getSaxParser();
+      SAXParser saxParser = parser.getSaxParser(schemaResource);
       trySetAccessExternalSchema(saxParser);
-      if (schemaResource != null) {
-        saxParser.setProperty(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-        saxParser.setProperty(JAXP_SCHEMA_SOURCE, schemaResource);
-      }
       saxParser.parse(inputStream, new ParseHandler(this));
     } catch (Exception e) {
-      throw LOG.parsingFailureException(name, e);
+      throw LOG.parsingFailureException(name != null ? name : "unnamed", e);
     }
 
     return this;
@@ -160,25 +151,12 @@ public abstract class Parse extends DefaultHandler {
     }
   }
 
-  /*
-   * JAXP allows users to override the default value via system properties and
-   * a central properties file (see https://docs.oracle.com/javase/tutorial/jaxp/properties/scope.html).
-   * However, both are overridden by an explicit configuration in code, as we apply it.
-   * Since we want users to customize the value, we take the system property into account.
-   * The properties file is not supported at the moment.
-   */
   protected String resolveAccessExternalSchemaProperty() {
-    String systemProperty = System.getProperty(JAXP_ACCESS_EXTERNAL_SCHEMA_SYSTEM_PROPERTY);
-
-    if (systemProperty != null) {
-      return systemProperty;
-    } else {
-      return JAXP_ACCESS_EXTERNAL_SCHEMA_ALL;
-    }
+    return Parser.resolveAccessExternalSchemaProperty();
   }
 
   public Element getRootElement() {
-    return rootElement;
+    return requireNonNull(rootElement);
   }
 
   public List<Problem> getProblems() {
@@ -189,11 +167,11 @@ public abstract class Parse extends DefaultHandler {
     errors.add(new ProblemImpl(e));
   }
 
-  public void addError(String errorMessage, Element element) {
+  public void addError(String errorMessage, @Nullable Element element) {
     errors.add(new ProblemImpl(errorMessage, element));
   }
 
-  public void addError(String errorMessage, Element element, String... elementIds) {
+  public void addError(String errorMessage, @Nullable Element element, @Nullable String... elementIds) {
     errors.add(new ProblemImpl(errorMessage, element, elementIds));
   }
 
@@ -201,28 +179,28 @@ public abstract class Parse extends DefaultHandler {
     errors.add(new ProblemImpl(e));
   }
 
-  public void addError(BpmnParseException e, String elementId) {
+  public void addError(BpmnParseException e, @Nullable String elementId) {
     errors.add(new ProblemImpl(e, elementId));
   }
 
   public boolean hasErrors() {
-    return errors != null && !errors.isEmpty();
+    return !errors.isEmpty();
   }
 
   public void addWarning(SAXParseException e) {
     warnings.add(new ProblemImpl(e));
   }
 
-  public void addWarning(String errorMessage, Element element) {
+  public void addWarning(String errorMessage, @Nullable Element element) {
     warnings.add(new ProblemImpl(errorMessage, element));
   }
 
-  public void addWarning(String errorMessage, Element element, String... elementIds) {
+  public void addWarning(String errorMessage, @Nullable Element element, @Nullable String... elementIds) {
     warnings.add(new ProblemImpl(errorMessage, element, elementIds));
   }
 
   public boolean hasWarnings() {
-    return warnings != null && !warnings.isEmpty();
+    return !warnings.isEmpty();
   }
 
   public void logWarnings() {
@@ -244,6 +222,6 @@ public abstract class Parse extends DefaultHandler {
       strb.append(" | resource ").append(name);
       strb.append(error);
     }
-    throw LOG.exceptionDuringParsing(strb.toString(), name, errors, warnings);
+    throw LOG.exceptionDuringParsing(strb.toString(), name != null ? name : "unnamed", errors, warnings);
   }
 }

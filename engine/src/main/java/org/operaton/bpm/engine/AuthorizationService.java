@@ -18,6 +18,8 @@ package org.operaton.bpm.engine;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -27,47 +29,60 @@ import org.operaton.bpm.engine.authorization.Resources;
 
 
 /**
- * <p>The authorization service allows managing {@link Authorization Authorizations}.</p>
+ * The authorization service allows managing {@link Authorization Authorizations}.
  *
  * <h2>Creating an authorization</h2>
- * <p>An authorization is created between a user/group and a resource. It describes
+ * <p>
+ * An authorization is created between a user/group and a resource. It describes
  * the user/group's <em>permissions</em> to access that resource. An authorization may
  * express different permissions, such as the permission to READ, UPDATE, DELETE the
- * resource. (See {@link Authorization} for details).</p>
+ * resource. (See {@link Authorization} for details).
+ * </p>
  *
  * <h2>Granting / revoking permissions</h2>
- * <p>In order to grant the permission to access a certain resource, an authorization
+ * <p>
+ * In order to grant the permission to access a certain resource, an authorization
  * object is created:
+ * </p>
  * <pre>
  * Authorization auth = authorizationService.createNewAuthorization();
  * //... configure auth
  * authorizationService.saveAuthorization(auth);
  * </pre>
+ * <p>
  * The authorization object can be configured either for a user or a group:
+ * </p>
  * <pre>
  * auth.setUserId("john");
  *   -OR-
  * auth.setGroupId("management");
  * </pre>
+ * <p>
  * and a resource:
+ * </p>
  * <pre>
  * auth.setResource("processDefinition");
  * auth.setResourceId("2313");
  * </pre>
+ * <p>
  * finally the permissions to access that resource can be assigned:
+ * </p>
  * <pre>
  * auth.addPermission(Permissions.READ);
  * </pre>
+ * <p>
  * and the authorization object is saved:
+ * </p>
  * <pre>
  * authorizationService.saveAuthorization(auth);
  * </pre>
+ * <p>
  * As a result, the given user or group will have permission to READ the referenced process definition.
  * </p>
  *
  * @author Daniel Meyer
  */
-public interface AuthorizationService {
+public @NullMarked interface AuthorizationService {
 
   // Authorization CRUD //////////////////////////////////////
 
@@ -129,7 +144,7 @@ public interface AuthorizationService {
    * {@link Resources#HISTORIC_TASK Historic Task} or {@link Resources#HISTORIC_PROCESS_INSTANCE
    * Historic Process Instance} and historic instance permissions are disabled.
    */
-  boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource);
+  boolean isUserAuthorized(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource);
 
   /**
    * <p>Allows performing an authorization check.</p>
@@ -145,6 +160,6 @@ public interface AuthorizationService {
    * {@link Resources#HISTORIC_TASK Historic Task} or {@link Resources#HISTORIC_PROCESS_INSTANCE
    * Historic Process Instance} and historic instance permissions are disabled.
    */
-  boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId);
+  boolean isUserAuthorized(@Nullable String userId, @Nullable List<String> groupIds, Permission permission, Resource resource, @Nullable String resourceId);
 
 }

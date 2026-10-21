@@ -53,7 +53,7 @@ public interface DeploymentQuery extends Query<DeploymentQuery, Deployment>{
 
   /**
    * If the given <code>source</code> is <code>null</code>,
-   * then deployments are returned where source is equal to null.
+   * then deployments are returned where source is equal to {@code null}.
    * Otherwise only deployments with the given source are
    * selected.
    */

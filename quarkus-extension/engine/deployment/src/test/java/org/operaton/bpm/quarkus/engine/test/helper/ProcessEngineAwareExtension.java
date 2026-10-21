@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 
 import io.quarkus.arc.Arc;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.test.Deployment;
 
-public class ProcessEngineAwareExtension extends QuarkusUnitTest {
+public class ProcessEngineAwareExtension extends QuarkusExtensionTest {
 
   protected String deploymentId;
   protected Supplier<JavaArchive> archiveProducer;
@@ -49,12 +49,12 @@ public class ProcessEngineAwareExtension extends QuarkusUnitTest {
         String testMethodName = testMethod.getName();
         Class<?> testHelperClass = loadClass(TestHelper.class);
         Method annotationDeploymentSetUp = testHelperClass.getMethod("annotationDeploymentSetUp",
-            loadClass(ProcessEngine.class), String[].class, Class.class, String.class);
+            loadClass(ProcessEngine.class), String[].class, Class.class, Boolean.class, String.class);
 
         String[] resources = annotation.resources();
         Class<?> testClass = context.getTestClass().orElse(null);
         deploymentId = (String) annotationDeploymentSetUp.invoke(testHelperClass, processEngine, resources, testClass,
-            testMethodName);
+            Boolean.TRUE, testMethodName);
       }
     }
   }
@@ -107,7 +107,7 @@ public class ProcessEngineAwareExtension extends QuarkusUnitTest {
   }
 
   @Override
-  public QuarkusUnitTest setArchiveProducer(Supplier<JavaArchive> archiveProducer) {
+  public QuarkusExtensionTest setArchiveProducer(Supplier<JavaArchive> archiveProducer) {
     this.archiveProducer = archiveProducer;
     return this;
   }

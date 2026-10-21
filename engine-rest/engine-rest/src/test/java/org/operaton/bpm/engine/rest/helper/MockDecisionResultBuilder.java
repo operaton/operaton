@@ -45,7 +45,7 @@ public class MockDecisionResultBuilder {
     return decisionTableResult;
   }
 
-  protected class SimpleDecisionResult extends ArrayList<DmnDecisionResultEntries> implements DmnDecisionResult {
+  private static class SimpleDecisionResult extends ArrayList<DmnDecisionResultEntries> implements DmnDecisionResult {
 
     private static final long serialVersionUID = 1L;
 

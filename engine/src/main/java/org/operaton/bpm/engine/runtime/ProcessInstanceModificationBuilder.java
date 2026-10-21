@@ -35,18 +35,21 @@ public interface ProcessInstanceModificationBuilder extends
   InstantiationBuilder<ProcessInstanceModificationInstantiationBuilder> {
 
   /**
-   * <p><i>Submits the instruction:</i></p>
+   * <i>Submits the instruction:</i>
    *
-   * <p>Start before the specified activity. Instantiate the given activity
-   * as a descendant of the given ancestor activity instance.</p>
+   * <p>
+   * Start before the specified activity. Instantiate the given activity
+   * as a descendant of the given ancestor activity instance.
+   * </p>
    *
-   * <p>In particular:
+   * <p>
+   * In particular:
+   * </p>
    *   <ul>
    *     <li>Instantiate all activities between the ancestor activity and the activity to execute</li>
    *     <li>Instantiate and execute the given activity (respects the asyncBefore
    *       attribute of the activity)</li>
    *   </ul>
-   * </p>
    *
    * @param activityId the activity to instantiate
    * @param ancestorActivityInstanceId the ID of an existing activity instance under which the new
@@ -64,17 +67,20 @@ public interface ProcessInstanceModificationBuilder extends
   ProcessInstanceModificationInstantiationBuilder startAfterActivity(String activityId, String ancestorActivityInstanceId);
 
   /**
-   * <p><i>Submits the instruction:</i></p>
+   * <i>Submits the instruction:</i>
    *
-   * <p>Start the specified sequence flow. Instantiate the given sequence flow
-   * as a descendant of the given ancestor activity instance.</p>
+   * <p>
+   * Start the specified sequence flow. Instantiate the given sequence flow
+   * as a descendant of the given ancestor activity instance.
+   * </p>
    *
-   * <p>In particular:
+   * <p>
+   * In particular:
+   * </p>
    *   <ul>
    *     <li>Instantiate all activities between the ancestor activity and the activity to execute</li>
    *     <li>Execute the given transition (does not consider sequence flow conditions)</li>
    *   </ul>
-   * </p>
    *
    * @param transitionId the sequence flow to execute
    * @param ancestorActivityInstanceId the ID of an existing activity instance under which the new
@@ -105,26 +111,31 @@ public interface ProcessInstanceModificationBuilder extends
   ProcessInstanceModificationBuilder cancelTransitionInstance(String transitionInstanceId);
 
   /**
-   * <p><i>Submits the instruction:</i></p>
+   * <i>Submits the instruction:</i>
    *
-   * <p>Cancel all instances of the given activity in an arbitrary order, which are:
+   * <p>
+   * Cancel all instances of the given activity in an arbitrary order, which are:
+   * </p>
    * <ul>
    *   <li>activity instances of that activity
    *   <li>transition instances entering or leaving that activity
    * </ul></p>
    *
-   * <p>Therefore behaves like {@link #cancelActivityInstance(String)} for each individual
+   * <p>
+   * Therefore behaves like {@link #cancelActivityInstance(String)} for each individual
    * activity instance and like {@link #cancelTransitionInstance(String)} for each
-   * individual transition instance.</p>
+   * individual transition instance.
+   * </p>
    *
-   * <p>The cancellation order of the instances is arbitrary</p>
+   * <p>
+   * The cancellation order of the instances is arbitrary
+   * </p>
    *
    * @param activityId the activity for which all instances should be cancelled
    */
   ProcessInstanceModificationBuilder cancelAllForActivity(String activityId);
 
   /**
-   * <p>
    * A canceled process instance receives a termination state to indicate the
    * source of the cancellation call. The state can have the following values:
    *   <ul>
@@ -133,7 +144,6 @@ public interface ProcessInstanceModificationBuilder extends
    *     <li><code>INTERNALLY_TERMINATED</code>: the cancellation was triggered
    * internally. (e.g. by the engine)</li>
    *   </ul>
-   * </p>
    *
    * @param external
    *          was the cancellation triggered by an external source?

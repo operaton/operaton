@@ -52,7 +52,7 @@ public class MetricsResourceImpl implements MetricsResource {
     DateConverter dateConverter = new DateConverter();
     dateConverter.setObjectMapper(objectMapper);
 
-    Number result = null;
+    Number result;
 
     if (Metrics.UNIQUE_TASK_WORKERS.equals(metricsName) || Metrics.TASK_USERS.equals(metricsName)) {
       result = processEngine.getManagementService().getUniqueTaskWorkerCount(

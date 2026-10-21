@@ -27,46 +27,49 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
-  protected Expression command;
-  protected Expression wait;
-  protected Expression arg1;
-  protected Expression arg2;
-  protected Expression arg3;
-  protected Expression arg4;
-  protected Expression arg5;
-  protected Expression outputVariable;
-  protected Expression errorCodeVariable;
-  protected Expression redirectError;
-  protected Expression cleanEnv;
-  protected Expression directory;
+  protected @Nullable Expression command;
+  protected @Nullable Expression wait;
+  protected @Nullable Expression arg1;
+  protected @Nullable Expression arg2;
+  protected @Nullable Expression arg3;
+  protected @Nullable Expression arg4;
+  protected @Nullable Expression arg5;
+  protected @Nullable Expression outputVariable;
+  protected @Nullable Expression errorCodeVariable;
+  protected @Nullable Expression redirectError;
+  protected @Nullable Expression cleanEnv;
+  protected @Nullable Expression directory;
 
-  String commandStr;
-  String arg1Str;
-  String arg2Str;
-  String arg3Str;
-  String arg4Str;
-  String arg5Str;
-  String waitStr;
-  String resultVariableStr;
-  String errorCodeVariableStr;
-  Boolean waitFlag;
-  Boolean redirectErrorFlag;
-  Boolean cleanEnvBoolan;
-  String directoryStr;
+  @Nullable String commandStr;
+  @Nullable String arg1Str;
+  @Nullable String arg2Str;
+  @Nullable String arg3Str;
+  @Nullable String arg4Str;
+  @Nullable String arg5Str;
+  @Nullable String waitStr;
+  @Nullable String resultVariableStr;
+  @Nullable String errorCodeVariableStr;
+  @Nullable Boolean waitFlag;
+  Boolean redirectErrorFlag = false;
+  @Nullable Boolean cleanEnvBoolan;
+  @Nullable String directoryStr;
 
   private void readFields(ActivityExecution execution) {
     commandStr = getStringFromField(command, execution);
@@ -95,6 +98,9 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
     readFields(execution);
 
     List<String> argList = new ArrayList<>();
+
+    EnsureUtil.ensureNotNull("Command is missing","command", commandStr);
+    Objects.requireNonNull(commandStr);
     argList.add(commandStr);
 
     if (arg1Str != null) {
@@ -169,7 +175,7 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
     }
   }
 
-  protected String getStringFromField(Expression expression, DelegateExecution execution) {
+  protected @Nullable String getStringFromField(@Nullable Expression expression, DelegateExecution execution) {
     if (expression != null) {
       Object value = expression.getValue(execution);
       if (value != null) {

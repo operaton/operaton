@@ -20,7 +20,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public final class EncodingUtil {
 
@@ -30,7 +30,7 @@ public final class EncodingUtil {
   }
 
   protected static Charset getDefaultEncoding() {
-    Charset charset = null;
+    Charset charset;
     try {
       charset = StandardCharsets.UTF_8;
     }catch (Exception e){

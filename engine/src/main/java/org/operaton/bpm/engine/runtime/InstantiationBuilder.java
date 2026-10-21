@@ -24,18 +24,21 @@ import org.operaton.bpm.engine.ProcessEngineException;
 public interface InstantiationBuilder<T extends InstantiationBuilder<T>> {
 
   /**
-   * <p><i>Submits the instruction:</i></p>
+   * <i>Submits the instruction:</i>
    *
-   * <p>Start before the specified activity.</p>
+   * <p>
+   * Start before the specified activity.
+   * </p>
    *
-   * <p>In particular:
+   * <p>
+   * In particular:
+   * </p>
    *   <ul>
    *     <li>In the parent activity hierarchy, determine the closest existing ancestor activity instance</li>
    *     <li>Instantiate all parent activities up to the ancestor's activity</li>
    *     <li>Instantiate and execute the given activity (respects the asyncBefore
    *       attribute of the activity)</li>
    *   </ul>
-   * </p>
    *
    * @param activityId the activity to instantiate
    * @throws ProcessEngineException if more than one possible ancestor activity instance exists
@@ -52,17 +55,20 @@ public interface InstantiationBuilder<T extends InstantiationBuilder<T>> {
   T startAfterActivity(String activityId);
 
   /**
-   * <p><i>Submits the instruction:</i></p>
+   * <i>Submits the instruction:</i>
    *
-   * <p>Start a sequence flow.</p>
+   * <p>
+   * Start a sequence flow.
+   * </p>
    *
-   * <p>In particular:
+   * <p>
+   * In particular:
+   * </p>
    *   <ul>
    *     <li>In the parent activity hierarchy, determine the closest existing ancestor activity instance</li>
    *     <li>Instantiate all parent activities up to the ancestor's activity</li>
    *     <li>Execute the given transition (does not consider sequence flow conditions)</li>
    *   </ul>
-   * </p>
    *
    * @param transitionId the sequence flow to execute
    * @throws ProcessEngineException if more than one possible ancestor activity instance exists

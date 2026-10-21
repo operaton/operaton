@@ -19,7 +19,7 @@
 
 We would love you to contribute to this project. You can do so in various ways.
 
-If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-46uee9nut-_msh4RxIBD6vXHtzTjZlQA).
+If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-4dkhr4vyr-xE2hR4XotI32sdXDHyLO9g).
 
 ## File bugs or feature requests
 
@@ -290,6 +290,11 @@ Operaton follows established design patterns:
 * **Integration Tests**: Use `ProcessEngineExtension` for engine-related tests
 * **Test Isolation**: Each test should be independent and repeatable
 * **Test Naming**: Use descriptive names that explain the scenario being tested
+* **Multi-line String Literals**: Prefer Java text blocks (`"""..."""`) over multi-line `+` string
+  concatenation in tests when a literal's content itself spans multiple lines (e.g. inline BPMN/CMMN/DMN
+  model XML, JSON payloads, or embedded script source). Text blocks are more readable and avoid manual
+  escaping/indentation bookkeeping. This does not apply to short string splicing around a single variable
+  (e.g. building an HTTP header value) — only to literals whose content is itself multi-line.
 
 # Contribution checklist
 

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.externaltask;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -147,13 +146,9 @@ public class LockedExternalTaskDto {
   }
 
   public static List<LockedExternalTaskDto> fromLockedExternalTasks(List<LockedExternalTask> tasks) {
-    List<LockedExternalTaskDto> dtos = new ArrayList<>();
-
-    for (LockedExternalTask task : tasks) {
-      dtos.add(LockedExternalTaskDto.fromLockedExternalTask(task));
-    }
-
-    return dtos;
+    return tasks.stream()
+        .map(LockedExternalTaskDto::fromLockedExternalTask)
+        .toList();
   }
   @Override
   public String toString() {

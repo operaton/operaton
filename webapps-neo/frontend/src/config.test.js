@@ -38,7 +38,11 @@ describe("config", () => {
     });
 
     it("passes through an already authenticated user", async () => {
-      serve({ authMode: "oauth2", oauth: { flow: "session", login: "/x" }, user: { id: "demo" } });
+      serve({
+        authMode: "oauth2",
+        oauth: { flow: "session", login: "/x" },
+        user: { id: "demo" },
+      });
       expect((await load_config()).user).toEqual({ id: "demo" });
     });
 
@@ -88,12 +92,12 @@ describe("config", () => {
       serve({
         authMode: "oauth",
         oauth: { flow: "pkce", authority: "https://idp.example.com" },
-        hideReleaseWarning: "true",
+        remotePluginsEnabled: "true",
       });
       const config = await load_config();
 
       expect(config.auth_mode).toBe("oauth2");
-      expect(config.hide_release_warning).toBe(true);
+      expect(config.remote_plugins_enabled).toBe(true);
     });
   });
 

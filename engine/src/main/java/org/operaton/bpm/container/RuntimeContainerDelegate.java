@@ -26,7 +26,7 @@ import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**
- * <p>The {@link RuntimeContainerDelegate} in an SPI that allows the process engine to integrate with the
+ * The {@link RuntimeContainerDelegate} in an SPI that allows the process engine to integrate with the
  * runtime container in which it is deployed. Examples of "runtime containers" are
  * <ul>
  *  <li>WildFly (Module Service Container),</li>
@@ -35,7 +35,9 @@ import org.operaton.bpm.engine.ProcessEngine;
  *  <li>...</li>
  * </ul>
  *
- * <p>The current {@link RuntimeContainerDelegate} can be obtained through the static {@link #INSTANCE} field.</p>
+ * <p>
+ * The current {@link RuntimeContainerDelegate} can be obtained through the static {@link #INSTANCE} field.
+ * </p>
  *
  * @author Daniel Meyer
  *
@@ -84,7 +86,7 @@ public @NullMarked interface RuntimeContainerDelegate {
   ExecutorService getExecutorService();
 
   /**
-   * @return a reference to the process application with the given name if deployed; null otherwise
+   * @return a reference to the process application with the given name if deployed; {@code null} otherwise
    */
   @Nullable ProcessApplicationReference getDeployedProcessApplication(String name);
 

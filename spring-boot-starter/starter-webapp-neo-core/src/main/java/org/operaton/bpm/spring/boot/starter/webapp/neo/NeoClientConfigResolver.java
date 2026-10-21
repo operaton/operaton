@@ -42,7 +42,7 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
  * no dependency on Spring Security — it is optional on the classpath. This mirrors
  * {@code ClientsNotConfiguredCondition} in the security starter.</p>
  *
- * @since 2.2.0
+ * @since 2.2
  */
 public class NeoClientConfigResolver {
 
@@ -77,7 +77,6 @@ public class NeoClientConfigResolver {
       authMode,
       NeoWebappProperty.AUTH_MODE_OAUTH2.equals(authMode) ? resolveOAuth(contextPath) : null,
       neo.getPluginsUrl().isEmpty() ? null : neo.getPluginsUrl(),
-      neo.isHideReleaseWarning(),
       resolveUser(principal));
   }
 

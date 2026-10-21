@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  *
  * @author Joram Barrez
  */
-public class ReceiveTaskActivityBehavior extends TaskActivityBehavior {
+public @NullMarked class ReceiveTaskActivityBehavior extends TaskActivityBehavior {
 
   @Override
   public void performExecution(ActivityExecution execution) {
@@ -38,7 +40,7 @@ public class ReceiveTaskActivityBehavior extends TaskActivityBehavior {
   }
 
   @Override
-  public void signal(ActivityExecution execution, String signalName, Object data) throws Exception {
+  public void signal(ActivityExecution execution, @Nullable String signalName, @Nullable Object data) throws Exception {
     leave(execution);
   }
 

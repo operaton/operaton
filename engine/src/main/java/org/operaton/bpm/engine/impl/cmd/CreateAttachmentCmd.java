@@ -49,16 +49,16 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 public @NullMarked class CreateAttachmentCmd implements Command<Attachment> {
 
   protected @Nullable String taskId;
-  protected String attachmentType;
-  protected String processInstanceId;
-  protected String attachmentName;
-  protected String attachmentDescription;
+  protected @Nullable String attachmentType;
+  protected @Nullable String processInstanceId;
+  protected @Nullable String attachmentName;
+  protected @Nullable String attachmentDescription;
   protected @Nullable InputStream content;
   protected @Nullable String url;
   private @Nullable TaskEntity task;
   protected @Nullable ExecutionEntity processInstance;
 
-  public CreateAttachmentCmd(String attachmentType, @Nullable String taskId, String processInstanceId, String attachmentName, String attachmentDescription, @Nullable InputStream content, @Nullable String url) {
+  public CreateAttachmentCmd(@Nullable String attachmentType, @Nullable String taskId, @Nullable String processInstanceId, @Nullable String attachmentName, @Nullable String attachmentDescription, @Nullable InputStream content, @Nullable String url) {
     this.attachmentType = attachmentType;
     this.taskId = taskId;
     this.processInstanceId = processInstanceId;

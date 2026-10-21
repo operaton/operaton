@@ -44,7 +44,7 @@ public interface Model {
    * Gets the defined {@link ModelElementType} of a {@link ModelElementInstance}.
    *
    * @param instanceClass  the instance class to find the type for
-   * @return the corresponding element type or null if no type is defined for the instance
+   * @return the corresponding element type or {@code null} if no type is defined for the instance
    */
   @Nullable ModelElementType getType(Class<? extends ModelElementInstance> instanceClass);
 
@@ -52,7 +52,7 @@ public interface Model {
    * Gets the defined {@link ModelElementType} for a type by its name.
    *
    * @param typeName  the name of the type
-   * @return the element type or null if no type is defined for the name
+   * @return the element type or {@code null} if no type is defined for the name
    */
   @Nullable ModelElementType getTypeForName(String typeName);
 
@@ -62,7 +62,7 @@ public interface Model {
    *
    * @param namespaceUri  the namespace URI for the type
    * @param typeName  the name of the type
-   * @return the element type or null if no type is defined for the name and namespace URI
+   * @return the element type or {@code null} if no type is defined for the name and namespace URI
    */
   @Nullable ModelElementType getTypeForName(String namespaceUri, String typeName);
 
@@ -76,14 +76,14 @@ public interface Model {
   /**
    * Returns the actual namespace URI for an alternative namespace URI
    * @param alternativeNs the alternative namespace URI
-   * @return the actual namespace URI or null if none is set
+   * @return the actual namespace URI or {@code null} if none is set
    */
   @Nullable String getActualNamespace(String alternativeNs);
 
   /**
    * Returns the alternative namespace URI for a namespace URI
    * @param actualNs the actual namespace URI
-   * @return the alternative namespace URI or null if none is set
+   * @return the alternative namespace URI or {@code null} if none is set
    */
   @Nullable String getAlternativeNamespace(String actualNs);
 

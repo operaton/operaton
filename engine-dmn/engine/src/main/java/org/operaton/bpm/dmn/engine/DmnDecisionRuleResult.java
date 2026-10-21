@@ -36,7 +36,7 @@ public @NullMarked interface DmnDecisionRuleResult extends Map<String, Object>, 
    *
    * @param <T>
    *          the type of the rule result entry
-   * @return the value of the first rule result entry or null if none exists
+   * @return the value of the first rule result entry or {@code null} if none exists
    *
    * @see #getFirstEntryTyped()
    */
@@ -47,7 +47,7 @@ public @NullMarked interface DmnDecisionRuleResult extends Map<String, Object>, 
    *
    * @param <T>
    *          the type of the rule result entry
-   * @return the typed value of the first rule result entry or null if none exists
+   * @return the typed value of the first rule result entry or {@code null} if none exists
    *
    * @see #getFirstEntry()
    */
@@ -59,7 +59,7 @@ public @NullMarked interface DmnDecisionRuleResult extends Map<String, Object>, 
    *
    * @param <T>
    *          the type of the rule result entry
-   * @return the value of the single rule result entry or null if none exists
+   * @return the value of the single rule result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one rule result entry exists
@@ -74,7 +74,7 @@ public @NullMarked interface DmnDecisionRuleResult extends Map<String, Object>, 
    *
    * @param <T>
    *          the type of the rule result entry
-   * @return the typed value of the single rule result entry or null if none exists
+   * @return the typed value of the single rule result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one rule result entry exists
@@ -90,7 +90,7 @@ public @NullMarked interface DmnDecisionRuleResult extends Map<String, Object>, 
    *          the name of the output
    * @param <T>
    *          the type of the rule result entry
-   * @return the value for the given name or null if no value exists for
+   * @return the value for the given name or {@code null} if no value exists for
    *         this name
    *
    * @see #getEntryTyped(String)
@@ -104,7 +104,7 @@ public @NullMarked interface DmnDecisionRuleResult extends Map<String, Object>, 
    *          the name of the output
    * @param <T>
    *          the type of the rule result entry
-   * @return the typed value for the given name or null if no value exists for
+   * @return the typed value for the given name or {@code null} if no value exists for
    *         this name
    *
    * @see #getEntry(String)

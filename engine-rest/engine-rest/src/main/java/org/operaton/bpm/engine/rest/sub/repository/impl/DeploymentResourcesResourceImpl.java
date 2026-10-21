@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub.repository.impl;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,10 +85,9 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
   public List<DeploymentResourceDto> getDeploymentResources() {
     List<Resource> resources = engine.getRepositoryService().getDeploymentResources(deploymentId);
 
-    List<DeploymentResourceDto> deploymentResources = new ArrayList<>();
-    for (Resource resource : resources) {
-      deploymentResources.add(DeploymentResourceDto.fromResources(resource));
-    }
+    List<DeploymentResourceDto> deploymentResources = resources.stream()
+      .map(DeploymentResourceDto::fromResources)
+      .toList();
 
     if (!deploymentResources.isEmpty()) {
       return deploymentResources;

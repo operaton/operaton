@@ -39,6 +39,7 @@ import jakarta.el.ExpressionFactory;
  *
  * <p>
  * If no properties are specified at construction time, properties are read from
+ * </p>
  * <ol>
  * <li>
  * If the file <code>JAVA_HOME/lib/el.properties</code> exists and if it contains property
@@ -51,11 +52,13 @@ import jakarta.el.ExpressionFactory;
  * <code>el.properties</code> on your classpath. These properties override the properties from
  * <code>JAVA_HOME/lib/el.properties</code> or {@link System#getProperties()}.</li>
  * </ol>
+ * <p>
  * There are also constructors to explicitly pass in an instance of {@link Properties}.
  * </p>
  *
  * <p>
  * Having this, the following properties are read:
+ * </p>
  * <ul>
  * <li>
  * <code>jakarta.el.cacheSize</code> - cache size (int, default is 1000)</li>
@@ -69,7 +72,6 @@ import jakarta.el.ExpressionFactory;
  * <code>jakarta.el.varArgs</code> - support function/method calls using varargs (boolean, default is
  * <code>false</code>).</li>
  * </ul>
- * </p>
  *
  * @author Christoph Beck
  */
@@ -269,7 +271,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 		Properties properties = new Properties(loadDefaultProperties());
 
 		// try to find and load properties
-		InputStream input = null;
+		InputStream input;
 		try {
 			input = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 		} catch (SecurityException e) {
@@ -304,7 +306,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 	 */
 	protected TreeStore createTreeStore(int defaultCacheSize, Profile profile, Properties properties) {
 		// create builder
-		TreeBuilder builder = null;
+		TreeBuilder builder;
 		if (properties == null) {
 			builder = createTreeBuilder(null, profile.features());
 		} else {

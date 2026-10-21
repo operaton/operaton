@@ -1,3 +1,5 @@
+@use "sass:math";
+
 section.tasks-list {
   [cam-sorting-choices] {
     > ol,
@@ -32,7 +34,6 @@ section.tasks-list {
     display: inline-block;
     max-width: 0;
     margin-right: 0;
-    //transition: max-width 0.218s ease;
     transition: margin-right 0.218s ease;
   }
 
@@ -88,7 +89,7 @@ section.tasks-list {
   }
 
   .dropdown-menu > li > .variable-inputs {
-    margin: ($grid-gutter-width / 2) 0;
+    margin: math.div($grid-gutter-width, 2) 0;
     padding: 0 9px;
 
     .actions {

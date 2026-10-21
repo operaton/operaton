@@ -80,6 +80,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     return finishedProcessInstanceCount;
   }
 
+  @SuppressWarnings("unused")
   public void setFinishedProcessInstanceCount(Long finishedProcessInstanceCount) {
     this.finishedProcessInstanceCount = finishedProcessInstanceCount;
   }
@@ -89,6 +90,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     return cleanableProcessInstanceCount;
   }
 
+  @SuppressWarnings("unused")
   public void setCleanableProcessInstanceCount(Long cleanableProcessInstanceCount) {
     this.cleanableProcessInstanceCount = cleanableProcessInstanceCount;
   }

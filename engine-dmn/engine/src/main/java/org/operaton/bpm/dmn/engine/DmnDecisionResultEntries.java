@@ -41,7 +41,7 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *
    * @param <T>
    *          the type of the result entry
-   * @return the value of the first result entry or null if none exists
+   * @return the value of the first result entry or {@code null} if none exists
    *
    * @see #getFirstEntryTyped()
    */
@@ -52,7 +52,7 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *
    * @param <T>
    *          the type of the result entry
-   * @return the typed value of the first result entry or null if none exists
+   * @return the typed value of the first result entry or {@code null} if none exists
    *
    * @see #getFirstEntry()
    */
@@ -64,7 +64,7 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *
    * @param <T>
    *          the type of the result entry
-   * @return the value of the single result entry or null if none exists
+   * @return the value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one result entry exists
@@ -79,7 +79,7 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *
    * @param <T>
    *          the type of the result entry
-   * @return the typed value of the single result entry or null if none exists
+   * @return the typed value of the single result entry or {@code null} if none exists
    *
    * @throws DmnEngineException
    *           if more than one result entry exists
@@ -95,7 +95,7 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *          the name of the output
    * @param <T>
    *          the type of the result entry
-   * @return the value for the given name or null if no value exists for this
+   * @return the value for the given name or {@code null} if no value exists for this
    *         name
    *
    * @see #getEntryTyped(String)
@@ -109,7 +109,7 @@ public interface DmnDecisionResultEntries extends Map<String, Object>, Serializa
    *          the name of the output
    * @param <T>
    *          the type of the result entry
-   * @return the typed value for the given name or null if no value exists for
+   * @return the typed value for the given name or {@code null} if no value exists for
    *         this name
    *
    * @see #getEntry(String)

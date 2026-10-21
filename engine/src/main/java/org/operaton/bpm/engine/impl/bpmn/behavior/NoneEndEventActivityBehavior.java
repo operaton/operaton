@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 
 /**
  * @author Joram Barrez
  */
-public class NoneEndEventActivityBehavior extends FlowNodeActivityBehavior {
+public @NullMarked class NoneEndEventActivityBehavior extends FlowNodeActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {

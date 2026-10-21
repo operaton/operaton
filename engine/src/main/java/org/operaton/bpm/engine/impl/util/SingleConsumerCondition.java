@@ -19,12 +19,11 @@ package org.operaton.bpm.engine.impl.util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
-import org.jspecify.annotations.NonNull;
-
 /**
  * MPSC Condition implementation.
  * <p>
  * Implementation Notes:
+ * </p>
  * <ul>
  * <li>{@link #await(long)} may spuriously return before the deadline is reached.</li>
  * <li>if {@link #signal()} is called before the consumer thread calls {@link #await(long)},
@@ -37,7 +36,7 @@ public class SingleConsumerCondition {
   // and replaced in a meaningful way without breaking the implementation
   private final Thread consumer;
 
-  public SingleConsumerCondition(@NonNull Thread consumer) {
+  public SingleConsumerCondition(Thread consumer) {
     this.consumer = consumer;
   }
 

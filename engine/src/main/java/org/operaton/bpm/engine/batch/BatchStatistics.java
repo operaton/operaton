@@ -17,18 +17,16 @@
 package org.operaton.bpm.engine.batch;
 
 /**
- * <p>
  *  Additional statistics for a single batch.
- * </p>
  *
- * <p>
+ *   <p>
  *   Contains the number of remaining jobs, completed and failed batch
  *   execution jobs. The following relation between these exists:
+ *   </p>
  *
  *   <pre>
  *     batch total jobs = remaining jobs + completed jobs
  *   </pre>
- * </p>
  */
 public interface BatchStatistics extends Batch {
   /**

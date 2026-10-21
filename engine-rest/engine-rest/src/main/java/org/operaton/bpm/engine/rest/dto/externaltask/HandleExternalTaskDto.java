@@ -22,13 +22,13 @@ package org.operaton.bpm.engine.rest.dto.externaltask;
  *
  * <p>
  * Used in:
+ * </p>
  * <ul>
  *   <li>{@link LockExternalTaskDto}</li>
  *   <li>{@link ExtendLockOnExternalTaskDto}</li>
  *   <li>{@link ExternalTaskFailureDto}</li>
  *   <li>{@link CompleteExternalTaskDto}</li>
  * </ul>
- * </p>
  *
  * <p>
  * Note: the {@link ExternalTaskBpmnError} class doesn't extend this class. Any adjustments made here

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Map;
 
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 
 /**
@@ -28,10 +27,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
  */
 public @NullMarked class CompleteExternalTaskCmd extends HandleExternalTaskCmd {
 
-  protected @Nullable Map<String, Object> variables;
-  protected @Nullable Map<String, Object> localVariables;
+  protected Map<String, Object> variables;
+  protected Map<String, Object> localVariables;
 
-  public CompleteExternalTaskCmd(String externalTaskId, String workerId, @Nullable Map<String, Object> variables, @Nullable Map<String, Object> localVariables) {
+  public CompleteExternalTaskCmd(String externalTaskId, String workerId, Map<String, Object> variables, Map<String, Object> localVariables) {
     super(externalTaskId, workerId);
     this.localVariables = localVariables;
     this.variables = variables;

@@ -35,7 +35,7 @@ public @NullMarked class SetTaskDueDateCmd extends AbstractSetTaskPropertyCmd<Da
    *
    * @param taskId the id of the referenced task, non-null
    * @param value  the task dueDate value to set, non-null
-   * @throws NullValueException in case the given taskId or the given dueDate value are null
+   * @throws NullValueException in case the given taskId or the given dueDate value are {@code null}
    */
   public SetTaskDueDateCmd(String taskId, Date value) {
     super(taskId, value, true);

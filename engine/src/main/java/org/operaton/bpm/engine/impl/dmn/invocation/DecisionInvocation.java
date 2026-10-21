@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.dmn.invocation;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
@@ -44,7 +46,7 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
  * @author Daniel Meyer
  *
  */
-public class DecisionInvocation extends DelegateInvocation {
+public @NullMarked class DecisionInvocation extends DelegateInvocation {
 
   protected DecisionDefinition decisionDefinition;
   protected VariableContext variableContext;
@@ -64,7 +66,7 @@ public class DecisionInvocation extends DelegateInvocation {
   }
 
   @Override
-  public DmnDecisionResult getInvocationResult() {
+  public @Nullable DmnDecisionResult getInvocationResult() {
     return (DmnDecisionResult) super.getInvocationResult();
   }
 

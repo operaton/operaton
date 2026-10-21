@@ -18,7 +18,6 @@
 package org.operaton.bpm.pa.rest;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -53,13 +52,16 @@ import org.operaton.bpm.engine.rest.dto.identity.UserDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 
 /**
- *
  * This servlet allows the testsuite to check whether the database is clean.
  * If the database is not clean the schema is dropped and re-created.
  *
+ * <p>
  * Invoke using GET /operaton/ensureCleanDb/{engineName}
+ * </p>
  *
+ * <p>
  * Response is JSON: {"clean":true}
+ * </p>
  *
  * @author Daniel Meyer
  *
@@ -69,7 +71,7 @@ public class TestServlet extends HttpServlet {
 
   public static final Logger log = Logger.getLogger(TestServlet.class.getName());
 
-  private static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
+  private static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
       "ACT_GE_PROPERTY"
     );
 

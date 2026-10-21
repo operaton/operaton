@@ -149,7 +149,7 @@ class CommandContextInterceptorTest {
 
   }
 
-  protected class IdentifiableRuntimeException extends RuntimeException {
+  static class IdentifiableRuntimeException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
     protected int id;

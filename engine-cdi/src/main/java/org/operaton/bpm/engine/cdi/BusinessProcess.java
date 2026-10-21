@@ -50,9 +50,11 @@ import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandConte
  * with a particular Execution / Task, then perform some changes (retrieve / set process
  * variables) and then end the unit of work. This bean makes sure that our changes are
  * only "flushed" to the process engine when we successfully complete the unit of work.
+ * </p>
  * <p />
  * A typical usage scenario might look like this:<br />
  * <strong>1st unit of work ("process instantiation"):</strong>
+ * </p>
  * <pre>
  * conversation.begin();
  * ...
@@ -60,7 +62,9 @@ import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandConte
  * businessProcess.startProcessByKey("billingProcess");
  * conversation.end();
  * </pre>
+ * <p>
  * <strong>2nd unit of work ("perform a user task"):</strong>
+ * </p>
  * <pre>
  * conversation.begin();
  * businessProcess.startTask(id); // now we have associated a task with the current conversation
@@ -75,10 +79,12 @@ import static org.operaton.bpm.engine.impl.context.Context.hasActiveCommandConte
  * <strong>NOTE:</strong> in the absence of a conversation, (non faces request, i.e. when processing a JAX-RS,
  * JAX-WS, JMS, remote EJB or plain Servlet requests), the {@link BusinessProcess} bean associates with the
  * current Request (see {@link RequestScoped @RequestScoped}).
+ * </p>
  * <p />
  * <strong>NOTE:</strong> in the absence of a request, ie. when the JobExecutor accesses
  * {@link BusinessProcessScoped @BusinessProcessScoped} beans, the execution is associated with the
  * current thread.
+ * </p>
  *
  * @author Daniel Meyer
  * @author Falko Menge
@@ -252,6 +258,7 @@ public class BusinessProcess implements Serializable {
    * Ends the current unit of work (flushes changes to process variables set
    * using {@link #setVariable(String, Object)} or made on
    * {@link BusinessProcessScoped @BusinessProcessScoped} beans).
+   * </p>
    *
    * @throws ProcessEngineCdiException
    *           if no execution is currently associated
@@ -281,7 +288,6 @@ public class BusinessProcess implements Serializable {
 
   /**
    * Associates the task with the provided taskId with the current conversation.
-   * <p/>
    *
    * @param taskId
    *          the id of the task
@@ -326,6 +332,7 @@ public class BusinessProcess implements Serializable {
    * Ends the current unit of work (flushes changes to process variables set
    * using {@link #setVariable(String, Object)} or made on
    * {@link BusinessProcessScoped @BusinessProcessScoped} beans).
+   * </p>
    *
    * @throws ProcessEngineCdiException
    *           if no task is currently associated
@@ -447,7 +454,6 @@ public class BusinessProcess implements Serializable {
 
   /**
    * Set a value for a process variable.
-   * <p />
    *
    * <p>
    * <strong>NOTE:</strong> If no execution is currently associated,
@@ -545,7 +551,6 @@ public class BusinessProcess implements Serializable {
 
   /**
    * Set a value for a local process variable.
-   * <p />
    *
    * <p>
    * <strong>NOTE:</strong> If a task or execution is currently associated,

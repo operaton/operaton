@@ -354,7 +354,6 @@ class GetHistoricVariableUpdatesForOptimizeTest {
   /**
    * Excluded on h2, because the test takes quite some time there (30-40 seconds)
    * and the fixed problem did not occur on h2.
-   * <p>
    */
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.H2)

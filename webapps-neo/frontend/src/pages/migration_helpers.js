@@ -213,3 +213,23 @@ export const add_query_params_abstract = (
     route(`${url}&${name}=${value}`);
   }
 };
+
+/**
+ * Which selectors to send with a migration.
+ *
+ * Ticked instances go as ids. A query goes along whenever one was built — the
+ * query builder is additive to the checkboxes, and the engine unions both. It
+ * also goes along when nothing is ticked at all: "leave all unchecked to
+ * migrate every matching instance" is what the page promises, and an empty
+ * query is exactly that set once `execute` stamps the source definition onto
+ * it. Sending neither selector leaves the engine with no instances, and it
+ * rejects the request instead of migrating everything.
+ */
+export const migration_selectors = (selected_ids, query) => {
+  const nothing_selected = selected_ids.length === 0;
+  return {
+    process_instance_ids: nothing_selected ? null : selected_ids,
+    process_instance_query:
+      Object.keys(query).length > 0 || nothing_selected ? query : null,
+  };
+};

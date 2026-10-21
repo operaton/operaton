@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -131,10 +130,8 @@ public class MetricsRestServiceImpl extends AbstractRestProcessEngineAware imple
   }
 
   protected List<MetricsIntervalResultDto> convertToDtos(List<MetricIntervalValue> metrics) {
-    List<MetricsIntervalResultDto> intervalMetrics = new ArrayList<>();
-    for (MetricIntervalValue m : metrics) {
-      intervalMetrics.add(new MetricsIntervalResultDto(m));
-    }
-    return intervalMetrics;
+    return metrics.stream()
+        .map(MetricsIntervalResultDto::new)
+        .toList();
   }
 }

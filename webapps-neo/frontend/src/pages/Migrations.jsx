@@ -21,6 +21,7 @@ import {
   remove_query_row,
   update_query_row,
   build_query,
+  migration_selectors,
   add_query_params_abstract,
 } from "./migration_helpers.js";
 
@@ -225,12 +226,12 @@ const ProcessSelection = () => {
             query_obj = build_query(
               migration_state.process_instance_query.peek(),
             ),
-            has_query = Object.keys(query_obj).length > 0;
+            selectors = migration_selectors(selected_ids, query_obj);
           engine_rest.migration.execute(
             state,
             migration_plan,
-            selected_ids.length > 0 ? selected_ids : null,
-            has_query ? query_obj : null,
+            selectors.process_instance_ids,
+            selectors.process_instance_query,
             execute_form_data.peek().skip_custom_listeners,
             execute_form_data.peek().skip_io_mappings,
             execute_form_data.peek().async,

@@ -22,19 +22,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class MigratingEventScopeInstance extends MigratingScopeInstance {
+public @NullMarked class MigratingEventScopeInstance extends MigratingScopeInstance {
 
   public static final MigrationLogger MIGRATION_LOGGER = ProcessEngineLogger.MIGRATION_LOGGER;
 
@@ -116,6 +121,8 @@ public class MigratingEventScopeInstance extends MigratingScopeInstance {
 
   @Override
   public void migrateState() {
+    EnsureUtil.ensureNotNull("Cannot migrate event scope instance " + this + ": target scope is null", "targetScope", targetScope);
+    requireNonNull(targetScope);
     migratingEventSubscription.migrateState();
 
     eventScopeExecution.setActivity((ActivityImpl) targetScope);
@@ -132,7 +139,7 @@ public class MigratingEventScopeInstance extends MigratingScopeInstance {
   }
 
   @Override
-  public void setParent(MigratingScopeInstance parentInstance) {
+  public void setParent(@Nullable MigratingScopeInstance parentInstance) {
     if (this.parentInstance != null) {
       this.parentInstance.removeChild(this);
     }

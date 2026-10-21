@@ -19,7 +19,6 @@ package org.operaton.bpm.model.dmn.impl;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.validation.SchemaFactory;
 
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelException;
@@ -39,7 +38,7 @@ public class DmnParser extends AbstractModelParser {
   private static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
   public DmnParser() {
-    this.schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA);
+    this.schemaFactory = createSchemaFactory();
     addSchema(DMN15_NS, createSchema(DMN_15_SCHEMA_LOCATION, DmnParser.class.getClassLoader()));
     addSchema(DMN14_NS, createSchema(DMN_14_SCHEMA_LOCATION, DmnParser.class.getClassLoader()));
     addSchema(DMN13_NS, createSchema(DMN_13_SCHEMA_LOCATION, DmnParser.class.getClassLoader()));

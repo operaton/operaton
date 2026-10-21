@@ -45,7 +45,7 @@ class CommandInvocationContextTest {
     assertThatCode(() -> processEngineConfiguration.getCommandExecutorTxRequired().execute(outerCommand)).doesNotThrowAnyException();
   }
 
-  protected class SelfAssertingCommand implements Command<Void> {
+  static class SelfAssertingCommand implements Command<Void> {
 
     protected Command<Void> innerCommand;
 

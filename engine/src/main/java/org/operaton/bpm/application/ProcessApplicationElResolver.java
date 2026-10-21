@@ -43,7 +43,7 @@ public interface ProcessApplicationElResolver {
   Integer getPrecedence();
 
   /**
-   * return the Resolver. May be null.
+   * return the Resolver. May be {@code null}.
    */
   ELResolver getElResolver(AbstractProcessApplication processApplication);
 

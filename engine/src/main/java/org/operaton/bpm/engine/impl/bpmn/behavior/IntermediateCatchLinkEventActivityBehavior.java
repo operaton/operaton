@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 /**
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Bernd Rücker
  *
  */
-public class IntermediateCatchLinkEventActivityBehavior extends AbstractBpmnActivityBehavior {
+public @NullMarked class IntermediateCatchLinkEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {

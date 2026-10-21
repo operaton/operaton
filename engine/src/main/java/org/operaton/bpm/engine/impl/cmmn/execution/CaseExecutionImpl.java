@@ -245,15 +245,9 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   @Override
   protected List<CaseSentryPartImpl> findSentry(String sentryId) {
-    List<CaseSentryPartImpl> result = new ArrayList<>();
-
-    for (CaseSentryPartImpl sentryPart : getCaseSentryParts()) {
-      if (sentryPart.getSentryId().equals(sentryId)) {
-        result.add(sentryPart);
-      }
-    }
-
-    return result;
+    return getCaseSentryParts().stream()
+        .filter(sentryPart -> sentryPart.getSentryId().equals(sentryId))
+        .toList();
   }
 
   @Override

@@ -24,6 +24,7 @@ import org.operaton.bpm.model.bpmn.instance.LaneSet;
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings("java:S2187") // no test methods defined here, all defined by superclass
 public class ChildLaneSetTest extends BpmnModelElementInstanceTest {
 
   @Override

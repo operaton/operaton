@@ -29,12 +29,12 @@ import org.operaton.bpm.engine.ProcessEngine;
 public interface ProcessEngineProvider {
 
   /**
-   * Provides the default engine. Has to return null if no default engine exists.
+   * Provides the default engine. Has to return {@code null} if no default engine exists.
    */
   ProcessEngine getDefaultProcessEngine();
 
   /**
-   * Provides the engine with the given name. Has to return null if no such engine exists.
+   * Provides the engine with the given name. Has to return {@code null} if no such engine exists.
    */
   ProcessEngine getProcessEngine(String name);
 

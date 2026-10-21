@@ -28,14 +28,14 @@ public interface DmnDecisionRequirementsGraph {
   /**
    * The unique identifier of the diagram if exists.
    *
-   * @return the identifier or null if not set
+   * @return the identifier or {@code null} if not set
    */
   String getKey();
 
   /**
    * The human readable name of the diagram if exists.
    *
-   * @return the name or null if not set
+   * @return the name or {@code null} if not set
    */
   String getName();
 
@@ -51,7 +51,7 @@ public interface DmnDecisionRequirementsGraph {
    *
    * @param key
    *          the identifier of the decision
-   * @return the decision or null if not exists
+   * @return the decision or {@code null} if not exists
    */
   DmnDecision getDecision(String key);
 

@@ -27,15 +27,16 @@ package org.operaton.bpm.model.bpmn;
  *
  * <p>
  * Example:
+ * </p>
  * <pre>
  * // In your implementation JAR:
  * // File: META-INF/services/org.operaton.bpm.model.bpmn.BpmnFactory
  * com.example.MyCustomBpmnFactory
  * </pre>
- * </p>
  *
  * <p>
  * To obtain an instance, use:
+ * </p>
  * <pre>
  * ServiceLoader&lt;BpmnFactory&gt; loader = ServiceLoader.load(BpmnFactory.class);
  * for (BpmnFactory factory : loader) {
@@ -43,7 +44,6 @@ package org.operaton.bpm.model.bpmn;
  *   // use bpmn
  * }
  * </pre>
- * </p>
  */
 public interface BpmnFactory {
   Bpmn newInstance();

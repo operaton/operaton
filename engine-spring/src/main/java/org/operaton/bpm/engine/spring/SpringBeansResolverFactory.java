@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.spring;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -29,14 +29,12 @@ import org.operaton.bpm.engine.impl.scripting.engine.Resolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ResolverFactory;
 
 /**
- * <p>
  * {@link ResolverFactory} and {@link Resolver} classes to make the beans
  * managed by the Spring container available in scripting
- * </p>
  *
  * <p>
  * {@see org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration#initScripting()}
- * <p>
+ * </p>
  *
  */
 public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
@@ -52,7 +50,7 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
     this.applicationContext = applicationContext;
 
     String[] beannames = applicationContext.getBeanDefinitionNames();
-    this.keySet = new HashSet<>(Arrays.asList(beannames));
+    this.keySet = new HashSet<>(List.of(beannames));
   }
 
   @Override

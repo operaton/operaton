@@ -28,6 +28,8 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Daniel Meyer
  *
@@ -40,6 +42,7 @@ public @NullMarked class GetStartFormVariablesCmd extends AbstractGetFormVariabl
   @Override
   public VariableMap execute(final CommandContext commandContext) {
     StartFormData startFormData = commandContext.runWithoutAuthorization(new GetStartFormCmd(resourceId));
+    requireNonNull(startFormData);
 
     ProcessDefinition definition = startFormData.getProcessDefinition();
     checkGetStartFormVariables((ProcessDefinitionEntity) definition, commandContext);

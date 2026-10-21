@@ -99,7 +99,8 @@ class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
-    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList("foo", null, "bar"));
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(
+            Arrays.asList("foo", null, "bar"));
 
     // when/then
     assertThatThrownBy(migrationPlanExecutionBuilder::execute)
@@ -339,7 +340,7 @@ class MigrationProcessInstanceTest {
     assertThat(targetProcessInstanceQuery.count()).isZero();
 
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId()))
+      .processInstanceIds(List.of(processInstance1.getId(), processInstance2.getId()))
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 

@@ -44,7 +44,7 @@ public abstract class PvmAtomicOperationCancelActivity implements PvmAtomicOpera
     // first, cancel and destroy the current scope
     execution.setActive(true);
 
-    PvmExecutionImpl propagatingExecution = null;
+    PvmExecutionImpl propagatingExecution;
 
     if(LegacyBehavior.isConcurrentScope(execution)) {
       // this is legacy behavior

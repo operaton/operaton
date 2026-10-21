@@ -47,6 +47,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  * </ul>
  * <p>
  * References:
+ * </p>
  * <ul>
  *   <li> {@link OAuth2AuthorizedClientManager#authorize(OAuth2AuthorizeRequest)}
  *   <li> {@link org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider#authorize(OAuth2AuthorizationContext)}

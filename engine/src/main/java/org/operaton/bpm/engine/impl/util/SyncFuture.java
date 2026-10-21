@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -24,13 +26,16 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author Daniel Meyer
  *
+ * @deprecated Unused internal API
  */
+@Deprecated(forRemoval = true, since = "2.2")
+@SuppressWarnings("java:S1133")
 public class SyncFuture<V> implements Future<V> {
 
-  private V result;
-  private Throwable e;
+  private @Nullable V result;
+  private @Nullable Throwable e;
 
-  public SyncFuture(V result) {
+  public SyncFuture(@Nullable V result) {
     this.result = result;
   }
 
@@ -54,7 +59,7 @@ public class SyncFuture<V> implements Future<V> {
   }
 
   @Override
-  public V get() throws InterruptedException, ExecutionException {
+  public @Nullable V get() throws InterruptedException, ExecutionException {
     if(e==null) {
       return result;
     } else {
@@ -63,7 +68,7 @@ public class SyncFuture<V> implements Future<V> {
   }
 
   @Override
-  public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+  public @Nullable V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
     return get();
   }
 

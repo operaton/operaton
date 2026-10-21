@@ -67,7 +67,7 @@ public interface ModelElementInstance {
    * @param attributeName  the name of the attribute
    * @return the value of the attribute
    */
-  String getAttributeValue(String attributeName);
+  @Nullable String getAttributeValue(String attributeName);
 
   /**
    * Sets the value by name of a non-ID attribute.
@@ -111,7 +111,7 @@ public interface ModelElementInstance {
    * @param attributeName  the attribute name of the attribute
    * @return the value of the attribute
    */
-  String getAttributeValueNs(String namespaceUri, String attributeName);
+  @Nullable String getAttributeValueNs(String namespaceUri, String attributeName);
 
   /**
    * Sets the value by name and namespace of a non-ID attribute.
@@ -186,7 +186,7 @@ public interface ModelElementInstance {
    *
    * @param namespaceUri the local name of the element
    * @param elementName the namespace of the element
-   * @return the child element or null.
+   * @return the child element or {@code null}.
    */
   @Nullable ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName);
 
@@ -194,7 +194,7 @@ public interface ModelElementInstance {
    * Returns a child element with the given type
    *
    * @param elementType  the type of the element
-   * @return the child element or null
+   * @return the child element or {@code null}
    */
   @Nullable ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType);
 
@@ -249,10 +249,10 @@ public interface ModelElementInstance {
   <T extends ModelElementInstance> Collection<T> getChildElementsByType(Class<T> childElementClass);
 
   /**
-   * Inserts the new element after the given element or at the beginning if the given element is null.
+   * Inserts the new element after the given element or at the beginning if the given element is {@code null}.
    *
    * @param elementToInsert  the new element to insert
-   * @param insertAfterElement  the element to insert after or null to insert at first position
+   * @param insertAfterElement  the element to insert after or {@code null} to insert at first position
    */
   void insertElementAfter(ModelElementInstance elementToInsert, ModelElementInstance insertAfterElement);
 

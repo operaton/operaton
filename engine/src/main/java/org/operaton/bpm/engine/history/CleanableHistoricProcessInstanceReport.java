@@ -28,21 +28,21 @@ public interface CleanableHistoricProcessInstanceReport extends Query<CleanableH
   /**
    * Only takes historic process instances into account for the given process definition ids.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   CleanableHistoricProcessInstanceReport processDefinitionIdIn(String... processDefinitionIds);
 
   /**
    * Only takes historic process instances into account for the given process definition keys.
    *
-   * @throws NotValidException if one of the given keys is null
+   * @throws NotValidException if one of the given keys is {@code null}
    */
   CleanableHistoricProcessInstanceReport processDefinitionKeyIn(String... processDefinitionKeys);
 
   /**
    * Only select historic process instances with one of the given tenant ids.
    *
-   * @throws NotValidException if one of the given ids is null
+   * @throws NotValidException if one of the given ids is {@code null}
    */
   CleanableHistoricProcessInstanceReport tenantIdIn(String... tenantIds);
 

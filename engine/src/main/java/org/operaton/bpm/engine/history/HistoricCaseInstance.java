@@ -58,10 +58,10 @@ public interface HistoricCaseInstance {
    * @see IdentityService#setAuthenticatedUserId(String) */
   String getCreateUserId();
 
-  /** The case instance id of a potential super case instance or null if no super case instance exists. */
+  /** The case instance id of a potential super case instance or {@code null} if no super case instance exists. */
   @Nullable String getSuperCaseInstanceId();
 
-  /** The process instance id of a potential super process instance or null if no super process instance exists. */
+  /** The process instance id of a potential super process instance or {@code null} if no super process instance exists. */
   @Nullable String getSuperProcessInstanceId();
 
   /**

@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 public @NullMarked class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd implements Command<Void> {
   protected List<String> processInstanceIds;
 
-  public DeleteProcessInstancesCmd(List<String> processInstanceIds, String deleteReason, boolean skipCustomListeners,
+  public DeleteProcessInstancesCmd(List<String> processInstanceIds, @Nullable String deleteReason, boolean skipCustomListeners,
                                    boolean externallyTerminated, boolean skipSubprocesses, boolean failIfNotExists,
                                    boolean skipIoMappings) {
 

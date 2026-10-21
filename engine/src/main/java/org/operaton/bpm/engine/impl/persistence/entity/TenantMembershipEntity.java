@@ -21,7 +21,7 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 
 /**
- * A relationship between a tenant and an user or a group.
+ * A relationship between a tenant and a user or a group.
  */
 public class TenantMembershipEntity implements DbEntity {
 

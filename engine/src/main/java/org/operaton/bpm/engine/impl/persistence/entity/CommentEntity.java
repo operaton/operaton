@@ -34,13 +34,13 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Event;
 
 /**
- * @author Tom Baeyens
- *
  * Implements the deprecated {@link Event} interface only to remain compatible with
  * {@code TaskService#getTaskEvents} (backed by {@code GetTaskEventsCmd}), for as long
  * as that deprecated API still exists.
+ *
+ * @author Tom Baeyens
  */
-@SuppressWarnings("removal")
+@SuppressWarnings({"removal", "unused"})
 public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity {
 
   public static final String TYPE_EVENT = "event";

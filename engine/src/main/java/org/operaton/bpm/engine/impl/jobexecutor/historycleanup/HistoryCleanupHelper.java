@@ -47,7 +47,7 @@ public final class HistoryCleanupHelper {
   }
 
   /**
-   * Returns the max retries used for cleanup jobs. If the configuration is null, the default value used will be
+   * Returns the max retries used for cleanup jobs. If the configuration is {@code null}, the default value used will be
    * defaultNumberOfRetries, the configuration used for all jobs.
    *
    * @return the effective max number of retries

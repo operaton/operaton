@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 
 
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 /**
  * @author Tom Baeyens
  */
-public interface Deployer {
+public @NullMarked interface Deployer {
 
   void deploy(DeploymentEntity deployment);
 }

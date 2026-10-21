@@ -34,18 +34,20 @@ public interface SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder exte
   SetRemovalTimeToHistoricProcessInstancesBuilder absoluteRemovalTime(Date removalTime);
 
   /**
-   * <p> Calculates the removal time dynamically based on the respective process definition time to
+   * Calculates the removal time dynamically based on the respective process definition time to
    * live and the process engine's removal time strategy.
    *
-   * <p> In case {@link #hierarchical()} is enabled, the removal time is being calculated
+   * <p>
+   * In case {@link #hierarchical()} is enabled, the removal time is being calculated
    * based on the base time and time to live of the historic root process instance.
+   * </p>
    *
    * @return the builder.
    */
   SetRemovalTimeToHistoricProcessInstancesBuilder calculatedRemovalTime();
 
   /**
-   * <p> Sets the removal time to {@code null}.
+   * Sets the removal time to {@code null}.
    *
    * @return the builder.
    */

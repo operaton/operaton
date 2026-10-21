@@ -70,7 +70,7 @@ public class DeploymentResourceImpl extends AbstractRestProcessEngineAware imple
 
   @Override
   public DeploymentDto redeploy(UriInfo uriInfo, RedeploymentDto redeployment) {
-    DeploymentWithDefinitions deployment = null;
+    DeploymentWithDefinitions deployment;
     try {
       deployment = tryToRedeploy(redeployment);
 

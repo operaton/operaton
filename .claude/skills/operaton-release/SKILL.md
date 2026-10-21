@@ -1,5 +1,5 @@
 ---
-name: operaton-release
+name: operaton:release
 description: Use when preparing, performing, or announcing an Operaton release. Triggers include "prepare release X.Y.Z", "prepare the upcoming releases", "perform release X.Y.Z", "X.Y.Z-Mx", and "announce release X.Y.Z" / "announce the release(s)". Use for release pre-flight checks, build/Docker-image/documentation status, noteworthy-label and milestone hygiene, distribution smoke tests, release notes, go/no-go confidence votes, driving the release.yml workflow, and post-release announcements (website, blog, Slack, forum) plus branch-cleanup listing.
 ---
 

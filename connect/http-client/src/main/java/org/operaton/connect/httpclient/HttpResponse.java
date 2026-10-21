@@ -32,7 +32,7 @@ public interface HttpResponse extends CloseableConnectorResponse {
   Integer getStatusCode();
 
   /**
-   * @return the response body or null if non exists
+   * @return the response body or {@code null} if non exists
    */
   String getResponse();
 
@@ -42,7 +42,7 @@ public interface HttpResponse extends CloseableConnectorResponse {
   Map<String, String> getHeaders();
 
   /**
-   * @return return the response header value for the given field or null if not set
+   * @return return the response header value for the given field or {@code null} if not set
    */
   String getHeader(String field);
 

@@ -150,7 +150,7 @@ public abstract class AstProperty extends AstNode {
 	}
 
 	protected Method findMethod(String name, Class<?> clazz, Class<?> returnType, Class<?>[] paramTypes) {
-		Method method = null;
+		Method method;
 		try {
 			method = clazz.getMethod(name, paramTypes);
 		} catch (NoSuchMethodException e) {

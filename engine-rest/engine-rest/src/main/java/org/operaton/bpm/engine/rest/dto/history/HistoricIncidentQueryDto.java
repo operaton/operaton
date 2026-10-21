@@ -316,13 +316,13 @@ public class HistoricIncidentQueryDto extends AbstractQueryDto<HistoricIncidentQ
       query.deleted();
     }
     if (tenantIds != null && !tenantIds.isEmpty()) {
-      query.tenantIdIn(tenantIds.toArray(new String[tenantIds.size()]));
+      query.tenantIdIn(tenantIds.toArray(String[]::new));
     }
     if (TRUE.equals(withoutTenantId)) {
       query.withoutTenantId();
     }
     if (jobDefinitionIds != null && !jobDefinitionIds.isEmpty()) {
-      query.jobDefinitionIdIn(jobDefinitionIds.toArray(new String[jobDefinitionIds.size()]));
+      query.jobDefinitionIdIn(jobDefinitionIds.toArray(String[]::new));
     }
   }
 

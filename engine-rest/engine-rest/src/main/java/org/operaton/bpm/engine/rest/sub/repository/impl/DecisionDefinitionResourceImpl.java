@@ -67,7 +67,7 @@ public class DecisionDefinitionResourceImpl implements DecisionDefinitionResourc
   public DecisionDefinitionDto getDecisionDefinition() {
     RepositoryService repositoryService = engine.getRepositoryService();
 
-    DecisionDefinition definition = null;
+    DecisionDefinition definition;
 
     try {
       definition = repositoryService.getDecisionDefinition(decisionDefinitionId);

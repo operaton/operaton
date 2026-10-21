@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.AbstractResourceDefinitionManager;
@@ -24,9 +26,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
-public class ProcessDefinitionCache extends ResourceDefinitionCache<ProcessDefinitionEntity> {
+public @NullMarked class ProcessDefinitionCache extends ResourceDefinitionCache<ProcessDefinitionEntity> {
 
   private static final String VAR_PROCESS_DEFINITION = "processDefinition";
   private static final String VAR_PROCESS_DEFINITION_ID = "processDefinitionId";
@@ -47,41 +49,41 @@ public class ProcessDefinitionCache extends ResourceDefinitionCache<ProcessDefin
   }
 
   @Override
-  protected void checkDefinitionFound(String definitionId, ProcessDefinitionEntity definition) {
+  protected void checkDefinitionFound(String definitionId, @Nullable ProcessDefinitionEntity definition) {
     ensureNotNull(NotFoundException.class, "no deployed process definition found with id '%s'".formatted(definitionId),
       VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKey(String definitionKey, ProcessDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKey(String definitionKey, @Nullable ProcessDefinitionEntity definition) {
     ensureNotNull("no processes deployed with key '%s'".formatted(definitionKey), VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, ProcessDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId, @Nullable ProcessDefinitionEntity definition) {
     ensureNotNull("no processes deployed with key '%s' and tenant-id '%s'".formatted(definitionKey, tenantId),
       VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, ProcessDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, @Nullable String tenantId, @Nullable ProcessDefinitionEntity definition) {
     ensureNotNull("no processes deployed with key = '%s', version = '%s' and tenant-id = '%s'".formatted(definitionKey, definitionVersion, tenantId), VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, String tenantId,
-      ProcessDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByKeyVersionTagAndTenantId(String definitionKey, String definitionVersionTag, @Nullable String tenantId,
+          @Nullable ProcessDefinitionEntity definition) {
     ensureNotNull("no processes deployed with key = '%s', versionTag = '%s' and tenant-id = '%s'".formatted(definitionKey, definitionVersionTag, tenantId), VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, ProcessDefinitionEntity definition) {
+  protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, @Nullable ProcessDefinitionEntity definition) {
     ensureNotNull("no processes deployed with key = '%s' in deployment = '%s'".formatted(definitionKey, deploymentId),
       VAR_PROCESS_DEFINITION, definition);
   }
 
   @Override
-  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, ProcessDefinitionEntity definition) {
+  protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, @Nullable ProcessDefinitionEntity definition) {
     ensureNotNull("deployment '%s' didn't put process definition '%s' in the cache".formatted(deploymentId, definitionId),
       VAR_CACHED_PROCESS_DEFINITION, definition);
   }

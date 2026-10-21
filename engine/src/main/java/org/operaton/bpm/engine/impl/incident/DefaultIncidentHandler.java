@@ -23,12 +23,12 @@ import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.runtime.Incident;
 
 /**
- * <p>
  * An incident handler that logs incidents of a certain type
- * as instances of {@link Incident} to the engine database.</p>
+ * as instances of {@link Incident} to the engine database.
  *
  * <p>
  * By default, the process engine has two default handlers:
+ * </p>
  * <ul>
  * <li>type <code>failedJob</code>: Indicates jobs without retries left. This incident handler is active by default and must be disabled
  * via {@link org.operaton.bpm.engine.ProcessEngineConfiguration#setCreateIncidentOnFailedJobEnabled(boolean)}.

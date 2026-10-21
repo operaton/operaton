@@ -121,23 +121,12 @@
   }
 }
 
-@layer custom {
-  #release-warning {
-    text-align: center;
-    font-style: italic;
-    font-weight: 600;
-    font-size: var(--small-font-size);
-    padding: 0.2em;
-    background-color: #fff4f2;
-    color: #bb2511;
-  }
-}
-
 @layer components {
   @media (width <=70em) {
     #mobile-logo {
       display: block !important;
       font-weight: bold;
+      text-transform: uppercase;
       color: var(--text);
       text-decoration: none;
     }
@@ -1111,12 +1100,6 @@
     background-clip: padding-box;
   }
 
-  /* keep the hover/selected background, but drop the negative margin shift */
-  .admin-page tbody tr:hover :where(td, th),
-  .admin-page tbody tr[aria-selected="true"] :where(td, th) {
-    margin: 0;
-  }
-
   .auth-table :where(td, th) {
     vertical-align: top;
   }
@@ -1309,6 +1292,14 @@
 
     > * {
       break-inside: avoid-column;
+    }
+
+    /* A message about the form as a whole belongs across both columns; in the
+       label column it is squeezed into a few characters per line. */
+    > .error,
+    > .info-box,
+    > .password-policy {
+      grid-column: 1 / -1;
     }
 
     .form-horizontal {
@@ -1607,7 +1598,6 @@
   tbody tr:hover :where(td, th),
   tbody tr[aria-selected="true"] :where(td, th) {
     background-color: var(--background-2);
-    margin: calc(-1 * var(--border-width-2));
   }
 
   th,

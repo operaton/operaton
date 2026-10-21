@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.Serial;
 
 /**
@@ -24,15 +26,17 @@ import java.io.Serial;
  *
  * @author Frederik Heremans
  */
-public class ClassLoadingException extends ProcessEngineException {
+public @NullMarked class ClassLoadingException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
 
   protected final String className;
 
+  /** @deprecated Use {@link #ClassLoadingException(String, String, Throwable)} instead */
+  @Deprecated(forRemoval = true, since = "2.2")
   public ClassLoadingException(String message, Throwable cause) {
     super(message, cause);
-    this.className = null;
+    this.className = "<UNDEFINED>";
   }
 
   public ClassLoadingException(String message, String className, Throwable cause) {

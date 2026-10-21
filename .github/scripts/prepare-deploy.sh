@@ -8,7 +8,7 @@ DB_DIR=engine/src/main/resources/org/operaton/bpm/engine/db
 # Last release tag reachable from HEAD (i.e. the previous release on this branch)
 LAST_RELEASE_TAG=$(git tag --merged HEAD | grep '^v' | sort -V | tail -1)
 
-if [ -z "$LAST_RELEASE_TAG" ]; then
+if [[ -z "$LAST_RELEASE_TAG" ]]; then
     echo "⚠️ No release tag found; sql scripts will be deployed."
     exit 0
 fi

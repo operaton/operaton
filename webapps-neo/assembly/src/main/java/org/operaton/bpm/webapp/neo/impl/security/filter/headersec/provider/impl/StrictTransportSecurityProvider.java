@@ -17,7 +17,7 @@
  */
 package org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -61,7 +61,7 @@ public class StrictTransportSecurityProvider extends HeaderSecurityProvider {
   @Override
   public Map<String, String> initParams() {
 
-    Arrays.asList(Parameters.values()).forEach(parameter -> initParams.put(parameter.getName(), null));
+    List.of(Parameters.values()).forEach(parameter -> initParams.put(parameter.getName(), null));
 
     return initParams;
   }

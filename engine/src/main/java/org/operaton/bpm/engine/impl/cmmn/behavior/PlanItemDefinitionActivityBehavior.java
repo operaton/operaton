@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.behavior;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -211,7 +210,7 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
       CmmnActivityExecution parent = execution.getParent();
 
       // instantiate a new instance of given activity
-      List<CmmnExecution> children = parent.createChildExecutions(Arrays.asList(activity));
+      List<CmmnExecution> children = parent.createChildExecutions(List.of(activity));
       // start the lifecycle of the new instance
       parent.triggerChildExecutionsLifecycle(children);
     }

@@ -1,2 +1,3 @@
 # github actions code owners
 .github/  @javahippie @kthoms @cachescrubber
+webapps-neo/ @lambdaschmied2 @javahippie

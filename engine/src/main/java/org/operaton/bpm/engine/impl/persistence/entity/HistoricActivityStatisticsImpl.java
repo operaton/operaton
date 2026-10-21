@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.history.HistoricActivityStatistics;
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("unused")
 public class HistoricActivityStatisticsImpl implements HistoricActivityStatistics {
 
   protected String id;

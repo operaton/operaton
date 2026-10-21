@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.batch.AbstractBatchConfigurationObjectConverter;
 import org.operaton.bpm.engine.impl.batch.BatchConfiguration;
 import org.operaton.bpm.engine.impl.batch.DeploymentMappingJsonConverter;
@@ -29,7 +30,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 /**
  * @author Askar Akhmerov
  */
-public class DeleteHistoricProcessInstanceBatchConfigurationJsonConverter
+public @NullMarked class DeleteHistoricProcessInstanceBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
 
   public static final String HISTORIC_PROCESS_INSTANCE_IDS = "historicProcessInstanceIds";

@@ -47,7 +47,7 @@ public abstract @NullMarked class AbstractSetTaskPropertyCmd<T> implements Comma
    *
    * @param taskId the id of the task whose property should be changed
    * @param value  the new value to set to the referenced task
-   * @throws NullValueException in case the given taskId or the given value are null
+   * @throws NullValueException in case the given taskId or the given value are {@code null}
    * @throws NotFoundException  in case the referenced task does not exist
    */
   protected AbstractSetTaskPropertyCmd(String taskId, @Nullable T value) {
@@ -138,12 +138,12 @@ public abstract @NullMarked class AbstractSetTaskPropertyCmd<T> implements Comma
   protected abstract void executeSetOperation(TaskEntity task, @Nullable T value);
 
   /**
-   * Ensures the value is not null and returns the value.
+   * Ensures the value is not {@code null} and returns the value.
    *
    * @param value the value
    * @param <S>   the type of the value
    * @return the value
-   * @throws NullValueException in case the given value is null
+   * @throws NullValueException in case the given value is {@code null}
    */
   protected <S> @Nullable S ensureNotNullAndGet(String variableName, @Nullable S value) {
     ensureNotNull(variableName, value);

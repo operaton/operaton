@@ -56,7 +56,7 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
   }
 
   private boolean validateDoubleValue(Object submittedValue, Double doubleValue, String configurationString) {
-    Double configuration = null;
+    Double configuration;
     try {
       configuration = Double.parseDouble(configurationString);
     } catch( NumberFormatException e) {
@@ -67,7 +67,7 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
   }
 
   private boolean validateFloatValue(Object submittedValue, Float floatValue, String configurationString) {
-    Float configuration = null;
+    Float configuration;
     try {
       configuration = Float.parseFloat(configurationString);
     } catch( NumberFormatException e) {
@@ -78,7 +78,7 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
   }
 
   private boolean validateLongValue(Object submittedValue, Long longValue, String configurationString) {
-    Long configuration = null;
+    Long configuration;
     try {
       configuration = Long.parseLong(configurationString);
     } catch(NumberFormatException e) {
@@ -89,7 +89,7 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
   }
 
   private boolean validateIntegerValue(Object submittedValue, Integer integerValue, String configurationString) {
-    Integer configuration = null;
+    Integer configuration;
     try {
       configuration = Integer.parseInt(configurationString);
     } catch( NumberFormatException e) {
@@ -100,7 +100,7 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
   }
 
   private boolean validateShortValue(Object submittedValue, Short shortValue, String configurationString) {
-    Short configuration = null;
+    Short configuration;
     try {
       configuration = Short.parseShort(configurationString);
     } catch( NumberFormatException e) {

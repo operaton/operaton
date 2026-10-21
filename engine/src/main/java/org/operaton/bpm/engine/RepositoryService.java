@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -62,7 +63,7 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
  * @author Tijs Rademakers
  * @author Joram Barrez
  */
-public interface RepositoryService {
+public @NullMarked interface RepositoryService {
 
   /**
    * Starts creating a new deployment
@@ -79,7 +80,7 @@ public interface RepositoryService {
   /**
    * Deletes the given deployment.
    *
-   * @param deploymentId id of the deployment, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
    *
    * @throws RuntimeException
    *          If there are still runtime or history process instances or jobs.
@@ -92,7 +93,7 @@ public interface RepositoryService {
    * Deletes the given deployment and cascade deletion to process instances,
    * history process instances and jobs.
    *
-   * @param deploymentId id of the deployment, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#DEPLOYMENT}.
@@ -108,7 +109,7 @@ public interface RepositoryService {
    * Deletes the given deployment and cascade deletion to process instances,
    * history process instances and jobs.
    *
-   * @param deploymentId id of the deployment, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#DEPLOYMENT}.
@@ -119,7 +120,7 @@ public interface RepositoryService {
    * Deletes the given deployment and cascade deletion to process instances,
    * history process instances and jobs.
    *
-   * @param deploymentId id of the deployment, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
    * @param cascade if set to true, all process instances (including) history are deleted
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
@@ -133,7 +134,7 @@ public interface RepositoryService {
    * Deletes the given deployment and cascade deletion to process instances,
    * history process instances and jobs.
    *
-   * @param deploymentId id of the deployment, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
    * @param cascade if set to true, all process instances (including) history are deleted
    * @param skipCustomListeners if true, only the built-in {@link ExecutionListener}s
    * are notified with the {@link ExecutionListener#EVENTNAME_END} event.
@@ -231,7 +232,7 @@ public interface RepositoryService {
    * Retrieves a list of deployment resource names for the given deployment,
    * ordered alphabetically.
    *
-   * @param deploymentId id of the deployment, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DEPLOYMENT}.
@@ -242,7 +243,7 @@ public interface RepositoryService {
    * Retrieves a list of deployment resources for the given deployment,
    * ordered alphabetically by name.
    *
-   * @param deploymentId id of the deployment, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DEPLOYMENT}.
@@ -252,8 +253,8 @@ public interface RepositoryService {
   /**
    * Gives access to a deployment resource through a stream of bytes.
    *
-   * @param deploymentId id of the deployment, cannot be null.
-   * @param resourceName name of the resource, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
+   * @param resourceName name of the resource, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When the resource doesn't exist in the given deployment or when no deployment exists
@@ -266,8 +267,8 @@ public interface RepositoryService {
   /**
    * Gives access to a deployment resource through a stream of bytes.
    *
-   * @param deploymentId id of the deployment, cannot be null.
-   * @param resourceId id of the resource, cannot be null.
+   * @param deploymentId id of the deployment, cannot be {@code null}.
+   * @param resourceId id of the resource, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When the resource doesn't exist in the given deployment or when no deployment exists
@@ -338,7 +339,7 @@ public interface RepositoryService {
    *
    * @param suspendProcessInstances If true, all the process instances of the provided process definition
    *                                will be suspended too.
-   * @param suspensionDate The date on which the process definition will be suspended. If null, the
+   * @param suspensionDate The date on which the process definition will be suspended. If {@code null}, the
    *                       process definition is suspended immediately.
    *                       Note: The job executor needs to be active to use this!
    *
@@ -356,7 +357,7 @@ public interface RepositoryService {
    *
    * @see RuntimeService#suspendProcessInstanceById(String)
    */
-  void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, Date suspensionDate);
+  void suspendProcessDefinitionById(String processDefinitionId, boolean suspendProcessInstances, @Nullable Date suspensionDate);
 
   /**
    * Suspends the <strong>all</strong> process definitions with the given key (= id in the bpmn20.xml file).
@@ -394,7 +395,7 @@ public interface RepositoryService {
    *
    * @param suspendProcessInstances If true, all the process instances of the provided process definition
    *                                will be suspended too.
-   * @param suspensionDate The date on which the process definition will be suspended. If null, the
+   * @param suspensionDate The date on which the process definition will be suspended. If {@code null}, the
    *                       process definition is suspended immediately.
    *                       Note: The job executor needs to be active to use this!
    *
@@ -412,7 +413,7 @@ public interface RepositoryService {
    *
    * @see RuntimeService#suspendProcessInstanceById(String)
    */
-  void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, Date suspensionDate);
+  void suspendProcessDefinitionByKey(String processDefinitionKey, boolean suspendProcessInstances, @Nullable Date suspensionDate);
 
   /**
    * Activates the process definition with the given id.
@@ -435,7 +436,7 @@ public interface RepositoryService {
    *
    * @param suspendProcessInstances If true, all the process instances of the provided process definition
    *                                will be activated too.
-   * @param activationDate The date on which the process definition will be activated. If null, the
+   * @param activationDate The date on which the process definition will be activated. If {@code null}, the
    *                       process definition is suspended immediately.
    *                       Note: The job executor needs to be active to use this!
    *
@@ -453,7 +454,7 @@ public interface RepositoryService {
    *
    * @see RuntimeService#activateProcessInstanceById(String)
    */
-  void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, Date activationDate);
+  void activateProcessDefinitionById(String processDefinitionId, boolean activateProcessInstances, @Nullable Date activationDate);
 
   /**
    * Activates the process definition with the given key (=id in the bpmn20.xml file).
@@ -476,7 +477,7 @@ public interface RepositoryService {
    *
    * @param suspendProcessInstances If true, all the process instances of the provided process definition
    *                                will be activated too.
-   * @param activationDate The date on which the process definition will be activated. If null, the
+   * @param activationDate The date on which the process definition will be activated. If {@code null}, the
    *                       process definition is suspended immediately.
    *                       Note: The job executor needs to be active to use this!
    *
@@ -494,7 +495,7 @@ public interface RepositoryService {
    *
    * @see RuntimeService#activateProcessInstanceById(String)
    */
-  void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances,  Date activationDate);
+  void activateProcessDefinitionByKey(String processDefinitionKey, boolean activateProcessInstances, @Nullable Date activationDate);
 
   /**
    * Activate or suspend process definitions using a fluent builder. Specify the
@@ -541,29 +542,29 @@ public interface RepositoryService {
    * through a stream of bytes.
    *
    * @param processDefinitionId
-   *          id of a {@link ProcessDefinition}, cannot be null.
+   *          id of a {@link ProcessDefinition}, cannot be {@code null}.
    *
    * @throws NotFoundException
    *           when the process model doesn't exist.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  InputStream getProcessModel(String processDefinitionId);
+  @Nullable InputStream getProcessModel(String processDefinitionId);
 
   /**
    * Gives access to a deployed process diagram, e.g., a PNG image, through a
    * stream of bytes.
    *
    * @param processDefinitionId
-   *          id of a {@link ProcessDefinition}, cannot be null.
-   * @return null when the diagram resource name of a {@link ProcessDefinition} is null.
+   *          id of a {@link ProcessDefinition}, cannot be {@code null}.
+   * @return {@code null} when the diagram resource name of a {@link ProcessDefinition} is {@code null}.
    *
    * @throws ProcessEngineException
    *           when the process diagram doesn't exist.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  InputStream getProcessDiagram(String processDefinitionId);
+  @Nullable InputStream getProcessDiagram(String processDefinitionId);
 
   /**
    * Returns the {@link ProcessDefinition} including all BPMN information like additional
@@ -582,17 +583,17 @@ public interface RepositoryService {
    * This method requires a process model and a diagram image to be deployed.
    * </p>
    *
-   * @param processDefinitionId id of a {@link ProcessDefinition}, cannot be null.
+   * @param processDefinitionId id of a {@link ProcessDefinition}, cannot be {@code null}.
    * @return Map with process element ids as keys and positions and dimensions as values.
    *
-   * @return null when the input stream of a process diagram is null.
+   * @return {@code null} when the input stream of a process diagram is {@code null}.
    *
    * @throws ProcessEngineException
    *          When the process model or diagram doesn't exist.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
-  DiagramLayout getProcessDiagramLayout(String processDefinitionId);
+  @Nullable DiagramLayout getProcessDiagramLayout(String processDefinitionId);
 
   /**
    * Returns the {@link BpmnModelInstance} for the given processDefinitionId.
@@ -615,7 +616,7 @@ public interface RepositoryService {
    *
    * @return the {@link CmmnModelInstance}
    *
-   * @throws NotValidException when the given case definition id or deployment id or resource name is null
+   * @throws NotValidException when the given case definition id or deployment id or resource name is {@code null}
    * @throws NotFoundException when no CMMN model instance or deployment resource is found for the given
    *     case definition id
    * @throws ProcessEngineException when an internal exception happens during the execution
@@ -631,7 +632,7 @@ public interface RepositoryService {
    *
    * @return the {@link DmnModelInstance}
    *
-   * @throws NotValidException when the given decision definition id or deployment id or resource name is null
+   * @throws NotValidException when the given decision definition id or deployment id or resource name is {@code null}
    * @throws NotFoundException when no DMN model instance or deployment resource is found for the given
    *     decision definition id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command.
@@ -643,8 +644,8 @@ public interface RepositoryService {
   /**
    * Authorizes a candidate user for a process definition.
    *
-   * @param processDefinitionId id of the process definition, cannot be null.
-   * @param userId id of the user involve, cannot be null.
+   * @param processDefinitionId id of the process definition, cannot be {@code null}.
+   * @param userId id of the user involve, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When the process definition or user doesn't exist.
@@ -657,8 +658,8 @@ public interface RepositoryService {
   /**
    * Authorizes a candidate group for a process definition.
    *
-   * @param processDefinitionId id of the process definition, cannot be null.
-   * @param groupId id of the group involve, cannot be null.
+   * @param processDefinitionId id of the process definition, cannot be {@code null}.
+   * @param groupId id of the group involve, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When the process definition or group doesn't exist.
@@ -671,8 +672,8 @@ public interface RepositoryService {
   /**
    * Removes the authorization of a candidate user for a process definition.
    *
-   * @param processDefinitionId id of the process definition, cannot be null.
-   * @param userId id of the user involve, cannot be null.
+   * @param processDefinitionId id of the process definition, cannot be {@code null}.
+   * @param userId id of the user involve, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When the process definition or user doesn't exist.
@@ -685,8 +686,8 @@ public interface RepositoryService {
   /**
    * Removes the authorization of a candidate group for a process definition.
    *
-   * @param processDefinitionId id of the process definition, cannot be null.
-   * @param groupId id of the group involve, cannot be null.
+   * @param processDefinitionId id of the process definition, cannot be {@code null}.
+   * @param groupId id of the group involve, cannot be {@code null}.
    *
    * @throws ProcessEngineException
    *          When the process definition or group doesn't exist.
@@ -709,7 +710,7 @@ public interface RepositoryService {
   /**
    * Returns the {@link CaseDefinition}.
    *
-   * @throws NotValidException when the given case definition id is null
+   * @throws NotValidException when the given case definition id is {@code null}
    * @throws NotFoundException when no case definition is found for the given case definition id
    * @throws ProcessEngineException when an internal exception happens during the execution
    *     of the command.
@@ -721,28 +722,28 @@ public interface RepositoryService {
    * through a stream of bytes.
    *
    * @param caseDefinitionId
-   *          id of a {@link CaseDefinition}, cannot be null.
+   *          id of a {@link CaseDefinition}, cannot be {@code null}.
    *
-   * @throws NotValidException when the given case definition id or deployment id or resource name is null
+   * @throws NotValidException when the given case definition id or deployment id or resource name is {@code null}
    * @throws NotFoundException when no case definition or deployment resource is found for the given case definition id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    */
-  InputStream getCaseModel(String caseDefinitionId);
+  @Nullable InputStream getCaseModel(String caseDefinitionId);
 
   /**
    * Gives access to a deployed case diagram, e.g., a PNG image, through a
    * stream of bytes.
    *
-   * @param caseDefinitionId id of a {@link CaseDefinition}, cannot be null.
-   * @return null when the diagram resource name of a {@link CaseDefinition} is null.
+   * @param caseDefinitionId id of a {@link CaseDefinition}, cannot be {@code null}.
+   * @return {@code null} when the diagram resource name of a {@link CaseDefinition} is {@code null}.
    * @throws ProcessEngineException when the process diagram doesn't exist.
    */
-  InputStream getCaseDiagram(String caseDefinitionId);
+  @Nullable InputStream getCaseDiagram(String caseDefinitionId);
 
   /**
    * Returns the {@link DecisionDefinition}.
    *
-   * @throws NotValidException when the given decision definition id is null
+   * @throws NotValidException when the given decision definition id is {@code null}
    * @throws NotFoundException when no decision definition is found for the given decision definition id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command.
    * @throws AuthorizationException
@@ -753,7 +754,7 @@ public interface RepositoryService {
   /**
    * Returns the {@link DecisionRequirementsDefinition}.
    *
-   * @throws NotValidException when the given decision requirements definition id is null
+   * @throws NotValidException when the given decision requirements definition id is {@code null}
    * @throws NotFoundException when no decision requirements definition is found for the given decision requirements definition id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command.
    * @throws AuthorizationException
@@ -766,9 +767,9 @@ public interface RepositoryService {
    * through a stream of bytes.
    *
    * @param decisionDefinitionId
-   *          id of a {@link DecisionDefinition}, cannot be null.
+   *          id of a {@link DecisionDefinition}, cannot be {@code null}.
    *
-   * @throws NotValidException when the given decision definition id or deployment id or resource name is null
+   * @throws NotValidException when the given decision definition id or deployment id or resource name is {@code null}
    * @throws NotFoundException when no decision definition or deployment resource is found for the given decision definition id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    * @throws AuthorizationException
@@ -781,9 +782,9 @@ public interface RepositoryService {
    * through a stream of bytes.
    *
    * @param decisionRequirementsDefinitionId
-   *          id of a {@link DecisionRequirementsDefinition}, cannot be null.
+   *          id of a {@link DecisionRequirementsDefinition}, cannot be {@code null}.
    *
-   * @throws NotValidException when the given decision requirements definition id or deployment id or resource name is null
+   * @throws NotValidException when the given decision requirements definition id or deployment id or resource name is {@code null}
    * @throws NotFoundException when no decision requirements definition or deployment resource is found for the given decision requirements definition id
    * @throws ProcessEngineException when an internal exception happens during the execution of the command
    * @throws AuthorizationException
@@ -795,25 +796,25 @@ public interface RepositoryService {
    * Gives access to a deployed decision diagram, e.g., a PNG image, through a
    * stream of bytes.
    *
-   * @param decisionDefinitionId id of a {@link DecisionDefinition}, cannot be null.
-   * @return null when the diagram resource name of a {@link DecisionDefinition} is null.
+   * @param decisionDefinitionId id of a {@link DecisionDefinition}, cannot be {@code null}.
+   * @return {@code null} when the diagram resource name of a {@link DecisionDefinition} is {@code null}.
    * @throws ProcessEngineException when the decision diagram doesn't exist.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DECISION_DEFINITION}.
    */
-  InputStream getDecisionDiagram(String decisionDefinitionId);
+  @Nullable InputStream getDecisionDiagram(String decisionDefinitionId);
 
   /**
    * Gives access to a deployed decision requirements diagram, e.g., a PNG image, through a
    * stream of bytes.
    *
-   * @param decisionRequirementsDefinitionId id of a {@link DecisionRequirementsDefinition}, cannot be null.
-   * @return null when the diagram resource name of a {@link DecisionRequirementsDefinition} is null.
+   * @param decisionRequirementsDefinitionId id of a {@link DecisionRequirementsDefinition}, cannot be {@code null}.
+   * @return {@code null} when the diagram resource name of a {@link DecisionRequirementsDefinition} is {@code null}.
    * @throws ProcessEngineException when the decision requirements diagram doesn't exist.
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DECISION_REQUIREMENTS_DEFINITION}.
    */
-  InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId);
+  @Nullable InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId);
 
   /**
    * For the given process, returns a list of {@link CalledProcessDefinition}.

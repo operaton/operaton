@@ -560,7 +560,7 @@ public class Parser {
 	//fall-through to default is expected
 	@SuppressWarnings("java:S128")
 	protected AstNode unary(boolean required) throws Scanner.ScanException, ParseException {
-		AstNode v = null;
+		AstNode v;
 		switch (token.getSymbol()) {
 			case NOT:
 				consumeToken();

@@ -46,7 +46,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
  */
 public @NullMarked class DeleteProcessInstanceBatchCmd implements Command<Batch> {
 
-  protected final String deleteReason;
+  protected final @Nullable String deleteReason;
   protected List<String> processInstanceIds;
   protected @Nullable ProcessInstanceQuery processInstanceQuery;
   protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
@@ -57,7 +57,7 @@ public @NullMarked class DeleteProcessInstanceBatchCmd implements Command<Batch>
   public DeleteProcessInstanceBatchCmd(List<String> processInstances,
                                        @Nullable ProcessInstanceQuery processInstanceQuery,
                                        @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery,
-                                       String deleteReason,
+                                       @Nullable String deleteReason,
                                        boolean skipCustomListeners,
                                        boolean skipSubprocesses,
                                        boolean skipIoMappings) {

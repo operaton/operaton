@@ -612,19 +612,19 @@ public class ProcessEngineRestServiceTest extends
     when(query.singleResult()).thenReturn(instance);
     when(query.disableCustomObjectDeserialization()).thenReturn(query);
 
-    given()
+    Response response = given()
       .pathParam("name", EXAMPLE_ENGINE_NAME)
       .pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
-    .then().expect()
+    .when()
+      .get(HISTORY_BINARY_VARIABLE_INSTANCE_URL);
+
+    response.then()
       .statusCode(Status.OK.getStatusCode())
-      . body(is(equalTo(new String(byteContent))))
-      .and()
-        .header("Content-Disposition", "attachment; " +
-                "filename=\"" + filename + "\"; " +
-                "filename*=UTF-8''" + filename)
-        .contentType(equalTo(ContentType.TEXT.toString() + "; charset=UTF-8"))
-      .when()
-        .get(HISTORY_BINARY_VARIABLE_INSTANCE_URL);
+      .body(is(equalTo(new String(byteContent))))
+      .header("Content-Disposition", "attachment; " +
+              "filename=\"" + filename + "\"; " +
+              "filename*=UTF-8''" + filename);
+    assertThat(MediaType.valueOf(response.getContentType())).isEqualTo(MediaType.TEXT_PLAIN_TYPE.withCharset(encoding));
 
     verify(mockHistoryService).createHistoricVariableInstanceQuery();
     verifyNoInteractions(processEngine);

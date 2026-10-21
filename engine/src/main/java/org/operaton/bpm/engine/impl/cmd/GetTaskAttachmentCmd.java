@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.task.Attachment;
@@ -34,7 +35,7 @@ public @NullMarked class GetTaskAttachmentCmd implements Command<Attachment> {
   }
 
   @Override
-  public Attachment execute(CommandContext commandContext) {
+  public @Nullable Attachment execute(CommandContext commandContext) {
     return commandContext
       .getAttachmentManager()
       .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);

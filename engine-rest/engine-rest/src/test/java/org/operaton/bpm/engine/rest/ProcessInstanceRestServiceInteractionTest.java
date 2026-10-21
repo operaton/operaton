@@ -4356,7 +4356,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
 
   /**
    * Thrown when java serialization format is prohibited and java serialized variable is set
-   * or null value is given.
+   * or {@code null} value is given.
    */
   @Test
   void shouldTransformProcessEngineExceptionToInvalidRequestException() {

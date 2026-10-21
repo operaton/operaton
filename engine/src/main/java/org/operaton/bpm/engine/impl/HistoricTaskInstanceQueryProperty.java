@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import org.operaton.bpm.engine.query.QueryProperty;
+import org.jspecify.annotations.NullMarked;
 
+import org.operaton.bpm.engine.query.QueryProperty;
 
 /**
  * @author Tom Baeyens
  */
-final class HistoricTaskInstanceQueryProperty {
+final @NullMarked class HistoricTaskInstanceQueryProperty {
 
   public static final QueryProperty HISTORIC_TASK_INSTANCE_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty PROCESS_DEFINITION_ID = new QueryPropertyImpl("PROC_DEF_ID_");

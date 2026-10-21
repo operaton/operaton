@@ -49,6 +49,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * <p>
  * Provide common logic for process instance deletion operations.
  * Permissions checking and single process instance removal included.
+ * </p>
  */
 @NullMarked
 public abstract class AbstractDeleteProcessInstanceCmd {

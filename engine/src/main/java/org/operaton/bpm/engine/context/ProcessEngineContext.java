@@ -21,33 +21,41 @@ import java.util.concurrent.Callable;
 import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
 
 /**
- * <p>When a Process Engine API call is performed, the engine
+ * When a Process Engine API call is performed, the engine
  * will create a Process Engine Context. The context caches database
  * entities, so that multiple operations on the same entity do not
  * result in multiple database queries. This also means that the changes
  * to these entities are accumulated and are flushed to the database
  * as soon as the Process Engine API call returns (however, the current
- * transaction might be committed at a later time).</p>
+ * transaction might be committed at a later time).
  *
- * <p>If a Process Engine API call is nested into another call, the
+ * <p>
+ * If a Process Engine API call is nested into another call, the
  * default behaviour is to reuse the existing Process Engine Context.
  * This means that the nested call will have access to the same cached
- * entities and the changes made to them.</p>
+ * entities and the changes made to them.
+ * </p>
  *
- * <p>When the nested call is to be executed in a new transaction, a new Process
+ * <p>
+ * When the nested call is to be executed in a new transaction, a new Process
  * Engine Context needs to be created for its execution. In this case, the
  * nested call will use a new cache for the database entities, independent of
  * the previous (outer) call cache. This means that, the changes in the cache of
  * one call are invisible to the other call and vice versa. When the nested call
  * returns, the changes are flushed to the database independently of the Process
- * Engine Context of the outer call.</p>
+ * Engine Context of the outer call.
+ * </p>
  *
- * <p>The <code>ProcessEngineContext</code> is a utility class to declare to
+ * <p>
+ * The <code>ProcessEngineContext</code> is a utility class to declare to
  * the Process Engine that a new Process Engine Context needs to be created
  * in order for the database operations in a nested Process Engine API call
- * to be separated in a new transaction.</p>
+ * to be separated in a new transaction.
+ * </p>
  *
+ * <p>
  * Example on declaring a new Process Engine Context:
+ * </p>
  *
  * <pre>
  *  try {
@@ -90,12 +98,14 @@ public final class ProcessEngineContext {
   }
 
   /**
-   * <p>Takes a callable and executes all engine API invocations
+   * Takes a callable and executes all engine API invocations
    * within that callable in a new Process Engine Context. Please
    * see the {@link ProcessEngineContext} class documentation for
-   * a more detailed description on the purpose of this method.</p>
+   * a more detailed description on the purpose of this method.
    *
+   * <p>
    * An alternative to calling:
+   * </p>
    *
    * <p>
    * <code>

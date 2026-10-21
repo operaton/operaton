@@ -10,6 +10,8 @@ import engine_rest from "../api/engine_rest.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 import { app_path, get_config } from "../config.js";
+import { app_name, logo_url, logo_alt } from "../branding.js";
+import { page_allowed } from "../helper/authorized_apps.js";
 
 const swap_server = (e, state) => {
   const server = get_config().backends.find((s) => s.url === e.target.value);
@@ -33,9 +35,9 @@ const builtin_nav = [
 // both the desktop menu and the mobile dialog. Entries are declared root-relative
 // (a plugin cannot know the deployment's prefix) and prefixed here, once, so both
 // the rendered href and the `url.startsWith` active check see the same shape.
-const nav_entries = () =>
+const nav_entries = (authorized_apps) =>
   [
-    ...builtin_nav,
+    ...builtin_nav.filter((entry) => page_allowed(authorized_apps, entry.href)),
     ...plugins_for(PLUGIN_POINTS.PAGE)
       .filter((plugin) => plugin.properties?.href && plugin.properties?.nameKey)
       .map((plugin) => ({
@@ -48,8 +50,9 @@ const nav_entries = () =>
 // Rendered in both the desktop <menu> and the mobile <dialog> so nav entries
 // (built-in and plugin) are declared exactly once.
 const MainNavEntries = ({ url, on_navigate }) => {
-  const [t] = useTranslation();
-  return nav_entries().map((entry) => (
+  const [t] = useTranslation(),
+    state = useContext(AppState);
+  return nav_entries(state.auth.authorized_apps.value).map((entry) => (
     <li key={entry.href}>
       <a
         href={entry.href}
@@ -70,7 +73,14 @@ export function Header() {
     showSearch = () => document.getElementById("global-search").showModal(),
     show_mobile_menu = () => document.getElementById("mobile-menu").showModal(),
     close_mobile_menu = () => document.getElementById("mobile-menu").close(),
-    logout = () => engine_rest.auth.logout(state);
+    // Leave the page behind: after signing out the address would otherwise
+    // still name a task or an instance the next person may not open at all.
+    // Only once the session really ended — a logout the server refuses leaves
+    // the user signed in, and moving them then would say otherwise.
+    logout = async () => {
+      await engine_rest.auth.logout(state);
+      if (!state.auth.user.id.peek()) route(app_path("/"));
+    };
 
   useHotkeys("alt+shift+0", () => route(app_path("/")));
   useHotkeys("alt+shift+1", () => route(app_path("/tasks")));
@@ -109,25 +119,6 @@ export function Header() {
   return (
     <>
       <header id="top">
-        {/* Reads the runtime flag, not a build-time env var, so a distro operator can
-            turn the notice off without rebuilding the bundle. */}
-        {get_config().hide_release_warning ? null : (
-          <div id="release-warning">
-            {t("nav.release-warning")}{" "}
-            <a href="https://github.com/operaton/operaton/issues">
-              {t("nav.release-warning-issue")}
-            </a>{" "}
-            {t("nav.release-warning-forum") !== t("nav.release-warning-issue") && (
-              <>
-                {t("nav.release-warning-or")}{" "}
-                <a href="https://forum.operaton.org/">
-                  {t("nav.release-warning-forum")}
-                </a>
-              </>
-            )}
-          </div>
-        )}
-
         <menu id="skip-links">
           <li>
             <a href="#content">{t("nav.skip-to-content")}</a>
@@ -135,15 +126,15 @@ export function Header() {
         </menu>
 
         <a href={app_path("/")} id="mobile-logo">
-          OPERATON
+          {app_name()}
         </a>
         <a
           href={app_path("/")}
           id="logo"
-          aria-label="Operaton"
+          aria-label={app_name()}
           aria-current={url === app_path("/") ? "page" : undefined}
         >
-          <img src={app_path("/operaton-logo.svg")} alt="Operaton" />
+          <img src={logo_url()} alt={logo_alt()} />
         </a>
         <button
           type="button"
@@ -193,11 +184,14 @@ export function Header() {
                   <li>
                     <a
                       href={app_path("/account")}
+                      title={t("nav.account")}
                       aria-current={
-                        url.startsWith(app_path("/account")) ? "page" : undefined
+                        url.startsWith(app_path("/account"))
+                          ? "page"
+                          : undefined
                       }
                     >
-                      {t("nav.account")}
+                      {state.auth.user.id.value || t("nav.account")}
                     </a>
                   </li>
                 </menu>
@@ -230,7 +224,9 @@ export function Header() {
               <a href={app_path("/help")}>{t("nav.help")}</a>
             </li>
             <li>
-              <a href={app_path("/account")}>{t("nav.account")}</a>
+              <a href={app_path("/account")} title={t("nav.account")}>
+                {state.auth.user.id.value || t("nav.account")}
+              </a>
             </li>
             <li>
               <button

@@ -26,9 +26,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.JsonNode;
-import kong.unirest.Unirest;
+import kong.unirest.core.HttpResponse;
+import kong.unirest.core.JsonNode;
+import kong.unirest.core.Unirest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -79,7 +79,11 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
     };
 
     int requestsCount = 500;
-    ExecutorService service = Executors.newFixedThreadPool(requestsCount);
+    // Unirest 4 (java.net.http) has no connection pool limit. Cap the number of parallel
+    // requests to stay below the fetch-and-lock queue capacity (default 200), matching the
+    // per-route connection limit of 20 applied by the previous HttpClient 4 based Unirest.
+    int parallelRequests = 20;
+    ExecutorService service = Executors.newFixedThreadPool(parallelRequests);
 
     try {
       List<Callable<String>> requests = new ArrayList<>();

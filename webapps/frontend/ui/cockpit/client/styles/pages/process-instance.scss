@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .incidents-tab {
   position: relative;
 
@@ -34,7 +36,7 @@
         max-width: 100%;
         max-height: 100px;
         // mix() works the same in Sass as it did in LESS
-        background-color: mix($body-bg, $primary);
+        background-color: color.mix($body-bg, $primary);
       }
     }
   }

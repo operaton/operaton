@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,9 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+import java.util.Collections;
+
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -132,14 +136,14 @@ class AuthorizationServiceAuthorizationsTest {
     var basePermsId = basePerms.getId();
 
     // when/then
-    assertThatThrownBy(() -> authorizationService.deleteAuthorization(basePermsId))
+    assertThatThrownBy(() -> authorizationService.deleteAuthorization(requireNonNull(basePermsId)))
       .isInstanceOf(AuthorizationException.class)
       .satisfies(e -> {
         AuthorizationException ae = (AuthorizationException) e;
         assertThat(ae.getUserId()).isEqualTo(JONNY_2);
         assertThat(ae.getMissingAuthorizations()).hasSize(1);
         MissingAuthorization info = ae.getMissingAuthorizations().get(0);
-        assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
+        assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), requireNonNull(basePerms.getId()), info);
       });
   }
 
@@ -409,16 +413,16 @@ class AuthorizationServiceAuthorizationsTest {
     processEngineConfiguration.setAuthorizationEnabled(true);
 
     // then
-    assertThat(authorizationService.isUserAuthorized(userId, null, Permissions.ACCESS, resource)).isTrue();
+    assertThat(authorizationService.isUserAuthorized(userId, Collections.emptyList(), Permissions.ACCESS, resource)).isTrue();
   }
 
   protected void cleanupAfterTest() {
     for (Authorization authorization : authorizationService.createAuthorizationQuery().list()) {
-      authorizationService.deleteAuthorization(authorization.getId());
+      authorizationService.deleteAuthorization(requireNonNull(authorization.getId()));
     }
   }
 
-  static class ResourceImpl implements Resource {
+  static @NullMarked class ResourceImpl implements Resource {
 
     String resourceName;
     int resourceType;

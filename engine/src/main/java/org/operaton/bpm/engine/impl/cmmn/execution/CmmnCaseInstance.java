@@ -48,7 +48,7 @@ public interface CmmnCaseInstance extends CmmnActivityExecution {
    * @param activityId the id of the {@link CmmnActivity activity} to
    *                   which a case execution is associated.
 
-   * @return returns a case execution or null if a case execution could
+   * @return returns a case execution or {@code null} if a case execution could
    *         not be found.
    */
   @Nullable CmmnActivityExecution findCaseExecution(String activityId);

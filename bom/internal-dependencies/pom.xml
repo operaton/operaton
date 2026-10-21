@@ -23,6 +23,24 @@
     <version.jetty>12.1.4</version.jetty>
   </properties>
 
+  <!-- Build-only inputs for the alignment check below. jersey-common gets its
+    version from Spring Boot; the Jersey BOM represents our declared version.
+    Test dependencies are not exported when this BOM is imported. -->
+  <dependencies>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey</groupId>
+      <artifactId>jersey-bom</artifactId>
+      <version>${version.jersey3}</version>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <dependencyManagement>
     <dependencies>
       <!-- BOMs -->
@@ -83,6 +101,7 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+      <!-- Keep Spring Boot ahead of the Jersey BOM: Boot defines the Jersey version. -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -206,7 +225,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.20.0</version>
+        <version>3.21.0</version>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId>
@@ -277,7 +296,7 @@
       <dependency>
         <groupId>ch.martinelli.oss</groupId>
         <artifactId>testcontainers-mailpit</artifactId>
-        <version>1.3.1</version>
+        <version>1.3.2</version>
         <scope>test</scope>
       </dependency>
 
@@ -341,13 +360,12 @@
         <artifactId>httpcore5</artifactId>
         <version>${version.httpcore5}</version>
       </dependency>
-      <!-- Pulled in transitively by httpclient5 alongside httpcore5. Managed here so
-        both halves of the core5 family stay on the same version instead of h2 falling
-        through to whatever spring-boot-dependencies happens to manage. -->
+      <!-- Keep HTTP/2 aligned with httpcore5; Spring Boot otherwise manages
+        the vulnerable 5.3.x line (CVE-2026-54428, fixed in 5.4.3). -->
       <dependency>
         <groupId>org.apache.httpcomponents.core5</groupId>
         <artifactId>httpcore5-h2</artifactId>
-        <version>${version.httpcore5-h2}</version>
+        <version>${version.httpcore5}</version>
       </dependency>
       <dependency>
         <groupId>org.glassfish.jaxb</groupId>
@@ -362,7 +380,7 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.10.17</version>
+        <version>1.10.18</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -401,6 +419,12 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-email2-jakarta</artifactId>
         <version>2.0.0-M1</version>
+      </dependency>
+      <!-- commons-email2-jakarta still depends on 2.0.1, affected by CVE-2025-7962. -->
+      <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>jakarta.mail</artifactId>
+        <version>2.0.2</version>
       </dependency>
       <dependency>
         <groupId>org.eclipse.angus</groupId>
@@ -448,7 +472,7 @@
       <dependency>
         <groupId>org.xmlunit</groupId>
         <artifactId>xmlunit-core</artifactId>
-        <version>2.13.0</version>
+        <version>2.14.0</version>
         <scope>test</scope>
       </dependency>
 
@@ -507,9 +531,13 @@
 
       <dependency>
         <groupId>com.konghq</groupId>
-        <artifactId>unirest-java</artifactId>
+        <artifactId>unirest-java-core</artifactId>
         <version>${version.unirest-java}</version>
-        <classifier>standalone</classifier>
+      </dependency>
+      <dependency>
+        <groupId>com.konghq</groupId>
+        <artifactId>unirest-modules-gson</artifactId>
+        <version>${version.unirest-java}</version>
       </dependency>
 
       <!-- scripting -->
@@ -566,4 +594,32 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-jersey-spring-boot-alignment</id>
+            <inherited>false</inherited>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireSameVersions>
+                  <dependencies>
+                    <dependency>org.glassfish.jersey.core:jersey-common</dependency>
+                    <dependency>org.glassfish.jersey:jersey-bom</dependency>
+                  </dependencies>
+                </requireSameVersions>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

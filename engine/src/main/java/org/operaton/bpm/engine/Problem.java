@@ -16,15 +16,18 @@
  */
 package org.operaton.bpm.engine;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.List;
 
 /**
  * Interface of a problem occurred during parsing
  */
-public interface Problem {
+public @NullMarked interface Problem {
 
   /** The message of this problem */
-  String getMessage();
+  @Nullable String getMessage();
 
   /** The line where the problem occurs */
   int getLine();
@@ -36,7 +39,7 @@ public interface Problem {
    * The id of the main element causing the problem. It can be
    * <code>null</code> in case the element doesn't have an id.
    */
-  String getMainElementId();
+  @Nullable String getMainElementId();
 
   /**
    * The ids of all involved elements in the problem. It can be an empty

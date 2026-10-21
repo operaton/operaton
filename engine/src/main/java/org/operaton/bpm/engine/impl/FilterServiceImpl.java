@@ -18,7 +18,8 @@ package org.operaton.bpm.engine.impl;
 
 import java.util.List;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.filter.Filter;
@@ -38,11 +39,11 @@ import org.operaton.bpm.engine.query.Query;
 /**
  * @author Sebastian Menski
  */
-public class FilterServiceImpl extends ServiceImpl implements FilterService {
+public @NullMarked class FilterServiceImpl extends ServiceImpl implements FilterService {
 
   @Override
-  public @NonNull Filter newTaskFilter() {
-    return commandExecutor.execute(new CreateFilterCmd(EntityTypes.TASK));
+  public Filter newTaskFilter() {
+    return getCommandExecutor().execute(new CreateFilterCmd(EntityTypes.TASK));
   }
 
   @Override
@@ -62,63 +63,63 @@ public class FilterServiceImpl extends ServiceImpl implements FilterService {
 
   @Override
   public Filter saveFilter(Filter filter) {
-    return commandExecutor.execute(new SaveFilterCmd(filter));
+    return getCommandExecutor().execute(new SaveFilterCmd(filter));
   }
 
   @Override
   public Filter getFilter(String filterId) {
-    return commandExecutor.execute(new GetFilterCmd(filterId));
+    return getCommandExecutor().execute(new GetFilterCmd(filterId));
   }
 
   @Override
   public void deleteFilter(String filterId) {
-    commandExecutor.execute(new DeleteFilterCmd(filterId));
+    getCommandExecutor().execute(new DeleteFilterCmd(filterId));
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public <T> List<T> list(String filterId) {
-    return (List<T>) commandExecutor.execute(new ExecuteFilterListCmd(filterId));
+    return (List<T>) getCommandExecutor().execute(new ExecuteFilterListCmd(filterId));
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T, Q extends Query<?, T>> List<T> list(String filterId, Q extendingQuery) {
-    return (List<T>) commandExecutor.execute(new ExecuteFilterListCmd(filterId, extendingQuery));
+  public <T, Q extends Query<?, T>> List<T> list(String filterId, @Nullable Q extendingQuery) {
+    return (List<T>) getCommandExecutor().execute(new ExecuteFilterListCmd(filterId, extendingQuery));
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public <T> List<T> listPage(String filterId, int firstResult, int maxResults) {
-    return (List<T>) commandExecutor.execute(new ExecuteFilterListPageCmd(filterId, firstResult, maxResults));
+    return (List<T>) getCommandExecutor().execute(new ExecuteFilterListPageCmd(filterId, firstResult, maxResults));
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T, Q extends Query<?, T>> List<T> listPage(String filterId, Q extendingQuery, int firstResult, int maxResults) {
-    return (List<T>) commandExecutor.execute(new ExecuteFilterListPageCmd(filterId, extendingQuery, firstResult, maxResults));
+  public <T, Q extends Query<?, T>> List<T> listPage(String filterId, @Nullable Q extendingQuery, int firstResult, int maxResults) {
+    return (List<T>) getCommandExecutor().execute(new ExecuteFilterListPageCmd(filterId, extendingQuery, firstResult, maxResults));
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public <T> T singleResult(String filterId) {
-    return (T) commandExecutor.execute(new ExecuteFilterSingleResultCmd(filterId));
+    return (T) getCommandExecutor().execute(new ExecuteFilterSingleResultCmd(filterId));
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public <T, Q extends Query<?, T>> T singleResult(String filterId, Q extendingQuery) {
-    return (T) commandExecutor.execute(new ExecuteFilterSingleResultCmd(filterId, extendingQuery));
+  public <T, Q extends Query<?, T>> T singleResult(String filterId, @Nullable Q extendingQuery) {
+    return (T) getCommandExecutor().execute(new ExecuteFilterSingleResultCmd(filterId, extendingQuery));
   }
 
   @Override
   public Long count(String filterId) {
-    return commandExecutor.execute(new ExecuteFilterCountCmd(filterId));
+    return getCommandExecutor().execute(new ExecuteFilterCountCmd(filterId));
   }
 
   @Override
-  public Long count(String filterId, Query<?, ?> extendingQuery) {
-    return commandExecutor.execute(new ExecuteFilterCountCmd(filterId, extendingQuery));
+  public Long count(String filterId, @Nullable Query<?, ?> extendingQuery) {
+    return getCommandExecutor().execute(new ExecuteFilterCountCmd(filterId, extendingQuery));
   }
 
 }

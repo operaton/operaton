@@ -44,7 +44,7 @@ public final class LogUtil {
     NONE, INDENT, PRINT_ID
 
   }
-  private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+  private static final String LINE_SEPARATOR = System.lineSeparator();
   private static Map<Long, String> threadIndents = new HashMap<>();
   private static ThreadLogMode threadLogMode = ThreadLogMode.NONE;
 
@@ -79,6 +79,9 @@ public final class LogUtil {
     }
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public static class LogFormatter extends Formatter {
     private final Format dateFormat = new SimpleDateFormat("HH:mm:ss,SSS");
 
@@ -140,6 +143,9 @@ public final class LogUtil {
 
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.2")
+  @SuppressWarnings("java:S1133")
   public static void resetThreadIndents() {
     threadIndents = new HashMap<>();
   }

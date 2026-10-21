@@ -23,7 +23,6 @@ The document looks like this — everything except `authMode` is optional:
   "authMode": "basic",
   "oauth": { "flow": "session", "login": "/oauth2/authorization/operaton", "logout": "/logout" },
   "pluginsUrl": "/plugins/plugins.json",
-  "hideReleaseWarning": false,
   "user": { "id": "demo" }
 }
 ```

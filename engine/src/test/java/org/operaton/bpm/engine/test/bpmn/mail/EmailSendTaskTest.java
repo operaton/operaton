@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.mail;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,7 +49,7 @@ class EmailSendTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
   }
 
   @Deployment
@@ -96,7 +95,7 @@ class EmailSendTaskTest extends EmailTestCase {
 
     String rawMessage = getRawMessage(messages.get(0));
     assertEmailSend(rawMessage, false, subject, "Hello " + recipientName + ", this is an e-mail",
-            sender, Arrays.asList(recipient), null);
+            sender, List.of(recipient), null);
   }
 
   @Deployment
@@ -108,7 +107,7 @@ class EmailSendTaskTest extends EmailTestCase {
     Message emailMsg = messages.get(0);
     String rawMessage = getRawMessage(emailMsg);
     assertEmailSend(rawMessage, false, "Hello world", "This is the content", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), Arrays.asList("fozzie@operaton.org"));
+            List.of("kermit@operaton.org"), List.of("fozzie@operaton.org"));
 
     // Bcc is not stored in the header (obviously)
     // so the only way to verify the bcc, is that the messae has the bcc field in Mailpit message.
@@ -124,7 +123,7 @@ class EmailSendTaskTest extends EmailTestCase {
     List<Message> messages = getReceivedEmails();
     assertThat(messages).hasSize(1);
     String rawMessage = getRawMessage(messages.get(0));
-    assertEmailSend(rawMessage, true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", Arrays.asList("kermit@operaton.org"), null);
+    assertEmailSend(rawMessage, true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", List.of("kermit@operaton.org"), null);
   }
 
   @Deployment

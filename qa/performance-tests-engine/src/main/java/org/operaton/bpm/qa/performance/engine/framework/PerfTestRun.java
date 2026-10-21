@@ -152,6 +152,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
    * <p>
    * Note: This method will change the state of the run
    * to waiting.
+   * </p>
    *
    * @return true if the run was already signaled, false otherwise
    */
@@ -166,6 +167,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
    * <p>
    * Note: This method will change the state of the run
    * to signaled.
+   * </p>
    *
    * @return true if the run was waiting, false otherwise
    */

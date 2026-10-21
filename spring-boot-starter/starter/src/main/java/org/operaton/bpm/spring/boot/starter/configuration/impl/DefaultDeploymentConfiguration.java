@@ -48,7 +48,7 @@ public class DefaultDeploymentConfiguration extends AbstractOperatonConfiguratio
   public void preInit(SpringProcessEngineConfiguration configuration) {
     if (operatonBpmProperties.isAutoDeploymentEnabled()) {
       final Set<Resource> resources = getDeploymentResources();
-      configuration.setDeploymentResources(resources.toArray(new Resource[resources.size()]));
+      configuration.setDeploymentResources(resources.toArray(Resource[]::new));
       LOG.autoDeployResources(resources);
     }
   }

@@ -8,6 +8,7 @@ import {
   update_variable,
   update_mapping,
   add_query_params_abstract,
+  migration_selectors,
 } from "./migration_helpers.js";
 
 // --- Tests ---
@@ -237,6 +238,38 @@ describe("Migrations", () => {
       const mappings = { taskA: "targetA", taskB: "targetB" };
       update_mapping("", "taskA", mappings);
       expect(mappings).toEqual({ taskA: "targetA", taskB: "targetB" });
+    });
+  });
+
+  describe("migration_selectors", () => {
+    it("sends the ticked instances as ids and no query", () => {
+      expect(migration_selectors(["a", "b"], {})).toEqual({
+        process_instance_ids: ["a", "b"],
+        process_instance_query: null,
+      });
+    });
+
+    it("sends an empty query when nothing is ticked, meaning every match", () => {
+      // Sending null for both is what made the engine reject the migration
+      // with "Process instance ids cannot empty" instead of migrating all.
+      expect(migration_selectors([], {})).toEqual({
+        process_instance_ids: null,
+        process_instance_query: {},
+      });
+    });
+
+    it("keeps a built query alongside ticked instances", () => {
+      expect(migration_selectors(["a"], { businessKey: "K1" })).toEqual({
+        process_instance_ids: ["a"],
+        process_instance_query: { businessKey: "K1" },
+      });
+    });
+
+    it("sends a built query on its own when nothing is ticked", () => {
+      expect(migration_selectors([], { businessKey: "K1" })).toEqual({
+        process_instance_ids: null,
+        process_instance_query: { businessKey: "K1" },
+      });
     });
   });
 

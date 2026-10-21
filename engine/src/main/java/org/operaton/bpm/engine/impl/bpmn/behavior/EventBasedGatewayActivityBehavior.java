@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.ConditionalEventDefinition;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
@@ -25,7 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 /**
  * @author Daniel Meyer
  */
-public class EventBasedGatewayActivityBehavior extends FlowNodeActivityBehavior {
+public @NullMarked class EventBasedGatewayActivityBehavior extends FlowNodeActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {

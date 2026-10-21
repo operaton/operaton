@@ -29,11 +29,13 @@ import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.FOREIG
 import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.OPTIMISTIC_LOCKING;
 
 /**
- * <p>One of the provider methods are called when a {@link ProcessEngineException} occurs.
+ * One of the provider methods are called when a {@link ProcessEngineException} occurs.
  * The default implementation provides the built-in exception codes.
  *
- * <p>You can disable the built-in or/and additionally register a custom provider via
+ * <p>
+ * You can disable the built-in or/and additionally register a custom provider via
  * the {@link ProcessEngineConfigurationImpl} using the following properties:
+ * </p>
  * <ul>
  *   <li>{@code disableExceptionCode} - disables the whole feature
  *   <li>{@code disableBuiltinExceptionCodeProvider} - only disables the built-in provider
@@ -43,10 +45,12 @@ import static org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode.OPTIMI
 public interface ExceptionCodeProvider {
 
   /**
-   * <p>Called when a {@link ProcessEngineException} occurs.
+   * Called when a {@link ProcessEngineException} occurs.
    *
-   * <p>Provides the exception code that can be determined based on the passed {@link ProcessEngineException}.
+   * <p>
+   * Provides the exception code that can be determined based on the passed {@link ProcessEngineException}.
    * Only called when no other provider method is called.
+   * </p>
    *
    * @param processEngineException that occurred.
    * @return an integer value representing the error code. When returning {@code null},
@@ -62,11 +66,13 @@ public interface ExceptionCodeProvider {
   }
 
   /**
-   * <p>Called when a {@link SQLException} occurs.
+   * Called when a {@link SQLException} occurs.
    *
-   * <p>Provides the exception code that can be determined based on the passed {@link SQLException}.
+   * <p>
+   * Provides the exception code that can be determined based on the passed {@link SQLException}.
    * The error code is assigned to the top level {@link ProcessEngineException}.
    * Only called when no other provider method is called.
+   * </p>
    *
    * @param sqlException that occurred.
    * @return an integer value representing the error code. When returning {@code null},

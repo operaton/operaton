@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.scripting;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.impl.delegate.ScriptInvocation;
  * @author Daniel Meyer
  *
  */
-public class ScriptValueProvider implements ParameterValueProvider {
+public @NullMarked class ScriptValueProvider implements ParameterValueProvider {
 
   protected ExecutableScript script;
 
@@ -38,7 +40,7 @@ public class ScriptValueProvider implements ParameterValueProvider {
   }
 
   @Override
-  public Object getValue(VariableScope variableScope) {
+  public @Nullable Object getValue(VariableScope variableScope) {
     ScriptInvocation invocation = new ScriptInvocation(script, variableScope);
     try {
       Context

@@ -60,6 +60,7 @@ public final class CompensationBehavior {
    *
    * <p>
    * This is the case if
+   * </p>
    * <ul>
    *   <li>the execution has an activity
    *   <li>the execution is a scope
@@ -67,7 +68,6 @@ public final class CompensationBehavior {
    *   <li>the execution has children
    *   <li>the execution does not throw compensation
    * </ul>
-   * </p>
    */
   public static boolean executesDefaultCompensationHandler(PvmExecutionImpl scopeExecution) {
     ActivityImpl currentActivity = scopeExecution.getActivity();

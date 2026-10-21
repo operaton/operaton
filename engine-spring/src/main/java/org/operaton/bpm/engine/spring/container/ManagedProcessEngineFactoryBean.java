@@ -21,6 +21,8 @@ import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.spring.ProcessEngineFactoryBean;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * <p>Factory bean registering a spring-managed process engine with the {@link BpmPlatform}.</p>
  *
@@ -35,6 +37,7 @@ public class ManagedProcessEngineFactoryBean extends ProcessEngineFactoryBean {
   @Override
   public ProcessEngine getObject() throws Exception {
     ProcessEngine processEngine = super.getObject();
+    requireNonNull(processEngine);
 
     RuntimeContainerDelegate runtimeContainerDelegate = getRuntimeContainerDelegate();
     runtimeContainerDelegate.registerProcessEngine(processEngine);

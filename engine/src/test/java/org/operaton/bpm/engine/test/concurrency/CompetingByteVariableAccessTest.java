@@ -40,8 +40,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  *  t=3: commit transaction
  * </pre>
  *
+ * <p>
  * This test ensures that thread1's command fails with an OptimisticLockingException,
  * not with a NullPointerException or something in that direction.
+ * </p>
  *
  * @author Thorben Lindhauer
  */

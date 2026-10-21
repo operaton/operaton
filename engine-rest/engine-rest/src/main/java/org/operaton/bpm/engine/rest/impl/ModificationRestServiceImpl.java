@@ -51,7 +51,7 @@ public class ModificationRestServiceImpl extends AbstractRestProcessEngineAware 
 
   @Override
   public BatchDto executeModificationAsync(ModificationDto modificationExecutionDto) {
-    Batch batch = null;
+    Batch batch;
     try {
       batch = createModificationBuilder(modificationExecutionDto).executeAsync();
     } catch (BadUserRequestException e) {

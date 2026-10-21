@@ -19,6 +19,7 @@ package org.operaton.bpm.container.impl.jmx;
 import java.lang.management.ManagementFactory;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
@@ -173,7 +174,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   }
 
   /**
-   * get a specific service by name or null if no such Service exists.
+   * get a specific service by name or {@code null} if no such Service exists.
    *
    */
   @Override
@@ -184,7 +185,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   }
 
   /**
-   * get a specific service by name or null if no such Service exists.
+   * get a specific service by name or {@code null} if no such Service exists.
    *
    */
   @SuppressWarnings("unchecked")
@@ -193,7 +194,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   }
 
   /**
-   * get the service value for a specific service by name or null if no such
+   * get the service value for a specific service by name or {@code null} if no such
    * Service exists.
    *
    */
@@ -208,7 +209,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   }
 
   /**
-   * get the service value for a specific service by name or null if no such
+   * get the service value for a specific service by name or {@code null} if no such
    * Service exists.
    *
    */
@@ -229,12 +230,9 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     // query the MBeanServer for all services of the given type
     Set<String> serviceNames = getServiceNames(type);
 
-    List<PlatformService<S>> res = new ArrayList<>();
-    for (String serviceName : serviceNames) {
-      res.add((PlatformService<S>) servicesByName.get(getObjectName(serviceName)));
-    }
-
-    return res;
+    return serviceNames.stream()
+        .map(serviceName -> (PlatformService<S>) servicesByName.get(getObjectName(serviceName)))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -245,11 +243,9 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     String typeName = composeLocalName(type, "*");
     ObjectName typeObjectName = getObjectName(typeName);
     Set<ObjectName> resultNames = getmBeanServer().queryNames(typeObjectName, null);
-    Set<String> result= new HashSet<>();
-    for (ObjectName objectName : resultNames) {
-      result.add(objectName.toString());
-    }
-    return result;
+    return resultNames.stream()
+        .map(ObjectName::toString)
+        .collect(Collectors.toSet());
   }
 
   /**

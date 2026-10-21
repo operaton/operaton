@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 public interface ProcessEngineXml {
 
   /**
-   * @return the name of the process engine. Must not be null.
+   * @return the name of the process engine. Must not be {@code null}.
    */
   String getName();
 

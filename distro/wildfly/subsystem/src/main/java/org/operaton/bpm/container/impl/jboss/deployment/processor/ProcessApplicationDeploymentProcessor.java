@@ -234,7 +234,7 @@ public class ProcessApplicationDeploymentProcessor implements DeploymentUnitProc
   }
 
   protected ServiceName getProcessEngineServiceName(ProcessArchiveXml processArchive) {
-    ServiceName serviceName = null;
+    ServiceName serviceName;
     if(processArchive.getProcessEngineName() == null || processArchive.getProcessEngineName().isEmpty()) {
       serviceName = ServiceNames.forDefaultProcessEngine();
     } else {

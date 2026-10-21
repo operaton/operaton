@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.delegate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.DelegateTask;
@@ -43,7 +42,7 @@ public class AssertingTaskListener implements TaskListener {
   }
 
   public static void addAsserts(DelegateTaskAsserter... asserters) {
-    asserts.addAll(Arrays.asList(asserters));
+    asserts.addAll(List.of(asserters));
   }
 
 }

@@ -17,10 +17,12 @@
 package org.operaton.bpm.engine.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -37,18 +39,18 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class ModificationBuilderImpl implements ModificationBuilder {
+public @NullMarked class ModificationBuilderImpl implements ModificationBuilder {
 
   protected CommandExecutor commandExecutor;
-  protected ProcessInstanceQuery processInstanceQuery;
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery;
-  protected List<String> processInstanceIds;
+  protected @Nullable ProcessInstanceQuery processInstanceQuery;
+  protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
+  protected @Nullable List<String> processInstanceIds;
   protected List<AbstractProcessInstanceModificationCommand> instructions;
   protected String processDefinitionId;
 
   protected boolean skipCustomListeners;
   protected boolean skipIoMappings;
-  protected String annotation;
+  protected @Nullable String annotation;
 
   public ModificationBuilderImpl(CommandExecutor commandExecutor, String processDefinitionId) {
     this.commandExecutor = commandExecutor;
@@ -94,18 +96,18 @@ public class ModificationBuilderImpl implements ModificationBuilder {
   }
 
   @Override
-  public ModificationBuilder processInstanceIds(List<String> processInstanceIds) {
+  public ModificationBuilder processInstanceIds(@Nullable List<String> processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
     return this;
   }
 
   @Override
-  public ModificationBuilder processInstanceIds(String... processInstanceIds) {
+  public ModificationBuilder processInstanceIds(@Nullable String @Nullable... processInstanceIds) {
     if (processInstanceIds == null) {
       this.processInstanceIds = Collections.emptyList();
     }
     else {
-      this.processInstanceIds = Arrays.asList(processInstanceIds);
+      this.processInstanceIds = Stream.of(processInstanceIds).toList();
     }
     return this;
   }
@@ -157,15 +159,15 @@ public class ModificationBuilderImpl implements ModificationBuilder {
     return commandExecutor;
   }
 
-  public ProcessInstanceQuery getProcessInstanceQuery() {
+  public @Nullable ProcessInstanceQuery getProcessInstanceQuery() {
     return processInstanceQuery;
   }
 
-  public HistoricProcessInstanceQuery getHistoricProcessInstanceQuery() {
+  public @Nullable HistoricProcessInstanceQuery getHistoricProcessInstanceQuery() {
     return historicProcessInstanceQuery;
   }
 
-  public List<String> getProcessInstanceIds() {
+  public @Nullable List<String> getProcessInstanceIds() {
     return processInstanceIds;
   }
 
@@ -193,7 +195,7 @@ public class ModificationBuilderImpl implements ModificationBuilder {
     return skipIoMappings;
   }
 
-  public String getAnnotation() {
+  public @Nullable String getAnnotation() {
     return annotation;
   }
 

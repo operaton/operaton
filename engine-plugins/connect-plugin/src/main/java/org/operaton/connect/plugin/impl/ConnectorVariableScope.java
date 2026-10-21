@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.SimpleVariableInstance;
@@ -40,11 +41,11 @@ import org.operaton.connect.spi.ConnectorResponse;
 public class ConnectorVariableScope extends AbstractVariableScope {
   private static final VariableInstanceFactory<CoreVariableInstance> VARIABLE_INSTANCE_FACTORY = (VariableInstanceFactory) new SimpleVariableInstanceFactory();
 
-  protected AbstractVariableScope parent;
+  protected @Nullable AbstractVariableScope parent;
 
   protected transient VariableStore<SimpleVariableInstance> variableStore;
 
-  public ConnectorVariableScope(AbstractVariableScope parent) {
+  public ConnectorVariableScope(@Nullable AbstractVariableScope parent) {
     this.parent = parent;
     this.variableStore = new VariableStore<>();
   }
@@ -69,7 +70,7 @@ public class ConnectorVariableScope extends AbstractVariableScope {
   }
 
   @Override
-  public AbstractVariableScope getParentVariableScope() {
+  public @Nullable AbstractVariableScope getParentVariableScope() {
     return parent;
   }
 

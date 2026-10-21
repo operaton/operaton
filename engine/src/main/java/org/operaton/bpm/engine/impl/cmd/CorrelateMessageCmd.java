@@ -68,7 +68,7 @@ public @NullMarked class CorrelateMessageCmd extends AbstractCorrelateMessageCmd
     final CorrelationHandler correlationHandler = processEngineConfiguration.getCorrelationHandler();
     final CorrelationSet correlationSet = new CorrelationSet(builder);
 
-    CorrelationHandlerResult correlationResult = null;
+    CorrelationHandlerResult correlationResult;
     if (startMessageOnly) {
       List<CorrelationHandlerResult> correlationResults = commandContext.runWithoutAuthorization((Callable<List<CorrelationHandlerResult>>) () -> correlationHandler.correlateStartMessages(commandContext, messageName, correlationSet));
       requireNonNull(correlationResults);

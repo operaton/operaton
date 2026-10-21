@@ -19,14 +19,15 @@ package org.operaton.bpm.run.qa.webapps;
 import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import kong.unirest.ObjectMapper;
-import kong.unirest.Unirest;
+import kong.unirest.core.ObjectMapper;
+import kong.unirest.core.Unirest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
-import org.operaton.bpm.run.qa.util.TestProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.operaton.bpm.run.qa.util.TestProperties;
 
 import static org.awaitility.Awaitility.await;
 

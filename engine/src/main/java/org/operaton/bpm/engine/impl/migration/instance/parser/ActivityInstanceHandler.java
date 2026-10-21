@@ -40,10 +40,10 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
 
   @Override
   public void handle(MigratingInstanceParseContext parseContext, ActivityInstance element) {
-    MigratingActivityInstance migratingInstance = null;
+    MigratingActivityInstance migratingInstance;
 
     MigrationInstruction applyingInstruction = parseContext.getInstructionFor(element.getActivityId());
-    ScopeImpl sourceScope = null;
+    ScopeImpl sourceScope;
     ScopeImpl targetScope = null;
     ExecutionEntity representativeExecution = parseContext.getMapping().getExecution(element);
 
@@ -150,15 +150,9 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
   }
 
   public static List<VariableInstanceEntity> getConcurrentLocalVariables(ExecutionEntity execution) {
-    List<VariableInstanceEntity> variables = new ArrayList<>();
-
-    for (VariableInstanceEntity variable : execution.getVariablesInternal()) {
-      if (variable.isConcurrentLocal()) {
-        variables.add(variable);
-      }
-    }
-
-    return variables;
+    return execution.getVariablesInternal().stream()
+        .filter(VariableInstanceEntity::isConcurrentLocal)
+        .toList();
   }
 
 

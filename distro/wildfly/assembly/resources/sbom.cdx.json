@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:6ad7c4d0-845c-4afe-94b4-354743844eac",
+  "serialNumber": "urn:uuid:7b302b0b-b742-4161-9ab1-9b8941fd0f59",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-16T10:37:57Z",
+    "timestamp": "2026-10-21T08:55:42Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-d3ade8ec0"
+          "version": "0.76.0-SNAPSHOT-738839c0e"
         }
       ]
     },
@@ -7518,45 +7518,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.core",
       "name": "jackson-databind",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "General data-binding functionality for Jackson: works on core streaming API",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "71abb795e3c9beff91198f789d2572e9"
+          "content": "eacb44f3b4e1b133d743d0166af82e97"
         },
         {
           "alg": "SHA-1",
-          "content": "a2ebbc72e3092323f0f3defa786ff3bb0c47218c"
+          "content": "c3ebe92d2efdba6ebf85d0eaa05a3a1724dab67e"
         },
         {
           "alg": "SHA-256",
-          "content": "1290c2795e93e8a6861a6c4d9ff0d844d32f5ea178362cb2721edf5561e828b1"
+          "content": "ad77f2285717e2f34c319d988b7c85783a47d0b33f33a501d1fcbf196e61bbaa"
         },
         {
           "alg": "SHA-512",
-          "content": "3485a31a4815ef2577b91667768eebb10bea7ece6b1b7cc0fa3c06f2746c003f4f32c19c52cc30ad13813eff9941ae212caffa9353c717d00947ab80ecc76bd3"
+          "content": "c59dd9b44473a279ac1d558257df10c121adc910d125e045ae72aa5df441b9512f3a57e659cfe0b74f027191b8b6adca8139ad58325f49e48d2f9a37cb4f40b7"
         },
         {
           "alg": "SHA-384",
-          "content": "dec105362feb79f6674df0f7b635ec1cc0dc798a6b1626d8c8b9be0cadd2cfe52a674b572a03405f6bc1eefa52622570"
+          "content": "98936b955bb08444b1825d64ad120e348c186aadb5da2ab40902bcd9833bcfdc85e05bb1216576c73a4eda251b742771"
         },
         {
           "alg": "SHA3-384",
-          "content": "a06bbc372c5ee02cd721366e6349291290075927b27e5fd6b7849cabba3e564ab2e40b954e5db53815b68dfc3c95c853"
+          "content": "39d8c68b48ee703859589c397abd7f133b83e9327aef52cedf53aec859c1963ccbf66bcbbee8da6b61a21c0d5517b349"
         },
         {
           "alg": "SHA3-256",
-          "content": "5ddf3f0b32ae55b476de1f267be264b18d7ffd372ac1b0e35787986255e68c84"
+          "content": "748a9c128f2e179cebab92f91444a57906e5e42e4ad2b1d296fc12d4bed548c6"
         },
         {
           "alg": "SHA3-512",
-          "content": "5b58ad040187c209248ac0ebd60299056f7bba7984bf8bb8195391fab99778a4dc1df71057537244bf3e4f2c20ee92c35d8979c0cf8054e0ada0ba7aa1ed09b8"
+          "content": "a146da179c78eaebde367936799b7b59cad214daca47c66256aaf4d3a36c43cf65752fc8283c6d3c5d7d65b221eb42f07d6634b26f4d2cb090bdcf8cb66de7a0"
         }
       ],
       "licenses": [
@@ -7566,7 +7566,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson",
@@ -7588,45 +7588,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.core",
       "name": "jackson-core",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "3b91b1c736a66b115e5a09378f418016"
+          "content": "7a0e2423b9aaed68f0ad866c98074edc"
         },
         {
           "alg": "SHA-1",
-          "content": "5abfb904683e642f4a5458f2a78ab9308c7c5a46"
+          "content": "6343fa08a059a4f5afa7411c8c04652f2880d69b"
         },
         {
           "alg": "SHA-256",
-          "content": "8c5623b98f32d5f7e1287ff61ed50e08ab7b11381e991fff89327faabba42261"
+          "content": "604ef7765013daf5cde192e40bc4c8412c4ca93f4aaf7bf8e9a62fad1e1026bb"
         },
         {
           "alg": "SHA-512",
-          "content": "a4f38908ebf7cb3da776955c398c7b55b0c056ae7265a511b4a2a37ef5a4c6fed433d611ee4f3a1071aa966cc5d16b1fcb95a0e7d672002ece9d89367a4f8f85"
+          "content": "afdde0d5cf8ea50c34968e02c4cfbf2c79cef2498bec3eaa4c85e2ac69bcd4b30884ebbbf22d52de35fae19095a2d624d3602e5c6b5c514a4ea9a6a8e4e97f10"
         },
         {
           "alg": "SHA-384",
-          "content": "3aeabfb54452889a3f00a573046f8b0f66be7bf358cc4508797dd8e806620ca60cc27074fe171a50512c0db609bc6e44"
+          "content": "72f45be7cb7e58420ff4fa56e66c282bd5363bec8fc2185cad0f212b82bcc563bcb6f1cb218a31248be51b2f449aac99"
         },
         {
           "alg": "SHA3-384",
-          "content": "1ab7ec68a3ef0fa912b69466362cf4d85367548836d4339187d348c6af885accb34405c0f6674c5049ddc25ddc292582"
+          "content": "5ffea2feb3825ce754ea9663227f766382784cc4d0c0b4d418d58f723b394bde4050c85f53fd76bd724a4bf0c9545f1d"
         },
         {
           "alg": "SHA3-256",
-          "content": "e36426bcb4ad4fc45330029f2fe3f7ec89867d556dbf67824ea9b939fa15f62f"
+          "content": "7ef384753658e3ee321000d7efe46071e07b33634a7e04be956bb9556fdc779e"
         },
         {
           "alg": "SHA3-512",
-          "content": "f3b933bcc044f42d550481f8cbf69e1f3dc5061386de5e893c20ee00b82fd14f8c46b57ff5785819ad2613f2c1d12cce685d21477670c5cf055724780cf855b8"
+          "content": "984eb369143729072d6cc699b532eaacd5d630013240a255513a204139850f7f4f6617a65e102e45848bf22a2763652b5aa1d285f09708cc2c0fa191e53953f4"
         }
       ],
       "licenses": [
@@ -7636,7 +7636,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-core",
@@ -7658,45 +7658,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.datatype",
       "name": "jackson-datatype-jsr310",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Add-on module to support JSR-310 (Java 8 Date \u0026 Time API) data types.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "3e0a6b99aee1b568b72a8ad2b1240745"
+          "content": "98354477d0a1b2e4bbd8f517fe4bef0f"
         },
         {
           "alg": "SHA-1",
-          "content": "ed949b76fb4a5530986cf5ab4a74aa0f03ca0cd6"
+          "content": "da8925687565c47bfb541830d353e5eec673f1e7"
         },
         {
           "alg": "SHA-256",
-          "content": "5989b937f0aa5b6407e7a061077c9bfcac0590dc0a32e54b2fac6a3e2d49e812"
+          "content": "63a0854504aa90ed8f34f891aaa5259f9bd622bac115323559a38abdc1e81632"
         },
         {
           "alg": "SHA-512",
-          "content": "3f0d918fb479ee6b0c1fc77e0ac3bc77426696158920b21d38324477597a5033909be3049bb42f73ac6e0c77c22f5057e4836a906446ce384528f912a2c39704"
+          "content": "39843722aaa707f82430f16542ce2d15a960cae43a2594866aab8de624048162bcba25b9fe59af31d0e4d0fc9ff44bb455466e99d93940e5477643b5555b8b3d"
         },
         {
           "alg": "SHA-384",
-          "content": "65bd3cb7ce36078f7b5be685651bcc4e0075cb111a17ae29a1e4c8943a5195b0683f236692178bbd4fca35d7a58bca8c"
+          "content": "49a1d0c5c64b06c71eddf479243ba3e4ba322c34c83aa5522a92aef50db8f60181896acb8750199cf35cb839c4ab53e1"
         },
         {
           "alg": "SHA3-384",
-          "content": "b45ecaa01aa39a8192987f4bab7b7ec7ecbe7a33ecf2d1227663adad852f8c97643bddb1620ca48a88b82edd549344a3"
+          "content": "4379d719c3c28014c31fdebe3593f7045d1aec73f45b76f89b80e75345a2d17b809f52e8a6b2cb0377f47c5dce2d4662"
         },
         {
           "alg": "SHA3-256",
-          "content": "99efec687946d83ccb23e34add5cbb0d14fa9370618731fa9f8f356391cfb0ca"
+          "content": "7e62ab5e24e2312c5e0c8ceb211c0d2e85bec19434e38a145588bca318af6c0d"
         },
         {
           "alg": "SHA3-512",
-          "content": "26ace591a92141b2087d564b97855ac5c9cfe8ceea3f40402f2e704c1d9fe800f64306df3d80e068f53a4aac211dfa3d3ccc9bb54df4cef0048b41a244b9ee34"
+          "content": "7a136c5e2da5ad08226cac278eff920ca5565b3b4498d83b53e66f12c3d72a4475deaa16d1a04392d929f4af1fc6de7bb517c503b8d9c3c89b57abbc3fe7786e"
         }
       ],
       "licenses": [
@@ -7706,7 +7706,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jsr310",
@@ -11384,45 +11384,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jakarta.rs",
       "name": "jackson-jakarta-rs-json-provider",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Functionality to handle JSON input/output for Jakarta-RS implementations (like Jersey and RESTeasy) using standard Jackson data binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f8956183aa3da6d24a827e343e09a769"
+          "content": "5684d80a767fe4d6bfabcaa6006e1c22"
         },
         {
           "alg": "SHA-1",
-          "content": "6dfacafd5750ffdcd51851c1aead22986bf2a652"
+          "content": "cdfbd859ca320f480b870ca9a6b989248a78f700"
         },
         {
           "alg": "SHA-256",
-          "content": "32473ee172e0c181ba63688ee4a94349de77de05bd4279d0846a9515a56bb0fe"
+          "content": "b06c49a5cb2da264fb7272d8abde26bf8c98f304ffb19d081dde9e39e2b1442d"
         },
         {
           "alg": "SHA-512",
-          "content": "290ee29fdfea0d0c555a7bec9d739150bd86674b4cb34ad3c7e8053fccdbd36b3a52644fe3d5618dda3457a914ba2491ffda66b11d3237f6bffb5a0d00a124dd"
+          "content": "4a4a2681bf1a56242a316b522937b841129c0a2c504215cb346059ac5c3f32f8b7f72906f5ccbc0e731c61a651d96d6d0749cb69ab039198b445cbdbdd7e61a8"
         },
         {
           "alg": "SHA-384",
-          "content": "4fa8cbfee172b2adea0bd63fe295adf598ef1d5685f318da3bc310b5bdbfbc21a82b584fc8fff008b276f4c966fe09c8"
+          "content": "09608d2337700b6fb569b1034ef65897954c27167b66f9e828414c236fe783f5becc2eb488158dc381362b7723c43a49"
         },
         {
           "alg": "SHA3-384",
-          "content": "b469ebe107c127e39b59cb044f4d8ff3a8347a2ca9abc729b56294a31679e4dbae7010da0922b0e43be1b1bdedb6b301"
+          "content": "1bb3c2ddd6bbdeaf1e272a512c4e8cf8723fc72185d03421f1b3393cbbd58d28548490fd55f7ead76637dc42a11b4c4e"
         },
         {
           "alg": "SHA3-256",
-          "content": "051de6c2d01a44ccd3e37fa9cad541a382176e354c2e929c435b10094ad4ce7b"
+          "content": "ac37ee0483b9702d4d620457db2a14e2f2a188c4509467a1db0f80ec71490bf4"
         },
         {
           "alg": "SHA3-512",
-          "content": "365ab127da1762c084237ea31fb7a3621cafaff74e506c13de5fdbdb825151d4998b9b6afe52e3ebd2eae027b44c0c5a3ad3b397492bc1ea061bd47b5ffacd52"
+          "content": "aae368bf5419747648e8822b378c2a5eebf519eef6bb8e9cb81d78382b1936813e15913356b02abfc870321ae671b28ee5061c5a4626305a65a2395e764e4cd2"
         }
       ],
       "licenses": [
@@ -11432,7 +11432,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jakarta-rs-providers/jackson-jakarta-rs-json-provider",
@@ -11454,45 +11454,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jakarta.rs",
       "name": "jackson-jakarta-rs-base",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Pile of code that is shared by all Jackson-based Jakarta-RS providers.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "1c3fd8a8216845cc9e7fc6e2ca696680"
+          "content": "8d859b573df18537ff6d5fe6725cd322"
         },
         {
           "alg": "SHA-1",
-          "content": "079ca19406bf51a01308492f304a561e3473f1d4"
+          "content": "8d47428d3a5f4dc4fd7338a41d2eb0a619e4eb0f"
         },
         {
           "alg": "SHA-256",
-          "content": "202b61a95e735d01ae03e411b8f6ae1245bbf19c87d4746c0204579f5c2e456b"
+          "content": "8e40722dfa332e947c493cf88fb30a136fc796a87ed731c18690e75d991dd289"
         },
         {
           "alg": "SHA-512",
-          "content": "9b5dd772f033275f134e6811b3d84f632e79229617a5f29961adb8f15b03c99022463cfccc356d37424bea4f94c36e5b6481f22fb141c901e6ce40bbd35631fc"
+          "content": "994df7332e7e8bfae356bd3e60c533bf976a8d9ed5c673a890791d67ace5f1a16eaec863acf7b2b9e7fa1c10c74e26cadf6208a1d46efb524d3a8a7396ccef7c"
         },
         {
           "alg": "SHA-384",
-          "content": "e8dfa695bcfd765c6a0bf8e40f1bf460c89f7b4e5fec6ea56fd115ed28b9e167d2d848fd2768c10eb95359d083c60eea"
+          "content": "9df478b284a3001549b9b2b8a1656994e383026b94994cf47ec90fd3b227323487af8fc1233781811ce971ef2dc68773"
         },
         {
           "alg": "SHA3-384",
-          "content": "537c412d80de819707fedb8169e602987ec0341c934461a3ed898370d7d39d4777c86becf8ec6787917b2ad74a72d785"
+          "content": "11aeb687077ac68de7129407c47bebc03fb1f905bf2a13180984247e32ea7fdea1cdb9030912f5ae559a24a8f760c7d4"
         },
         {
           "alg": "SHA3-256",
-          "content": "fd1fa4eb0619152407b8ccb868e103996e525a214f4a8fa60033a4549562ee35"
+          "content": "2529d6bd12e2e955753c61024e0254625fce6216c0b528749fc0c13970f18c4a"
         },
         {
           "alg": "SHA3-512",
-          "content": "6d3918e6973147b332ff351fc0bdff7e8c34f9524fe93143c6a7d0c840ee700b98908059347782cccd26ff9cc6f4996a9ab1868cd15f5958940474983ebce58b"
+          "content": "712b2338e76d91ace7538ec1754ac2cce4308eaa8c1c5b090ab4fad24fdb553394bec84167603ed8d2eb529d592cc168e47523c9d7d4368d4c44e3ffd1f6b91c"
         }
       ],
       "licenses": [
@@ -11502,7 +11502,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jakarta-rs-providers/jackson-jakarta-rs-base",
@@ -11524,45 +11524,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.module",
       "name": "jackson-module-jakarta-xmlbind-annotations",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Support for using Jakarta XML Bind (aka JAXB 3.0) annotations as an alternative to \u0022native\u0022 Jackson annotations, for configuring data-binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a594b092d11e227c11397cc9ba4ed7f1"
+          "content": "ceccc73676e5e9bb1b8a52f38afb1269"
         },
         {
           "alg": "SHA-1",
-          "content": "b1951f0af246835fd931d4bca316353518fe8428"
+          "content": "d673b1471f44dccc0f5f2ac876e9b85964039f0e"
         },
         {
           "alg": "SHA-256",
-          "content": "76054ca6e252e7142fec9c0e9a146bd8c43cde13dddf2d1cdaecd9db981c2ddc"
+          "content": "28a7067567dc8b63b346ddba58df9c34c49257900c84f52e01b8e5411764cf2b"
         },
         {
           "alg": "SHA-512",
-          "content": "72a5d81c022e089cb33e9259ac53ac3e559ffb1b8a0b70b7272cf2283da12a93c1ed6d030f95a7e136e950218be5aae48e1c79c892e008fca84aa611dd4219d6"
+          "content": "7693b055b10b8dec54229e6226ac967dcb8b0e4756ade413e14fcb9f0dab42f79fe4e3ec7bbb965be1906a277f59fd3bd8784255d1069075b36a32bb1c416462"
         },
         {
           "alg": "SHA-384",
-          "content": "43229fad5d568a5ceca9bcbc25460d4ff2fec7d10cc6b53285bcf7507c4ffcd47d8a627e91404ed1a56c7fe826adc80e"
+          "content": "a9553044cb7bd40bda5e908b990a293015c09ed750bd89e3c0ac86d42bbe5ce7c4fffa629e9d9c0a7153a5ed2b1ced66"
         },
         {
           "alg": "SHA3-384",
-          "content": "13ab41e939b1f4ca0177aa1f4feecd6aa338513441ad491d7291db09ba26694a9fed7ff8c181201211a680a27c9c5856"
+          "content": "b94d09973f4d670d0a704688b133f173fc380ab15e32b4bf006a2f8cc1595b3582f513135ef9e70187bac5716a3025ea"
         },
         {
           "alg": "SHA3-256",
-          "content": "20a5f5671f3ee941b43f9818b03d39b5d951880e0fe589dc10a22e3e899aaf2a"
+          "content": "cd5bea35b845b759fb7e72e0ca16fcaa835f4f4e0cc706a18f2f9b0636f6171b"
         },
         {
           "alg": "SHA3-512",
-          "content": "f281206512539eb117df2cf1579fb0edbc2630758f3ecd06c017d051f989c84c5f02ee62a3be19f0c26037af787b4184ad6e17595e8262a325b83ef88f6cd9ba"
+          "content": "8bcc167450e25a24ad0690621404a915d56dd55fe23266c2cbe9e493043e6759fe4f13a7d48ff76ed4c192e37c16b7e66ce99b8a677153c2ecfc6eacea14fbc1"
         }
       ],
       "licenses": [
@@ -11572,7 +11572,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-modules-base",
@@ -16716,45 +16716,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jaxrs",
       "name": "jackson-jaxrs-json-provider",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Functionality to handle JSON input/output for JAX-RS implementations (like Jersey and RESTeasy) using standard Jackson data binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "83c3a1fb3a89d3a944ae3597ab8d9eba"
+          "content": "98e782d503a984382114b0c57fd1ed39"
         },
         {
           "alg": "SHA-1",
-          "content": "249224f26ed078d602c39ef90a5ad018404ee4d5"
+          "content": "5c27593cdb3fae0011528bee860b323defd56d22"
         },
         {
           "alg": "SHA-256",
-          "content": "3e9e288003edefee18a3042c3fc030a6e8660a2db5e4e11f8dba00583375d8ea"
+          "content": "cd9e9b2c25f0f309d05eadef1f6d50eb0dada930396128274470dc0845a6314c"
         },
         {
           "alg": "SHA-512",
-          "content": "201183e82da67bc06aa97fa7aa6a6cbf373015f0475a9f3d3bae31f71ee049ef708adfe6e53e28ace43f0fc381265d022fbef2abbd413c2dd1078004870ac6b2"
+          "content": "8337b40ac511dad9851cd5344b24cee7e5305dccd94bbce1df461f85948d341ac18392cf47271a37916c19b74b79b7cc6cdf899974196d246719dc1e478fd9af"
         },
         {
           "alg": "SHA-384",
-          "content": "d48be9b365b1a44f301f357f62dd9534783c484573667f65307927a29fd958ca720bdcb2bca5ceea698d9eee712ea982"
+          "content": "53404095778d121e732314afabda64f6c29b6499bb716ad970772752c571706c4a7f9c7624bb8226a7eea86bdafc13b0"
         },
         {
           "alg": "SHA3-384",
-          "content": "591a9a9ca5917bb13aff381176c5bd14bc78e07dcdb23e4c81395ff547604d71b68d4dec96846051f6ea5ac8057c869c"
+          "content": "6b92558abbb13bf555697ffdc378f373c61f8bfd729d12cc8cf69f7a65d2c7106a315cb961c9f089511ddabe869c1391"
         },
         {
           "alg": "SHA3-256",
-          "content": "4a8b75b4396894e64cf02c160755f1793b8d07a5397472e0e1103692b7eb20d2"
+          "content": "513779216e117afe20e8827d4142e063fd19ede76882de50d20d97cb9ac7a9b9"
         },
         {
           "alg": "SHA3-512",
-          "content": "95e63d1b74cbfa35da2029fbfba2dee765df921fd54ebedc1ab51a78922ab7862efbb1c04dc332f729babbaf8e6a2fac54a429200e9f2bcb5a32ae471d4a2271"
+          "content": "45e3f0e513b09a08fc0984c3a4d3422721a9937a43a810bf0cc85297aba1df13c85b9a5d56379007e8f300b4c3824ca34ed8b11dcc15eb514b075bf8912a7c6b"
         }
       ],
       "licenses": [
@@ -16764,7 +16764,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jaxrs-providers/jackson-jaxrs-json-provider",
@@ -16786,45 +16786,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.jaxrs",
       "name": "jackson-jaxrs-base",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Pile of code that is shared by all Jackson-based JAX-RS providers.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "aecef3c370dccfeb73f28f342d8fc090"
+          "content": "28b696638a2fb4c9948f8c040406adb1"
         },
         {
           "alg": "SHA-1",
-          "content": "88d1d385ac4c28a85fb7b833986f199006a7145c"
+          "content": "8caae3d257d8c46ff073d8e02de109cd6f6854d2"
         },
         {
           "alg": "SHA-256",
-          "content": "4f84c6734f9cba48f51e17186818109a3f6a91fe8e49234e5e49ed2df8778adf"
+          "content": "424325e2cf21246bff27f8c30659a6c2da90b7f8b7d138cf7d04535df051c6c1"
         },
         {
           "alg": "SHA-512",
-          "content": "22c4fa64490dbaf9410cf361c50acfc5c097de1da85d194e2d78f45a309ab6c1121b1cb30f300cac0037cb1455a972c1ae08a9262c10cafd136a2a02b738d020"
+          "content": "efb0f3c507e3ef80e74c65a8655b0424e0329e988f7278d17774b88ec7e44d6a737bbe8a6ee4ded0f3f826ac498a80d7fef30d82ba4c085b312cae6649913dac"
         },
         {
           "alg": "SHA-384",
-          "content": "a84a45129f43c393c7fc9aa72aad05091e8c671782f284e6e4c629e75276654d7999bc57324c09c74811a5ae46ab7c05"
+          "content": "46438640006cd90b4b384cab60f287baf7073e5efbae001322d09056338b42dbfb2ce4a5bec56e1bac9da55d5c9ff0e2"
         },
         {
           "alg": "SHA3-384",
-          "content": "678e40f933bdd433916602721b68ab95bd439b750c84739189acd23aa6e9998fb963be582661a7dcd4f078efc365a0c9"
+          "content": "92a5c6fc57c9b138d14e8b88bc444ec7d88747eeb620fc203bfe6cb40dcc2d759d648cd6a51f7a937c085aae6d99e70c"
         },
         {
           "alg": "SHA3-256",
-          "content": "3801ac89e7f58ba35e496ec4c880e7712570a7115bb45d798609ebd032a03ba5"
+          "content": "e7782a8683a65dfc782f19c8e0773be5e8b6623f4726119654ab3e8dedaad136"
         },
         {
           "alg": "SHA3-512",
-          "content": "64384abf5111e8e311fa075725d56359510cf55be71866fd83561d66a72ba3b00dac3df1d2e1cfe1063ceb9986510efc709f1c750c2108bcbb4e15f2b87edd05"
+          "content": "314d2652cf3fedb209f1ade0e2ea77e013765508d13f895ca27c9c59622dabf74432a68f522733ea0ad95ecbf4e1a733ae35a43934befecb3cb5f7aff81d620b"
         }
       ],
       "licenses": [
@@ -16834,7 +16834,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-jaxrs-providers/jackson-jaxrs-base",
@@ -16856,45 +16856,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.module",
       "name": "jackson-module-jaxb-annotations",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Support for using JAXB annotations as an alternative to \u0022native\u0022 Jackson annotations, for configuring data-binding.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6fa528557a12c9f5f9db1620a27b84e6"
+          "content": "d160ec11a49a5dfbe3c6547492cae80d"
         },
         {
           "alg": "SHA-1",
-          "content": "20073cff996b0e27993953cc806f9f0b403e0566"
+          "content": "7d30b0dcd4dd031c79ad170b3c0c13fabb27f55b"
         },
         {
           "alg": "SHA-256",
-          "content": "a74597f82779d79e89ad9b3fdce3558607301537e624e4db13f64925186ac0c5"
+          "content": "32a3b1ac114a3547c3ceb6e5a48091372de097e5fb6f87d660b18a2665405c36"
         },
         {
           "alg": "SHA-512",
-          "content": "a6b8da0fa8783d3a18345bf220f562b29697eb56a59972ca3185bcce9cae7e55e13f9ff853ddde00d25c8709e868a2f4f69d649a292bc9eb600b999f98a8b1dd"
+          "content": "ba109f888162a8cf7553b047e43c0c15282180c4635ad8efa1f86ab67b8dbdce083bae3552d01f4cd2e7720aefb6c452568264b67139cee40493605a8a0e55f7"
         },
         {
           "alg": "SHA-384",
-          "content": "9706db2682c60f36be7c6801c21c0fab705f1909c0a1587aa603d9e2e7e132d4d2be11cc302e95348eb489d8a2b6c8e2"
+          "content": "911270932697c8eb4d144f5e93eb8e8a954146a56d179f73d3613adc3089804023371cca2fec68db25464a5de7fa5e0a"
         },
         {
           "alg": "SHA3-384",
-          "content": "2c5054f275c7460e7aa2d81afe5f007e47ec117efd95aaedca85ffc2be50f767a11b7e30cbc8549c433416527b6a9ac2"
+          "content": "428d5cfd14c95ca3707eb0afe1781a6efbceda19745aebf640c64c0d85cab6e16f5e0c366533ff1d9a619eb962ee2aac"
         },
         {
           "alg": "SHA3-256",
-          "content": "cd9ae13d977f61114aabc617ef538a58a89d353d92ce4af64cbde234af9c4d97"
+          "content": "149a37351b1800de05bbb118993997ad790b8d459e0cbe7ed2784abdfb0cf779"
         },
         {
           "alg": "SHA3-512",
-          "content": "6643f78aeb1742343887771aa35505f067573bab7e350f1efce326431d40efca3a4182d6d82af3028e0099d0412439e8876262698b57e9070f66947ea93364b3"
+          "content": "959838aea1947304d6320df1d28291b54dd3bbf6d903b8851492d45fd9bdc8ee411ca62b663e3ff1794f7c77def27d6fefdb535d096f77b61b40221d3111af0a"
         }
       ],
       "licenses": [
@@ -16904,7 +16904,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-modules-base",
@@ -18028,45 +18028,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.datatype",
       "name": "jackson-datatype-joda",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Add-on module for Jackson (https://github.com/FasterXML/jackson) to support Joda (https://www.joda.org/joda-time/) data types.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8df37b92d6a79819dd5eb3f182d48c72"
+          "content": "a05544944adfd84e21ed09d9edb1bf8a"
         },
         {
           "alg": "SHA-1",
-          "content": "aefad757e6e31512bbfebd6f9dff6553b2effaff"
+          "content": "2aa36a0765ae684c740ac672b81e4f32bc125185"
         },
         {
           "alg": "SHA-256",
-          "content": "dcced7d5913b7cbe4e3176facd9152593017fbbc9dfa0f8b19e627e0d64b559a"
+          "content": "b0f3bb74c470d6278d38a0c1bafdae8dbc0023e445feb155d134eec2eac3807e"
         },
         {
           "alg": "SHA-512",
-          "content": "c77186aabb42b5195e54f4254c8b400a743a8f6704a74264c21add2420efd49d80f53869b444cca047f0d439dfe9b34d4622333658d407aa42d94790246ae6be"
+          "content": "859e664062b3d71afbb422d6895f2c99cf6b2c696be87a925c42d0f97ced245dd99e685a60541783f2a119e09259c780bc6fe61138e4e1a6602d9f33ab1b7aff"
         },
         {
           "alg": "SHA-384",
-          "content": "7ab4dc8b717d3536638e380d5baf8a7b9e6736abd7cd584b4253f78d1cee450d8fea90140daea9021145d82e1219a140"
+          "content": "20951898910a31effacc43a83382e6b42e30e1009563dd31a29bcbc15bff70e241bdfa956eeba0ab28e94af66bd9ef65"
         },
         {
           "alg": "SHA3-384",
-          "content": "bff33509471b936e81569f7401a615f14a78a681ab22b4ff18133042ad72e2ce7913e57d17cee3003abb28954b700799"
+          "content": "fc551350435c53ee8d9dfe1afe28b59c323517b2ca8687dbf6d908efc12df6c16b8adc33232c8ee3d115191e0474353f"
         },
         {
           "alg": "SHA3-256",
-          "content": "69c1a03d8c33e276cb8b301d99b000b9922078b3f0a9d3f7df7c2220df29a952"
+          "content": "47ec5d921f0ee747be9d8d99d4e322e5b838f0acb10807d61487af427e54fa60"
         },
         {
           "alg": "SHA3-512",
-          "content": "c15be95c429161ff2814da7d09656c9b11439ff39955e7a6ddb48ce94dda74b72452807b606a1a8eda681b24b191e8c158b0c676f3c32b6959ca972a4f4d2f30"
+          "content": "f2353469cbe7ece048043e440b785c46a95fd24ed71bfdf75a987a8631f7e6b0e926c72c56b0dd69a374c5e7cc59f6149b1a49199dabd34673d4653f50c1c31a"
         }
       ],
       "licenses": [
@@ -18076,7 +18076,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-datatype-joda",
@@ -18700,45 +18700,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.7?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.8?type=jar",
       "publisher": "FasterXML",
       "group": "com.fasterxml.jackson.dataformat",
       "name": "jackson-dataformat-yaml",
-      "version": "2.21.7",
+      "version": "2.21.8",
       "description": "Support for reading and writing YAML-encoded data via Jackson abstractions.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "cb73178d10762eb3bdc154226729c6bb"
+          "content": "ac16172584346977ff8b67d4bb15004e"
         },
         {
           "alg": "SHA-1",
-          "content": "cd755d8f2c860e887301b47140f60ab58b3eb538"
+          "content": "a2abba167e79574cef8798e4a29f8d1390c85f0d"
         },
         {
           "alg": "SHA-256",
-          "content": "df2b3e6a194181dc067b7211d750926b4ae9e4f3c892a0005b8219a9b59be681"
+          "content": "b924025c47ea13da43ff2860b19ce5c18ecd14b8ec5cb7d03fc315f699935abe"
         },
         {
           "alg": "SHA-512",
-          "content": "f0ba476abddd49e3de1331e8b17146a4f30a8369ab7178cb2ee20fb914ab409064cbcb494f5fa0fe0aa1e52bc54da3d9462838061e65c18620454361c0c95303"
+          "content": "f7f7321002bd4bddab1ff51232cb99e081dc943daf2984fc0d38ef14d884a94dd8cc22b0d9613c6cf72b592f58658277d63c24639d7e6ec3558a9acfe77fb842"
         },
         {
           "alg": "SHA-384",
-          "content": "354a37457c8145622f3d5e2ab4da84dce9b35a954315d23d2c1a87f99e1c24823eff012c96c50f935332ec13c6925b69"
+          "content": "a392641248363ee0c6a546117e58ba98b2b2cd173ca188afdca0d4b54fdaac41493878f0a38d8795d8c42773d892860f"
         },
         {
           "alg": "SHA3-384",
-          "content": "00e5e4e2769a2e3bd3faa2f84de569abb42b977d9e184e4ca39cbe465771e0ee4fbf46872e12560a089c5795b4d37e7e"
+          "content": "aa9a7b74296b82ae8ed89e94972d3f7a257d0db0f81bd159da8e7f107481bccb21cd67a16a27337088d0b3569cf7432b"
         },
         {
           "alg": "SHA3-256",
-          "content": "2c30c266542a80d139dc8314aaecc45308d5a9c1b423da8475e3d4757bc15bce"
+          "content": "970320e74a2a655ab9e82b2cd36e5c693daf6485af5f3f1188bd938f33fc2092"
         },
         {
           "alg": "SHA3-512",
-          "content": "ed81c6e39826553fb31158e488cdd17f28e1fbec646473b324655a7962a0096b0aad26085aa16c5828c4b825a554831652a4f57ff9db2f949ac78bbb248cc957"
+          "content": "c77b1be41377ac4cf269b0c9f42558b6b49e5dafce16f8f5f23f5c60be4fba9a90cc8afa2f38440546db00bf6c05269ec75446129884959bfb12d9783ebc2aad"
         }
       ],
       "licenses": [
@@ -18748,7 +18748,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.7?type=jar",
+      "purl": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/FasterXML/jackson-dataformats-text",
@@ -31320,7 +31320,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "4488d641-3e06-4b46-8362-34fb91bf82f3",
+      "bom-ref": "f84c80a3-3410-4913-91e7-cb9db18920f2",
       "name": "package-lock.json",
       "properties": [
         {
@@ -34170,19 +34170,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.16",
+      "bom-ref": "pkg:npm/dompurify@3.4.17",
       "name": "dompurify",
-      "version": "3.4.16",
+      "version": "3.4.17",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.16",
+      "purl": "pkg:npm/dompurify@3.4.17",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.16"
+          "value": "dompurify@3.4.17"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36559,7 +36559,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "de9f8807-b86f-4854-92b0-133af729eb92",
+      "bom-ref": "7ff378d2-f120-4b22-9e0c-9041611e9f39",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37528,20 +37528,20 @@
         "pkg:maven/org.operaton.spin/operaton-spin-core@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.1.6-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar"
       ]
     },
     {
@@ -37658,9 +37658,9 @@
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.1.6-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.8?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.1.6-SNAPSHOT?type=jar",
@@ -37673,35 +37673,35 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.8?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-base@2.21.8?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jakarta-xmlbind-annotations@2.21.8?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.8?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar"
       ]
     },
     {
@@ -37725,9 +37725,9 @@
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.1.6-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.8?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar"
       ]
@@ -37782,9 +37782,9 @@
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.1.6-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.8?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar"
       ]
@@ -37794,7 +37794,7 @@
       "dependsOn": [
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-depchain@3.3.7?type=pom",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@4.0.3?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.8?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
@@ -38237,25 +38237,25 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.8?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-base@2.21.8?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-jaxb-annotations@2.21.8?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/javax.xml.bind/jaxb-api@2.2.12?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar"
       ]
@@ -38441,7 +38441,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.spin/operaton-spin-core@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.1.6-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.8?type=jar",
         "pkg:maven/org.operaton.connect/operaton-connect-core@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.springframework/spring-context@7.0.9?type=jar",
         "pkg:maven/org.springframework/spring-jdbc@7.0.9?type=jar",
@@ -38451,11 +38451,11 @@
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.8?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/joda-time/joda-time@2.14.4?type=jar"
       ]
     },
@@ -38463,7 +38463,7 @@
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.1.6-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@2.1.6-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
@@ -38594,8 +38594,8 @@
       "ref": "pkg:maven/com.networknt/json-schema-validator@2.0.8?type=jar",
       "dependsOn": [
         "pkg:maven/com.ethlo.time/itu@1.14.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.8?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
@@ -38604,11 +38604,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.7?type=jar",
+      "ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.8?type=jar",
       "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/org.yaml/snakeyaml@2.5?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar"
       ]
     },
     {
@@ -38648,8 +38648,8 @@
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.1.6-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.7?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.8?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.6-SNAPSHOT?type=jar"
       ]
     },
@@ -38703,7 +38703,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.1.6-SNAPSHOT?type=jar",
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6.5?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.7?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.8?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.5?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.9?type=jar",
@@ -39763,7 +39763,7 @@
       "ref": "pkg:maven/org.infinispan.protostream/protostream@5.0.13.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.7?type=jar"
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.8?type=jar"
       ]
     },
     {
@@ -40266,7 +40266,13 @@
       "dependsOn": []
     },
     {
-      "ref": "4488d641-3e06-4b46-8362-34fb91bf82f3",
+      "ref": "7ff378d2-f120-4b22-9e0c-9041611e9f39",
+      "dependsOn": [
+        "f84c80a3-3410-4913-91e7-cb9db18920f2"
+      ]
+    },
+    {
+      "ref": "f84c80a3-3410-4913-91e7-cb9db18920f2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -40300,7 +40306,7 @@
         "pkg:npm/dmn-js-shared@17.12.3",
         "pkg:npm/dmn-js@17.12.3",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.16",
+        "pkg:npm/dompurify@3.4.17",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.11.2",
         "pkg:npm/jquery-ui@1.14.2",
@@ -40313,12 +40319,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
-      ]
-    },
-    {
-      "ref": "de9f8807-b86f-4854-92b0-133af729eb92",
-      "dependsOn": [
-        "4488d641-3e06-4b46-8362-34fb91bf82f3"
       ]
     },
     {
@@ -40469,7 +40469,7 @@
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/diagram-js@15.28.0",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.16",
+        "pkg:npm/dompurify@3.4.17",
         "pkg:npm/feelers@3.1.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
@@ -41172,7 +41172,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.16",
+      "ref": "pkg:npm/dompurify@3.4.17",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]

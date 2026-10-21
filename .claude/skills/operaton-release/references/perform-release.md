@@ -37,6 +37,9 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] Next development version `-SNAPSHOT` committed back to `BRANCH` (`[releng] Bump version ...`).
 - [ ] **Docker** build dispatched to `operaton/operaton-docker` (the workflow notifies it)
 - [ ] Watch the Docker build
+- [ ] Docker image pushed to Docker Hub (check `https://hub.docker.com/r/operaton/operaton/tags`).
+- [ ] PR at `operaton/operaton-helm` is open for the new Operaton release version
+- [ ] PR at `operaton/operaton-helm` is merged and the chart version is live on `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Confirm `latest` / version tags appear on Docker Hub.
 - [ ] Snapshot pre-release tags cleaned up.
 

@@ -23,6 +23,24 @@
     <version.jetty>12.1.4</version.jetty>
   </properties>
 
+  <!-- Build-only inputs for the alignment check below. jersey-common gets its
+    version from Spring Boot; the Jersey BOM represents our declared version.
+    Test dependencies are not exported when this BOM is imported. -->
+  <dependencies>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey</groupId>
+      <artifactId>jersey-bom</artifactId>
+      <version>${version.jersey3}</version>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <dependencyManagement>
     <dependencies>
       <!-- BOMs -->
@@ -83,6 +101,7 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+      <!-- Keep Spring Boot ahead of the Jersey BOM: Boot defines the Jersey version. -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -575,4 +594,32 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-jersey-spring-boot-alignment</id>
+            <inherited>false</inherited>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireSameVersions>
+                  <dependencies>
+                    <dependency>org.glassfish.jersey.core:jersey-common</dependency>
+                    <dependency>org.glassfish.jersey:jersey-bom</dependency>
+                  </dependencies>
+                </requireSameVersions>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

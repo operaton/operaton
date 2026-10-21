@@ -115,7 +115,7 @@ describe('The SDK core', function() {
       ProcessDefinition = camClient.resource('process-definition');
 
       var check = function(request) {
-        expect(request.headers).to.eql({
+        expect(request.header).to.eql({
           'Accept': 'application/hal+json, application/json; q=0.5'
         });
       };
@@ -142,7 +142,7 @@ describe('The SDK core', function() {
       ProcessDefinition = camClient.resource('process-definition');
 
       var check = function(request) {
-        expect(request.headers).to.eql(header);
+        expect(request.header).to.eql(header);
       };
 
       requestListener.register(check);
@@ -164,7 +164,7 @@ describe('The SDK core', function() {
       });
 
       var check = function(request) {
-        expect(request.headers).to.eql(header);
+        expect(request.header).to.eql(header);
       };
       requestListener.register(check);
 

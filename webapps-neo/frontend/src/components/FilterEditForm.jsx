@@ -18,6 +18,11 @@ export const FilterEditForm = ({
   sort_options,
   on_submit,
   on_cancel,
+  // When set, the editor offers to share the filter. `can_share` is whether the
+  // signed-in user may actually create the authorization; false shows the
+  // section disabled with a note. Pages that have no sharing (e.g. localStorage
+  // filters) leave this undefined and the section is not rendered.
+  sharing,
 }) => {
   const [t] = useTranslation();
 
@@ -63,6 +68,24 @@ export const FilterEditForm = ({
         "columns",
         (form.peek().columns ?? []).map((c, i) =>
           i === index ? { ...c, [field]: value } : c,
+        ),
+      );
+
+  const add_grant = () =>
+      update("grants", [
+        ...(form.peek().grants ?? []),
+        { type: "user", id: "" },
+      ]),
+    remove_grant = (index) =>
+      update(
+        "grants",
+        (form.peek().grants ?? []).filter((_, i) => i !== index),
+      ),
+    update_grant = (index, field, value) =>
+      update(
+        "grants",
+        (form.peek().grants ?? []).map((g, i) =>
+          i === index ? { ...g, [field]: value } : g,
         ),
       );
 
@@ -252,6 +275,82 @@ export const FilterEditForm = ({
         </select>
       </fieldset>
 
+      {sharing && (
+        <fieldset disabled={!sharing.can_share}>
+          <legend>{t("list_filter.share_section")}</legend>
+          <p class="hint">
+            {sharing.can_share
+              ? t("list_filter.share_hint")
+              : t("list_filter.share_denied")}
+          </p>
+          <label class="checkbox">
+            <input
+              type="checkbox"
+              checked={form.value.readable_by_all === true}
+              onChange={(e) =>
+                update("readable_by_all", e.currentTarget.checked)
+              }
+            />
+            {t("list_filter.share_all")}
+          </label>
+
+          {(form.value.grants ?? []).length > 0 && (
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">{t("common.type")}</th>
+                  <th scope="col">{t("common.name")}</th>
+                  <th scope="col">{t("common.action")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {form.value.grants.map((grant, i) => (
+                  <tr key={i}>
+                    <td>
+                      <select
+                        aria-label={t("common.type")}
+                        value={grant.type}
+                        onChange={(e) =>
+                          update_grant(i, "type", e.currentTarget.value)
+                        }
+                      >
+                        <option value="user">
+                          {t("list_filter.share_user")}
+                        </option>
+                        <option value="group">
+                          {t("list_filter.share_group")}
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        aria-label={t("common.name")}
+                        value={grant.id}
+                        onInput={(e) =>
+                          update_grant(i, "id", e.currentTarget.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="danger"
+                        onClick={() => remove_grant(i)}
+                      >
+                        {t("common.delete")}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <button type="button" onClick={add_grant}>
+            {t("list_filter.share_add")}
+          </button>
+        </fieldset>
+      )}
+
       <div class="button-group">
         <button type="submit" disabled={repeated_keys.size > 0}>
           {t("common.save")}
@@ -376,11 +475,17 @@ export const empty_filter_form = () => ({
   criteria: [],
   columns: [],
   show_undefined: false,
+  readable_by_all: false,
+  grants: [],
 });
 
 export const filter_form_from_saved = (filter) => ({
   id: filter.id ?? null,
   name: filter.name ?? "",
+  // Grants live in the authorization service, not on the filter, and are
+  // applied when the form is saved; an existing filter opens with none listed.
+  readable_by_all: false,
+  grants: [],
   columns: (filter.properties?.variables ?? []).map((v) => ({
     name: v.name ?? "",
     label: v.label ?? "",

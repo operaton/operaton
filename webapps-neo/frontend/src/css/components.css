@@ -194,12 +194,15 @@ section.task-tabs {
   margin: 0;
 }
 
-/* The manage-filters page that opens when ?filters=manage is present. */
+/* The manage-filters view that opens when ?filters=manage is present: a
+   master-detail page — saved filters on the left, the editor on the right. */
 #manage-filters {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-1);
-  padding: var(--spacing-1);
+  gap: var(--spacing-2);
+  padding: var(--spacing-2);
+  min-height: 0;
+  flex: 1;
 }
 
 #manage-filters header {
@@ -209,23 +212,80 @@ section.task-tabs {
   gap: var(--spacing-2);
 }
 
-#manage-filters .manage-filters-actions {
+.filter-manager {
+  display: grid;
+  grid-template-columns: minmax(12em, 20em) 1fr;
+  gap: var(--spacing-2);
+  align-items: start;
+  min-height: 0;
+}
+
+.filter-list {
   display: flex;
+  flex-direction: column;
   gap: var(--spacing-1);
 }
 
-#manage-filters table {
-  width: 100%;
-}
-
-#manage-filters td.actions {
-  display: flex;
-  gap: var(--spacing-1);
-  flex-wrap: wrap;
-}
-
-#manage-filters td.actions button {
+.filter-list menu {
+  list-style: none;
   margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.filter-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1);
+  border-bottom: var(--border);
+}
+
+.filter-list li:last-child {
+  border-bottom: none;
+}
+
+.filter-list li[aria-current="true"] {
+  background: var(--background-2);
+}
+
+.filter-list .filter-name {
+  flex: 1;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: var(--spacing-1);
+  margin: 0;
+  cursor: pointer;
+  color: var(--color-link);
+  font: inherit;
+}
+
+.filter-list .filter-name:hover {
+  text-decoration: underline;
+}
+
+.filter-list .row-actions {
+  display: flex;
+  gap: var(--spacing-1);
+}
+
+.filter-list .row-actions button {
+  margin: 0;
+  font-size: var(--small-font-size);
+}
+
+/* The editor fills its column; a background sets it apart from the list. */
+.filter-detail {
+  min-width: 0;
+  padding: var(--spacing-2);
+  background: var(--background-2);
+  border: var(--border);
+  border-radius: var(--border-radius);
 }
 
 /* Stacked field list for action dialogs (variable edit/add etc.). Without this

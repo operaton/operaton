@@ -1,6 +1,6 @@
 import { useSignal } from "@preact/signals";
 import { useTranslation } from "react-i18next";
-import { Dialog, ConfirmDialog } from "./Dialog.jsx";
+import { ConfirmDialog } from "./Dialog.jsx";
 import {
   FilterEditForm,
   empty_filter_form,
@@ -9,22 +9,23 @@ import {
 } from "./FilterEditForm.jsx";
 
 /**
- * The "manage filters" page rendered in place of the list table when the
- * URL carries ?filters=manage. Surfaces every saved filter for the
- * resource with row-level actions (edit, duplicate, share-link, delete)
- * and a primary "New filter" button. The create/edit dialog lives inside
- * this component and reuses <FilterEditForm>.
+ * The "manage filters" view rendered in place of the list table when the URL
+ * carries ?filters=manage. A master-detail page: the saved filters on the
+ * left, the editor for the selected one on the right. There is no dialog —
+ * selecting a filter, or "New filter", shows its form inline.
  *
  * @param title                 page heading (already translated)
  * @param saved_filters_signal  {Signal<{ status, data: SavedFilter[] }>}
  * @param filter_keys           {Array<{ key, nameKey, type? }>}
  * @param sort_options          {Array<{ key, nameKey }>}
- * @param on_save               {(filter) => void}
- * @param on_update             {(id, filter) => void}
+ * @param on_save               {(filter, sharing?) => void}
+ * @param on_update             {(id, filter, sharing?) => void}
  * @param on_delete             {(id) => void}
  * @param on_close              {() => void}        — Back to list
  * @param build_share_link      {(filter) => string} — per-row share URL
- * @param advanced_editor_href  {string} optional — Tasks links to /tasks/filter
+ * @param sharing               {{ can_share: boolean }} optional — enables the
+ *                              sharing section in the editor and passes the
+ *                              grants back through on_save/on_update
  */
 export const ManageFilters = ({
   title,
@@ -36,12 +37,14 @@ export const ManageFilters = ({
   on_delete,
   on_close,
   build_share_link,
-  advanced_editor_href,
+  sharing,
 }) => {
   const [t] = useTranslation();
-  const edit_open = useSignal(false);
+  // `edit_form` holds the form being edited; null means nothing is open on the
+  // right. `selected_id` drives the left list's current-item marker.
+  const edit_form = useSignal(null);
+  const selected_id = useSignal(null);
   const delete_open = useSignal(false);
-  const edit_form = useSignal(empty_filter_form());
   const pending_delete = useSignal(null);
   const copied = useSignal(null);
 
@@ -51,11 +54,11 @@ export const ManageFilters = ({
 
   const open_create = () => {
     edit_form.value = empty_filter_form();
-    edit_open.value = true;
+    selected_id.value = null;
   };
   const open_edit = (filter) => {
     edit_form.value = filter_form_from_saved(filter);
-    edit_open.value = true;
+    selected_id.value = filter.id;
   };
   const open_duplicate = (filter) => {
     edit_form.value = {
@@ -63,14 +66,22 @@ export const ManageFilters = ({
       id: null,
       name: `${filter.name} ${t("list_filter.duplicate_suffix")}`.trim(),
     };
-    edit_open.value = true;
+    selected_id.value = null;
+  };
+  const close_editor = () => {
+    edit_form.value = null;
+    selected_id.value = null;
   };
   const ask_delete = (filter) => {
     pending_delete.value = filter;
     delete_open.value = true;
   };
   const confirm_delete = () => {
-    if (pending_delete.value) on_delete?.(pending_delete.value.id);
+    const victim = pending_delete.value;
+    if (victim) {
+      on_delete?.(victim.id);
+      if (selected_id.peek() === victim.id) close_editor();
+    }
     pending_delete.value = null;
   };
   const share = (filter) => {
@@ -86,10 +97,14 @@ export const ManageFilters = ({
 
   const submit_form = (event) => {
     event.preventDefault();
-    const built = filter_from_form(edit_form.value, filter_keys);
-    if (edit_form.value.id) on_update?.(edit_form.value.id, built);
-    else on_save?.(built);
-    edit_open.value = false;
+    const f = edit_form.value;
+    const built = filter_from_form(f, filter_keys);
+    const grants = sharing
+      ? { readable_by_all: f.readable_by_all === true, grants: f.grants ?? [] }
+      : undefined;
+    if (f.id) on_update?.(f.id, built, grants);
+    else on_save?.(built, grants);
+    close_editor();
   };
 
   return (
@@ -101,86 +116,75 @@ export const ManageFilters = ({
         </button>
       </header>
 
-      <div class="manage-filters-actions">
-        <button type="button" class="primary" onClick={open_create}>
-          {t("list_filter.new_filter")}
-        </button>
-        {advanced_editor_href && (
-          <a href={advanced_editor_href} class="button secondary">
-            {t("list_filter.advanced")}
-          </a>
-        )}
-      </div>
-
-      {saved_filters.length === 0 ? (
-        <p class="info-box">{t("list_filter.empty")}</p>
-      ) : (
-        <table>
-          <caption class="screen-hidden">{title}</caption>
-          <thead>
-            <tr>
-              <th scope="col">{t("common.name")}</th>
-              <th scope="col">{t("list_filter.criteria")}</th>
-              <th scope="col">{t("list_filter.sort_override")}</th>
-              <th scope="col">{t("common.action")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {saved_filters.map((filter) => (
-              <tr key={filter.id}>
-                <th scope="row">{filter.name}</th>
-                <td>
-                  <CriteriaSummary query={filter.query} />
-                </td>
-                <td>
-                  {filter.sort?.sortBy
-                    ? `${filter.sort.sortBy} ${filter.sort.sortOrder ?? "asc"}`
-                    : "—"}
-                </td>
-                <td class="actions">
-                  <button type="button" onClick={() => open_edit(filter)}>
-                    {t("common.edit")}
+      <div class="filter-manager">
+        <div class="filter-list">
+          <button type="button" class="primary" onClick={open_create}>
+            {t("list_filter.new_filter")}
+          </button>
+          {saved_filters.length === 0 ? (
+            <p class="info-box">{t("list_filter.empty")}</p>
+          ) : (
+            <menu>
+              {saved_filters.map((filter) => (
+                <li
+                  key={filter.id}
+                  aria-current={
+                    selected_id.value === filter.id ? "true" : undefined
+                  }
+                >
+                  <button
+                    type="button"
+                    class="filter-name"
+                    onClick={() => open_edit(filter)}
+                  >
+                    {filter.name}
                   </button>
-                  <button type="button" onClick={() => open_duplicate(filter)}>
-                    {t("list_filter.duplicate")}
-                  </button>
-                  <button type="button" onClick={() => share(filter)}>
-                    <span aria-live="polite">
+                  <span class="row-actions">
+                    <button
+                      type="button"
+                      onClick={() => open_duplicate(filter)}
+                      title={t("list_filter.duplicate")}
+                    >
+                      {t("list_filter.duplicate")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => share(filter)}
+                      aria-live="polite"
+                    >
                       {copied.value === filter.id
                         ? t("list_filter.share_link_copied")
                         : t("list_filter.share_link")}
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    class="danger"
-                    onClick={() => ask_delete(filter)}
-                  >
-                    {t("common.delete")}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                    </button>
+                    <button
+                      type="button"
+                      class="danger"
+                      onClick={() => ask_delete(filter)}
+                    >
+                      {t("common.delete")}
+                    </button>
+                  </span>
+                </li>
+              ))}
+            </menu>
+          )}
+        </div>
 
-      <Dialog
-        open={edit_open}
-        title={
-          edit_form.value.id
-            ? t("list_filter.edit_filter_title")
-            : t("list_filter.new_filter_title")
-        }
-      >
-        <FilterEditForm
-          form={edit_form}
-          filter_keys={filter_keys}
-          sort_options={sort_options}
-          on_submit={submit_form}
-          on_cancel={() => (edit_open.value = false)}
-        />
-      </Dialog>
+        <div class="filter-detail">
+          {edit_form.value ? (
+            <FilterEditForm
+              form={edit_form}
+              filter_keys={filter_keys}
+              sort_options={sort_options}
+              sharing={sharing}
+              on_submit={submit_form}
+              on_cancel={close_editor}
+            />
+          ) : (
+            <p class="info-box">{t("list_filter.select_hint")}</p>
+          )}
+        </div>
+      </div>
 
       <ConfirmDialog
         open={delete_open}
@@ -192,10 +196,4 @@ export const ManageFilters = ({
       />
     </div>
   );
-};
-
-const CriteriaSummary = ({ query }) => {
-  const entries = Object.entries(query ?? {});
-  if (entries.length === 0) return <em>—</em>;
-  return entries.map(([k, v]) => `${k}=${v}`).join(", ");
 };

@@ -240,31 +240,7 @@
       "business-key": "Geschäftsschlüssel (optional)"
     },
     "filter": {
-      "title": "Filter-Editor",
-      "general": "Allgemein",
-      "description": "Beschreibung",
-      "color": "Farbe",
-      "auto-refresh": "Automatische Aktualisierung",
-      "criteria": "Kriterien",
-      "add-criteria": "Kriterium hinzufügen",
-      "permissions": "Wer diesen Filter verwenden darf",
-      "accessible-by-all": "Für alle Benutzer zugänglich",
-      "add-permission": "Person oder Gruppe hinzufügen",
-      "group-user": "Gruppe / Benutzer",
-      "identifier": "Bezeichner",
-      "variables": "Variablen",
-      "variables-hint": "Die hier gesetzten Variablen werden in der Aufgabenliste angezeigt.",
-      "show-undefined": "Undefinierte Variablen anzeigen",
-      "add-variable": "Variable hinzufügen",
-      "label": "Bezeichnung",
-      "manage_title": "Aufgaben-Filter verwalten",
-      "permissions-hint": "Ein gespeicherter Filter ist privat, bis jemand ihn lesen darf.",
-      "readable-by-all": "Alle dürfen ihn verwenden",
-      "user": "Benutzer",
-      "group": "Gruppe",
-      "permissions-denied": "Zum Freigeben eines Filters wird die Berechtigung benötigt, Berechtigungen anzulegen. Dieser Filter bleibt vorerst nur für dich sichtbar.",
-      "save-failed": "Der Filter konnte nicht gespeichert werden. {{reason}}",
-      "share-failed": "Der Filter wurde gespeichert, aber die Freigabe für {{identities}} ist fehlgeschlagen. Er ist vorerst nur für dich sichtbar."
+      "manage_title": "Aufgaben-Filter verwalten"
     },
     "sort": {
       "label": "Sortieren nach",
@@ -1025,7 +1001,15 @@
     "add_column": "Spalte hinzufügen",
     "column_label": "Überschrift",
     "show_undefined": "Aufgaben ohne die Variable ebenfalls zeigen",
-    "columns_hint": "Hier benannte Variablen erscheinen als zusätzliche Spalten der Aufgabenliste."
+    "columns_hint": "Hier benannte Variablen erscheinen als zusätzliche Spalten der Aufgabenliste.",
+    "share_section": "Freigabe",
+    "share_hint": "Wer diesen Filter sehen darf. Ohne Freigabe bleibt er nur für dich sichtbar.",
+    "share_denied": "Zum Freigeben wird die Berechtigung benötigt, Berechtigungen anzulegen. Der Filter bleibt vorerst nur für dich sichtbar.",
+    "share_all": "Alle dürfen ihn verwenden",
+    "share_user": "Benutzer",
+    "share_group": "Gruppe",
+    "share_add": "Person oder Gruppe hinzufügen",
+    "select_hint": "Wählen Sie links einen Filter aus oder legen Sie einen neuen an."
   },
   "login": {
     "title": "Anmelden",

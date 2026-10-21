@@ -304,14 +304,6 @@ const TasksPage = () => {
     );
   }
 
-  if (params?.task_id === "filter") {
-    return (
-      <main id="content" class="fade-in">
-        <Filter />
-      </main>
-    );
-  }
-
   if (query?.filters === "manage") {
     return (
       <main id="content" class="fade-in">
@@ -363,43 +355,44 @@ const grant_access = async (state, filter_id, { readable_by_all, grants }) => {
 const TasksManage = () => {
   const state = useContext(AppState),
     { route } = useLocation(),
-    [t] = useTranslation();
+    [t] = useTranslation(),
+    // Sharing a filter means creating an authorization, which is a permission
+    // of its own; the editor offers the section only to users who hold it.
+    may_share = useSignal(true);
 
   useEffect(() => {
     if (state.api.filter.list.value === null) {
       void engine_rest.filter.get_filters(state);
     }
+    void engine_rest.authorization
+      .may(state, "CREATE", "authorization", 4)
+      .then((allowed) => (may_share.value = allowed));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refresh = () => engine_rest.filter.get_filters(state);
-  const on_save = (filter) => {
-    const body = {
-      resourceType: "Task",
-      name: filter.name,
-      owner: resolve_user(state),
-      query: filter.query,
-      // Keep the columns and sort override the form produced; wiping these to
-      // {} is what dropped them on save.
-      properties: filter.properties ?? {},
-    };
-    const result = engine_rest.filter.create_filter(state, body);
-    if (result && typeof result.then === "function") result.then(refresh);
-    else refresh();
+  const body_of = (filter) => ({
+    resourceType: "Task",
+    name: filter.name,
+    owner: resolve_user(state),
+    query: filter.query,
+    // Keep the columns and sort override the form produced; wiping these to {}
+    // is what dropped them on save.
+    properties: filter.properties ?? {},
+  });
+  const on_save = async (filter, sharing) => {
+    const result = await engine_rest.filter.create_filter(
+      state,
+      body_of(filter),
+    );
+    const id = result?.data?.id;
+    if (id && sharing) await grant_access(state, id, sharing);
+    refresh();
   };
-  const on_update = (id, filter) => {
-    const body = {
-      resourceType: "Task",
-      name: filter.name,
-      owner: resolve_user(state),
-      query: filter.query,
-      // Keep the columns and sort override the form produced; wiping these to
-      // {} is what dropped them on save.
-      properties: filter.properties ?? {},
-    };
-    const result = engine_rest.filter.update_filter(state, id, body);
-    if (result && typeof result.then === "function") result.then(refresh);
-    else refresh();
+  const on_update = async (id, filter, sharing) => {
+    await engine_rest.filter.update_filter(state, id, body_of(filter));
+    if (sharing) await grant_access(state, id, sharing);
+    refresh();
   };
   const on_delete = (id) => {
     const result = engine_rest.filter.delete_filter(state, id);
@@ -418,7 +411,7 @@ const TasksManage = () => {
       on_delete={on_delete}
       on_close={() => route(without_manage(), true)}
       build_share_link={(f) => filter_share_link(window.location.href, f)}
-      advanced_editor_href="/tasks/filter"
+      sharing={{ can_share: may_share.value }}
     />
   );
 };
@@ -1304,405 +1297,6 @@ const Diagram = () => {
         )}
       />
     </>
-  );
-};
-
-const CRITERIA_KEYS = [
-  "assignee",
-  "assigneeLike",
-  "candidateGroup",
-  "candidateUser",
-  "involvedUser",
-  "unassigned",
-  "processDefinitionKey",
-  "processDefinitionName",
-  "processDefinitionNameLike",
-  "processInstanceBusinessKey",
-  "processInstanceBusinessKeyLike",
-  "taskDefinitionKey",
-  "taskDefinitionKeyLike",
-  "name",
-  "nameLike",
-  "description",
-  "descriptionLike",
-  "priority",
-  "dueBefore",
-  "dueAfter",
-  "followUpBefore",
-  "followUpAfter",
-  "createdBefore",
-  "createdAfter",
-  "active",
-  "suspended",
-];
-
-const Filter = () => {
-  const state = useContext(AppState),
-    [t] = useTranslation(),
-    { query } = useRoute(),
-    { route } = useLocation(),
-    form = useSignal({
-      name: "",
-      description: "",
-      color: "#000000",
-      priority: 0,
-      refresh: false,
-      criteria: [],
-      variables: [],
-      readable_by_all: false,
-      grants: [],
-    }),
-    may_share = useSignal(true),
-    save_error = useSignal(null),
-    update = (key, value) => (form.value = { ...form.peek(), [key]: value }),
-    add_criteria = () =>
-      update("criteria", [
-        ...form.peek().criteria,
-        { key: CRITERIA_KEYS[0], value: "" },
-      ]),
-    remove_criteria = (index) =>
-      update(
-        "criteria",
-        form.peek().criteria.filter((_, i) => i !== index),
-      ),
-    update_criteria = (index, field, value) =>
-      update(
-        "criteria",
-        form
-          .peek()
-          .criteria.map((c, i) => (i === index ? { ...c, [field]: value } : c)),
-      ),
-    add_grant = () =>
-      update("grants", [...form.peek().grants, { type: "user", id: "" }]),
-    remove_grant = (index) =>
-      update(
-        "grants",
-        form.peek().grants.filter((_, i) => i !== index),
-      ),
-    update_grant = (index, field, value) =>
-      update(
-        "grants",
-        form
-          .peek()
-          .grants.map((g, i) => (i === index ? { ...g, [field]: value } : g)),
-      ),
-    add_variable = () =>
-      update("variables", [...form.peek().variables, { name: "", label: "" }]),
-    remove_variable = (index) =>
-      update(
-        "variables",
-        form.peek().variables.filter((_, i) => i !== index),
-      ),
-    update_variable = (index, field, value) =>
-      update(
-        "variables",
-        form
-          .peek()
-          .variables.map((v, i) =>
-            i === index ? { ...v, [field]: value } : v,
-          ),
-      ),
-    submit = (event) => {
-      event.preventDefault();
-      const {
-          name,
-          description,
-          color,
-          priority,
-          refresh,
-          criteria,
-          variables,
-        } = form.value,
-        query = {};
-      criteria.forEach(({ key, value }) => {
-        if (key === "unassigned" || key === "active" || key === "suspended")
-          query[key] = true;
-        else if (key === "priority") query[key] = parseInt(value, 10);
-        else if (value) query[key] = value;
-      });
-      const body = {
-        resourceType: "Task",
-        name,
-        owner: resolve_user(state),
-        query,
-        properties: {
-          description,
-          color,
-          priority: parseInt(priority, 10) || 0,
-          refresh,
-          variables,
-        },
-      };
-      save_error.value = null;
-      void engine_rest.filter
-        .create_filter(state, body)
-        .then(async (result) => {
-          const id = result?.data?.id;
-          if (!id) {
-            save_error.value = t("tasks.filter.save-failed", {
-              reason: result?.error?.message ?? "",
-            });
-            return;
-          }
-          const refused = await grant_access(state, id, form.value);
-          if (refused.length > 0) {
-            save_error.value = t("tasks.filter.share-failed", {
-              identities: refused.join(", "),
-            });
-            return;
-          }
-          route(`/tasks${keep_list_query(query)}`);
-        });
-    };
-
-  // Sharing a filter means creating an authorization, which is a permission of
-  // its own. Without it the section stays inert rather than failing on save.
-  useEffect(() => {
-    void engine_rest.authorization
-      .may(state, "CREATE", "authorization", 4)
-      .then((allowed) => (may_share.value = allowed));
-  }, [state, may_share]);
-
-  return (
-    <div class="filter-editor">
-      <header>
-        <h2>{t("tasks.filter.title")}</h2>
-        <a href={`/tasks${keep_list_query(query)}`} class="button">
-          {t("common.back")}
-        </a>
-      </header>
-
-      <form onSubmit={submit}>
-        <fieldset>
-          <legend>{t("tasks.filter.general")}</legend>
-          <div class="filter-fields">
-            <label for="filter-name">{t("common.name")}</label>
-            <input
-              id="filter-name"
-              required
-              value={form.value.name}
-              onInput={(e) => update("name", e.currentTarget.value)}
-            />
-            <label for="filter-description">
-              {t("tasks.filter.description")}
-            </label>
-            <input
-              id="filter-description"
-              value={form.value.description}
-              onInput={(e) => update("description", e.currentTarget.value)}
-            />
-            <label for="filter-priority">
-              {t("tasks.task-list.table-headings.priority")}
-            </label>
-            <input
-              id="filter-priority"
-              type="number"
-              value={form.value.priority}
-              onInput={(e) => update("priority", e.currentTarget.value)}
-            />
-            <label for="filter-color">{t("tasks.filter.color")}</label>
-            <input
-              id="filter-color"
-              type="color"
-              value={form.value.color}
-              onInput={(e) => update("color", e.currentTarget.value)}
-            />
-            <label class="filter-checkbox" for="filter-auto-refresh">
-              <input
-                id="filter-auto-refresh"
-                type="checkbox"
-                checked={form.value.refresh}
-                onInput={(e) => update("refresh", e.currentTarget.checked)}
-              />
-              {t("tasks.filter.auto-refresh")}
-            </label>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>{t("tasks.filter.criteria")}</legend>
-          {form.value.criteria.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>{t("common.key")}</th>
-                  <th>{t("common.value")}</th>
-                  <th>{t("common.action")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {form.value.criteria.map((criterion, i) => (
-                  <tr key={i}>
-                    <td>
-                      <select
-                        value={criterion.key}
-                        onChange={(e) =>
-                          update_criteria(i, "key", e.currentTarget.value)
-                        }
-                      >
-                        {CRITERIA_KEYS.map((k) => (
-                          <option key={k} value={k}>
-                            {k}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      {criterion.key === "unassigned" ||
-                      criterion.key === "active" ||
-                      criterion.key === "suspended" ? (
-                        <em>{t("common.yes")}</em>
-                      ) : (
-                        <input
-                          value={criterion.value}
-                          onInput={(e) =>
-                            update_criteria(i, "value", e.currentTarget.value)
-                          }
-                        />
-                      )}
-                    </td>
-                    <td>
-                      <button type="button" onClick={() => remove_criteria(i)}>
-                        {t("common.remove")}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <button type="button" onClick={add_criteria}>
-            {t("tasks.filter.add-criteria")}
-          </button>
-        </fieldset>
-
-        <fieldset>
-          <legend>{t("tasks.filter.variables")}</legend>
-          <p>{t("tasks.filter.variables-hint")}</p>
-          {form.value.variables.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>{t("common.name")}</th>
-                  <th>{t("tasks.filter.label")}</th>
-                  <th>{t("common.action")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {form.value.variables.map((variable, i) => (
-                  <tr key={i}>
-                    <td>
-                      <input
-                        value={variable.name}
-                        onInput={(e) =>
-                          update_variable(i, "name", e.currentTarget.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        value={variable.label}
-                        onInput={(e) =>
-                          update_variable(i, "label", e.currentTarget.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <button type="button" onClick={() => remove_variable(i)}>
-                        {t("common.remove")}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <button type="button" onClick={add_variable}>
-            {t("tasks.filter.add-variable")}
-          </button>
-        </fieldset>
-
-        <div class="filter-actions">
-          <button type="submit">{t("common.save")}</button>
-          <a href={`/tasks${keep_list_query(query)}`}>{t("common.cancel")}</a>
-        </div>
-        {save_error.value && (
-          <p class="error" role="alert">
-            {save_error.value}
-          </p>
-        )}
-
-        <fieldset disabled={!may_share.value}>
-          <legend>{t("tasks.filter.permissions")}</legend>
-          <p>
-            {may_share.value
-              ? t("tasks.filter.permissions-hint")
-              : t("tasks.filter.permissions-denied")}
-          </p>
-          <label class="checkbox">
-            <input
-              type="checkbox"
-              checked={form.value.readable_by_all}
-              onChange={(e) =>
-                update("readable_by_all", e.currentTarget.checked)
-              }
-            />
-            {t("tasks.filter.readable-by-all")}
-          </label>
-
-          {form.value.grants.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>{t("common.type")}</th>
-                  <th>{t("common.name")}</th>
-                  <th>{t("common.action")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {form.value.grants.map((grant, i) => (
-                  <tr key={i}>
-                    <td>
-                      <select
-                        value={grant.type}
-                        onChange={(e) =>
-                          update_grant(i, "type", e.currentTarget.value)
-                        }
-                      >
-                        <option value="user">{t("tasks.filter.user")}</option>
-                        <option value="group">{t("tasks.filter.group")}</option>
-                      </select>
-                    </td>
-                    <td>
-                      <input
-                        value={grant.id}
-                        onInput={(e) =>
-                          update_grant(i, "id", e.currentTarget.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        class="danger"
-                        onClick={() => remove_grant(i)}
-                        aria-label={t("common.delete")}
-                        title={t("common.delete")}
-                      >
-                        <Icons.trash />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          <button type="button" onClick={add_grant}>
-            {t("tasks.filter.add-permission")}
-          </button>
-        </fieldset>
-      </form>
-    </div>
   );
 };
 

@@ -240,31 +240,7 @@
       "business-key": "Business Key (optional)"
     },
     "filter": {
-      "title": "Filter Editor",
-      "general": "General",
-      "description": "Description",
-      "color": "Color",
-      "auto-refresh": "Auto Refresh",
-      "criteria": "Criteria",
-      "add-criteria": "Add Criteria",
-      "permissions": "Who may use this filter",
-      "accessible-by-all": "Accessible by all users",
-      "add-permission": "Add person or group",
-      "group-user": "Group / User",
-      "identifier": "Identifier",
-      "variables": "Variables",
-      "variables-hint": "The variables you set here will be shown in the task list view.",
-      "show-undefined": "Show undefined variables",
-      "add-variable": "Add Variable",
-      "label": "Label",
-      "manage_title": "Manage task filters",
-      "permissions-hint": "A saved filter is private until someone is allowed to read it.",
-      "readable-by-all": "Everyone may use it",
-      "user": "User",
-      "group": "Group",
-      "permissions-denied": "Sharing a filter requires permission to create authorizations. This filter stays visible to you alone for now.",
-      "save-failed": "The filter could not be saved. {{reason}}",
-      "share-failed": "The filter was saved, but sharing it with {{identities}} failed. It stays visible to you alone for now."
+      "manage_title": "Manage task filters"
     },
     "sort": {
       "label": "Sort by",
@@ -1025,7 +1001,15 @@
     "add_column": "Add a column",
     "column_label": "Heading",
     "show_undefined": "Show tasks that do not carry the variable",
-    "columns_hint": "Variables named here appear as extra columns of the task list."
+    "columns_hint": "Variables named here appear as extra columns of the task list.",
+    "share_section": "Sharing",
+    "share_hint": "Who may see this filter. Without a grant it stays visible to you alone.",
+    "share_denied": "Sharing requires permission to create authorizations. The filter stays visible to you alone for now.",
+    "share_all": "Everyone may use it",
+    "share_user": "User",
+    "share_group": "Group",
+    "share_add": "Add a person or group",
+    "select_hint": "Pick a filter on the left, or create a new one."
   },
   "login": {
     "title": "Login",

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { RESPONSE_STATE } from "../api/helper.jsx";
+import { app_path } from "../config.js";
 
 /**
  * First-run screen: creates the initial administrator when the engine has none.
@@ -53,7 +54,7 @@ export const SetupPage = ({ on_created }) => {
 
   return (
     <section class="login-page setup-page">
-      <img class="login-logo" src="/operaton-logo.svg" alt="Operaton" />
+      <img class="login-logo" src={app_path("/operaton-logo.svg")} alt="Operaton" />
 
       <div class="login-content">
         <h1>{t("setup.title")}</h1>

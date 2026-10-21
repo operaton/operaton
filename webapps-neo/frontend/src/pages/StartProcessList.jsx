@@ -18,6 +18,7 @@ import {
   rendered_form_variables,
   form_ref_of,
 } from "../components/TaskForm_helpers.js";
+import { app_path } from "../config.js";
 
 const EMBEDDED_APP_PREFIX = "embedded:app:";
 const EMBEDDED_DEPLOYMENT_PREFIX = "embedded:deployment:";
@@ -122,7 +123,7 @@ const StartableProcessesList = () => {
                       aria-selected={process.id === params.tab}
                     >
                       <td>
-                        <a href={`/tasks/start/${process.id}`}>
+                        <a href={app_path(`/tasks/start/${process.id}`)}>
                           {process.name}
                         </a>
                       </td>
@@ -304,7 +305,8 @@ const StartGeneratedForm = ({ definition_id }) => {
         with_business_key({ variables }, business_key),
       )
       .then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) route("/tasks");
+        if (result?.status === RESPONSE_STATE.SUCCESS)
+          route(app_path("/tasks"));
         else setError(result?.error?.message ?? t("tasks.form.unknown-error"));
       })
       .catch((e) => setError(e?.message ?? t("tasks.form.unknown-error")));
@@ -383,7 +385,8 @@ const StartCamundaForm = ({ definition_id }) => {
         with_business_key({ variables }, business_key),
       )
       .then((result) => {
-        if (result?.status === RESPONSE_STATE.SUCCESS) route("/tasks");
+        if (result?.status === RESPONSE_STATE.SUCCESS)
+          route(app_path("/tasks"));
         else setError(result?.error?.message ?? t("tasks.form.unknown-error"));
       })
       .catch((e) => setError(e?.message ?? t("tasks.form.unknown-error")));

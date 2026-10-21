@@ -6,6 +6,7 @@ import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { DmnViewer } from "../components/DMNViewer.jsx";
 import { ListFilter } from "../components/ListFilter.jsx";
 import { ManageFilters } from "../components/ManageFilters.jsx";
+import { app_path } from "../config.js";
 import {
   filter_share_link,
   parse_list_query,
@@ -187,7 +188,7 @@ const DecisionsList = () => {
                   aria-selected={params.decision_id === decision.id}
                 >
                   <td>
-                    <a href={`/decisions/${decision.id}`}>
+                    <a href={app_path(`/decisions/${decision.id}`)}>
                       {decision?.name || decision?.id}
                     </a>
                   </td>
@@ -225,7 +226,7 @@ const DecisionDetails = () => {
         <menu>
           <li>
             <a
-              href={`/decisions/${decision_id}`}
+              href={app_path(`/decisions/${decision_id}`)}
               aria-current={!panel ? "page" : undefined}
             >
               {t("decisions.tabs.details")}
@@ -233,7 +234,7 @@ const DecisionDetails = () => {
           </li>
           <li>
             <a
-              href={`/decisions/${decision_id}/instances`}
+              href={app_path(`/decisions/${decision_id}/instances`)}
               aria-current={panel === "instances" ? "page" : undefined}
             >
               {t("decisions.tabs.instances")}

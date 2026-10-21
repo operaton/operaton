@@ -10,7 +10,7 @@
  * Values are validated before they reach the DOM/CSS, so a config file cannot
  * inject arbitrary markup or stylesheet rules.
  */
-import { get_config } from "./config.js";
+import { app_path, get_config } from "./config.js";
 
 const DEFAULT_APP_NAME = "Operaton";
 const DEFAULT_LOGO = "/operaton-logo.svg";
@@ -38,7 +38,7 @@ export const app_name = () =>
   non_empty(branding().appName) ? branding().appName : DEFAULT_APP_NAME;
 
 export const logo_url = () =>
-  is_url(branding().logoUrl) ? branding().logoUrl : DEFAULT_LOGO;
+  is_url(branding().logoUrl) ? branding().logoUrl : app_path(DEFAULT_LOGO);
 
 export const logo_alt = () =>
   non_empty(branding().logoAlt) ? branding().logoAlt : app_name();

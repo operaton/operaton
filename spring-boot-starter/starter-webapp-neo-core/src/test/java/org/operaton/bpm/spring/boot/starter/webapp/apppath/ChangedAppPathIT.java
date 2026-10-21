@@ -18,6 +18,8 @@
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +36,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
-import static org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
+import static org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_DEFAULT_VALUE;
+import static org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NAME;
+import static org.operaton.bpm.webapp.neo.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NONCE_PLACEHOLDER;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -117,6 +121,61 @@ class ChangedAppPathIT {
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(response.getBody()).contains("<title>Operaton</title>");
+  }
+
+  @Test
+  void shouldDeclareAppPathAsBaseHref() {
+    // when
+    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH + "/", String.class);
+
+    // then
+    // the one place the bundle can learn its own prefix from
+    assertThat(response.getBody()).contains("<base href=\"" + MY_APP_PATH + "/\">");
+  }
+
+  @Test
+  void shouldDeclareTheSameBaseHrefOnEveryRequest() {
+    // given the resource chain caches the transformed shell
+
+    // when
+    restClient.getForEntity(MY_APP_PATH + "/", String.class);
+    ResponseEntity<String> second = restClient.getForEntity(MY_APP_PATH + "/", String.class);
+
+    // then the cached copy carries the same prefix, not a stale one
+    assertThat(second.getBody()).contains("<base href=\"" + MY_APP_PATH + "/\">");
+  }
+
+  @Test
+  void shouldServeSpaShellForADeepLink() {
+    // when
+    ResponseEntity<String> response = restClient.getForEntity(
+        MY_APP_PATH + "/processes/some-definition-id/instances", String.class);
+
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).contains("<base href=\"" + MY_APP_PATH + "/\">");
+  }
+
+  @Test
+  void shouldServeBundleAssetsFromAppPath() {
+    // given the shell as the browser receives it
+    String shell = restClient.getForEntity(MY_APP_PATH + "/", String.class).getBody();
+
+    // when the browser resolves the script it references against the base href
+    Matcher matcher = Pattern.compile("<script[^>]*src=\"([^\"]+\\.js)\"").matcher(shell);
+    assertThat(matcher.find())
+        .as("the shell references a bundled script: %s", shell)
+        .isTrue();
+    String src = matcher.group(1).replaceFirst("^\\./", "");
+    assertThat(src)
+        .as("assets are referenced relative to the base href, never root-absolute")
+        .doesNotStartWith("/");
+
+    ResponseEntity<String> asset =
+        restClient.getForEntity(MY_APP_PATH + "/" + src, String.class);
+
+    // then
+    assertThat(asset.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
 
   @Test

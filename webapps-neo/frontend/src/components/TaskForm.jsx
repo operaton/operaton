@@ -19,6 +19,7 @@ import {
   coerce_variable_value,
   variable_edit_value,
 } from "../helper/variables.js";
+import { app_path } from "../config.js";
 
 const TaskForm = () => {
   const state = useContext(AppState),
@@ -73,7 +74,7 @@ const then_leave = (
         return;
       }
       localStorage.removeItem(`task_form_${task_id}`);
-      route(`/tasks${list_query}`);
+      route(app_path(`/tasks${list_query}`));
     })
     .catch((error) => set_error(error?.message ?? failed));
 

@@ -9,7 +9,7 @@ import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
-import { get_config } from "../config.js";
+import { app_path, get_config } from "../config.js";
 import { app_name, logo_url, logo_alt } from "../branding.js";
 import { page_allowed } from "../helper/authorized_apps.js";
 
@@ -32,17 +32,20 @@ const builtin_nav = [
 ];
 
 // Built-ins plus every PAGE plugin's nav entry — the single source of truth for
-// both the desktop menu and the mobile dialog.
-const nav_entries = (authorized_apps) => [
-  ...builtin_nav.filter((entry) => page_allowed(authorized_apps, entry.href)),
-  ...plugins_for(PLUGIN_POINTS.PAGE)
-    .filter((plugin) => plugin.properties?.href && plugin.properties?.nameKey)
-    .map((plugin) => ({
-      href: plugin.properties.href,
-      nameKey: plugin.properties.nameKey,
-      hotkey: plugin.properties.hotkey,
-    })),
-];
+// both the desktop menu and the mobile dialog. Entries are declared root-relative
+// (a plugin cannot know the deployment's prefix) and prefixed here, once, so both
+// the rendered href and the `url.startsWith` active check see the same shape.
+const nav_entries = (authorized_apps) =>
+  [
+    ...builtin_nav.filter((entry) => page_allowed(authorized_apps, entry.href)),
+    ...plugins_for(PLUGIN_POINTS.PAGE)
+      .filter((plugin) => plugin.properties?.href && plugin.properties?.nameKey)
+      .map((plugin) => ({
+        href: plugin.properties.href,
+        nameKey: plugin.properties.nameKey,
+        hotkey: plugin.properties.hotkey,
+      })),
+  ].map((entry) => ({ ...entry, href: app_path(entry.href) }));
 
 // Rendered in both the desktop <menu> and the mobile <dialog> so nav entries
 // (built-in and plugin) are declared exactly once.
@@ -76,17 +79,17 @@ export function Header() {
     // the user signed in, and moving them then would say otherwise.
     logout = async () => {
       await engine_rest.auth.logout(state);
-      if (!state.auth.user.id.peek()) route("/");
+      if (!state.auth.user.id.peek()) route(app_path("/"));
     };
 
-  useHotkeys("alt+shift+0", () => route("/"));
-  useHotkeys("alt+shift+1", () => route("/tasks"));
-  useHotkeys("alt+shift+2", () => route("/processes"));
-  useHotkeys("alt+shift+3", () => route("/decisions"));
-  useHotkeys("alt+shift+4", () => route("/deployments"));
-  useHotkeys("alt+shift+5", () => route("/batches"));
-  useHotkeys("alt+shift+6", () => route("/migrations"));
-  useHotkeys("alt+shift+7", () => route("/admin"));
+  useHotkeys("alt+shift+0", () => route(app_path("/")));
+  useHotkeys("alt+shift+1", () => route(app_path("/tasks")));
+  useHotkeys("alt+shift+2", () => route(app_path("/processes")));
+  useHotkeys("alt+shift+3", () => route(app_path("/decisions")));
+  useHotkeys("alt+shift+4", () => route(app_path("/deployments")));
+  useHotkeys("alt+shift+5", () => route(app_path("/batches")));
+  useHotkeys("alt+shift+6", () => route(app_path("/migrations")));
+  useHotkeys("alt+shift+7", () => route(app_path("/admin")));
 
   // Plugin page hotkeys, resolved in one handler. The list is frozen before
   // render, so the combined keys string is stable across renders.
@@ -109,7 +112,7 @@ export function Header() {
       const hit = plugin_hotkeys.find(
         (entry) => normalise(entry.hotkey) === pressed,
       );
-      if (hit) route(hit.href);
+      if (hit) route(app_path(hit.href));
     },
   );
 
@@ -122,14 +125,14 @@ export function Header() {
           </li>
         </menu>
 
-        <a href="/" id="mobile-logo">
+        <a href={app_path("/")} id="mobile-logo">
           {app_name()}
         </a>
         <a
-          href="/"
+          href={app_path("/")}
           id="logo"
           aria-label={app_name()}
-          aria-current={url === "/" ? "page" : undefined}
+          aria-current={url === app_path("/") ? "page" : undefined}
         >
           <img src={logo_url()} alt={logo_alt()} />
         </a>
@@ -170,9 +173,9 @@ export function Header() {
                 <menu>
                   <li>
                     <a
-                      href="/help"
+                      href={app_path("/help")}
                       aria-current={
-                        url.startsWith("/help") ? "page" : undefined
+                        url.startsWith(app_path("/help")) ? "page" : undefined
                       }
                     >
                       {t("nav.help")}
@@ -180,10 +183,12 @@ export function Header() {
                   </li>
                   <li>
                     <a
-                      href="/account"
+                      href={app_path("/account")}
                       title={t("nav.account")}
                       aria-current={
-                        url.startsWith("/account") ? "page" : undefined
+                        url.startsWith(app_path("/account"))
+                          ? "page"
+                          : undefined
                       }
                     >
                       {state.auth.user.id.value || t("nav.account")}
@@ -216,10 +221,10 @@ export function Header() {
           </menu>
           <menu>
             <li>
-              <a href="/help">{t("nav.help")}</a>
+              <a href={app_path("/help")}>{t("nav.help")}</a>
             </li>
             <li>
-              <a href="/account" title={t("nav.account")}>
+              <a href={app_path("/account")} title={t("nav.account")}>
                 {state.auth.user.id.value || t("nav.account")}
               </a>
             </li>

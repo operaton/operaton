@@ -32,6 +32,7 @@ import {
   fromLocalParts,
   toLocalParts,
 } from "../helper/date_formatter.js";
+import { app_path } from "../config.js";
 
 const TASK_PAGE_SIZE = 20;
 
@@ -290,7 +291,7 @@ const TasksPage = () => {
       params.task_id === undefined && query.filters !== "manage";
     if (on_the_list && first)
       route(
-        `/tasks/${first}/${task_tabs[0].id}${keep_list_query(query)}`,
+        app_path(`/tasks/${first}/${task_tabs[0].id}${keep_list_query(query)}`),
         true,
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -516,7 +517,7 @@ const TaskList = () => {
         ) : null}
       </div>
       <div class="list-actions">
-        <a href="/tasks/start" class="button start-process">
+        <a href={app_path("/tasks/start")} class="button start-process">
           {t("tasks.start-process-label")}
         </a>
       </div>
@@ -542,7 +543,9 @@ const TaskRowEntry = ({ task, columns = [], show_undefined, selected }) => {
   return (
     <tr id={id} key={id} aria-selected={selected}>
       <th scope="row">
-        <a href={`/tasks/${id}/${task_tabs[0].id}${list_query}`}>{name}</a>
+        <a href={app_path(`/tasks/${id}/${task_tabs[0].id}${list_query}`)}>
+          {name}
+        </a>
       </th>
       <td>{assignee ? assignee : "—"}</td>
       <td>{due ? <RelativeTime datetime={due} /> : "—"}</td>
@@ -612,7 +615,7 @@ const Task = () => {
               ? t("tasks.task-not-found-hint")
               : (task_value.error?.message ?? t("tasks.form.unknown-error"))}
           </p>
-          <a href={`/tasks${keep_list_query(query)}`} class="button">
+          <a href={app_path(`/tasks${keep_list_query(query)}`)} class="button">
             {t("tasks.back-to-list")}
           </a>
         </div>
@@ -630,7 +633,7 @@ const Task = () => {
                 then pointed at /processes/undefined under the label
                 "(Version )". */}
             {pd.value?.data?.id && (
-              <a href={`/processes/${pd.value.data.id}`}>
+              <a href={app_path(`/processes/${pd.value.data.id}`)}>
                 {pd.value.data.name ?? pd.value.data.key} (
                 {t("processes.version")} {pd.value.data.version})
               </a>
@@ -728,7 +731,7 @@ const TaskTabs = () => {
       {state.api.task.one.value?.data != null ? (
         <Tabs
           tabs={task_tabs}
-          base_url={`/tasks/${state.api.task.one.value.data.id}`}
+          base_url={app_path(`/tasks/${state.api.task.one.value.data.id}`)}
           className="fade-in"
           label={t("tasks.tabs.label")}
           query={keep_list_query(query)}

@@ -13,6 +13,7 @@ import {
   usePasswordPolicy,
 } from "../components/PasswordPolicy.jsx";
 import { IdentitySearch } from "../components/IdentitySearch.jsx";
+import { app_path } from "../config.js";
 
 const USER_SEARCH = [
   { key: "id", nameKey: "admin.search-id" },
@@ -51,7 +52,7 @@ const AdminPage = () => {
   }, []);
 
   useEffect(() => {
-    if (page_id === undefined) route("/admin/users");
+    if (page_id === undefined) route(app_path("/admin/users"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page_id]);
 
@@ -75,7 +76,7 @@ const AdminPage = () => {
             .map(({ section, label }) => (
               <li key={section}>
                 <a
-                  href={`/admin/${section}`}
+                  href={app_path(`/admin/${section}`)}
                   aria-current={is_current(section)}
                 >
                   {t(label)}
@@ -162,7 +163,7 @@ const TenantList = () => {
       <div class="page-heading">
         <h2>{t("admin.tenants")}</h2>
         {may_create.value && (
-          <a class="button" href="/admin/tenants/create">
+          <a class="button" href={app_path("/admin/tenants/create")}>
             {t("admin.tenant.create")}
           </a>
         )}
@@ -196,7 +197,11 @@ const TenantList = () => {
                 {tenants.value.data.map((tenant) => (
                   <tr key={tenant.id}>
                     <td>
-                      <a href={`/admin/tenants/${encode_id(tenant.id)}`}>
+                      <a
+                        href={app_path(
+                          `/admin/tenants/${encode_id(tenant.id)}`,
+                        )}
+                      >
                         {tenant.id}
                       </a>
                     </td>
@@ -232,7 +237,7 @@ const TenantCreate = () => {
       void engine_rest.tenant.create(state, form.value).then(() => {
         if (has_data(tenant_create)) {
           engine_rest.tenant.all(state);
-          route("/admin/tenants");
+          route(app_path("/admin/tenants"));
         }
       });
     };
@@ -270,7 +275,7 @@ const TenantCreate = () => {
 
         <div class="button-group">
           <button type="submit">{t("admin.tenant.create")}</button>
-          <a class="button secondary" href="/admin/tenants">
+          <a class="button secondary" href={app_path("/admin/tenants")}>
             {t("common.cancel")}
           </a>
         </div>
@@ -315,7 +320,7 @@ const TenantDetails = ({ tenant_id }) => {
     on_delete = () =>
       void engine_rest.tenant
         .delete(state, tenant_id)
-        .then(() => route("/admin/tenants"));
+        .then(() => route(app_path("/admin/tenants")));
 
   return (
     <div class="content fade-in">
@@ -456,7 +461,7 @@ const GroupsList = () => {
       <div class="page-heading">
         <h2>{t("admin.groups")}</h2>
         {may_create.value && (
-          <a class="button" href="/admin/groups/create">
+          <a class="button" href={app_path("/admin/groups/create")}>
             {t("admin.group.create")}
           </a>
         )}
@@ -496,7 +501,9 @@ const GroupsList = () => {
                 {groups.value.data.map((group) => (
                   <tr key={group.id}>
                     <td>
-                      <a href={`/admin/groups/${encode_id(group.id)}`}>
+                      <a
+                        href={app_path(`/admin/groups/${encode_id(group.id)}`)}
+                      >
                         {group.id}
                       </a>
                     </td>
@@ -547,7 +554,7 @@ const GroupCreate = () => {
       void engine_rest.group.create(state, form.value).then(() => {
         if (has_data(group_create)) {
           engine_rest.group.all(state);
-          route("/admin/groups");
+          route(app_path("/admin/groups"));
         }
       });
     };
@@ -592,7 +599,7 @@ const GroupCreate = () => {
 
         <div class="button-group">
           <button type="submit">{t("admin.group.create")}</button>
-          <a class="button secondary" href="/admin/groups">
+          <a class="button secondary" href={app_path("/admin/groups")}>
             {t("common.cancel")}
           </a>
         </div>
@@ -635,7 +642,7 @@ const GroupDetails = ({ group_id }) => {
     on_delete = () =>
       void engine_rest.group
         .delete(state, group_id)
-        .then(() => route("/admin/groups"));
+        .then(() => route(app_path("/admin/groups")));
 
   return (
     <div class="content fade-in">
@@ -968,7 +975,7 @@ const UserList = () => {
       <div class="page-heading">
         <h2>{t("admin.users")}</h2>
         {may_create.value && (
-          <a class="button" href="/admin/users/create">
+          <a class="button" href={app_path("/admin/users/create")}>
             {t("admin.user.create")}
           </a>
         )}
@@ -1003,7 +1010,7 @@ const UserList = () => {
               users.value?.data.map(({ id, firstName, lastName, email }) => (
                 <tr key={id}>
                   <td>
-                    <a href={`/admin/users/${encode_id(id)}`}>{id}</a>
+                    <a href={app_path(`/admin/users/${encode_id(id)}`)}>{id}</a>
                   </td>
                   <td>{firstName}</td>
                   <td>{lastName}</td>
@@ -1060,7 +1067,7 @@ const UserCreate = () => {
       void engine_rest.user.create(state, form.value).then(() => {
         if (has_data(user_create)) {
           engine_rest.user.all(state);
-          route("/admin/users");
+          route(app_path("/admin/users"));
         }
       });
     };
@@ -1137,7 +1144,7 @@ const UserCreate = () => {
 
         <div class="button-group">
           <button type="submit">{t("admin.user.create")}</button>
-          <a class="button secondary" href="/admin/users">
+          <a class="button secondary" href={app_path("/admin/users")}>
             {t("common.cancel")}
           </a>
         </div>
@@ -1163,7 +1170,7 @@ const UserDetails = ({ user_id }) => {
   const on_delete = () =>
     void engine_rest.user
       .delete(state, user_id)
-      .then(() => route("/admin/users"));
+      .then(() => route(app_path("/admin/users")));
 
   return (
     <div class="content fade-in">
@@ -1601,7 +1608,9 @@ const AuthorizationsPage = () => {
             {authorization_resources.map(({ nameKey, resource_type }) => (
               <li key={resource_type}>
                 <a
-                  href={`/admin/authorizations/resource-type/${resource_type}`}
+                  href={app_path(
+                    `/admin/authorizations/resource-type/${resource_type}`,
+                  )}
                 >
                   {t(nameKey)}
                 </a>

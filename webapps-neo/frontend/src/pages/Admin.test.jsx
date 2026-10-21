@@ -301,8 +301,9 @@ describe("AdminPage", () => {
       const inputs = container.querySelectorAll(".identity-search input");
       fireEvent.input(inputs[1], { target: { value: "Al" } });
       fireEvent.click(getByText("common.search"));
+      // *Like fields are wrapped in wildcards so a substring matches.
       expect(engine_rest.user.all.mock.lastCall[1]).toEqual({
-        firstNameLike: "Al",
+        firstNameLike: "%Al%",
       });
     });
 

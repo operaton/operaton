@@ -838,6 +838,7 @@
       "user-operation-log": "User Operation Log Category",
       "system": "System"
     },
+    "search-title": "Search",
     "search-id": "Id",
     "search-name": "Name",
     "search-first-name": "First name",

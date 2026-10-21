@@ -838,6 +838,7 @@
       "user-operation-log": "Benutzeroperations-Protokollkategorie",
       "system": "System"
     },
+    "search-title": "Suche",
     "search-id": "Kennung",
     "search-name": "Name",
     "search-first-name": "Vorname",

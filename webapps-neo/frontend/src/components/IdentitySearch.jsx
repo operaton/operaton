@@ -22,9 +22,18 @@ export const IdentitySearch = ({
 
   const set = (key, value) => (query.value = { ...query.peek(), [key]: value }),
     // Empty fields must not reach the engine: an empty nameLike matches nothing.
+    // A `*Like` field is a SQL LIKE pattern, so "de" only matches a value that
+    // *is* "de". People expect a contains-search, so wrap it in wildcards unless
+    // they typed their own `%` — then typing "de" finds "demo".
     filled = () =>
       Object.fromEntries(
-        Object.entries(query.value).filter(([, value]) => value !== ""),
+        Object.entries(query.value)
+          .filter(([, value]) => value !== "")
+          .map(([key, value]) =>
+            key.endsWith("Like") && !value.includes("%")
+              ? [key, `%${value}%`]
+              : [key, value],
+          ),
       ),
     submit = (e) => {
       e.preventDefault();
@@ -32,8 +41,9 @@ export const IdentitySearch = ({
     };
 
   return (
-    <>
-      <form class="identity-search" onSubmit={submit}>
+    <search class="identity-search">
+      <h3>{t("admin.search-title")}</h3>
+      <form onSubmit={submit}>
         {criteria.map(({ key, nameKey }) => (
           <label key={key}>
             {t(nameKey)}
@@ -54,6 +64,6 @@ export const IdentitySearch = ({
           </button>
         </div>
       ) : null}
-    </>
+    </search>
   );
 };

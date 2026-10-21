@@ -1809,11 +1809,19 @@ nav:has(> .breadcrumbs) {
 }
 
 .identity-search {
+  display: block;
+  margin-block-end: 1rem;
+}
+
+.identity-search h3 {
+  margin: 0 0 0.5rem;
+}
+
+.identity-search form {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: end;
-  margin-block-end: 1rem;
 }
 
 .identity-search label {
@@ -1822,15 +1830,48 @@ nav:has(> .breadcrumbs) {
   gap: 0.15rem;
 }
 
+.dashboard-section {
+  margin-top: var(--spacing-2);
+  padding: var(--spacing-2);
+  background: var(--background-2);
+  border-radius: var(--border-radius);
+}
+
 .dashboard-section > summary {
   display: flex;
   gap: 1rem;
   align-items: baseline;
   cursor: pointer;
+  list-style: none;
+}
+
+/* Flex summaries drop the native disclosure triangle, so draw our own. */
+.dashboard-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.dashboard-section > summary::before {
+  content: "";
+  flex: none;
+  align-self: center;
+  width: 0;
+  height: 0;
+  border-inline-start: 0.4em solid currentColor;
+  border-block: 0.3em solid transparent;
+  transition: transform 0.15s ease;
+}
+
+.dashboard-section[open] > summary::before {
+  transform: rotate(90deg);
 }
 
 .dashboard-section > summary h3 {
   display: inline;
+}
+
+/* Breathing room between the heading and the table/content it reveals. */
+.dashboard-section > summary + * {
+  margin-top: var(--spacing-2);
 }
 
 .task-breakdown {

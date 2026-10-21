@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:144ba575-81b0-43d0-ac70-70edf8493cc7",
+  "serialNumber": "urn:uuid:7c4d2921-59aa-45a8-94e3-329b7af1ab32",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-21T09:27:14Z",
+    "timestamp": "2026-10-21T15:39:28Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-738839c0e"
+          "version": "0.76.0-SNAPSHOT-2f4aaf7e7"
         }
       ]
     },
@@ -19418,7 +19418,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "487e5291-1f1c-4e17-8df7-f8fb1c9b3d00",
+      "bom-ref": "0e19594f-41bc-47bb-b863-df950fef2f89",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24674,7 +24674,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "19841feb-85a2-4880-a87a-829ef5c8c154",
+      "bom-ref": "3a9273cd-9c3d-4725-89e4-cacacf1a75d3",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24685,7 +24685,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "1f93e4ec-0748-4cc8-845b-7d5eb482c2a9",
+      "bom-ref": "d2b77354-9716-434f-8f26-121f99e4648e",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25840,7 +25840,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "61bdefa2-f436-491a-a065-c5ce0862fd9b",
+      "bom-ref": "27fda3d7-a98a-4962-b130-1521ef94a4ae",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -28258,13 +28258,7 @@
       "dependsOn": []
     },
     {
-      "ref": "19841feb-85a2-4880-a87a-829ef5c8c154",
-      "dependsOn": [
-        "487e5291-1f1c-4e17-8df7-f8fb1c9b3d00"
-      ]
-    },
-    {
-      "ref": "487e5291-1f1c-4e17-8df7-f8fb1c9b3d00",
+      "ref": "0e19594f-41bc-47bb-b863-df950fef2f89",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -28311,6 +28305,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
+      ]
+    },
+    {
+      "ref": "3a9273cd-9c3d-4725-89e4-cacacf1a75d3",
+      "dependsOn": [
+        "0e19594f-41bc-47bb-b863-df950fef2f89"
       ]
     },
     {
@@ -29709,7 +29709,13 @@
       "dependsOn": []
     },
     {
-      "ref": "1f93e4ec-0748-4cc8-845b-7d5eb482c2a9",
+      "ref": "27fda3d7-a98a-4962-b130-1521ef94a4ae",
+      "dependsOn": [
+        "d2b77354-9716-434f-8f26-121f99e4648e"
+      ]
+    },
+    {
+      "ref": "d2b77354-9716-434f-8f26-121f99e4648e",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -29727,12 +29733,6 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "61bdefa2-f436-491a-a065-c5ce0862fd9b",
-      "dependsOn": [
-        "1f93e4ec-0748-4cc8-845b-7d5eb482c2a9"
       ]
     },
     {

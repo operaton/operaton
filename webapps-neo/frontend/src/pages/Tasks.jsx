@@ -422,121 +422,6 @@ const TasksManage = () => {
 // A task that belongs to no process — a follow-up, a reminder, something the
 // model does not cover. The engine answers 204 without a body, so the id is
 // chosen here; otherwise the new task could not be opened afterwards.
-const CreateTaskButton = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    { query } = useRoute(),
-    [t] = useTranslation(),
-    name = useSignal(""),
-    assignee = useSignal(""),
-    description = useSignal(""),
-    tenant = useSignal(""),
-    error = useSignal(null),
-    close = () => document.getElementById("create_task").close(),
-    show = () => {
-      error.value = null;
-      // The tenants the signed-in user may read, not the ones they belong to:
-      // an administrator is typically a member of none and still has to be able
-      // to place a task in one. Authorization already narrows this per user.
-      void engine_rest.tenant.all(state);
-      document.getElementById("create_task").showModal();
-    },
-    tenants = state.api.tenant.list.value?.data ?? [],
-    submit = async (event) => {
-      event.preventDefault();
-      const id = crypto.randomUUID();
-      const result = await engine_rest.task.create_task(state, {
-        id,
-        name: name.value.trim(),
-        assignee: assignee.value.trim() || null,
-        description: description.value.trim() || null,
-        tenantId: tenant.value.trim() || null,
-      });
-      // A refusal used to leave the dialog standing with nothing said, which
-      // reads as a button that does not work. The engine's own words are the
-      // useful part here: which tenant, and why it was not accepted.
-      if (result?.status !== RESPONSE_STATE.SUCCESS) {
-        error.value = result?.error?.message ?? t("tasks.create.failed");
-        return;
-      }
-      error.value = null;
-      name.value = "";
-      assignee.value = "";
-      description.value = "";
-      tenant.value = "";
-      close();
-      route(`/tasks/${id}/form${keep_list_query(query)}`);
-    };
-
-  return (
-    <>
-      <button type="button" class="button create-task" onClick={show}>
-        {t("tasks.create.open")}
-      </button>
-
-      <dialog id="create_task" aria-labelledby="create-task-title">
-        <button type="button" onClick={close}>
-          {t("common.close")}
-        </button>
-        <h2 id="create-task-title">{t("tasks.create.title")}</h2>
-        <form onSubmit={submit}>
-          <label for="new-task-name">{t("common.name")}</label>
-          <input
-            id="new-task-name"
-            type="text"
-            required
-            value={name.value}
-            onInput={(e) => (name.value = e.currentTarget.value)}
-          />
-          <label for="new-task-assignee">
-            {t("tasks.task-list.table-headings.assignee")}
-          </label>
-          <input
-            id="new-task-assignee"
-            type="text"
-            value={assignee.value}
-            onInput={(e) => (assignee.value = e.currentTarget.value)}
-          />
-          <label for="new-task-description">
-            {t("tasks.attachments.description")}
-          </label>
-          <input
-            id="new-task-description"
-            type="text"
-            value={description.value}
-            onInput={(e) => (description.value = e.currentTarget.value)}
-          />
-          <label for="new-task-tenant">{t("tasks.tenant")}</label>
-          <input
-            id="new-task-tenant"
-            type="text"
-            list="new-task-tenants"
-            value={tenant.value}
-            onInput={(e) => (tenant.value = e.currentTarget.value)}
-          />
-          <datalist id="new-task-tenants">
-            {tenants.map((x) => (
-              <option key={x.id} value={x.id}>
-                {x.name ?? x.id}
-              </option>
-            ))}
-          </datalist>
-          {error.value && (
-            <p class="error" role="alert">
-              {error.value}
-            </p>
-          )}
-          <div class="button-group">
-            <button type="submit" disabled={!name.value.trim()}>
-              {t("tasks.create.save")}
-            </button>
-          </div>
-        </form>
-      </dialog>
-    </>
-  );
-};
-
 const TaskList = () => {
   const state = useContext(AppState),
     taskList = state.api.task.list,
@@ -637,7 +522,6 @@ const TaskList = () => {
         <a href="/tasks/start" class="button start-process">
           {t("tasks.start-process-label")}
         </a>
-        <CreateTaskButton />
       </div>
     </div>
   );

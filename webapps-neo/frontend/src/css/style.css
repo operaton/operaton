@@ -1251,6 +1251,14 @@
     font-weight: 400;
   }
 
+  /* Long lines scroll inside the block instead of widening the page. That makes
+     it a scroll container on both axes, so let vertical scrolling pass through
+     to the page instead of being swallowed by the overscroll rule in normalize. */
+  pre {
+    overflow-x: auto;
+    overscroll-behavior-y: auto;
+  }
+
   :where(h1, h2, h3, h4, h5, h6, p):first-child {
     margin: 0;
   }

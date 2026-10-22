@@ -178,12 +178,12 @@ describe("api/resources/auth (basic mode)", () => {
     });
 
     it("reaches signals nested deeper than one level", async () => {
-      state.api.process.instance.saved_filters.value = {
+      state.api.process.definition.statistics.value = {
         status: RESPONSE_STATE.SUCCESS,
         data: [{ id: "f2" }],
       };
       await auth.logout(state);
-      expect(state.api.process.instance.saved_filters.value).toBeNull();
+      expect(state.api.process.definition.statistics.value).toBeNull();
     });
   });
 

@@ -1,4 +1,25 @@
-import { GET, POST, PUT, DELETE } from "../helper.jsx";
+import {
+  GET,
+  POST,
+  PUT,
+  DELETE,
+  _url_engine_rest,
+  set_request_headers,
+} from "../helper.jsx";
+
+// Count a definition's suspended instances directly (returns the number instead
+// of writing a shared signal), so the overview can ask for several at once
+// without the queries clobbering each other.
+const get_suspended_count = async (state, definition_id) => {
+  const headers = set_request_headers(new Headers(), state);
+  const res = await fetch(
+    `${_url_engine_rest(state)}/process-instance/count` +
+      `?processDefinitionId=${encodeURIComponent(definition_id)}&suspended=true`,
+    { headers, credentials: "include" },
+  );
+  if (!res.ok) return 0;
+  return (await res.json())?.count ?? 0;
+};
 
 const get_process_instance = (state, instance_id) =>
   GET(
@@ -161,6 +182,7 @@ const process_instance = {
   variables: get_process_instance_variables,
   called: get_called_process_instances,
   count: get_process_instance_count,
+  suspended_count: get_suspended_count,
   all: get_all_process_instances,
   by_activity_ids: get_process_instances_by_activity_ids,
   by_defintion_id: get_process_instance_by_defintion_id,

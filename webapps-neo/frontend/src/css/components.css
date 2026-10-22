@@ -194,6 +194,75 @@ section.task-tabs {
   margin: 0;
 }
 
+/* Name search that replaced the saved filters on the list pages. */
+.list-search {
+  padding: var(--spacing-1);
+}
+
+.search-field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding-inline: var(--spacing-1);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--background-2);
+  max-width: 24em;
+}
+
+.search-field:focus-within {
+  border-color: var(--color-primary);
+}
+
+.search-field svg {
+  width: 1.1em;
+  height: 1.1em;
+  color: var(--text-2);
+  flex: none;
+}
+
+.search-field input {
+  flex: 1;
+  min-width: 12em;
+  border: none;
+  background: transparent;
+  padding: var(--spacing-1) 0;
+}
+
+.search-field input:focus {
+  outline: none;
+}
+
+/* Instance search: a tidy row of small labelled fields. */
+.instance-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  align-items: flex-end;
+  padding: var(--spacing-1);
+}
+
+.instance-search label {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.85em;
+}
+
+.instance-search label > span {
+  color: var(--text-2);
+}
+
+/* Beat `.processes input[type="search"] { flex: 0 1 24rem }` — inside these
+   column labels that 24rem becomes the field HEIGHT. Keep fields compact. */
+.processes .instance-search input[type="search"],
+.processes .instance-search select {
+  flex: none;
+  height: 2.3em;
+  max-width: none;
+  width: 12rem;
+}
+
 /* The manage-filters view that opens when ?filters=manage is present: a
    master-detail page — saved filters on the left, the editor on the right. */
 #manage-filters {
@@ -1872,6 +1941,11 @@ nav:has(> .breadcrumbs) {
 /* Breathing room between the heading and the table/content it reveals. */
 .dashboard-section > summary + * {
   margin-top: var(--spacing-2);
+}
+
+/* The "see all" link that used to sit inside the summary. */
+.dashboard-section > .section-link {
+  margin-bottom: 0;
 }
 
 .task-breakdown {

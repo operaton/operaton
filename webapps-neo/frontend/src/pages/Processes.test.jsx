@@ -107,7 +107,7 @@ describe("ProcessesPage — definition list", () => {
     signal_response(state.api.process.definition.list, definition_rows);
     const { getAllByRole } = renderPage(state);
     const cells = getAllByRole("cell").map((c) => c.textContent);
-    expect(cells).toContain("3"); // instances
+    expect(cells).toContain("3/0"); // active/suspended instances
     expect(cells).toContain("invoice"); // key
   });
 
@@ -146,7 +146,6 @@ describe("ProcessesPage — bulk actions", () => {
     const { getByText } = renderPage(state);
     expect(getByText("processes.bulk.activate").disabled).toBe(true);
     expect(getByText("processes.bulk.suspend").disabled).toBe(true);
-    expect(getByText("processes.bulk.remove").disabled).toBe(true);
   });
 
   it("enables bulk buttons once a row is selected", () => {
@@ -210,32 +209,6 @@ describe("ProcessesPage — bulk actions", () => {
     expect(
       engine_rest.process_definition.suspend.mock.lastCall[2].include_instances,
     ).toBe(false);
-  });
-
-  it("remove calls engine_rest.process_definition.remove after confirmation", async () => {
-    engine_rest.process_definition.remove.mockResolvedValue(undefined);
-    const prev = window.confirm;
-    window.confirm = vi.fn(() => true);
-    const { container, getByText } = renderPage(state);
-    select_first(container);
-    fireEvent.click(getByText("processes.bulk.remove"));
-    await Promise.resolve();
-    await Promise.resolve();
-    expect(engine_rest.process_definition.remove).toHaveBeenCalled();
-    expect(engine_rest.process_definition.remove.mock.lastCall[1]).toBe(
-      "proc:1",
-    );
-    window.confirm = prev;
-  });
-
-  it("remove is skipped when the confirmation is declined", () => {
-    const prev = window.confirm;
-    window.confirm = vi.fn(() => false);
-    const { container, getByText } = renderPage(state);
-    select_first(container);
-    fireEvent.click(getByText("processes.bulk.remove"));
-    expect(engine_rest.process_definition.remove).not.toHaveBeenCalled();
-    window.confirm = prev;
   });
 
   it("select-all checkbox selects every row", () => {

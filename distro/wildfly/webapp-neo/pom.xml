@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.operaton.bpm.wildfly</groupId>
+    <artifactId>operaton-wildfly</artifactId>
+    <version>2.2.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.operaton.bpm.webapp-neo</groupId>
+  <artifactId>operaton-webapp-neo-wildfly</artifactId>
+  <packaging>war</packaging>
+  <name>Operaton - Webapp-Neo - WildFly</name>
+  <description>${project.name}</description>
+  <properties>
+    <!-- generate a bom of compile time dependencies for the license book.
+    Note: Every compile time dependency will end up in the license book. Please
+    declare only dependencies that are actually needed -->
+    <skip-third-party-bom>false</skip-third-party-bom>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.bpm.webapp-neo</groupId>
+      <artifactId>operaton-webapp-neo</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>operaton-webapp-neo</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <!-- module dependencies for deployment on JBoss/WildFly -->
+              <Dependencies>org.operaton.bpm.operaton-engine,org.operaton.bpm.dmn.operaton-engine-dmn,org.operaton.bpm.model.operaton-bpmn-model,org.operaton.bpm.model.operaton-cmmn-model,org.operaton.bpm.model.operaton-dmn-model,org.operaton.bpm.model.operaton-xml-model,org.operaton.commons.operaton-commons-utils,org.operaton.commons.operaton-commons-logging,org.operaton.spin.operaton-spin-core,org.operaton.bpm.juel.operaton-juel services,org.graalvm.js.js-all services</Dependencies>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

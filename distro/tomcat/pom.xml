@@ -39,6 +39,7 @@
         <module>assembly</module>
         <module>distro</module>
         <module>webapp</module>
+        <module>webapp-neo</module>
       </modules>
     </profile>
   </profiles>

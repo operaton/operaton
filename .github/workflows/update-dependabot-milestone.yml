@@ -13,15 +13,34 @@
 # limitations under the License.
 name: Update Dependabot Milestone
 
+# Called by the Release workflow. A release created there with GITHUB_TOKEN does not emit a
+# 'release' event that triggers other workflows, so this workflow is invoked explicitly.
 on:
-  release:
-    types: [published]
+  workflow_call:
+    inputs:
+      release_tag:
+        description: 'The released version or tag, e.g. 2.1.5 or v2.1.5'
+        type: string
+        required: true
+      release_target_branch:
+        description: 'The branch the release was built from, e.g. main or release/2.1.x'
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'The released version or tag, e.g. 2.1.5 or v2.1.5'
+        type: string
+        required: true
+      release_target_branch:
+        description: 'The branch the release was built from, e.g. main or release/2.1.x'
+        type: string
+        required: true
 
 jobs:
   update-dependabot-milestone:
     name: Update Dependabot Milestone
     runs-on: ubuntu-latest
-    if: github.event.release.prerelease == false
     permissions:
       contents: write
       pull-requests: write
@@ -36,8 +55,8 @@ jobs:
 
       - name: Update dependabot milestone
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          RELEASE_TARGET_BRANCH: ${{ github.event.release.target_commitish }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TARGET_BRANCH: ${{ inputs.release_target_branch }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: .github/scripts/update-dependabot-milestone.sh

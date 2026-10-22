@@ -47,7 +47,7 @@
     "@playwright/test": "^1.60.0",
     "@preact/preset-vite": "^2.9.0",
     "@testing-library/preact": "^3.2.4",
-    "@vitest/ui": "^4.0.7",
+    "@vitest/ui": "^4.1.12",
     "eslint": "^9.39.5",
     "eslint-config-preact": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -57,6 +57,6 @@
     "pa11y": "^9.1.1",
     "simple-git-hooks": "^2.13.1",
     "vite": "^8.3.5",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }

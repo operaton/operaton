@@ -1103,6 +1103,12 @@
     vertical-align: top;
   }
 
+  /* The permissions fieldset names itself with its legend, so it has no label
+     in front of it; keep it in the field column. */
+  .authorization-create > fieldset {
+    grid-column: 2;
+  }
+
   .link-list {
     list-style: none;
     padding: 0;
@@ -1303,6 +1309,7 @@
 
     /* A message about the form as a whole belongs across both columns; in the
        label column it is squeezed into a few characters per line. */
+    > [aria-live],
     > .error,
     > .info-box,
     > .password-policy {

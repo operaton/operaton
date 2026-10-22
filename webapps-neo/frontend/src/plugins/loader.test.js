@@ -86,11 +86,20 @@ describe("plugins/loader", () => {
     expect(importer).not.toHaveBeenCalled();
   });
 
-  it("always registers bundled plugins (the metrics example)", async () => {
+  it("registers the bundled Metrics page only when it is enabled", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => ({ ok: false })),
     );
+    // Off in the standard delivery.
+    await load_plugins({ importer: vi.fn() });
+    expect(plugins_for(PLUGIN_POINTS.PAGE).map((p) => p.id)).not.toContain(
+      "metrics",
+    );
+
+    // On once configured.
+    _reset_registry();
+    set_config({ metricsEnabled: true });
     await load_plugins({ importer: vi.fn() });
     expect(plugins_for(PLUGIN_POINTS.PAGE).map((p) => p.id)).toContain(
       "metrics",
@@ -106,10 +115,6 @@ describe("plugins/loader", () => {
 
     expect(fetch_spy).not.toHaveBeenCalled();
     expect(importer).not.toHaveBeenCalled();
-    // bundled plugins are unaffected by the gate
-    expect(plugins_for(PLUGIN_POINTS.PAGE).map((p) => p.id)).toContain(
-      "metrics",
-    );
   });
 
   it("refuses a cross-origin plugin that is not in the allow list", async () => {

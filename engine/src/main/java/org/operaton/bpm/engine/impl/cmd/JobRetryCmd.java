@@ -62,6 +62,7 @@ public abstract @NullMarked class JobRetryCmd implements Command<Object> {
     if(exception != null) {
       job.setExceptionMessage(exception.getMessage());
       job.setExceptionStacktrace(getExceptionStacktrace());
+      job.setException(exception);
     }
   }
 

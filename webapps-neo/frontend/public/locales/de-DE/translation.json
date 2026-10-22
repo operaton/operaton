@@ -319,6 +319,7 @@
     "enable-history-mode": "Verlaufsmodus aktivieren",
     "start-time": "Startzeit",
     "business-key": "Geschäftsschlüssel",
+    "search": "Nach Name suchen",
     "state": "Status",
     "end-time": "Endzeit",
     "duration": "Dauer",
@@ -330,7 +331,8 @@
       "incidents": "Incid.",
       "instances": "Inst.",
       "version": "Ver.",
-      "tenant-id": "Mandant"
+      "tenant-id": "Mandant",
+      "instances-status": "Akt./Susp."
     },
     "tabs": {
       "instances": "Instanzen",
@@ -423,20 +425,20 @@
       "deploymentId": "Deployment-ID",
       "tenantId": "Mandanten-ID"
     },
-    "filter_keys": {
-      "name": "name",
-      "nameLike": "nameLike",
-      "key": "key",
-      "keyLike": "keyLike",
-      "category": "category",
-      "categoryLike": "categoryLike",
-      "versionTag": "versionTag",
-      "active": "active",
-      "suspended": "suspended",
-      "latestVersion": "latestVersion",
-      "startableInTasklist": "startableInTasklist"
-    },
     "instance": {
+      "search": {
+        "variable": "Variable",
+        "comparison": "Vergleich",
+        "op": {
+          "eq": "=",
+          "neq": "≠",
+          "gt": ">",
+          "gteq": "≥",
+          "lt": "<",
+          "lteq": "≤",
+          "like": "enthält"
+        }
+      },
       "sort": {
         "startTime": "Startzeit",
         "instanceId": "Instanz-ID",
@@ -444,19 +446,6 @@
         "businessKey": "Geschäftsschlüssel",
         "tenantId": "Mandanten-ID"
       },
-      "filter_keys": {
-        "businessKey": "businessKey",
-        "businessKeyLike": "businessKeyLike",
-        "active": "active",
-        "suspended": "suspended",
-        "withIncidents": "withIncidents",
-        "withoutIncidents": "withoutIncidents",
-        "startedBefore": "startedBefore",
-        "startedAfter": "startedAfter",
-        "finished": "finished",
-        "variables": "Variable"
-      },
-      "manage_title": "Prozessinstanz-Filter verwalten",
       "suspend": "Anhalten",
       "activate": "Aktivieren",
       "cancel": "Abbrechen",
@@ -464,9 +453,6 @@
       "keep-running": "Weiterlaufen lassen"
     },
     "history-mode-na": "Live-Daten – der Verlaufsmodus gilt hier nicht.",
-    "filter": {
-      "manage_title": "Prozessdefinitions-Filter verwalten"
-    },
     "variables": {
       "add": "Variable hinzufügen",
       "edit": "Variable bearbeiten",
@@ -515,10 +501,12 @@
     },
     "super-instance": "Übergeordnete Instanz",
     "root-instance": "Wurzelinstanz",
-    "removal-time": "Entfernungszeitpunkt"
+    "removal-time": "Entfernungszeitpunkt",
+    "instances-status-title": "Aktive / suspendierte Instanzen"
   },
   "decisions": {
     "title": "Entscheidungen",
+    "search": "Nach Name suchen",
     "queried-decisions": "Abgefragte Entscheidungen",
     "select-details": "Entscheidung auswählen, um Details anzuzeigen",
     "select-diagram": "Entscheidung auswählen, um Diagramm anzuzeigen",
@@ -535,20 +523,6 @@
       "version": "Version",
       "deploymentId": "Deployment-ID",
       "tenantId": "Mandanten-ID"
-    },
-    "filter_keys": {
-      "name": "name",
-      "nameLike": "nameLike",
-      "key": "key",
-      "keyLike": "keyLike",
-      "category": "category",
-      "categoryLike": "categoryLike",
-      "versionTag": "versionTag",
-      "latestVersion": "latestVersion",
-      "decisionRequirementsDefinitionKey": "decisionRequirementsDefinitionKey"
-    },
-    "filter": {
-      "manage_title": "Decision-Filter verwalten"
     },
     "tabs": {
       "details": "Details",
@@ -577,17 +551,6 @@
       "name": "Name",
       "id": "ID",
       "tenantId": "Mandanten-ID"
-    },
-    "filter_keys": {
-      "name": "name",
-      "nameLike": "nameLike",
-      "source": "source",
-      "tenantIdIn": "tenantIdIn",
-      "after": "after",
-      "before": "before"
-    },
-    "filter": {
-      "manage_title": "Deployment-Filter verwalten"
     },
     "upload": {
       "title": "Bereitstellen",
@@ -628,16 +591,6 @@
     "sort": {
       "batchId": "Batch-ID",
       "tenantId": "Mandanten-ID"
-    },
-    "filter_keys": {
-      "batchId": "batchId",
-      "type": "type",
-      "tenantIdIn": "tenantIdIn",
-      "suspended": "suspended",
-      "withoutTenantId": "withoutTenantId"
-    },
-    "filter": {
-      "manage_title": "Batch-Filter verwalten"
     },
     "retry-failed": "Fehlgeschlagene Jobs wiederholen",
     "show-history": "Verlauf anzeigen",

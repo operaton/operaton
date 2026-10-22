@@ -1,5 +1,5 @@
 import { useSignal } from "@preact/signals";
-import { useContext, useEffect } from "preact/hooks";
+import { useContext, useEffect, useRef } from "preact/hooks";
 import { useLocation, useRoute } from "preact-iso";
 import { useTranslation } from "react-i18next";
 import engine_rest, {
@@ -12,15 +12,9 @@ import { BPMNViewer } from "../components/BPMNViewer.jsx";
 import { Dialog, ConfirmDialog } from "../components/Dialog.jsx";
 import { SuspensionDialog } from "../components/SuspensionDialog.jsx";
 import { ListFilter } from "../components/ListFilter.jsx";
-import { ManageFilters } from "../components/ManageFilters.jsx";
+import { ListSearch } from "../components/ListSearch.jsx";
 import { Breadcrumbs } from "../components/Breadcrumbs.jsx";
-import {
-  filter_share_link,
-  parse_list_query,
-  with_manage,
-  without_manage,
-  write_list_query,
-} from "../helper/list_query.js";
+import { parse_list_query, write_list_query } from "../helper/list_query.js";
 import {
   VARIABLE_TYPES,
   coerce_variable_value,
@@ -29,17 +23,8 @@ import {
   object_type_label,
   format_variable_value,
 } from "../helper/variables.js";
-import {
-  create_saved_filter,
-  delete_saved_filter,
-  hydrate_signal,
-  update_saved_filter,
-} from "../helper/saved_filters.js";
 import { formatDuration, formatTimestamp } from "../helper/date_formatter.js";
 import { app_path } from "../config.js";
-
-const RESOURCE_TYPE = "process_definition";
-const INSTANCE_RESOURCE_TYPE = "process_instance";
 
 const INSTANCE_SORT_OPTIONS = [
   { key: "startTime", nameKey: "processes.instance.sort.startTime" },
@@ -49,76 +34,36 @@ const INSTANCE_SORT_OPTIONS = [
   { key: "tenantId", nameKey: "processes.instance.sort.tenantId" },
 ];
 
-const INSTANCE_FILTER_KEYS = [
-  {
-    key: "variables",
-    nameKey: "processes.instance.filter_keys.variables",
-    type: "variable",
-    // The historic instance query has no notLike.
-    operators: ["eq", "neq", "gt", "gteq", "lt", "lteq", "like"],
-  },
-  {
-    key: "businessKey",
-    nameKey: "processes.instance.filter_keys.businessKey",
-    type: "string",
-  },
-  {
-    key: "businessKeyLike",
-    nameKey: "processes.instance.filter_keys.businessKeyLike",
-    type: "string",
-  },
-  {
-    key: "active",
-    nameKey: "processes.instance.filter_keys.active",
-    type: "boolean",
-  },
-  {
-    key: "suspended",
-    nameKey: "processes.instance.filter_keys.suspended",
-    type: "boolean",
-  },
-  {
-    key: "finished",
-    nameKey: "processes.instance.filter_keys.finished",
-    type: "boolean",
-  },
-  {
-    key: "withIncidents",
-    nameKey: "processes.instance.filter_keys.withIncidents",
-    type: "boolean",
-  },
-  {
-    key: "withoutIncidents",
-    nameKey: "processes.instance.filter_keys.withoutIncidents",
-    type: "boolean",
-  },
-  {
-    key: "startedBefore",
-    nameKey: "processes.instance.filter_keys.startedBefore",
-    type: "date",
-  },
-  {
-    key: "startedAfter",
-    nameKey: "processes.instance.filter_keys.startedAfter",
-    type: "date",
-  },
-];
-
 const INSTANCE_DEFAULTS = { sortBy: "startTime", sortOrder: "asc" };
 
-const instance_params_from_query = (state, query) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(
-    state.api.process.instance.saved_filters,
-    saved_filter_id,
-  );
-  return {
-    ...(saved?.query ?? {}),
-    ...criteria,
+// The inline instance search (variable + business key). Its parts ride the
+// list-query criteria under their own keys; here they are translated into the
+// engine's `variables` (name_operator_value) and `businessKeyLike` params.
+const INSTANCE_SEARCH_OPERATORS = [
+  "eq",
+  "neq",
+  "gt",
+  "gteq",
+  "lt",
+  "lteq",
+  "like",
+];
+
+const instance_params_from_query = (query) => {
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
+  const { var_name, var_op, var_value, business_key, ...rest } = criteria;
+  const params = {
+    ...rest,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
   };
+  // The history wrapper serialises variables from {name, operator, value}.
+  if (var_name && var_value !== undefined && var_value !== "")
+    params.variables = [
+      { name: var_name, operator: var_op || "eq", value: var_value },
+    ];
+  if (business_key) params.businessKeyLike = `%${business_key}%`;
+  return params;
 };
 
 const SORT_OPTIONS = [
@@ -131,67 +76,27 @@ const SORT_OPTIONS = [
   { key: "tenantId", nameKey: "processes.sort.tenantId" },
 ];
 
-const FILTER_KEYS = [
-  { key: "name", nameKey: "processes.filter_keys.name", type: "string" },
-  {
-    key: "nameLike",
-    nameKey: "processes.filter_keys.nameLike",
-    type: "string",
-  },
-  { key: "key", nameKey: "processes.filter_keys.key", type: "string" },
-  { key: "keyLike", nameKey: "processes.filter_keys.keyLike", type: "string" },
-  {
-    key: "category",
-    nameKey: "processes.filter_keys.category",
-    type: "string",
-  },
-  {
-    key: "categoryLike",
-    nameKey: "processes.filter_keys.categoryLike",
-    type: "string",
-  },
-  {
-    key: "versionTag",
-    nameKey: "processes.filter_keys.versionTag",
-    type: "string",
-  },
-  { key: "active", nameKey: "processes.filter_keys.active", type: "boolean" },
-  {
-    key: "suspended",
-    nameKey: "processes.filter_keys.suspended",
-    type: "boolean",
-  },
-  {
-    key: "latestVersion",
-    nameKey: "processes.filter_keys.latestVersion",
-    type: "boolean",
-  },
-  {
-    key: "startableInTasklist",
-    nameKey: "processes.filter_keys.startableInTasklist",
-    type: "boolean",
-  },
-];
-
-const find_saved = (signal, id) => {
-  if (!id || id === "all") return null;
-  return (signal.value?.data ?? []).find((f) => f.id === id) ?? null;
-};
-
 const load_definitions = (state, query) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(
-    state.api.process.definition.saved_filters,
-    saved_filter_id,
-  );
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
   const params = {
-    ...(saved?.query ?? {}),
     ...criteria,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
   };
   void engine_rest.process_definition.list(state, params);
+};
+
+// Compare two definition-statistics rows by a definition field — numbers
+// numerically, everything else as text, nullish last. Used to sort the list
+// client-side (the statistics endpoint ignores sortBy).
+const compare_definitions = (key) => (a, b) => {
+  const av = a?.definition?.[key],
+    bv = b?.definition?.[key];
+  if (av == null && bv == null) return 0;
+  if (av == null) return 1;
+  if (bv == null) return -1;
+  if (typeof av === "number" && typeof bv === "number") return av - bv;
+  return String(av).localeCompare(String(bv));
 };
 
 /**
@@ -230,11 +135,6 @@ const ProcessesPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.definition_id, JSON.stringify(query)]);
-
-  useEffect(() => {
-    hydrate_signal(RESOURCE_TYPE, state.api.process.definition.saved_filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Activity instances power the diagram tokens and the activity history tab.
   // Live instances use the runtime endpoint; historic (finished) instances use
@@ -676,24 +576,37 @@ const ProcessDefinitionSelection = () => {
   const parsed = parse_list_query(query);
   const has_criteria = Object.keys(parsed.criteria).length > 0;
 
+  // The name search filters client-side: this list is backed by the statistics
+  // endpoint, which takes no nameLike. The term is kept in the URL so it
+  // survives a reload and a shared link.
+  const search_term = (parsed.criteria.nameLike ?? "").replace(/^%+|%+$/g, "");
+  const term_lc = search_term.toLowerCase();
+
   const list_value = definition.list.value;
-  const rows = list_value?.data ?? [];
+  const all_rows = list_value?.data ?? [];
+  const filtered = term_lc
+    ? all_rows.filter((r) =>
+        [r.definition?.name, r.definition?.key].some((s) =>
+          (s ?? "").toLowerCase().includes(term_lc),
+        ),
+      )
+    : all_rows;
+  // Sort client-side too: this list is backed by /process-definition/statistics,
+  // which ignores sortBy. The sort controls would otherwise do nothing.
+  const sortBy = parsed.sortBy ?? "name";
+  const sortOrder = parsed.sortOrder ?? "asc";
+  const rows = [...filtered].sort(compare_definitions(sortBy));
+  if (sortOrder === "desc") rows.reverse();
   const has_data = list_value?.status === RESPONSE_STATE.SUCCESS;
-  const is_empty = has_data && rows.length === 0 && !has_criteria;
+  const is_empty = has_data && all_rows.length === 0 && !has_criteria;
 
   const apply_patch = (patch) => {
     const next = write_list_query(window.location.href, patch);
     route(next, true);
   };
-  const open_manage = () => route(with_manage(), false);
-  const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
-    sortBy: parsed.sortBy ?? "name",
-    sortOrder: parsed.sortOrder ?? "asc",
-    criteria: parsed.criteria,
-  };
-
-  if (query.filters === "manage") return <DefinitionsManage />;
+  const list_current = { sortBy, sortOrder };
+  const on_search = (term) =>
+    apply_patch({ criteria: term ? { nameLike: `%${term}%` } : {} });
 
   const toggle_one = (id) => {
     const next = new Set(selected.value);
@@ -764,24 +677,6 @@ const ProcessDefinitionSelection = () => {
             class="secondary"
             disabled={!has_selection || bulk_running.value}
             onClick={() => {
-              if (
-                window.confirm(
-                  t("processes.bulk.confirm-remove", {
-                    count: selected.value.size,
-                  }),
-                )
-              ) {
-                void run_bulk("remove");
-              }
-            }}
-          >
-            {t("processes.bulk.remove")}
-          </button>
-          <button
-            type="button"
-            class="secondary"
-            disabled={!has_selection || bulk_running.value}
-            onClick={() => {
               suspend_next.value = false;
               suspension_open.value = true;
             }}
@@ -822,13 +717,16 @@ const ProcessDefinitionSelection = () => {
           </p>
         )}
       </div>
+      <ListSearch
+        label={t("processes.search")}
+        value={search_term}
+        on_search={on_search}
+      />
       <ListFilter
         sort_options={SORT_OPTIONS}
-        saved_filters_signal={definition.saved_filters}
         current={list_current}
         defaults={{ sortBy: "name", sortOrder: "asc" }}
         on_change={apply_patch}
-        on_manage={open_manage}
       />
 
       {is_empty ? (
@@ -850,8 +748,8 @@ const ProcessDefinitionSelection = () => {
                 <th class="num" title={t("processes.tabs.incidents")}>
                   {t("processes.col-abbr.incidents")}
                 </th>
-                <th class="num" title={t("dashboard.instances")}>
-                  {t("processes.col-abbr.instances")}
+                <th class="num" title={t("processes.instances-status-title")}>
+                  {t("processes.col-abbr.instances-status")}
                 </th>
                 <th>{t("common.key")}</th>
                 <th class="num" title={t("processes.version")}>
@@ -941,7 +839,26 @@ const ProcessDefinition = ({
   checked,
   onToggle,
 }) => {
-  const { query } = useRoute();
+  const state = useContext(AppState),
+    { query } = useRoute(),
+    // statistics gives the running total; ask the engine how many are suspended
+    // so the status column can show active vs. suspended.
+    suspended = useSignal(null);
+
+  useEffect(() => {
+    let alive = true;
+    void Promise.resolve(
+      engine_rest.process_instance.suspended_count(state, id),
+    ).then((n) => alive && (suspended.value = n ?? 0));
+    return () => {
+      alive = false;
+    };
+  }, [id]);
+
+  const total = instances ?? 0,
+    susp = suspended.value ?? 0,
+    active = Math.max(total - susp, 0);
+
   return (
     <tr aria-selected={checked}>
       <td onClick={(e) => e.stopPropagation()}>
@@ -962,7 +879,9 @@ const ProcessDefinition = ({
         </a>
       </td>
       <td class="num">{incidents?.length ?? 0}</td>
-      <td class="num">{instances ?? 0}</td>
+      <td class="num">
+        {active}/{susp}
+      </td>
       <td>{key}</td>
       <td class="num">{version}</td>
       <td class="font-mono">{id}</td>
@@ -981,16 +900,8 @@ const Instances = () => {
     // (finished vs unfinished), so it always holds the historic shape.
     list = state.api.history.process_instance.list;
 
-  useEffect(() => {
-    hydrate_signal(
-      INSTANCE_RESOURCE_TYPE,
-      state.api.process.instance.saved_filters,
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const fetch_page = (firstResult) => {
-    const extra = instance_params_from_query(state, query);
+    const extra = instance_params_from_query(query);
     if (history_mode) {
       void engine_rest.history.process_instance.all(
         state,
@@ -1035,29 +946,21 @@ const Instances = () => {
 
   const parsed = parse_list_query(query);
   const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
     sortBy: parsed.sortBy ?? INSTANCE_DEFAULTS.sortBy,
     sortOrder: parsed.sortOrder ?? INSTANCE_DEFAULTS.sortOrder,
-    criteria: parsed.criteria,
   };
   const apply_patch = (patch) => {
     route(write_list_query(window.location.href, patch), true);
   };
-  const open_manage = () => route(with_manage(), false);
-
-  if (!params?.selection_id && query?.filters === "manage") {
-    return <InstancesManage />;
-  }
 
   return !params?.selection_id ? (
     <>
+      <InstanceSearch criteria={parsed.criteria} on_change={apply_patch} />
       <ListFilter
         sort_options={INSTANCE_SORT_OPTIONS}
-        saved_filters_signal={state.api.process.instance.saved_filters}
         current={list_current}
         defaults={INSTANCE_DEFAULTS}
         on_change={apply_patch}
-        on_manage={open_manage}
       />
       <div>
         <table>
@@ -2287,70 +2190,93 @@ const JobDefinitions = () => {
   );
 };
 
-const DefinitionsManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
+// Inline instance search: find instances by a process variable (name,
+// comparison, value) and/or business key. Replaces the saved-filter variable
+// criteria, which were a Tasklist-style feature. The parts ride the list-query
+// criteria and are turned into the engine query by instance_params_from_query.
+const InstanceSearch = ({ criteria, on_change }) => {
+  const [t] = useTranslation(),
+    name = useSignal(criteria.var_name ?? ""),
+    op = useSignal(criteria.var_op ?? "eq"),
+    value = useSignal(criteria.var_value ?? ""),
+    business_key = useSignal(criteria.business_key ?? ""),
+    timer = useRef(null);
 
-  const refresh = () =>
-    hydrate_signal(RESOURCE_TYPE, state.api.process.definition.saved_filters);
+  // Search as the fields change (debounced). A variable needs both a name and
+  // a value to count; the business key stands on its own.
+  const run = () => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      const has_var = name.value.trim() && value.value.trim();
+      on_change({
+        criteria: {
+          ...(has_var
+            ? {
+                var_name: name.value.trim(),
+                var_op: op.value,
+                var_value: value.value.trim(),
+              }
+            : {}),
+          ...(business_key.value.trim()
+            ? { business_key: business_key.value.trim() }
+            : {}),
+        },
+      });
+    }, 300);
+  };
+
   return (
-    <div class="fade-in">
-      <ManageFilters
-        title={t("processes.filter.manage_title")}
-        saved_filters_signal={state.api.process.definition.saved_filters}
-        filter_keys={FILTER_KEYS}
-        sort_options={SORT_OPTIONS}
-        on_save={(f) => {
-          create_saved_filter(RESOURCE_TYPE, f);
-          refresh();
-        }}
-        on_update={(id, f) => {
-          update_saved_filter(RESOURCE_TYPE, id, f);
-          refresh();
-        }}
-        on_delete={(id) => {
-          delete_saved_filter(RESOURCE_TYPE, id);
-          refresh();
-        }}
-        on_close={() => route(without_manage(), true)}
-        build_share_link={(f) => filter_share_link(window.location.href, f)}
-      />
-    </div>
-  );
-};
-
-const InstancesManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
-
-  const refresh = () =>
-    hydrate_signal(
-      INSTANCE_RESOURCE_TYPE,
-      state.api.process.instance.saved_filters,
-    );
-  return (
-    <ManageFilters
-      title={t("processes.instance.manage_title")}
-      saved_filters_signal={state.api.process.instance.saved_filters}
-      filter_keys={INSTANCE_FILTER_KEYS}
-      sort_options={INSTANCE_SORT_OPTIONS}
-      on_save={(f) => {
-        create_saved_filter(INSTANCE_RESOURCE_TYPE, f);
-        refresh();
-      }}
-      on_update={(id, f) => {
-        update_saved_filter(INSTANCE_RESOURCE_TYPE, id, f);
-        refresh();
-      }}
-      on_delete={(id) => {
-        delete_saved_filter(INSTANCE_RESOURCE_TYPE, id);
-        refresh();
-      }}
-      on_close={() => route(without_manage(), true)}
-      build_share_link={(f) => filter_share_link(window.location.href, f)}
-    />
+    <search class="instance-search">
+      <label>
+        <span>{t("processes.instance.search.variable")}</span>
+        <input
+          type="search"
+          value={name.value}
+          onInput={(e) => {
+            name.value = e.currentTarget.value;
+            run();
+          }}
+        />
+      </label>
+      <label>
+        <span>{t("processes.instance.search.comparison")}</span>
+        <select
+          value={op.value}
+          onChange={(e) => {
+            op.value = e.currentTarget.value;
+            run();
+          }}
+        >
+          {INSTANCE_SEARCH_OPERATORS.map((o) => (
+            <option key={o} value={o}>
+              {t(`processes.instance.search.op.${o}`)}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <span>{t("common.value")}</span>
+        <input
+          type="search"
+          value={value.value}
+          onInput={(e) => {
+            value.value = e.currentTarget.value;
+            run();
+          }}
+        />
+      </label>
+      <label>
+        <span>{t("processes.business-key")}</span>
+        <input
+          type="search"
+          value={business_key.value}
+          onInput={(e) => {
+            business_key.value = e.currentTarget.value;
+            run();
+          }}
+        />
+      </label>
+    </search>
   );
 };
 

@@ -23,8 +23,12 @@ const register_descriptors = (module) => {
 
 /** Register plugins that ship inside the app bundle. */
 const register_bundled = () => {
+  // The Metrics page ships bundled but is off in the standard delivery; enable
+  // it with VITE_METRICS_ENABLED or config.json "metricsEnabled": true.
+  const metrics_enabled = get_config().metrics_enabled;
   const modules = import.meta.glob("./bundled/*/plugin.jsx", { eager: true });
   for (const path in modules) {
+    if (path.includes("/metrics/") && !metrics_enabled) continue;
     try {
       register_descriptors(modules[path]);
     } catch (error) {

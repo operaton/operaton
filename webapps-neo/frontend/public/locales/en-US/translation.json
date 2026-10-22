@@ -319,6 +319,7 @@
     "enable-history-mode": "Enable History Mode",
     "start-time": "Start Time",
     "business-key": "Business Key",
+    "search": "Search by name",
     "state": "State",
     "end-time": "End Time",
     "duration": "Duration",
@@ -330,7 +331,8 @@
       "incidents": "Incid.",
       "instances": "Inst.",
       "version": "Ver.",
-      "tenant-id": "Tenant"
+      "tenant-id": "Tenant",
+      "instances-status": "Act./Susp."
     },
     "tabs": {
       "instances": "Instances",
@@ -423,20 +425,20 @@
       "deploymentId": "Deployment ID",
       "tenantId": "Tenant ID"
     },
-    "filter_keys": {
-      "name": "name",
-      "nameLike": "nameLike",
-      "key": "key",
-      "keyLike": "keyLike",
-      "category": "category",
-      "categoryLike": "categoryLike",
-      "versionTag": "versionTag",
-      "active": "active",
-      "suspended": "suspended",
-      "latestVersion": "latestVersion",
-      "startableInTasklist": "startableInTasklist"
-    },
     "instance": {
+      "search": {
+        "variable": "Variable",
+        "comparison": "Comparison",
+        "op": {
+          "eq": "=",
+          "neq": "≠",
+          "gt": ">",
+          "gteq": "≥",
+          "lt": "<",
+          "lteq": "≤",
+          "like": "contains"
+        }
+      },
       "sort": {
         "startTime": "Start time",
         "instanceId": "Instance ID",
@@ -444,19 +446,6 @@
         "businessKey": "Business key",
         "tenantId": "Tenant ID"
       },
-      "filter_keys": {
-        "businessKey": "businessKey",
-        "businessKeyLike": "businessKeyLike",
-        "active": "active",
-        "suspended": "suspended",
-        "withIncidents": "withIncidents",
-        "withoutIncidents": "withoutIncidents",
-        "startedBefore": "startedBefore",
-        "startedAfter": "startedAfter",
-        "finished": "finished",
-        "variables": "Variable"
-      },
-      "manage_title": "Manage process-instance filters",
       "suspend": "Suspend",
       "activate": "Activate",
       "cancel": "Cancel",
@@ -464,9 +453,6 @@
       "keep-running": "Keep running"
     },
     "history-mode-na": "Live data — history mode does not apply here.",
-    "filter": {
-      "manage_title": "Manage process-definition filters"
-    },
     "variables": {
       "add": "Add variable",
       "edit": "Edit variable",
@@ -515,10 +501,12 @@
     },
     "super-instance": "Calling instance",
     "root-instance": "Root instance",
-    "removal-time": "Removal time"
+    "removal-time": "Removal time",
+    "instances-status-title": "Active / suspended instances"
   },
   "decisions": {
     "title": "Decisions",
+    "search": "Search by name",
     "queried-decisions": "Queried decisions",
     "select-details": "Select decision to view its details",
     "select-diagram": "Select decision to view its diagram",
@@ -535,20 +523,6 @@
       "version": "Version",
       "deploymentId": "Deployment ID",
       "tenantId": "Tenant ID"
-    },
-    "filter_keys": {
-      "name": "name",
-      "nameLike": "nameLike",
-      "key": "key",
-      "keyLike": "keyLike",
-      "category": "category",
-      "categoryLike": "categoryLike",
-      "versionTag": "versionTag",
-      "latestVersion": "latestVersion",
-      "decisionRequirementsDefinitionKey": "decisionRequirementsDefinitionKey"
-    },
-    "filter": {
-      "manage_title": "Manage decision-definition filters"
     },
     "tabs": {
       "details": "Details",
@@ -577,17 +551,6 @@
       "name": "Name",
       "id": "ID",
       "tenantId": "Tenant ID"
-    },
-    "filter_keys": {
-      "name": "name",
-      "nameLike": "nameLike",
-      "source": "source",
-      "tenantIdIn": "tenantIdIn",
-      "after": "after",
-      "before": "before"
-    },
-    "filter": {
-      "manage_title": "Manage deployment filters"
     },
     "upload": {
       "title": "Deploy",
@@ -628,16 +591,6 @@
     "sort": {
       "batchId": "Batch ID",
       "tenantId": "Tenant ID"
-    },
-    "filter_keys": {
-      "batchId": "batchId",
-      "type": "type",
-      "tenantIdIn": "tenantIdIn",
-      "suspended": "suspended",
-      "withoutTenantId": "withoutTenantId"
-    },
-    "filter": {
-      "manage_title": "Manage batch filters"
     },
     "retry-failed": "Retry failed jobs",
     "show-history": "Show history",

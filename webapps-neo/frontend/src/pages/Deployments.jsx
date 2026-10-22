@@ -13,24 +13,9 @@ import { Dialog } from "../components/Dialog.jsx";
 import { DmnViewer } from "../components/DMNViewer.jsx";
 import {} from "../helper/date_formatter.js";
 import { ListFilter } from "../components/ListFilter.jsx";
-import { ManageFilters } from "../components/ManageFilters.jsx";
 import { RelativeTime } from "../components/RelativeTime.jsx";
-import {
-  filter_share_link,
-  parse_list_query,
-  with_manage,
-  without_manage,
-  write_list_query,
-} from "../helper/list_query.js";
-import {
-  create_saved_filter,
-  delete_saved_filter,
-  hydrate_signal,
-  update_saved_filter,
-} from "../helper/saved_filters.js";
+import { parse_list_query, write_list_query } from "../helper/list_query.js";
 import { app_path } from "../config.js";
-
-const RESOURCE_TYPE = "deployment";
 
 const SORT_OPTIONS = [
   { key: "deploymentTime", nameKey: "deployments.sort.deploymentTime" },
@@ -39,37 +24,12 @@ const SORT_OPTIONS = [
   { key: "tenantId", nameKey: "deployments.sort.tenantId" },
 ];
 
-const FILTER_KEYS = [
-  { key: "name", nameKey: "deployments.filter_keys.name", type: "string" },
-  {
-    key: "nameLike",
-    nameKey: "deployments.filter_keys.nameLike",
-    type: "string",
-  },
-  { key: "source", nameKey: "deployments.filter_keys.source", type: "string" },
-  {
-    key: "tenantIdIn",
-    nameKey: "deployments.filter_keys.tenantIdIn",
-    type: "string",
-  },
-  { key: "after", nameKey: "deployments.filter_keys.after", type: "date" },
-  { key: "before", nameKey: "deployments.filter_keys.before", type: "date" },
-];
-
 const DEPLOYMENT_DEFAULTS = { sortBy: "deploymentTime", sortOrder: "desc" };
 
-const find_saved = (signal, id) => {
-  if (!id || id === "all") return null;
-  return (signal.value?.data ?? []).find((f) => f.id === id) ?? null;
-};
-
 const load_deployments = (state, query) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(state.api.deployment.saved_filters, saved_filter_id);
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
   const params = {
     ...DEPLOYMENT_DEFAULTS,
-    ...(saved?.query ?? {}),
     ...criteria,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
@@ -87,12 +47,6 @@ const DeploymentsPage = () => {
     } = useRoute(),
     { route } = useLocation(),
     [t] = useTranslation();
-
-  // Load the deployment list once on mount.
-  useEffect(() => {
-    hydrate_signal(RESOURCE_TYPE, state.api.deployment.saved_filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // The selected resource is not part of the list query, so picking one does
   // not reload the deployment list.
@@ -184,29 +138,22 @@ const DeploymentsList = () => {
 
   const parsed = parse_list_query(query);
   const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
     sortBy: parsed.sortBy ?? DEPLOYMENT_DEFAULTS.sortBy,
     sortOrder: parsed.sortOrder ?? DEPLOYMENT_DEFAULTS.sortOrder,
-    criteria: parsed.criteria,
   };
 
   const apply_patch = (patch) => {
     route(write_list_query(window.location.href, patch), true);
   };
-  const open_manage = () => route(with_manage(), false);
-
-  if (query?.filters === "manage") return <DeploymentsManage />;
 
   return (
     <div class="deployment-list">
       <div class="deployment-toolbar">
         <ListFilter
           sort_options={SORT_OPTIONS}
-          saved_filters_signal={state.api.deployment.saved_filters}
           current={list_current}
           defaults={DEPLOYMENT_DEFAULTS}
           on_change={apply_patch}
-          on_manage={open_manage}
         />
         <DeploymentUpload />
       </div>
@@ -587,39 +534,6 @@ const FormPreview = ({ data }) => {
       <h3>{t("deployments.raw-data-json")}</h3>
       <pre>{JSON.stringify(schema, null, 2)}</pre>
     </>
-  );
-};
-
-const DeploymentsManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
-
-  const refresh = () =>
-    hydrate_signal(RESOURCE_TYPE, state.api.deployment.saved_filters);
-  return (
-    <div class="fade-in">
-      <ManageFilters
-        title={t("deployments.filter.manage_title")}
-        saved_filters_signal={state.api.deployment.saved_filters}
-        filter_keys={FILTER_KEYS}
-        sort_options={SORT_OPTIONS}
-        on_save={(f) => {
-          create_saved_filter(RESOURCE_TYPE, f);
-          refresh();
-        }}
-        on_update={(id, f) => {
-          update_saved_filter(RESOURCE_TYPE, id, f);
-          refresh();
-        }}
-        on_delete={(id) => {
-          delete_saved_filter(RESOURCE_TYPE, id);
-          refresh();
-        }}
-        on_close={() => route(without_manage(), true)}
-        build_share_link={(f) => filter_share_link(window.location.href, f)}
-      />
-    </div>
   );
 };
 

@@ -91,7 +91,6 @@ const createAppState = () => {
       delete: signal(null),
       update: signal(null),
       retry: signal(null),
-      saved_filters: signal(null),
     },
     tenant: {
       list: signal(null),
@@ -121,7 +120,6 @@ const createAppState = () => {
         activity_instance_statistics: signal(null),
         suspend: signal(null),
         remove: signal(null),
-        saved_filters: signal(null),
       },
       instance: {
         called: signal(null),
@@ -135,7 +133,6 @@ const createAppState = () => {
         modification: signal(null),
         suspend: signal(null),
         delete: signal(null),
-        saved_filters: signal(null),
       },
     },
     incident: {
@@ -202,7 +199,6 @@ const createAppState = () => {
       process_definition: signal(null),
       delete: signal(null),
       create: signal(null),
-      saved_filters: signal(null),
     },
     decision: {
       definitions: signal(null),
@@ -210,7 +206,6 @@ const createAppState = () => {
       dmn: signal(null),
       instances: signal(null),
       instance: signal(null),
-      saved_filters: signal(null),
     },
     history: {
       incident: {

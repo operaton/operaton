@@ -1,9 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 /**
- * Slim list-page toolbar: a saved-filter dropdown + an Edit button that
- * opens the manage page, then a sort selector aligned to the right. CRUD
- * for saved filters lives in <ManageFilters>, not here.
+ * Slim list-page toolbar: a sort selector, and — only when `on_manage` is
+ * given — a saved-filter dropdown + an Edit button that opens the manage page.
+ * Saved filters are a Tasklist feature; other list pages pass no `on_manage`,
+ * so they show sorting only. CRUD for saved filters lives in <ManageFilters>.
  *
  * @param sort_options       {Array<{ key, nameKey }>}
  * @param saved_filters_signal {Signal<{ status, data: SavedFilter[] } | null>}
@@ -11,7 +12,7 @@ import { useTranslation } from "react-i18next";
  * @param defaults           {{ sortBy, sortOrder }}
  * @param include_my_filter  {boolean} — adds the "My" preset (Tasks only)
  * @param on_change          {(patch) => void}
- * @param on_manage          {() => void}    — Edit button click
+ * @param on_manage          {() => void}  — Edit button; omit to hide saved filters
  * @param filter_predicate   {(SavedFilter) => boolean} optional gate for which
  *                           saved filters to display
  */
@@ -32,30 +33,32 @@ export const ListFilter = ({
 
   return (
     <div id="list-filter">
-      <div class="list-filter-group">
-        <label for="list-filter-saved">{t("list_filter.saved_filter")}</label>
-        <select
-          id="list-filter-saved"
-          value={current.saved_filter_id ?? "all"}
-          onChange={(e) =>
-            on_change?.({ saved_filter_id: e.currentTarget.value })
-          }
-        >
-          <option value="all">{t("list_filter.all")}</option>
-          {include_my_filter && (
-            <option value="my">{t("list_filter.my")}</option>
-          )}
-          {saved_filters.length > 0 && <option disabled>──────────</option>}
-          {saved_filters.map((f) => (
-            <option key={f.id} value={f.id}>
-              {f.name}
-            </option>
-          ))}
-        </select>
-        <button type="button" onClick={on_manage}>
-          {t("list_filter.edit")}
-        </button>
-      </div>
+      {on_manage && (
+        <div class="list-filter-group">
+          <label for="list-filter-saved">{t("list_filter.saved_filter")}</label>
+          <select
+            id="list-filter-saved"
+            value={current.saved_filter_id ?? "all"}
+            onChange={(e) =>
+              on_change?.({ saved_filter_id: e.currentTarget.value })
+            }
+          >
+            <option value="all">{t("list_filter.all")}</option>
+            {include_my_filter && (
+              <option value="my">{t("list_filter.my")}</option>
+            )}
+            {saved_filters.length > 0 && <option disabled>──────────</option>}
+            {saved_filters.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.name}
+              </option>
+            ))}
+          </select>
+          <button type="button" onClick={on_manage}>
+            {t("list_filter.edit")}
+          </button>
+        </div>
+      )}
       <div class="list-filter-group">
         <label for="list-filter-sort-by">{t("list_filter.sort_by")}</label>
         <select

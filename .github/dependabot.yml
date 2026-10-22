@@ -3,6 +3,7 @@
 # Please see the documentation for more information:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 # https://containers.dev/guide/dependabot
+# Update policy and troubleshooting stored ignores: .github/DEPENDABOT.md
 
 version: 2
 updates:
@@ -19,6 +20,8 @@ updates:
       exclude:
         - "org.springframework.boot:*"
         - "org.springframework:spring-framework-bom"
+    # Jackson 2 patch/minor updates are allowed on main; the former shaded-FEEL
+    # constraint no longer applies. Bot-command ignores must be cleared separately.
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.FlowScopeWalker;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Validates that the target process definition cannot add a migrating multi-instance body.
@@ -33,8 +36,9 @@ public class CannotAddMultiInstanceBodyValidator implements MigrationInstruction
   public void validate(ValidatingMigrationInstruction instruction, final ValidatingMigrationInstructions instructions,
       MigrationInstructionValidationReportImpl report) {
     ActivityImpl targetActivity = instruction.getTargetActivity();
+    ScopeImpl flowScope = requireNonNull(targetActivity).getFlowScope();
 
-    FlowScopeWalker flowScopeWalker = new FlowScopeWalker(targetActivity.getFlowScope());
+    FlowScopeWalker flowScopeWalker = new FlowScopeWalker(flowScope);
     MiBodyCollector miBodyCollector = new MiBodyCollector();
     flowScopeWalker.addPreVisitor(miBodyCollector);
 
@@ -49,10 +53,10 @@ public class CannotAddMultiInstanceBodyValidator implements MigrationInstruction
 
   public static class MiBodyCollector implements TreeVisitor<ScopeImpl> {
 
-    protected ScopeImpl firstMiBody;
+    protected @Nullable ScopeImpl firstMiBody;
 
     @Override
-    public void visit(ScopeImpl obj) {
+    public void visit(@Nullable ScopeImpl obj) {
       if (firstMiBody == null && obj != null && isMiBody(obj)) {
         firstMiBody = obj;
       }

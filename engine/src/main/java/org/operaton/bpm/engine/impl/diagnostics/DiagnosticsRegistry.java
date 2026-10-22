@@ -21,13 +21,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 
 public class DiagnosticsRegistry {
 
   protected Map<String, CommandCounter> commands = new HashMap<>();
-  protected ApplicationServerImpl applicationServer;
-  protected String operatonIntegration;
+  protected @Nullable ApplicationServerImpl applicationServer;
+  protected @Nullable String operatonIntegration;
   protected Set<String> webapps = new HashSet<>();
 
   public synchronized ApplicationServerImpl getApplicationServer() {
@@ -45,10 +46,11 @@ public class DiagnosticsRegistry {
     return commands;
   }
 
-  public String getOperatonIntegration() {
+  public @Nullable String getOperatonIntegration() {
     return operatonIntegration;
   }
 
+  @SuppressWarnings("unused")
   public void setOperatonIntegration(String operatonIntegration) {
     this.operatonIntegration = operatonIntegration;
   }
@@ -80,9 +82,7 @@ public class DiagnosticsRegistry {
   }
 
   public synchronized void addWebapp(String webapp) {
-    if (!webapps.contains(webapp)) {
-      webapps.add(webapp);
-    }
+    webapps.add(webapp);
   }
 
   public void clearCommandCounts() {

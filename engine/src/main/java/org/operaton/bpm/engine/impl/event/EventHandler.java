@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.event;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 
@@ -27,10 +28,10 @@ public interface EventHandler {
   String getEventHandlerType();
 
   void handleEvent(EventSubscriptionEntity eventSubscription,
-                   Object payload,
-                   Object localPayload,
-                   Object payloadToTriggeredScope,
-                   String businessKey,
+                   @Nullable Object payload,
+                   @Nullable Object localPayload,
+                   @Nullable Object payloadToTriggeredScope,
+                   @Nullable String businessKey,
                    CommandContext commandContext);
 
 }

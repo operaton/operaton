@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * @author Daniel Meyer
  *
  */
-public class TransactionLogger extends ProcessEngineLogger {
+public @NullMarked class TransactionLogger extends ProcessEngineLogger {
 
   public ProcessEngineException exceptionWhileInteractingWithTransaction(String operation, Throwable e) {
     throw new ProcessEngineException(exceptionMessage(

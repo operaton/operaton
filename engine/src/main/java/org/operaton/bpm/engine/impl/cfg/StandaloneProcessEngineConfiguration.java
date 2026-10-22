@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.CommandCounterInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.ProcessApplicationContextInterce
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class StandaloneProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
+public @NullMarked class StandaloneProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
 
   @Override
   protected Collection<CommandInterceptor> getDefaultCommandInterceptorsTxRequired() {

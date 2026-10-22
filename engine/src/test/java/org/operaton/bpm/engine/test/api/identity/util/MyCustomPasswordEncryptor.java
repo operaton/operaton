@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.identity.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.digest.PasswordEncryptor;
 
-public class MyCustomPasswordEncryptor implements PasswordEncryptor {
+public @NullMarked class MyCustomPasswordEncryptor implements PasswordEncryptor {
 
   protected String password;
   protected String algorithmName;

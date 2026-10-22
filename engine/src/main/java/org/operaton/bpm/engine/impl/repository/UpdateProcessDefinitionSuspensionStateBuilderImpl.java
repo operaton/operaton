@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.repository;
 
 import java.util.Date;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmd.ActivateProcessDefinitionCmd;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
@@ -27,6 +28,7 @@ import org.operaton.bpm.engine.repository.UpdateProcessDefinitionSuspensionState
 import org.operaton.bpm.engine.repository.UpdateProcessDefinitionSuspensionStateSelectBuilder;
 import org.operaton.bpm.engine.repository.UpdateProcessDefinitionSuspensionStateTenantBuilder;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
@@ -35,18 +37,18 @@ public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements Update
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  protected final CommandExecutor commandExecutor;
+  protected final @Nullable CommandExecutor commandExecutor;
 
-  protected String processDefinitionKey;
-  protected String processDefinitionId;
+  protected @Nullable String processDefinitionKey;
+  protected @Nullable String processDefinitionId;
 
   protected boolean includeProcessInstances;
-  protected Date executionDate;
+  protected @Nullable Date executionDate;
 
-  protected String processDefinitionTenantId;
+  protected @Nullable String processDefinitionTenantId;
   protected boolean isTenantIdSet;
 
-  public UpdateProcessDefinitionSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {
+  public UpdateProcessDefinitionSuspensionStateBuilderImpl(@Nullable CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;
   }
 
@@ -106,7 +108,7 @@ public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements Update
     validateParameters();
 
     ActivateProcessDefinitionCmd command = new ActivateProcessDefinitionCmd(this);
-    commandExecutor.execute(command);
+    requireNonNull(commandExecutor).execute(command);
   }
 
   @Override
@@ -114,7 +116,7 @@ public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements Update
     validateParameters();
 
     SuspendProcessDefinitionCmd command = new SuspendProcessDefinitionCmd(this);
-    commandExecutor.execute(command);
+    requireNonNull(commandExecutor).execute(command);
   }
 
   protected void validateParameters() {
@@ -127,11 +129,11 @@ public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements Update
     ensureNotNull("commandExecutor", commandExecutor);
   }
 
-  public String getProcessDefinitionKey() {
+  public @Nullable String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
@@ -139,11 +141,11 @@ public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements Update
     return includeProcessInstances;
   }
 
-  public Date getExecutionDate() {
+  public @Nullable Date getExecutionDate() {
     return executionDate;
   }
 
-  public String getProcessDefinitionTenantId() {
+  public @Nullable String getProcessDefinitionTenantId() {
     return processDefinitionTenantId;
   }
 

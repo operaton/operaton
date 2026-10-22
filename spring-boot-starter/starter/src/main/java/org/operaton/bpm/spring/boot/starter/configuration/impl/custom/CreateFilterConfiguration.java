@@ -21,15 +21,17 @@ import java.util.Objects;
 import java.util.Optional;
 import jakarta.annotation.PostConstruct;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.AbstractOperatonConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.FilterProperty;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
-public class CreateFilterConfiguration extends AbstractOperatonConfiguration {
+public @NullMarked class CreateFilterConfiguration extends AbstractOperatonConfiguration {
 
-  protected String filterName;
+  protected @Nullable String filterName;
 
   public CreateFilterConfiguration(OperatonBpmProperties operatonBpmProperties) {
     super(operatonBpmProperties);

@@ -22,6 +22,8 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Task;
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.task.Task;
 /**
  * @author Tom Baeyens
  */
-public class DefaultBusinessCalendar implements BusinessCalendar {
+public @NullMarked class DefaultBusinessCalendar implements BusinessCalendar {
 
   private static final Map<String, Integer> units = new HashMap<>();
   static {
@@ -62,7 +64,7 @@ public class DefaultBusinessCalendar implements BusinessCalendar {
   }
 
   @Override
-  public Date resolveDuedate(String duedate, Date startDate) {
+  public Date resolveDuedate(String duedate, @Nullable Date startDate) {
     Date resolvedDuedate = startDate == null ? ClockUtil.getCurrentTime() : startDate;
 
     String[] tokens = duedate.split(" and ");

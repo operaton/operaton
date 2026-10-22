@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.util.*;
 
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.Expression;
@@ -93,17 +92,17 @@ public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl i
   }
 
   @Override
-  public ExecutionEntity createProcessInstance(String businessKey) {
+  public ExecutionEntity createProcessInstance(@Nullable String businessKey) {
     return (ExecutionEntity) super.createProcessInstance(businessKey);
   }
 
   @Override
-  public ExecutionEntity createProcessInstance(String businessKey, String caseInstanceId) {
+  public ExecutionEntity createProcessInstance(@Nullable String businessKey, @Nullable String caseInstanceId) {
     return (ExecutionEntity) super.createProcessInstance(businessKey, caseInstanceId);
   }
 
   @Override
-  public ExecutionEntity createProcessInstance(String businessKey, ActivityImpl initial) {
+  public ExecutionEntity createProcessInstance(@Nullable String businessKey, @Nullable ActivityImpl initial) {
     return (ExecutionEntity) super.createProcessInstance(businessKey, initial);
   }
 
@@ -194,7 +193,7 @@ public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl i
    */
   @Override
   public void updateModifiableFieldsFromEntity(ProcessDefinitionEntity updatingProcessDefinition) {
-    if (this.key.equals(updatingProcessDefinition.key) && this.deploymentId.equals(updatingProcessDefinition.deploymentId)) {
+    if (Objects.equals(this.key, updatingProcessDefinition.key) && Objects.equals(this.deploymentId, updatingProcessDefinition.deploymentId)) {
       this.revision = updatingProcessDefinition.revision;
       this.suspensionState = updatingProcessDefinition.suspensionState;
       this.historyTimeToLive = updatingProcessDefinition.historyTimeToLive;
@@ -444,8 +443,8 @@ public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl i
     return suspensionState == SuspensionState.SUSPENDED.getStateCode();
   }
 
-  public @NonNull Set<Expression> getCandidateStarterUserIdExpressions() {
-    return Objects.requireNonNullElse(candidateStarterUserIdExpressions, Collections.emptySet());
+  public Set<Expression> getCandidateStarterUserIdExpressions() {
+    return candidateStarterUserIdExpressions != null ? candidateStarterUserIdExpressions : Collections.emptySet();
   }
 
   public void addCandidateStarterUserIdExpression(Expression userId) {
@@ -455,8 +454,8 @@ public @NullMarked class ProcessDefinitionEntity extends ProcessDefinitionImpl i
     candidateStarterUserIdExpressions.add(userId);
   }
 
-  public @NonNull Set<Expression> getCandidateStarterGroupIdExpressions() {
-    return Objects.requireNonNullElse(candidateStarterGroupIdExpressions, Collections.emptySet());
+  public Set<Expression> getCandidateStarterGroupIdExpressions() {
+    return candidateStarterGroupIdExpressions != null ? candidateStarterGroupIdExpressions : Collections.emptySet();
   }
 
   public void addCandidateStarterGroupIdExpression(Expression groupId) {

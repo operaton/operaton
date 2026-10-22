@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
 /**
  * @author Nico Rehwaldt
  */
-public interface BpmnParseFactory {
+public @NullMarked interface BpmnParseFactory {
 
   BpmnParse createBpmnParse(BpmnParser bpmnParser);
 

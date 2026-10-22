@@ -26,28 +26,28 @@ import org.operaton.bpm.engine.RepositoryService;
 public interface ResourceDefinition {
 
   /** unique identifier */
-  String getId();
+  @Nullable String getId();
 
   /** category name which is derived from the targetNamespace attribute in the definitions element */
-  String getCategory();
+  @Nullable String getCategory();
 
   /** label used for display purposes */
-  String getName();
+  @Nullable String getName();
 
   /** unique name for all versions this definition */
-  String getKey();
+  @Nullable String getKey();
 
   /** version of this definition */
   int getVersion();
 
   /** name of {@link RepositoryService#getResourceAsStream(String, String) the resource} of this definition */
-  String getResourceName();
+  @Nullable String getResourceName();
 
   /** The deployment in which this definition is contained. */
-  String getDeploymentId();
+  @Nullable String getDeploymentId();
 
   /** The diagram resource name for this definition if exist */
-  String getDiagramResourceName();
+  @Nullable String getDiagramResourceName();
 
   /**
    * The id of the tenant this definition belongs to. Can be <code>null</code>
@@ -56,6 +56,6 @@ public interface ResourceDefinition {
   @Nullable String getTenantId();
 
   /** History time to live. Is taken into account in history cleanup. */
-  Integer getHistoryTimeToLive();
+  @Nullable Integer getHistoryTimeToLive();
 
 }

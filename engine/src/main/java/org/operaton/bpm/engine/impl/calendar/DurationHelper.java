@@ -26,27 +26,30 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-import org.jspecify.annotations.NonNull;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * helper class for parsing ISO8601 duration format (also recurring) and computing next timer date
  */
-public class DurationHelper {
+public @NullMarked class DurationHelper {
 
   public static final String PNW_PATTERN = "P\\d+W";
   private static final int MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  Date start;
+  @Nullable Date start;
 
-  Date end;
+  @Nullable Date end;
 
-  Duration period;
+  @Nullable Duration period;
 
   boolean isRepeat;
 
@@ -60,7 +63,7 @@ public class DurationHelper {
     this(expressions, null);
   }
 
-  public DurationHelper(String expressions, Date startDate) {
+  public DurationHelper(String expressions, @Nullable Date startDate) {
     List<String> expression = initExpressions(expressions);
     initDatatypeFactory();
     validateExpressions(expressions, expression);
@@ -69,8 +72,7 @@ public class DurationHelper {
     initStart(startDate);
   }
 
-  @NonNull
-  private List<String> initExpressions(String inputExpressions) {
+  private List<String> initExpressions(@Nullable String inputExpressions) {
     List<String> expressions = new ArrayList<>();
     if(inputExpressions != null) {
       expressions = List.of(inputExpressions.split("/"));
@@ -116,17 +118,17 @@ public class DurationHelper {
     }
   }
 
-  private void initStart(Date startDate) {
+  private void initStart(@Nullable Date startDate) {
     if (start == null && end == null) {
       start = startDate == null ? ClockUtil.getCurrentTime() : startDate;
     }
   }
 
-  public Date getDateAfter() {
+  public @Nullable Date getDateAfter() {
     return getDateAfter(null);
   }
 
-  public Date getDateAfter(Date date) {
+  public @Nullable Date getDateAfter(@Nullable Date date) {
     if (isRepeat) {
       return getDateAfterRepeat(date == null ? ClockUtil.getCurrentTime() : date);
     }
@@ -135,6 +137,8 @@ public class DurationHelper {
       return end;
     }
 
+    requireNonNull(start);
+    requireNonNull(period);
     return add(start, period);
   }
 
@@ -146,14 +150,14 @@ public class DurationHelper {
     return isRepeat;
   }
 
-  private Date getDateAfterRepeat(Date date) {
+  private @Nullable Date getDateAfterRepeat(Date date) {
     // use date without the current offset for due date calculation to get the
     // next due date as it would be without any modifications, later add offset
     Date dateWithoutOffset = new Date(date.getTime() - repeatOffset);
     if (start != null) {
       Date cur = start;
       for (int i = 0; i < times && !cur.after(dateWithoutOffset); i++) {
-        cur = add(cur, period);
+        cur = add(cur, requireNonNull(period));
       }
       if (cur.before(dateWithoutOffset)) {
         return null;
@@ -161,6 +165,8 @@ public class DurationHelper {
       // add offset to calculated due date
       return repeatOffset == 0L ? cur : new Date(cur.getTime() + repeatOffset);
     }
+    requireNonNull(period);
+    requireNonNull(end);
     Date cur = add(end, period.negate());
     Date next = end;
 

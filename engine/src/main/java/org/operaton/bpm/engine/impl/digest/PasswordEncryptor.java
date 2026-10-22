@@ -28,19 +28,11 @@ public interface PasswordEncryptor {
 
   /**
    * Encrypt the given password
-   *
-   * @param password
-   * @return
    */
   String encrypt(String password);
 
   /**
    * Returns true if the given plain text equals to the encrypted password.
-   *
-   * @param password
-   * @param encrypted
-   *
-   * @return
    */
   boolean check(String password, String encrypted);
 

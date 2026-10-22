@@ -1103,6 +1103,23 @@
     vertical-align: top;
   }
 
+  /* Collapsible "create new authorization" panel above the table. */
+  .authorization-create-panel {
+    margin: var(--spacing-2) 0 var(--spacing-3);
+    padding: var(--spacing-1) var(--spacing-2);
+    background: var(--background-2);
+    border-radius: var(--border-radius-2);
+
+    > summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    &[open] > summary {
+      margin-bottom: var(--spacing-1);
+    }
+  }
+
   /* The permissions fieldset names itself with its legend, so it has no label
      in front of it; keep it in the field column. */
   .authorization-create > fieldset {

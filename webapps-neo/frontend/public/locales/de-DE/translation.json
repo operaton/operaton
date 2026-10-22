@@ -794,7 +794,6 @@
     "authorization": {
       "title": "Autorisierung",
       "create": "Neue Autorisierung erstellen",
-      "cancel-create": "Erstellung der Autorisierung abbrechen",
       "user-group": "Benutzer / Gruppe",
       "permissions": "Berechtigungen",
       "resource-id": "Ressourcen-ID",

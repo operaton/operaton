@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -115,9 +116,9 @@ class HistoricCaseInstanceTest extends CmmnTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/emptyStageWithManualActivationCase.cmmn"})
   @Test
   void testHistoricCaseInstanceDates() {
-    // create test dates
+    // Keep the query boundaries outside daylight-saving transitions.
     long duration = 72 * 3600 * 1000;
-    Date created = ClockUtil.getCurrentTime();
+    Date created = Date.from(Instant.parse("2026-01-15T12:00:00Z"));
     Date closed = new Date(created.getTime() + duration);
 
     // create instance

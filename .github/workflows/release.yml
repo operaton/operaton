@@ -341,7 +341,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    uses: operaton/operaton/.github/workflows/update-dependabot-milestone.yml@main
+    uses: $/.github/workflows/update-dependabot-milestone.yml
     with:
       release_tag: ${{needs.release_build.outputs.version}}
       release_target_branch: ${{github.ref_name}}

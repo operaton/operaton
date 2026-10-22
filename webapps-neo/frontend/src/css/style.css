@@ -1029,15 +1029,14 @@
     padding: var(--spacing-2);
   }
 
-  /* Single vertical column that fills the viewport; the page itself does not
-     scroll — only the details pane does.
+  /* Single vertical column; the page scrolls as a whole so nothing is cut off
+     on short viewports.
        row 1: deployment list (content height, capped at 30rem, scrolls internally)
        row 2: resource list (content height)
-       row 3: resource details (fills the rest, scrolls internally) */
+       row 3: resource details (content height) */
   .deployments {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
 
   .deployments .deployment-list {

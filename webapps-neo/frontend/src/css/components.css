@@ -1637,9 +1637,6 @@ nav:has(> .breadcrumbs) {
   flex-direction: column;
   gap: var(--spacing-2);
   padding: var(--spacing-2);
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
 }
 
 .deployments #diagram-container {

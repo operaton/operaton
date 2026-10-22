@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:5e011c2b-b219-4b63-b053-12bd75ef0a29",
+  "serialNumber": "urn:uuid:8f2882a9-96dc-4764-9d4c-13f3832a37b9",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-22T11:36:26Z",
+    "timestamp": "2026-10-22T11:41:55Z",
     "tools": {
       "components": [
         {
@@ -30879,6 +30879,37 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo-wildfly@2.2.0-SNAPSHOT?type=war",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm.webapp-neo",
+      "name": "operaton-webapp-neo-wildfly",
+      "version": "2.2.0-SNAPSHOT",
+      "description": "Operaton - Webapp-Neo - WildFly",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo-wildfly@2.2.0-SNAPSHOT?type=war",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-database-settings/operaton-wildfly/operaton-webapp-neo-wildfly",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-wildfly/operaton-webapp-neo-wildfly",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm.wildfly/operaton-bpm-wildfly@2.2.0-SNAPSHOT?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.wildfly",
@@ -31005,7 +31036,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0d164d25-1f84-4856-9133-7b9d647b7d12",
+      "bom-ref": "2d444460-8ea0-4a59-95b3-3653039cfe00",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36261,7 +36292,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "cc9bc80f-c78a-460f-9699-92ffa668c406",
+      "bom-ref": "0ea0aa0a-dc16-4490-8edc-be18faabb3e2",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36272,7 +36303,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2d4cc323-ad0a-4d7d-8dd8-d0f5c153b8aa",
+      "bom-ref": "13ed2864-9ef7-4ab7-9ef6-180216efa3de",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37427,7 +37458,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d77d2783-5b70-4e4a-8a16-4cd40dcce205",
+      "bom-ref": "695dad13-81f4-4b9c-8712-7a1016874d6f",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -39642,6 +39673,7 @@
         "pkg:maven/org.operaton.bpm.wildfly/operaton-wildfly-modules@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.wildfly/operaton-wildfly-assembly@2.2.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-wildfly@2.2.0-SNAPSHOT?type=war",
+        "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo-wildfly@2.2.0-SNAPSHOT?type=war",
         "pkg:maven/org.operaton.bpm.wildfly/operaton-bpm-wildfly@2.2.0-SNAPSHOT?type=pom"
       ]
     },
@@ -41098,6 +41130,12 @@
       ]
     },
     {
+      "ref": "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo-wildfly@2.2.0-SNAPSHOT?type=war",
+      "dependsOn": [
+        "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo@2.2.0-SNAPSHOT?type=war"
+      ]
+    },
+    {
       "ref": "pkg:maven/org.operaton.bpm.wildfly/operaton-bpm-wildfly@2.2.0-SNAPSHOT?type=pom",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.2.0-SNAPSHOT?type=pom",
@@ -41105,6 +41143,7 @@
         "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.25.0?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.2.0-SNAPSHOT?classifier=wildfly&type=war",
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-wildfly@2.2.0-SNAPSHOT?type=war",
+        "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo-wildfly@2.2.0-SNAPSHOT?type=war",
         "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.2.0-SNAPSHOT?type=war"
       ]
     },
@@ -41137,7 +41176,13 @@
       "dependsOn": []
     },
     {
-      "ref": "0d164d25-1f84-4856-9133-7b9d647b7d12",
+      "ref": "0ea0aa0a-dc16-4490-8edc-be18faabb3e2",
+      "dependsOn": [
+        "2d444460-8ea0-4a59-95b3-3653039cfe00"
+      ]
+    },
+    {
+      "ref": "2d444460-8ea0-4a59-95b3-3653039cfe00",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -41184,12 +41229,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
-      ]
-    },
-    {
-      "ref": "cc9bc80f-c78a-460f-9699-92ffa668c406",
-      "dependsOn": [
-        "0d164d25-1f84-4856-9133-7b9d647b7d12"
       ]
     },
     {
@@ -42588,7 +42627,7 @@
       "dependsOn": []
     },
     {
-      "ref": "2d4cc323-ad0a-4d7d-8dd8-d0f5c153b8aa",
+      "ref": "13ed2864-9ef7-4ab7-9ef6-180216efa3de",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -42609,9 +42648,9 @@
       ]
     },
     {
-      "ref": "d77d2783-5b70-4e4a-8a16-4cd40dcce205",
+      "ref": "695dad13-81f4-4b9c-8712-7a1016874d6f",
       "dependsOn": [
-        "2d4cc323-ad0a-4d7d-8dd8-d0f5c153b8aa"
+        "13ed2864-9ef7-4ab7-9ef6-180216efa3de"
       ]
     },
     {

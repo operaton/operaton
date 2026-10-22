@@ -18,7 +18,7 @@
     <version.jakarta-ee>11.0.0</version.jakarta-ee>
     <version.resteasy>7.0.5.Final</version.resteasy>
     <!-- Must match Spring Boot's Jersey version; enforced in bom/internal-dependencies. -->
-    <version.jersey3>4.0.2</version.jersey3>
+    <version.jersey3>4.0.3</version.jersey3>
     <version.groovy>5.1.3</version.groovy>
     <version.rest-assured>6.2.0</version.rest-assured>
     <version.jython>2.7.4</version.jython>

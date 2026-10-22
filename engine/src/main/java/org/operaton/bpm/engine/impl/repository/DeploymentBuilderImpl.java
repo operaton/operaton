@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,6 +30,7 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -52,6 +52,8 @@ import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static java.util.Collections.emptySet;
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
@@ -75,13 +77,13 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  protected transient RepositoryServiceImpl repositoryService;
+  protected transient @Nullable RepositoryServiceImpl repositoryService;
   protected transient DeploymentEntity deployment = new DeploymentEntity();
   protected boolean isDuplicateFilterEnabled;
   protected boolean deployChangedOnly;
-  protected Date processDefinitionsActivationDate;
+  protected @Nullable Date processDefinitionsActivationDate;
 
-  protected String nameFromDeployment;
+  protected @Nullable String nameFromDeployment;
   private final Set<String> deployments = new HashSet<>();
   private final Map<String, Set<String>> deploymentResourcesById = new HashMap<>();
   private final Map<String, Set<String>> deploymentResourcesByName = new HashMap<>();
@@ -120,7 +122,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder addModelInstance(String resourceName, CmmnModelInstance modelInstance) {
     ensureNotNull(MODEL_INSTANCE, modelInstance);
 
-    validateResouceName(resourceName, CMMN_RESOURCE_SUFFIXES);
+    validateResourceName(resourceName, CMMN_RESOURCE_SUFFIXES);
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     Cmmn.writeModelToStream(outputStream, modelInstance);
@@ -132,7 +134,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder addModelInstance(String resourceName, BpmnModelInstance modelInstance) {
     ensureNotNull(MODEL_INSTANCE, modelInstance);
 
-    validateResouceName(resourceName, BPMN_RESOURCE_SUFFIXES);
+    validateResourceName(resourceName, BPMN_RESOURCE_SUFFIXES);
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     Bpmn.writeModelToStream(outputStream, modelInstance);
@@ -144,7 +146,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder addModelInstance(String resourceName, DmnModelInstance modelInstance) {
     ensureNotNull(MODEL_INSTANCE, modelInstance);
 
-    validateResouceName(resourceName, DMN_RESOURCE_SUFFIXES);
+    validateResourceName(resourceName, DMN_RESOURCE_SUFFIXES);
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     Dmn.writeModelToStream(outputStream, modelInstance);
@@ -152,7 +154,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return addBytes(resourceName, outputStream.toByteArray());
   }
 
-  private void validateResouceName(String resourceName, String[] resourceSuffixes) {
+  private void validateResourceName(String resourceName, String[] resourceSuffixes) {
     if (!StringUtil.hasAnySuffix(resourceName, resourceSuffixes)) {
       LOG.warnDeploymentResourceHasWrongName(resourceName, resourceSuffixes);
     }
@@ -290,14 +292,14 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentWithDefinitions deployWithResult() {
-    return repositoryService.deployWithResult(this);
+    return requireNonNull(repositoryService).deployWithResult(this);
   }
 
 
   @Override
   public Collection<String> getResourceNames() {
     if(deployment.getResources() == null) {
-      return Collections.<String>emptySet();
+      return emptySet();
     } else {
       return deployment.getResources().keySet();
     }
@@ -317,11 +319,11 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return deployChangedOnly;
   }
 
-  public Date getProcessDefinitionsActivationDate() {
+  public @Nullable Date getProcessDefinitionsActivationDate() {
     return processDefinitionsActivationDate;
   }
 
-  public String getNameFromDeployment() {
+  public @Nullable String getNameFromDeployment() {
     return nameFromDeployment;
   }
 

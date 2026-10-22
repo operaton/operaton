@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -27,7 +28,7 @@ import org.operaton.bpm.engine.authorization.Resources;
 /**
  * Fluent builder to update the suspension state of process instances.
  */
-public interface UpdateProcessInstanceSuspensionStateBuilder {
+public @NullMarked interface UpdateProcessInstanceSuspensionStateBuilder {
 
   /**
    * <p>

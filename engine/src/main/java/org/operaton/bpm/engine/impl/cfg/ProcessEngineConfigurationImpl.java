@@ -2909,7 +2909,7 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
   // getters and setters //////////////////////////////////////////////////////
 
   public @Nullable HistoryLevel getHistoryLevel() {
-    return requireNonNull(historyLevel);
+    return historyLevel;
   }
 
   public void setHistoryLevel(HistoryLevel historyLevel) {
@@ -2952,8 +2952,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
     return this;
   }
 
-  public List<CommandInterceptor> getCommandInterceptorsTxRequired() {
-    return requireNonNull(commandInterceptorsTxRequired);
+  public @Nullable List<CommandInterceptor> getCommandInterceptorsTxRequired() {
+    return commandInterceptorsTxRequired;
   }
 
   public ProcessEngineConfigurationImpl setCommandInterceptorsTxRequired(List<CommandInterceptor> commandInterceptorsTxRequired) {
@@ -2961,8 +2961,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
     return this;
   }
 
-  public CommandExecutor getCommandExecutorTxRequired() {
-    return requireNonNull(commandExecutorTxRequired);
+  public @Nullable CommandExecutor getCommandExecutorTxRequired() {
+    return commandExecutorTxRequired;
   }
 
   public ProcessEngineConfigurationImpl setCommandExecutorTxRequired(CommandExecutor commandExecutorTxRequired) {
@@ -2988,8 +2988,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
     return this;
   }
 
-  public List<CommandInterceptor> getCommandInterceptorsTxRequiresNew() {
-    return requireNonNull(commandInterceptorsTxRequiresNew);
+  public @Nullable List<CommandInterceptor> getCommandInterceptorsTxRequiresNew() {
+    return commandInterceptorsTxRequiresNew;
   }
 
   public ProcessEngineConfigurationImpl setCommandInterceptorsTxRequiresNew(List<CommandInterceptor> commandInterceptorsTxRequiresNew) {
@@ -2997,8 +2997,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
     return this;
   }
 
-  public CommandExecutor getCommandExecutorTxRequiresNew() {
-    return requireNonNull(commandExecutorTxRequiresNew);
+  public @Nullable CommandExecutor getCommandExecutorTxRequiresNew() {
+    return commandExecutorTxRequiresNew;
   }
 
   @SuppressWarnings("unused")
@@ -3247,7 +3247,7 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
   }
 
   public @Nullable ExpressionManager getExpressionManager() {
-    return requireNonNull(expressionManager);
+    return expressionManager;
   }
 
   public ProcessEngineConfigurationImpl setExpressionManager(ExpressionManager expressionManager) {
@@ -3768,8 +3768,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
     this.customEventHandlers = customEventHandlers;
   }
 
-  public FailedJobCommandFactory getFailedJobCommandFactory() {
-    return requireNonNull(failedJobCommandFactory, "failedJobCommandFactory not initialized. Please make sure to call setFailedJobCommandFactory() before accessing it.");
+  public @Nullable FailedJobCommandFactory getFailedJobCommandFactory() {
+    return failedJobCommandFactory;
   }
 
   public ProcessEngineConfigurationImpl setFailedJobCommandFactory(FailedJobCommandFactory failedJobCommandFactory) {
@@ -3844,8 +3844,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
     this.processApplicationManager = processApplicationManager;
   }
 
-  public CommandExecutor getCommandExecutorSchemaOperations() {
-    return requireNonNull(commandExecutorSchemaOperations);
+  public @Nullable CommandExecutor getCommandExecutorSchemaOperations() {
+    return commandExecutorSchemaOperations;
   }
 
   @SuppressWarnings("unused")
@@ -5338,8 +5338,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
     return new ExceptionCodeInterceptor(builtinExceptionCodeProvider, customExceptionCodeProvider);
   }
 
-  public DiagnosticsRegistry getDiagnosticsRegistry() {
-    return requireNonNull(diagnosticsRegistry);
+  public @Nullable DiagnosticsRegistry getDiagnosticsRegistry() {
+    return diagnosticsRegistry;
   }
 
   public ProcessEngineConfiguration setDiagnosticsRegistry(DiagnosticsRegistry diagnosticsRegistry) {

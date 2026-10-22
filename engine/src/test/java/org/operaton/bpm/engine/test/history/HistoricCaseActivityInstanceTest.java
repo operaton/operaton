@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -257,9 +258,9 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     String milestoneId2 = "PI_Milestone_2";
     String milestoneId3 = "PI_Milestone_3";
 
-    // create test dates
+    // Keep the query boundaries outside daylight-saving transitions.
     long duration = 72 * 3600 * 1000;
-    Date created = ClockUtil.getCurrentTime();
+    Date created = Date.from(Instant.parse("2026-01-15T12:00:00Z"));
     Date ended = new Date(created.getTime() + duration);
 
     ClockUtil.setCurrentTime(created);

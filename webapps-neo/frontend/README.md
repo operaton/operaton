@@ -51,6 +51,17 @@ The e2e tests need the backend running (`docker compose up`, or `podman compose
 up`) and drive the dev server, which they start automatically. They log in with
 `demo`/`demo`. Use `npx playwright test --ui` to watch the flows interactively.
 
+## Metrics
+
+The web apps include an **Engine Metrics** page — an at-a-glance dashboard of
+process starts, flow nodes executed, failed jobs, running vs. completed
+instances, and the busiest processes and user tasks.
+
+It is a bundled plugin that is **off in the standard delivery**. Turn it on with
+the `VITE_METRICS_ENABLED=true` environment variable (dev build) or
+`"metricsEnabled": true` in the runtime `config.json` (deployment). Once enabled
+it appears as a **Metrics** entry in the main navigation.
+
 ## Documentation
 
 Documentation for the Operaton web apps can currently be found inside the [`/docs`](./docs/) folder.

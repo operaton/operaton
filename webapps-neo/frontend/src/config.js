@@ -113,6 +113,8 @@ const from_env = () => {
     // is opt-in. See `remote_plugins_allow_origins` for cross-origin sources.
     remote_plugins_enabled: clean(import.meta.env.VITE_REMOTE_PLUGINS_ENABLED) === "true",
     remote_plugins_allow_origins: split_origins(clean(import.meta.env.VITE_REMOTE_PLUGINS_ALLOW_ORIGINS)),
+    // The bundled Metrics page ships with the app but is off by default.
+    metrics_enabled: clean(import.meta.env.VITE_METRICS_ENABLED) === "true",
     branding: parse_branding(import.meta.env.VITE_BRANDING),
     user: undefined,
   }
@@ -158,6 +160,8 @@ const from_document = (json) => {
     remote_plugins_allow_origins: Array.isArray(json.remotePluginsAllowOrigins)
       ? json.remotePluginsAllowOrigins.map(clean).filter(Boolean)
       : split_origins(clean(json.remotePluginsAllowOrigins)),
+    metrics_enabled:
+      json.metricsEnabled === true || clean(json.metricsEnabled) === "true",
     branding: as_branding(json.branding),
     user: json.user?.id ? { id: json.user.id } : undefined,
   }

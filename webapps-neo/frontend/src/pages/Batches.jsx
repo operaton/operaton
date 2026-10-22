@@ -6,65 +6,22 @@ import { AppState } from "../state.js";
 import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { ConfirmDialog } from "../components/Dialog.jsx";
 import { ListFilter } from "../components/ListFilter.jsx";
-import { ManageFilters } from "../components/ManageFilters.jsx";
 import { app_path } from "../config.js";
-import {
-  filter_share_link,
-  parse_list_query,
-  with_manage,
-  without_manage,
-  write_list_query,
-} from "../helper/list_query.js";
-import {
-  create_saved_filter,
-  delete_saved_filter,
-  hydrate_signal,
-  update_saved_filter,
-} from "../helper/saved_filters.js";
-
-const RESOURCE_TYPE = "batch";
+import { parse_list_query, write_list_query } from "../helper/list_query.js";
 
 const SORT_OPTIONS = [
   { key: "batchId", nameKey: "batches.sort.batchId" },
   { key: "tenantId", nameKey: "batches.sort.tenantId" },
 ];
 
-const FILTER_KEYS = [
-  { key: "batchId", nameKey: "batches.filter_keys.batchId", type: "string" },
-  { key: "type", nameKey: "batches.filter_keys.type", type: "string" },
-  {
-    key: "tenantIdIn",
-    nameKey: "batches.filter_keys.tenantIdIn",
-    type: "string",
-  },
-  {
-    key: "suspended",
-    nameKey: "batches.filter_keys.suspended",
-    type: "boolean",
-  },
-  {
-    key: "withoutTenantId",
-    nameKey: "batches.filter_keys.withoutTenantId",
-    type: "boolean",
-  },
-];
-
 const BATCH_DEFAULTS = { sortBy: "batchId", sortOrder: "desc" };
-
-const find_saved = (signal, id) => {
-  if (!id || id === "all") return null;
-  return (signal.value?.data ?? []).find((f) => f.id === id) ?? null;
-};
 
 const keep_history_query = (query) => (query?.history ? "?history=true" : "");
 
 const load_batches = (state, query, firstResult = 0, history = false) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(state.api.batch.saved_filters, saved_filter_id);
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
   const params = {
     ...BATCH_DEFAULTS,
-    ...(saved?.query ?? {}),
     ...criteria,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
@@ -81,11 +38,6 @@ const BatchesPage = () => {
     } = useRoute(),
     history_mode = query.history === "true",
     [t] = useTranslation();
-
-  useEffect(() => {
-    hydrate_signal(RESOURCE_TYPE, state.api.batch.saved_filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     load_batches(state, query, 0, history_mode);
@@ -137,24 +89,19 @@ const BatchesList = () => {
 
   const parsed = parse_list_query(query);
   const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
     sortBy: parsed.sortBy ?? BATCH_DEFAULTS.sortBy,
     sortOrder: parsed.sortOrder ?? BATCH_DEFAULTS.sortOrder,
-    criteria: parsed.criteria,
   };
 
   const apply_patch = (patch) => {
     route(write_list_query(window.location.href, patch), true);
   };
-  const open_manage = () => route(with_manage(), false);
   const toggle_history = () =>
     route(app_path(history_mode ? "/batches" : "/batches?history=true"));
 
   const list_signal = history_mode
     ? state.api.history.batch.list
     : state.api.batch.list;
-
-  if (query?.filters === "manage") return <BatchesManage />;
 
   return (
     <div>
@@ -173,11 +120,9 @@ const BatchesList = () => {
       </header>
       <ListFilter
         sort_options={SORT_OPTIONS}
-        saved_filters_signal={state.api.batch.saved_filters}
         current={list_current}
         defaults={BATCH_DEFAULTS}
         on_change={apply_patch}
-        on_manage={open_manage}
       />
       <RequestState
         signal={list_signal}
@@ -196,7 +141,9 @@ const BatchesList = () => {
                   ) : (
                     <>
                       <th scope="col">{t("batches.progress")}</th>
-                      <th scope="col" class="num">{t("batches.failed-jobs")}</th>
+                      <th scope="col" class="num">
+                        {t("batches.failed-jobs")}
+                      </th>
                       <th scope="col">{t("batches.state")}</th>
                     </>
                   )}
@@ -404,39 +351,6 @@ const HistoricBatchDetails = () => {
             </div>
           );
         }}
-      />
-    </div>
-  );
-};
-
-const BatchesManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
-
-  const refresh = () =>
-    hydrate_signal(RESOURCE_TYPE, state.api.batch.saved_filters);
-  return (
-    <div class="fade-in">
-      <ManageFilters
-        title={t("batches.filter.manage_title")}
-        saved_filters_signal={state.api.batch.saved_filters}
-        filter_keys={FILTER_KEYS}
-        sort_options={SORT_OPTIONS}
-        on_save={(f) => {
-          create_saved_filter(RESOURCE_TYPE, f);
-          refresh();
-        }}
-        on_update={(id, f) => {
-          update_saved_filter(RESOURCE_TYPE, id, f);
-          refresh();
-        }}
-        on_delete={(id) => {
-          delete_saved_filter(RESOURCE_TYPE, id);
-          refresh();
-        }}
-        on_close={() => route(without_manage(), true)}
-        build_share_link={(f) => filter_share_link(window.location.href, f)}
       />
     </div>
   );

@@ -147,3 +147,15 @@ VITE_REMOTE_PLUGINS_ALLOW_ORIGINS=https://plugins.example.com
 
 See [Plugin System.md](Plugin%20System.md) for the manifest shape and the full
 plugin mechanism.
+
+### VITE_METRICS_ENABLED
+
+Whether to show the bundled **Engine Metrics** page. Defaults to `false`: the
+page ships with the app but stays off in the standard delivery. Set it to `true`
+to add a **Metrics** entry to the main navigation. The runtime equivalent in
+`config.json` is `"metricsEnabled": true`.
+
+```properties
+# .env
+VITE_METRICS_ENABLED=true
+```

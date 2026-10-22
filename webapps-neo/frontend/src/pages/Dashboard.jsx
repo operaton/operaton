@@ -39,8 +39,11 @@ const CollapsibleSection = ({ id, title, link, children }) => {
     <details class="dashboard-section" open={!hidden.value} onToggle={toggle}>
       <summary>
         <h3>{title}</h3>
-        {link}
       </summary>
+      {/* The "see all" link lives outside <summary>: a link nested in the
+          disclosure control is invalid (nested interactive) and would also
+          toggle the section when clicked. */}
+      {link && <p class="section-link">{link}</p>}
       {children}
     </details>
   );

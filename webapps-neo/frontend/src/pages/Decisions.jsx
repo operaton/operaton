@@ -5,23 +5,9 @@ import { useLocation, useRoute } from "preact-iso";
 import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { DmnViewer } from "../components/DMNViewer.jsx";
 import { ListFilter } from "../components/ListFilter.jsx";
-import { ManageFilters } from "../components/ManageFilters.jsx";
+import { ListSearch } from "../components/ListSearch.jsx";
 import { app_path } from "../config.js";
-import {
-  filter_share_link,
-  parse_list_query,
-  with_manage,
-  without_manage,
-  write_list_query,
-} from "../helper/list_query.js";
-import {
-  create_saved_filter,
-  delete_saved_filter,
-  hydrate_signal,
-  update_saved_filter,
-} from "../helper/saved_filters.js";
-
-const RESOURCE_TYPE = "decision_definition";
+import { parse_list_query, write_list_query } from "../helper/list_query.js";
 
 const SORT_OPTIONS = [
   { key: "name", nameKey: "decisions.sort.name" },
@@ -33,53 +19,9 @@ const SORT_OPTIONS = [
   { key: "tenantId", nameKey: "decisions.sort.tenantId" },
 ];
 
-const FILTER_KEYS = [
-  { key: "name", nameKey: "decisions.filter_keys.name", type: "string" },
-  {
-    key: "nameLike",
-    nameKey: "decisions.filter_keys.nameLike",
-    type: "string",
-  },
-  { key: "key", nameKey: "decisions.filter_keys.key", type: "string" },
-  { key: "keyLike", nameKey: "decisions.filter_keys.keyLike", type: "string" },
-  {
-    key: "category",
-    nameKey: "decisions.filter_keys.category",
-    type: "string",
-  },
-  {
-    key: "categoryLike",
-    nameKey: "decisions.filter_keys.categoryLike",
-    type: "string",
-  },
-  {
-    key: "versionTag",
-    nameKey: "decisions.filter_keys.versionTag",
-    type: "string",
-  },
-  {
-    key: "latestVersion",
-    nameKey: "decisions.filter_keys.latestVersion",
-    type: "boolean",
-  },
-  {
-    key: "decisionRequirementsDefinitionKey",
-    nameKey: "decisions.filter_keys.decisionRequirementsDefinitionKey",
-    type: "string",
-  },
-];
-
-const find_saved = (signal, id) => {
-  if (!id || id === "all") return null;
-  return (signal.value?.data ?? []).find((f) => f.id === id) ?? null;
-};
-
 const load_decisions = (state, query) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(state.api.decision.saved_filters, saved_filter_id);
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
   const params = {
-    ...(saved?.query ?? {}),
     ...criteria,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
@@ -98,11 +40,6 @@ const DecisionsPage = () => {
       params: { decision_id },
       query,
     } = useRoute();
-
-  useEffect(() => {
-    hydrate_signal(RESOURCE_TYPE, state.api.decision.saved_filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     load_decisions(state, query);
@@ -135,7 +72,7 @@ const DecisionsList = () => {
   const state = useContext(AppState),
     {
       api: {
-        decision: { definitions, saved_filters },
+        decision: { definitions },
       },
     } = state,
     { params, query } = useRoute(),
@@ -144,29 +81,31 @@ const DecisionsList = () => {
 
   const parsed = parse_list_query(query);
   const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
     sortBy: parsed.sortBy ?? "name",
     sortOrder: parsed.sortOrder ?? "asc",
-    criteria: parsed.criteria,
   };
+  // The name search rides the generic list criteria as a nameLike term.
+  const search_term = (parsed.criteria.nameLike ?? "").replace(/^%+|%+$/g, "");
 
   const apply_patch = (patch) => {
     route(write_list_query(window.location.href, patch), true);
   };
-  const open_manage = () => route(with_manage(), false);
-
-  if (query?.filters === "manage") return <DecisionsManage />;
+  const on_search = (term) =>
+    apply_patch({ criteria: term ? { nameLike: `%${term}%` } : {} });
 
   return (
     <div id="decision-list">
       <h2 class="screen-hidden">{t("decisions.queried-decisions")}</h2>
+      <ListSearch
+        label={t("decisions.search")}
+        value={search_term}
+        on_search={on_search}
+      />
       <ListFilter
         sort_options={SORT_OPTIONS}
-        saved_filters_signal={saved_filters}
         current={list_current}
         defaults={{ sortBy: "name", sortOrder: "asc" }}
         on_change={apply_patch}
-        on_manage={open_manage}
       />
       <RequestState
         signal={definitions}
@@ -458,39 +397,6 @@ const DecisionInstanceDetail = () => {
           ))}
         </tbody>
       </table>
-    </div>
-  );
-};
-
-const DecisionsManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
-
-  const refresh = () =>
-    hydrate_signal(RESOURCE_TYPE, state.api.decision.saved_filters);
-  return (
-    <div id="decision-list" class="fade-in">
-      <ManageFilters
-        title={t("decisions.filter.manage_title")}
-        saved_filters_signal={state.api.decision.saved_filters}
-        filter_keys={FILTER_KEYS}
-        sort_options={SORT_OPTIONS}
-        on_save={(f) => {
-          create_saved_filter(RESOURCE_TYPE, f);
-          refresh();
-        }}
-        on_update={(id, f) => {
-          update_saved_filter(RESOURCE_TYPE, id, f);
-          refresh();
-        }}
-        on_delete={(id) => {
-          delete_saved_filter(RESOURCE_TYPE, id);
-          refresh();
-        }}
-        on_close={() => route(without_manage(), true)}
-        build_share_link={(f) => filter_share_link(window.location.href, f)}
-      />
     </div>
   );
 };

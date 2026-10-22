@@ -32,9 +32,10 @@ vi.mock("../components/CamundaForm.jsx", () => ({
 }));
 
 let mockParams = {};
+let mockQuery = {};
 const routeFn = vi.fn();
 vi.mock("preact-iso", () => ({
-  useRoute: () => ({ params: mockParams }),
+  useRoute: () => ({ params: mockParams, query: mockQuery }),
   useLocation: () => ({ route: routeFn, path: "/deployments" }),
 }));
 
@@ -51,6 +52,7 @@ describe("DeploymentsPage", () => {
   beforeEach(() => {
     state = create_mock_state();
     mockParams = {};
+    mockQuery = {};
     routeFn.mockClear();
   });
   afterEach(cleanup);
@@ -98,11 +100,38 @@ describe("DeploymentsPage", () => {
     ]);
     const { getByText } = renderPage(state);
     const link = getByText("process.bpmn");
-    expect(link.getAttribute("href")).toBe("/deployments/dep1/process.bpmn");
+    expect(link.getAttribute("href")).toBe(
+      "/deployments/dep1?resource=process.bpmn",
+    );
+  });
+
+  it("encodes the resource name in the link", () => {
+    mockParams = { deployment_id: "dep1" };
+    signal_response(state.api.deployment.resources, [
+      { id: "r1", name: "forms/my approve.form" },
+    ]);
+    const { getByText } = renderPage(state);
+    const link = getByText("my approve.form");
+    expect(link.getAttribute("href")).toBe(
+      "/deployments/dep1?resource=forms%2Fmy%20approve.form",
+    );
+  });
+
+  it("does not reload the deployment list when a resource is selected", () => {
+    mockParams = { deployment_id: "dep1" };
+    mockQuery = { sortBy: "name" };
+    const { rerender } = renderPage(state);
+    engine_rest.deployment.all.mockClear();
+
+    mockQuery = { sortBy: "name", resource: "process.bpmn" };
+    rerender(h(AppState.Provider, { value: state }, h(DeploymentsPage, {})));
+
+    expect(engine_rest.deployment.all).not.toHaveBeenCalled();
   });
 
   it("fetches resource content + definition + instance count when a resource is selected", () => {
-    mockParams = { deployment_id: "dep1", resource_name: "process.bpmn" };
+    mockParams = { deployment_id: "dep1" };
+    mockQuery = { resource: "process.bpmn" };
     signal_response(state.api.deployment.resources, [
       { id: "r1", name: "process.bpmn" },
     ]);
@@ -113,7 +142,8 @@ describe("DeploymentsPage", () => {
   });
 
   it("renders the BPMN viewer stub for a .bpmn resource", () => {
-    mockParams = { deployment_id: "dep1", resource_name: "process.bpmn" };
+    mockParams = { deployment_id: "dep1" };
+    mockQuery = { resource: "process.bpmn" };
     signal_response(state.api.deployment.resources, [
       { id: "r1", name: "process.bpmn" },
     ]);
@@ -124,7 +154,8 @@ describe("DeploymentsPage", () => {
   });
 
   it("renders the DMN viewer stub for a .dmn resource", () => {
-    mockParams = { deployment_id: "dep1", resource_name: "decision.dmn" };
+    mockParams = { deployment_id: "dep1" };
+    mockQuery = { resource: "decision.dmn" };
     signal_response(state.api.deployment.resources, [
       { id: "r1", name: "decision.dmn" },
     ]);
@@ -134,7 +165,8 @@ describe("DeploymentsPage", () => {
   });
 
   it("renders the Camunda form preview stub for a .form resource", () => {
-    mockParams = { deployment_id: "dep1", resource_name: "my.form" };
+    mockParams = { deployment_id: "dep1" };
+    mockQuery = { resource: "my.form" };
     signal_response(state.api.deployment.resources, [
       { id: "r1", name: "my.form" },
     ]);
@@ -185,7 +217,8 @@ describe("DeploymentsPage", () => {
 
   describe("downloading a resource", () => {
     it("offers the deployed file under its own name", () => {
-      mockParams = { deployment_id: "dep1", resource_name: "a/process.bpmn" };
+      mockParams = { deployment_id: "dep1" };
+      mockQuery = { resource: "a/process.bpmn" };
       signal_response(state.api.deployment.resource, "<definitions />");
       const { getByText } = renderPage(state);
       const link = getByText("deployments.download");
@@ -193,7 +226,8 @@ describe("DeploymentsPage", () => {
     });
 
     it("offers nothing while the content is not loaded", () => {
-      mockParams = { deployment_id: "dep1", resource_name: "process.bpmn" };
+      mockParams = { deployment_id: "dep1" };
+      mockQuery = { resource: "process.bpmn" };
       const { queryByText } = renderPage(state);
       expect(queryByText("deployments.download")).toBeNull();
     });

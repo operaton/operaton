@@ -1632,21 +1632,21 @@ const AuthorizationsPage = () => {
             </p>
           ) : null}
 
-          <div class="button-group">
-            <button onClick={() => (show_create.value = !show_create.value)}>
-              {!show_create.value
-                ? t("admin.authorization.create")
-                : t("admin.authorization.cancel-create")}
-            </button>
-          </div>
-
-          {show_create.value ? (
-            <AuthorizationCreate
-              resource={resource}
-              resource_type={resource_type}
-              on_done={() => (show_create.value = false)}
-            />
-          ) : null}
+          {/* Mounted only while open, so a reopened form starts empty. */}
+          <details
+            class="authorization-create-panel"
+            open={show_create.value}
+            onToggle={(e) => (show_create.value = e.currentTarget.open)}
+          >
+            <summary>{t("admin.authorization.create")}</summary>
+            {show_create.value ? (
+              <AuthorizationCreate
+                resource={resource}
+                resource_type={resource_type}
+                on_done={() => (show_create.value = false)}
+              />
+            ) : null}
+          </details>
 
           <table class="fade-in auth-table">
             <thead>

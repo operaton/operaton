@@ -130,7 +130,7 @@ const Routing = () => {
           />
           <Route path={app_path("/migrations")} component={MigrationsGuarded} />
           <Route
-            path={app_path("/deployments/:deployment_id?/:resource_name?")}
+            path={app_path("/deployments/:deployment_id?")}
             component={DeploymentsGuarded}
           />
           <Route

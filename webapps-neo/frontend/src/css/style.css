@@ -1029,15 +1029,14 @@
     padding: var(--spacing-2);
   }
 
-  /* Single vertical column that fills the viewport; the page itself does not
-     scroll — only the details pane does.
+  /* Single vertical column; the page scrolls as a whole so nothing is cut off
+     on short viewports.
        row 1: deployment list (content height, capped at 30rem, scrolls internally)
        row 2: resource list (content height)
-       row 3: resource details (fills the rest, scrolls internally) */
+       row 3: resource details (content height) */
   .deployments {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
 
   .deployments .deployment-list {
@@ -1102,6 +1101,29 @@
 
   .auth-table :where(td, th) {
     vertical-align: top;
+  }
+
+  /* Collapsible "create new authorization" panel above the table. */
+  .authorization-create-panel {
+    margin: var(--spacing-2) 0 var(--spacing-3);
+    padding: var(--spacing-1) var(--spacing-2);
+    background: var(--background-2);
+    border-radius: var(--border-radius-2);
+
+    > summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    &[open] > summary {
+      margin-bottom: var(--spacing-1);
+    }
+  }
+
+  /* The permissions fieldset names itself with its legend, so it has no label
+     in front of it; keep it in the field column. */
+  .authorization-create > fieldset {
+    grid-column: 2;
   }
 
   .link-list {
@@ -1252,6 +1274,14 @@
     font-weight: 400;
   }
 
+  /* Long lines scroll inside the block instead of widening the page. That makes
+     it a scroll container on both axes, so let vertical scrolling pass through
+     to the page instead of being swallowed by the overscroll rule in normalize. */
+  pre {
+    overflow-x: auto;
+    overscroll-behavior-y: auto;
+  }
+
   :where(h1, h2, h3, h4, h5, h6, p):first-child {
     margin: 0;
   }
@@ -1296,6 +1326,7 @@
 
     /* A message about the form as a whole belongs across both columns; in the
        label column it is squeezed into a few characters per line. */
+    > [aria-live],
     > .error,
     > .info-box,
     > .password-policy {

@@ -22,6 +22,7 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_IS_TRANSIENT;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_NAME;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_INPUT_PARAMETER;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
@@ -34,6 +35,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl implements OperatonInputParameter {
 
   protected static Attribute<String> operatonNameAttribute;
+  protected static Attribute<Boolean> operatonTransientAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputParameter.class, OPERATON_ELEMENT_INPUT_PARAMETER)
@@ -43,6 +45,11 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)
       .required()
+      .build();
+
+    operatonTransientAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_IS_TRANSIENT)
+      .namespace(OPERATON_NS)
+      .defaultValue(false)
       .build();
 
     typeBuilder.build();
@@ -60,6 +67,16 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
   @Override
   public void setOperatonName(String operatonName) {
     operatonNameAttribute.setValue(this, operatonName);
+  }
+
+  @Override
+  public boolean isOperatonTransient() {
+    return operatonTransientAttribute.getValue(this);
+  }
+
+  @Override
+  public void setOperatonTransient(boolean isTransient) {
+    operatonTransientAttribute.setValue(this, isTransient);
   }
 
 }

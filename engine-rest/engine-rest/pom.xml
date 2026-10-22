@@ -303,7 +303,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <version.undertow>2.3.26.Final</version.undertow>
+        <version.undertow>2.3.27.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>

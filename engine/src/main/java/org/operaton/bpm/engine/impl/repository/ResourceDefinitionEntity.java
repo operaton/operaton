@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.repository;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.repository.ResourceDefinition;
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.repository.ResourceDefinition;
 /**
  * Entity of a deployed resource definition
  */
-public interface ResourceDefinitionEntity<T extends ResourceDefinition> extends ResourceDefinition {
+public @NullUnmarked interface ResourceDefinitionEntity<T extends ResourceDefinition> extends ResourceDefinition {
 
   void setId(String id);
 

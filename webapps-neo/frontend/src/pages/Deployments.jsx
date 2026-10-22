@@ -82,8 +82,8 @@ const DeploymentsPage = () => {
     // Ephemeral, single-page selection state — not a fetched resource.
     selected_resource = useSignal(null),
     {
-      params: { deployment_id, resource_name },
-      query,
+      params: { deployment_id },
+      query: { resource: resource_name, ...list_query } = {},
     } = useRoute(),
     { route } = useLocation(),
     [t] = useTranslation();
@@ -94,10 +94,12 @@ const DeploymentsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // The selected resource is not part of the list query, so picking one does
+  // not reload the deployment list.
   useEffect(() => {
-    load_deployments(state, query);
+    load_deployments(state, list_query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(query)]);
+  }, [JSON.stringify(list_query)]);
 
   // When the deployment list has loaded and the user is on /deployments with
   // no specific deployment selected, redirect to the first one.
@@ -350,7 +352,7 @@ const DeploymentUpload = () => {
 
 const ResourcesList = () => {
   const state = useContext(AppState),
-    { params } = useRoute(),
+    { params, query } = useRoute(),
     [t] = useTranslation();
 
   if (!params.deployment_id) {
@@ -375,12 +377,12 @@ const ResourcesList = () => {
               state.api.deployment.resources.value?.data.map((resource) => (
                 <tr
                   key={resource.id}
-                  aria-selected={params.resource_name === resource.name}
+                  aria-selected={query.resource === resource.name}
                 >
                   <th scope="row">
                     <a
                       href={app_path(
-                        `/deployments/${params.deployment_id}/${resource.name}`,
+                        `/deployments/${params.deployment_id}?resource=${encodeURIComponent(resource.name)}`,
                       )}
                     >
                       {resource.name.includes("/")
@@ -488,7 +490,7 @@ const ResourceDetails = () => {
       },
     } = state,
     {
-      params: { resource_name },
+      query: { resource: resource_name },
     } = useRoute(),
     [t] = useTranslation(),
     resource_file_type = resource_name?.split(".").pop();

@@ -59,9 +59,29 @@ After announcements are out:
 
 - **`changelog.tpl`** — on `main` it is updated by the `main` version bump after a minor release (`perform-release.md` → "Bump `main` after a minor release"); verify that PR is merged.
 - **Close milestone** — `gh api repos/operaton/operaton/milestones/<N> -X PATCH -f state=closed`
-- **Open next milestone** — verify the next milestone exists (e.g. 2.1.3) with a due date matching the calendar (`references/calendar.md`).
+- **Open next milestone** — verify the next milestone exists (e.g. 2.1.3) with a due date matching the calendar (`references/calendar.md`). Skip this when the release line is being closed (see below).
+- **Close the release line** — REQUIRED check after a `X.Y.6` patch release; see "6. Closing a release branch".
 - **Calendar** — mark the released version as done in `references/calendar.md`.
 - **Docs / download page** — verify https://docs.operaton.org shows the new version; verify the download page links resolve.
+
+## 6. Closing a release branch
+
+A release line usually ends with its `.6` patch. After releasing `X.Y.6` from `release/X.Y.x`:
+
+1. Check the release calendar (`references/calendar.md`) for **any** future event `Operaton X.Y.*` — use the full
+   future range, not the usual 14 days. If one exists, the line stays open; stop here.
+2. **Ask the user explicitly** (AskUserQuestion) whether `release/X.Y.x` is to be closed. Do not close it on your own.
+   On "no", stop here.
+3. On "yes", raise one PR against `main` that removes every `.github/dependabot.yml` entry with
+   `target-branch: "release/X.Y.x"` (precedent: #3409, "Remove 1.x from dependabot"). Otherwise Dependabot keeps opening
+   update PRs and the milestone automation keeps editing those entries.
+4. Close what still targets the line, after listing it to the user:
+   - open PRs with base `release/X.Y.x` (`gh pr list --repo operaton/operaton --base release/X.Y.x --state open`)
+   - the automatic "Update dependabot milestone after release X.Y.6" PR on `main` (obsolete once the entries are removed)
+   - the next patch milestone (`X.Y.7`) if one was created — move open items first, then close it
+5. Deleting `release/X.Y.x` (which also stops the nightly integration builds, as `nightly-trigger.yml` picks up every
+   `release/*` branch) is irreversible: only after the dependabot PR is merged and the user confirms the deletion
+   separately. The `vX.Y.*` tags keep the code. Never delete it as part of the branch-cleanup list in step 4.
 
 ## Output
 

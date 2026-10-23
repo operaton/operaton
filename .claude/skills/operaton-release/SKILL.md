@@ -79,6 +79,7 @@ See `references/announce.md`. **Only after PERFORM verified the release is live.
 3. **Forum** (forum.operaton.org, "Announcement" category) — fuller markdown version. Draft → confirm → post.
 4. **Branch cleanup** — `.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>"` lists merged branches with links. **List only — you MUST NOT delete any branch.** Hand the list to the user.
 5. **Housekeeping** — `changelog.tpl`, close milestone + open next, calendar, docs/download verification, optional wider social.
+6. **Close the release line** after a `X.Y.6` patch if the calendar has no further `X.Y.*` release: **ask the user**, then remove its `dependabot.yml` entries via PR; branch deletion only on separate confirmation (see `references/announce.md` → "6. Closing a release branch").
 
 ## Output
 
@@ -91,5 +92,6 @@ PREPARE and PERFORM end with a structured report: per-release status, confidence
 - About to run PERFORM with `dry_run=false` without a prior dry-run or user confirmation → STOP.
 - Branch pom version ≠ target version → blocker, do not proceed.
 - About to delete a branch during ANNOUNCE (`git push origin --delete`, `git branch -D`) → **STOP.** List branches only; the human deletes them.
+- About to close a `release/X.Y.x` line (dependabot entries, milestone, branch) without the user's explicit yes → **STOP**, ask first.
 - About to post to Slack `@channel` or the forum without showing the user the draft first → STOP, draft and confirm.
 - About to announce a release whose GitHub release / Maven Central / release-notes page is not yet live → STOP, verify the links resolve first.

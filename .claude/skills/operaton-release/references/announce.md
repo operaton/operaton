@@ -7,6 +7,7 @@
 - GitHub Release tag(s) live and visible
 - Maven Central artifacts resolve (HTTP 200)
 - Docker versioned tags on Docker Hub
+- Helm chart for the release listed in `https://operaton.github.io/operaton-helm/index.yaml` (final releases; see `perform-release.md` → Helm chart publishing). Mention the chart version in the announcements.
 
 ## 1. Website — `operaton/operaton.org`
 

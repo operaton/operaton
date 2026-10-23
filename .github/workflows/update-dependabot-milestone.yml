@@ -43,6 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write # create missing milestones
       pull-requests: write
 
     steps:
@@ -73,9 +74,8 @@ jobs:
           body: |
             ## Update Dependabot Milestone
 
-            After the release of `${{ env.RELEASE_VERSION }}`, this PR updates the `milestone` field
-            for `${{ env.TARGET_BRANCH }}` entries in `.github/dependabot.yml` to point to
-            milestone **${{ env.MILESTONE_TITLE }}**.
+            After the release of `${{ env.RELEASE_VERSION }}`, this PR ${{ env.CHANGE_SUMMARY }}
+            in `.github/dependabot.yml`.
 
             This PR was created automatically by the
             [Update Dependabot Milestone](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) workflow.

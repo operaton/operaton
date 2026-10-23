@@ -362,8 +362,21 @@ jobs:
           DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
           NEEDS_RELEASE_BUILD_OUTPUTS_VERSION: ${{ needs.release_build.outputs.version}}
         run: |
-          PAYLOAD=$(jq -n --arg version "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION" \
-            '{ref: "main", inputs: {version: $version, snapshot: "false"}}')
+          # A release of an older line (a newer release/* branch exists) must not move the 'latest' Docker tag
+          IFS=. read -r MAJOR MINOR _ <<< "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION"
+          TAG_LATEST=auto
+          for BRANCH in $(git ls-remote --heads "https://github.com/${GITHUB_REPOSITORY}.git" 'refs/heads/release/*' | sed 's|.*refs/heads/||'); do
+            if [[ "$BRANCH" =~ ^release/([0-9]+)\.([0-9]+)\.x$ ]]; then
+              B_MAJOR=${BASH_REMATCH[1]}
+              B_MINOR=${BASH_REMATCH[2]}
+              if (( B_MAJOR > MAJOR || (B_MAJOR == MAJOR && B_MINOR > MINOR) )); then
+                echo "Newer release branch $BRANCH exists, not tagging 'latest'"
+                TAG_LATEST=false
+              fi
+            fi
+          done
+          PAYLOAD=$(jq -n --arg version "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION" --arg tag_latest "$TAG_LATEST" \
+            '{ref: "main", inputs: {version: $version, snapshot: "false", tag_latest: $tag_latest}}')
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \

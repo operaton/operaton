@@ -28,6 +28,7 @@ var DATE_PATTERN =
   /^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.([0-9]{0,4}))?$/;
 
 var {XMLValidator} = require('fast-xml-parser');
+var moment = require('moment');
 
 var isValidXML = function (value) {
   if (!value) return false;
@@ -47,43 +48,23 @@ var isValidDate = function (value) {
   var parts = DATE_PATTERN.exec(dateToString(value));
   if (!parts) return false;
 
-  var year = Number(parts[1]);
-  var month = Number(parts[2]);
-  var day = Number(parts[3]);
-  var hour = Number(parts[4]);
-  var minute = Number(parts[5]);
   var second = Number(parts[6]);
-  var leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
-  var daysInMonth = [
-    31,
-    leapYear ? 29 : 28,
-    31,
-    30,
-    31,
-    30,
-    31,
-    31,
-    30,
-    31,
-    30,
-    31,
-  ];
 
-  // Validate local calendar fields without Date parsing or timezone conversion.
-  // Preserve leap seconds and ISO end-of-day notation in the existing grammar.
-  return (
-    month >= 1 &&
-    month <= 12 &&
-    day >= 1 &&
-    day <= daysInMonth[month - 1] &&
-    minute <= 59 &&
-    second <= 60 &&
-    (hour < 24 ||
-      (hour === 24 &&
-        minute === 0 &&
-        second === 0 &&
-        Number(parts[7] || 0) === 0))
-  );
+  // Validate fields in UTC so local DST rules cannot normalize the input.
+  // Only validity is used; conversion still returns the original local value.
+  return moment
+    .utc([
+      Number(parts[1]),
+      Number(parts[2]) - 1,
+      Number(parts[3]),
+      Number(parts[4]),
+      Number(parts[5]),
+      // Moment does not support the SDK's existing leap-second notation.
+      second === 60 ? 59 : second,
+      // Any nonzero fraction must reject 24:00:00, including submilliseconds.
+      Number(parts[7] || 0) === 0 ? 0 : 1,
+    ])
+    .isValid();
 };
 
 var isType = function (value, type) {

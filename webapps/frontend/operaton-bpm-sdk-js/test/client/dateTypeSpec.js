@@ -26,14 +26,19 @@ describe('Date type calendar validation', function () {
     '0099-12-31T23:59:59',
     '1900-02-28T12:34:56',
     '2000-02-29T12:34:56',
+    '2400-02-29T12:34:56',
     '2024-02-29T12:34:56',
     '2024-04-30T12:34:56',
     '9999-12-31T23:59:59',
+    '9999-12-31T24:00:00',
     '2016-12-31T23:59:60',
     '2016-12-31T23:59:60.1234',
+    '2016-12-31T23:59:60.0001',
     '2024-02-29T24:00:00',
     '2024-02-29T24:00:00.',
     '2024-02-29T24:00:00.0000',
+    '2024-04-30T24:00:00',
+    '2024-12-31T24:00:00',
   ].forEach(function (value) {
     it('accepts and preserves ' + value, function () {
       expect(typeUtil.isType(value, 'Date')).to.eql(true);
@@ -41,7 +46,7 @@ describe('Date type calendar validation', function () {
     });
   });
 
-  ['', '.', '.1', '.12', '.123', '.1234'].forEach(function (fraction) {
+  ['', '.', '.1', '.12', '.123', '.1234', '.0001'].forEach(function (fraction) {
     it(
       'preserves the supported fraction ' + JSON.stringify(fraction),
       function () {
@@ -56,6 +61,9 @@ describe('Date type calendar validation', function () {
     '2023-02-29T12:34:56',
     '1900-02-29T12:34:56',
     '2100-02-29T12:34:56',
+    '0000-02-30T00:00:00',
+    '0001-02-29T00:00:00',
+    '0099-02-29T00:00:00',
     '2024-02-30T12:34:56',
     '2024-04-31T12:34:56',
     '2024-00-01T12:34:56',
@@ -69,6 +77,12 @@ describe('Date type calendar validation', function () {
     '2024-01-01T12:00:61',
     '2024-01-01T24:01:00',
     '2024-01-01T24:00:01',
+    '2024-01-01T24:00:60',
+    '2024-02-30T23:59:60',
+    '2024-02-30T24:00:00',
+    '2024-04-31T24:00:00',
+    '2024-01-01T24:00:00.1',
+    '2024-01-01T24:00:00.001',
     '2024-01-01T24:00:00.0001',
     '2024-01-01T12:00:00.12345',
     '2024-01-01T12:00:00Z',
@@ -99,30 +113,38 @@ describe('Date type calendar validation', function () {
     }).to.throw('is not of type Date');
   });
 
-  ['UTC', 'America/New_York', 'Asia/Kathmandu'].forEach(function (timezone) {
-    it('preserves local dates in ' + timezone, function () {
-      var originalTimezone = process.env.TZ;
-      try {
-        process.env.TZ = timezone;
-        var date = new Date(2024, 1, 29, 12, 34, 56);
-        expect(typeUtil.dateToString(date)).to.eql('2024-02-29T12:34:56');
-        expect(typeUtil.isType(date, 'Date')).to.eql(true);
-        expect(typeUtil.convertToType(date, 'Date')).to.eql(
-          '2024-02-29T12:34:56',
-        );
+  ['UTC', 'America/New_York', 'Asia/Kathmandu', 'Pacific/Apia'].forEach(
+    function (timezone) {
+      it('preserves local dates in ' + timezone, function () {
+        var originalTimezone = process.env.TZ;
+        try {
+          process.env.TZ = timezone;
+          var date = new Date(2024, 1, 29, 12, 34, 56);
+          expect(typeUtil.dateToString(date)).to.eql('2024-02-29T12:34:56');
+          expect(typeUtil.isType(date, 'Date')).to.eql(true);
+          expect(typeUtil.convertToType(date, 'Date')).to.eql(
+            '2024-02-29T12:34:56',
+          );
 
-        // Local strings have no zone, including times in a host-zone DST gap.
-        expect(typeUtil.isType('2024-03-10T02:30:00', 'Date')).to.eql(true);
-        expect(typeUtil.convertToType('2024-03-10T02:30:00', 'Date')).to.eql(
-          '2024-03-10T02:30:00',
-        );
-      } finally {
-        if (originalTimezone === undefined) {
-          delete process.env.TZ;
-        } else {
-          process.env.TZ = originalTimezone;
+          // Local strings have no zone, including times in a host-zone DST gap.
+          expect(typeUtil.isType('2024-03-10T02:30:00', 'Date')).to.eql(true);
+          expect(typeUtil.convertToType('2024-03-10T02:30:00', 'Date')).to.eql(
+            '2024-03-10T02:30:00',
+          );
+
+          // Apia skipped this entire local day when changing its UTC offset.
+          expect(typeUtil.isType('2011-12-30T12:34:56', 'Date')).to.eql(true);
+          expect(typeUtil.convertToType('2011-12-30T12:34:56', 'Date')).to.eql(
+            '2011-12-30T12:34:56',
+          );
+        } finally {
+          if (originalTimezone === undefined) {
+            delete process.env.TZ;
+          } else {
+            process.env.TZ = originalTimezone;
+          }
         }
-      }
-    });
-  });
+      });
+    },
+  );
 });

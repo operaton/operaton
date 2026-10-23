@@ -34,6 +34,12 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] GitHub Release created with the tag (`gh release view vX.Y.Z --repo operaton/operaton`). For `-Mx`/`-RCx`, it should be a prerelease.
 - [ ] Update the release notes: Deduplicate contributor, remove bots & LLM users. Update also the RELEASE.md artifact.
 - [ ] Artifacts on **Maven Central** (e.g. check `https://repo1.maven.org/maven2/org/operaton/bpm/operaton-engine/X.Y.Z/`).
+- [ ] **SQL scripts** (final releases): the release log ("Maven Build" step) prints either
+  `No database changes detected since last release tag vA.B.C.` or `Database changes detected …`. It must match the
+  PREPARE schema check. If the schema changed, `operaton-sql-scripts:<schema>` is on Maven Central
+  (`https://repo1.maven.org/maven2/org/operaton/bpm/distro/operaton-sql-scripts/<schema>/`), and the GitHub release has
+  `operaton-sql-scripts-<schema>.tar.gz`. A schema artifact can be published only once — never re-deploy it by hand
+  without the user's explicit decision.
 - [ ] Next development version `-SNAPSHOT` committed back to `BRANCH` (`[releng] Bump version ...`).
 - [ ] **`main` version bumped** — REQUIRED when `X.Y.0` (no qualifier) was released from `release/X.Y.x`. See "Bump `main` after a minor release" below.
 - [ ] **Docker** build dispatched to `operaton/operaton-docker` (the workflow notifies it)

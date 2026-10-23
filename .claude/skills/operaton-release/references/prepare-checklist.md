@@ -61,6 +61,26 @@ See `references/release-notes.md`. Type-dependent:
 - [ ] When the upcoming release is a final minor/major, remove the `(DRAFT)` suffix from the title.
 - [ ] Add a _Security Vulnerabilities_ section if any CVEs are fixed in this release, with links to advisories and list dependency upgrades that fixed CVEs.
 
+### Database schema
+Run the schema check for every release (read-only, GitHub API only):
+```bash
+.devenv/scripts/release/check-db-schema.py --branch BRANCH --version VER
+```
+It compares `BRANCH` with the previous final release (highest `vX.Y.Z` tag below `VER`; milestone/RC tags are
+ignored, the same rule as `.github/scripts/prepare-deploy.sh`) and prints the schema version
+(`operaton.dbscheme.current.version` in `database/pom.xml`) before and after, the changed files in the engine `db`
+directory, whether the change is **version-only** (upgrade scripts only insert an `ACT_GE_SCHEMA_LOG` row) or
+**structural**, and the commits with their PRs and closed issues. Exit code `2` = schema changed.
+
+- [ ] **Patch (`PATCH>0`)**: no schema change. Release branches take no schema updates — any change is a 🔴 blocker.
+- [ ] **Minor/Milestone (`.0` / `-Mx` / `-RCx`)**: if the version changed, the release notes' *Database Schema*
+  section states old → new version, version-only vs structural, the upgrade script names, and links the PRs/issues
+  from the report (see `references/release-notes.md` → "Database Schema"). A section still saying "no changes" while
+  the version moved is a 🔴 blocker for a `.0`; for a milestone, raise the PR and note it 🟡.
+- [ ] **Final `.0` with a new schema version**: `operaton-sql-scripts:<schema>` must not be on Maven Central yet
+  (`curl -s -o /dev/null -w '%{http_code}' https://repo1.maven.org/maven2/org/operaton/bpm/distro/operaton-sql-scripts/<schema>/`
+  → `404`). A `200` means the deploy will fail — 🔴, ask the user.
+
 ## 7. Smoke tests
 See `references/smoke-tests.md` (hybrid: browser-drive Docker images, guided manual for OS distros).
 

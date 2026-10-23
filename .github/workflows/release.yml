@@ -341,6 +341,7 @@ jobs:
     if: ${{github.event.inputs.dry_run == 'false' && needs.release_build.outputs.is_prerelease == 'false' }}
     permissions:
       contents: write
+      issues: write
       pull-requests: write
     uses: $/.github/workflows/update-dependabot-milestone.yml
     with:

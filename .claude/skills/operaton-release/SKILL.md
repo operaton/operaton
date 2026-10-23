@@ -67,7 +67,8 @@ See `references/perform-release.md`. In short:
 3. **Dry run:** `gh workflow run release.yml --ref <branch> -f dry_run=true [-f preliminary_release_qualifier=M1]`. Monitor to green.
 4. **Confirm again**, then real run with `-f dry_run=false`.
 5. **Verify:** GitHub release created, Maven Central artifacts present, `operaton-docker` build dispatched / `latest` tag updated, Helm chart PR opened on `operaton-helm` (merge it → chart auto-published), next `-SNAPSHOT` version committed.
-6. **Report** run URLs and verification results.
+6. **Bump `main`** if `X.Y.0` was released from `release/X.Y.x`: ask the user for next minor vs. major, then `.github/scripts/set-project-version.sh` via PR (see perform-release.md → "Bump `main` after a minor release").
+7. **Report** run URLs and verification results.
 
 ## ANNOUNCE workflow
 

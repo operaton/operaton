@@ -68,12 +68,17 @@ The target of `main` is always `X.(Y+1).0-SNAPSHOT` or `(X+1).0.0-SNAPSHOT` — 
    ```
    It sets all reactor poms (`versions:set`), `package.json` + `package-lock.json` (needs `npm`), the non-reactor
    `distro/run/**` poms, and points `.github/jreleaser/changelog.tpl` at `release-notes/<NEXT_MAJOR>_<NEXT_MINOR>/`.
-5. Verify — the script ends with `⚠️ The following files still contain the old version:` if anything was missed:
+5. Verify:
    ```bash
-   git grep -l 'X.Y.0-SNAPSHOT' -- '*pom.xml' '*package.json' '*package-lock.json'   # must be empty
-   grep release-notes .github/jreleaser/changelog.tpl                                 # new MAJOR_MINOR
+   git grep -n 'X.Y.0-SNAPSHOT' -- '*pom.xml' '*package.json' '*package-lock.json' \
+     | grep -v '<operaton.version.current>'                                         # must be empty
+   grep release-notes .github/jreleaser/changelog.tpl                               # new MAJOR_MINOR
    ```
-   If files are listed, fix them, re-run the `git grep`, and report the miss (the script should not leave any).
+   Expected leftover: `<operaton.version.current>X.Y.0-SNAPSHOT</operaton.version.current>` in the newest
+   `qa/test-db-instance-migration/test-fixture-*/pom.xml`. It records the version that created the DB fixture and is set by
+   `finalize-qa-db-fixture.sh` during the release — leave it unchanged. The script's closing
+   `⚠️ The following files still contain the old version:` list includes that file for the same reason.
+   Any other hit is a miss: fix it, re-run the check, and report it.
 6. Commit `chore(release): bump project version to <NEXT>-SNAPSHOT` and open a PR against `main`. Never push to `main`
    directly.
 7. Make sure the GitHub milestone for `<NEXT>` (e.g. `2.3.0`) exists.

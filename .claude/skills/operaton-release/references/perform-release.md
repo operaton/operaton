@@ -73,9 +73,7 @@ The target of `main` is always `X.(Y+1).0-SNAPSHOT` or `(X+1).0.0-SNAPSHOT` — 
    git grep -l 'X.Y.0-SNAPSHOT' -- '*pom.xml' '*package.json' '*package-lock.json'   # must be empty
    grep release-notes .github/jreleaser/changelog.tpl                                 # new MAJOR_MINOR
    ```
-   **macOS:** the script's `sed -i "s/…/…/g"` for `distro/run/**` poms (GNU syntax) fails under BSD sed
-   (`undefined label`), so those poms keep the old version. Fix the listed files with
-   `sed -i '' "s/X.Y.0-SNAPSHOT/<NEXT>-SNAPSHOT/g" <file>` and re-run the `git grep`.
+   If files are listed, fix them, re-run the `git grep`, and report the miss (the script should not leave any).
 6. Commit `chore(release): bump project version to <NEXT>-SNAPSHOT` and open a PR against `main`. Never push to `main`
    directly.
 7. Make sure the GitHub milestone for `<NEXT>` (e.g. `2.3.0`) exists.

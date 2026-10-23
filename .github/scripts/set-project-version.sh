@@ -14,6 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# GNU sed (Linux) and BSD sed (macOS) disagree on `-i`; an attached backup suffix works on both.
+sed_in_place() {
+  local expression=$1 file=$2
+  sed -i.bak -e "$expression" "$file" && rm -f "$file.bak"
+}
+
 if [[ ! -f "mvnw" ]]; then
   echo "⚠️ Maven Wrapper not found. You must execute this script from the project root directory. Exiting..."
   exit 1
@@ -60,7 +66,7 @@ echo "🔄 Updating version in package.json files"
 PACKAGE_JSON_FILES=($(find . -name package.json -not -path "*/node_modules/*"))
 
 for PACKAGE_JSON_FILE in "${PACKAGE_JSON_FILES[@]}"; do
-  sed -i '' -e "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" $PACKAGE_JSON_FILE
+  sed_in_place "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" "$PACKAGE_JSON_FILE"
 done
 
 echo "🔄 Regenerating package-lock.json files via npm install"
@@ -83,6 +89,7 @@ POM_FILES=(\
 ./distro/run/qa/integration-tests/pom.xml \
 ./distro/run/qa/pom.xml \
 ./distro/run/modules/webapps/pom.xml \
+./distro/run/modules/webapps-neo/pom.xml \
 ./distro/run/modules/example/pom.xml \
 ./distro/run/modules/oauth2/pom.xml \
 ./distro/run/modules/pom.xml \
@@ -90,7 +97,7 @@ POM_FILES=(\
 )
 
 for POM_FILE in "${POM_FILES[@]}"; do
-  sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" $POM_FILE
+  sed_in_place "s/$CURRENT_VERSION/$NEW_VERSION/g" "$POM_FILE"
 done
 
 echo "🔄 Updating version in .github/jreleaser/changelog.tpl"
@@ -98,7 +105,7 @@ if [[ $NEW_VERSION_WITHOUT_SNAPSHOT =~ ^([0-9]+)\.([0-9]+)\. ]]; then
   MAJOR="${BASH_REMATCH[1]}"
   MINOR="${BASH_REMATCH[2]}"
   NEW_VERSION_UNDERSCORE="${MAJOR}_${MINOR}"
-  sed -i '' "s|release-notes/[0-9_]*/|release-notes/${NEW_VERSION_UNDERSCORE}/|" .github/jreleaser/changelog.tpl
+  sed_in_place "s|release-notes/[0-9_]*/|release-notes/${NEW_VERSION_UNDERSCORE}/|" .github/jreleaser/changelog.tpl
 fi
 
 MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json  .)

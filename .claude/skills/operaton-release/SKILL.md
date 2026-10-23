@@ -30,7 +30,7 @@ PERFORM is outward-facing and hard to reverse. Always dry-run first, always conf
    - Qualifier `-M#` / `-RC#` → **milestone/preliminary release** of a `.0`, from `main` (or its release branch if one exists). Pass as `preliminary_release_qualifier`.
 3. **Sanity check:** the branch's `pom.xml` version must equal the target base version + `-SNAPSHOT`. Mismatch = blocker, report it.
 
-For multiple releases, process each independently and give a **separate confidence vote per release**.
+For multiple releases, process each independently and give a **separate confidence vote per release**. When PERFORM covers releases of different lines on one day, Docker `latest` must end on the highest version — follow perform-release.md → "Docker `latest` with several releases on one day".
 
 ## PREPARE workflow
 

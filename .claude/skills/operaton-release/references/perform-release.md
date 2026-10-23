@@ -39,9 +39,41 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] **Docker** build dispatched to `operaton/operaton-docker` (the workflow notifies it)
 - [ ] Watch the Docker build
 - [ ] Docker image pushed to Docker Hub (check `https://hub.docker.com/r/operaton/operaton/tags`).
-- [ ] Confirm `latest` / version tags appear on Docker Hub.
+- [ ] Confirm version tags appear on Docker Hub, and `latest` points at the **highest** version released (see "Docker `latest` with several releases on one day").
 - [ ] **Helm chart** published (see below): chart PR on `operaton/operaton-helm` opened, merged, and the new chart version listed in `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Snapshot pre-release tags cleaned up.
+
+## Docker `latest` with several releases on one day
+
+Rule: when releases of different lines run on the same day (e.g. patch `2.1.6` and minor `2.2.0`), the Docker `latest`
+tags must end up on the **highest** version only.
+
+How tagging works: `release.yml` (post_release → "Notify Docker Repository") dispatches `build-test-and-publish.yml` on
+`operaton/operaton-docker` with `version` and `snapshot=false`. Per image and Java variant, `release.sh` adds `latest`
+when the version is higher than the highest release tag on Docker Hub **at check time** (`should_tag_latest`), then
+pushes. The check and the push are not atomic: if the lower version checks before the higher one is pushed and pushes
+after it, `latest` ends on the lower version. A lower-version push that lands *before* the higher one is harmless.
+
+Procedure when releasing several lines on the same day:
+1. Dispatch in ascending version order (lower line first) — releases may run in parallel.
+2. Watch both `operaton-docker` runs (`gh run list --repo operaton/operaton-docker --workflow build-test-and-publish.yml -L 5`);
+   map each to its release via the time of the release run's "Notify Docker Repository" step.
+3. If the higher version dispatches Docker while the lower version's Docker run is still in progress — or before it —
+   cancel the lower version's Docker run (`gh run cancel <id> --repo operaton/operaton-docker`) and re-dispatch it once
+   the higher version's Docker run has finished:
+   ```bash
+   gh workflow run build-test-and-publish.yml --repo operaton/operaton-docker -f version=X.Y.Z -f snapshot=false
+   ```
+   Its `latest` check then sees the higher version and skips `latest`.
+4. Verify for `operaton`, `tomcat`, `wildfly`: every `latest*` tag has the same digest as the matching
+   `<HIGHER>*` tag:
+   ```bash
+   for r in operaton tomcat wildfly; do curl -s "https://hub.docker.com/v2/repositories/operaton/$r/tags?page_size=100" | python3 -c 'import json,sys; t={x["name"]:x.get("digest") for x in json.load(sys.stdin)["results"]}; v=sys.argv[2]; [print(sys.argv[1], n, "OK" if d==t.get(v+n[6:]) else "MISMATCH vs "+v+n[6:]) for n,d in sorted(t.items()) if n.startswith("latest")]' "$r" HIGHER; done
+   ```
+
+Re-dispatching after the fact does **not** repair a wrong `latest`: `release.sh` exits with "Not pushing already
+released image" when the version tag exists. Repair needs a manual re-tag with Docker Hub push rights, e.g.
+`docker buildx imagetools create -t operaton/<image>:latest operaton/<image>:<HIGHER>` (per Java variant) — ask the user.
 
 ## Bump `main` after a minor release
 

@@ -38,10 +38,43 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] **Docker** build dispatched to `operaton/operaton-docker` (the workflow notifies it)
 - [ ] Watch the Docker build
 - [ ] Docker image pushed to Docker Hub (check `https://hub.docker.com/r/operaton/operaton/tags`).
-- [ ] PR at `operaton/operaton-helm` is open for the new Operaton release version
-- [ ] PR at `operaton/operaton-helm` is merged and the chart version is live on `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Confirm `latest` / version tags appear on Docker Hub.
+- [ ] **Helm chart** published (see below): chart PR on `operaton/operaton-helm` opened, merged, and the new chart version listed in `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Snapshot pre-release tags cleaned up.
+
+## Helm chart publishing (automated)
+
+Final releases (not `-Mx`/`-RCx`, not dry runs) publish the Helm chart automatically:
+
+1. `release.yml` step **Notify Helm Chart Repository** dispatches
+   [`update-operaton-release.yaml`](https://github.com/operaton/operaton-helm/blob/main/.github/workflows/update-operaton-release.yaml)
+   on `operaton/operaton-helm` with `operaton_version=X.Y.Z` (token secret `HELM_ACTION_DISPATCH_TOKEN`).
+2. That workflow waits (max. 45 min) for `operaton/operaton:X.Y.Z` on Docker Hub, computes the chart version, sets
+   `version`/`appVersion` in `charts/operaton/Chart.yaml` and `image.tag` in `values.yaml`, and opens a PR
+   `release: Release chart version <C> for Operaton X.Y.Z` (branch `update-operaton-release/X.Y.Z`).
+3. **Manual:** review and merge that PR. The push to `main` runs `test-and-release.yaml` (chart-releaser), which creates the
+   `operaton-<C>` GitHub release and updates `index.yaml`.
+
+Chart version rules: `X.Y.0` → minor bump of the current chart version (`1.1.0` → `1.2.0`). `X.Y.Z` (Z>0) → patch bump of
+the chart that shipped `appVersion X.Y.(Z-1)`; if none exists, falls back to a minor bump.
+
+Verify:
+```bash
+gh run list --repo operaton/operaton-helm --workflow update-operaton-release.yaml -L 1
+gh pr list --repo operaton/operaton-helm --search "Operaton X.Y.Z in:title"
+curl -s https://operaton.github.io/operaton-helm/index.yaml | grep -A1 'appVersion: X.Y.Z'
+```
+
+Caveats:
+- The Helm step exists on `main` and branches cut from it (`release/2.2.x` onward). Older release branches (e.g.
+  `release/2.1.x`) lack it — dispatch manually if a chart is wanted:
+  `gh workflow run update-operaton-release.yaml --repo operaton/operaton-helm -f operaton_version=X.Y.Z`.
+- The chart PR always targets the helm repo's `main`. Releasing a patch of an **older** line after a newer minor (e.g.
+  2.1.6 after 2.2.0) would reset `main`'s `Chart.yaml` to the older `appVersion`. Merge the older line's chart PR first,
+  or skip the chart for the older line.
+- If the dispatch fails (HTTP ≠ 204, e.g. expired `HELM_ACTION_DISPATCH_TOKEN`), the `post_release` job stops **before**
+  "Delete snapshot release", "Set next development version" and "Commit changes". Do not re-run the whole release: dispatch
+  the Helm workflow manually, then re-run only the failed `post_release` job after fixing the token.
 
 ## Report
 List: run URL + result, release URL, Maven Central status, Docker status, next-version commit. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset — these are post-release items, not done here).

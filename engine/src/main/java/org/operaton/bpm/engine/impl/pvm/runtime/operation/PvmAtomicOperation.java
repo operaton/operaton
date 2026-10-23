@@ -42,8 +42,15 @@ public interface PvmAtomicOperation extends CoreAtomicOperation<PvmExecutionImpl
   PvmAtomicOperation ACTIVITY_INIT_STACK = new PvmAtomicOperationActivityInitStack(ACTIVITY_INIT_STACK_NOTIFY_LISTENER_START);
   PvmAtomicOperation ACTIVITY_INIT_STACK_AND_RETURN = new PvmAtomicOperationActivityInitStack(ACTIVITY_INIT_STACK_NOTIFY_LISTENER_RETURN);
   PvmAtomicOperation ACTIVITY_EXECUTE = new PvmAtomicOperationActivityExecute();
-  PvmAtomicOperation ACTIVITY_NOTIFY_LISTENER_END = new PvmAtomicOperationActivityNotifyListenerEnd();
   PvmAtomicOperation ACTIVITY_END = new PvmAtomicOperationActivityEnd();
+  PvmAtomicOperation ACTIVITY_END_DEFERRED = new PvmAtomicOperationActivityEnd("activity-end-deferred", true);
+  PvmAtomicOperation ACTIVITY_END_RETIRE = new PvmAtomicOperationActivityEnd("activity-end-retire", false);
+  PvmAtomicOperation ACTIVITY_END_DISPOSED = new PvmAtomicOperationActivityEnd("activity-end-disposed", false, true);
+  PvmAtomicOperation ACTIVITY_NOTIFY_LISTENER_END = new PvmAtomicOperationActivityNotifyListenerEnd();
+  PvmAtomicOperation ACTIVITY_NOTIFY_LISTENER_END_DEFERRED = new PvmAtomicOperationActivityNotifyListenerEnd(
+      ACTIVITY_END_DEFERRED, "activity-notify-listener-end-deferred");
+  PvmAtomicOperation ACTIVITY_NOTIFY_LISTENER_END_RETIRE = new PvmAtomicOperationActivityNotifyListenerEnd(
+      ACTIVITY_END_RETIRE, "activity-notify-listener-end-retire");
   PvmAtomicOperation FIRE_ACTIVITY_END = new PvmAtomicOperationFireActivityEnd();
 
   PvmAtomicOperation TRANSITION_NOTIFY_LISTENER_END = new PvmAtomicOperationTransitionNotifyListenerEnd();

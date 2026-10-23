@@ -15,7 +15,7 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown:  # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
+    cooldown: # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
       exclude:
         - "org.springframework.boot:*"
         - "org.springframework:spring-framework-bom"
@@ -71,7 +71,7 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-    cooldown:  # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
+    cooldown: # zizmor: ignore[dependabot-cooldown] Spring Boot/Framework patches wanted immediately; intentional zero cooldown
       exclude:
         - "org.springframework.boot:*"
         - "org.springframework:spring-framework-bom"
@@ -122,7 +122,6 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -168,8 +167,7 @@ updates:
     labels:
       - "dependencies:devcontainers"
     milestone: 23
-
-# Release 2.1.x branch - all updates
+    # Release 2.1.x branch - all updates
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -186,7 +184,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 31
+    milestone: 23
     groups:
       all:
         patterns:
@@ -203,7 +201,7 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:npm"
-    milestone: 31
+    milestone: 23
     groups:
       all:
         patterns:
@@ -223,7 +221,7 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:npm"
-    milestone: 31
+    milestone: 23
     groups:
       all:
         patterns:
@@ -242,7 +240,7 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:github-action"
-    milestone: 31
+    milestone: 23
     groups:
       github-actions:
         patterns:
@@ -257,4 +255,4 @@ updates:
     target-branch: "release/2.1.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 31
+    milestone: 23

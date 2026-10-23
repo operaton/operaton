@@ -54,6 +54,12 @@ when the version is higher than the highest release tag on Docker Hub **at check
 pushes. The check and the push are not atomic: if the lower version checks before the higher one is pushed and pushes
 after it, `latest` ends on the lower version. A lower-version push that lands *before* the higher one is harmless.
 
+`release.yml` passes `tag_latest` to `operaton-docker` (operaton/operaton-docker#50, operaton/operaton#3941): `false`
+when a newer `release/A.B.x` branch exists, otherwise `auto`. With that in place on the releasing branch, an older-line
+release never tags `latest`; check the "Notify Docker Repository" log for `Newer release branch … not tagging 'latest'`.
+Branches whose `release.yml` predates it (check: `git grep -n tag_latest origin/<BRANCH> -- .github/workflows/release.yml`)
+still race — use the procedure below. Run the digest check in step 4 in every case.
+
 Procedure when releasing several lines on the same day:
 1. Dispatch in ascending version order (lower line first) — releases may run in parallel.
 2. Watch both `operaton-docker` runs (`gh run list --repo operaton/operaton-docker --workflow build-test-and-publish.yml -L 5`);
@@ -62,9 +68,10 @@ Procedure when releasing several lines on the same day:
    cancel the lower version's Docker run (`gh run cancel <id> --repo operaton/operaton-docker`) and re-dispatch it once
    the higher version's Docker run has finished:
    ```bash
-   gh workflow run build-test-and-publish.yml --repo operaton/operaton-docker -f version=X.Y.Z -f snapshot=false
+   gh workflow run build-test-and-publish.yml --repo operaton/operaton-docker -f version=X.Y.Z -f snapshot=false -f tag_latest=false
    ```
-   Its `latest` check then sees the higher version and skips `latest`.
+   (Omit `-f tag_latest=false` if operaton-docker#50 is not merged yet; the `latest` check then sees the higher version
+   and skips `latest`.)
 4. Verify for `operaton`, `tomcat`, `wildfly`: every `latest*` tag has the same digest as the matching
    `<HIGHER>*` tag:
    ```bash

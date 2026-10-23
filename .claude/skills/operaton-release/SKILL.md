@@ -41,7 +41,7 @@ Work the checklist in `references/prepare-checklist.md`. Create a TodoWrite item
 3. **Docker images** — `operaton/operaton`, `operaton/wildfly`, `operaton/tomcat` SNAPSHOT images current on Docker Hub.
 4. **Dependencies** — no open HIGH/CRITICAL Dependabot alerts (except legacy webapp deps).
 5. **Label & milestone hygiene** — closed issues/PRs without milestone; merged PRs in the milestone that look noteworthy but lack the `noteworthy` label. See `references/noteworthy.md`.
-6. **Documentation** — release notes correct for the type. See `references/release-notes.md`.
+6. **Documentation** — release notes correct for the type, including the *Database Schema* section from `.devenv/scripts/release/check-db-schema.py`. See `references/release-notes.md`.
 7. **Smoke tests** — hybrid. See `references/smoke-tests.md`.
 8. **Raise PRs** for every fixable gap (docs, labels, config). Collect links.
 9. **Confidence vote** — see rubric below.
@@ -89,6 +89,7 @@ PREPARE and PERFORM end with a structured report: per-release status, confidence
 - About to give a 🟢 GO without having actually run the build/image/doc checks → verify first, evidence before assertion.
 - About to run PERFORM with `dry_run=false` without a prior dry-run or user confirmation → STOP.
 - Branch pom version ≠ target version → blocker, do not proceed.
+- Patch release whose schema check reports a database schema change → blocker; release branches take no schema updates.
 - About to delete a branch during ANNOUNCE (`git push origin --delete`, `git branch -D`) → **STOP.** List branches only; the human deletes them.
 - About to post to Slack `@channel` or the forum without showing the user the draft first → STOP, draft and confirm.
 - About to announce a release whose GitHub release / Maven Central / release-notes page is not yet live → STOP, verify the links resolve first.

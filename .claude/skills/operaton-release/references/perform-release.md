@@ -35,12 +35,53 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] Update the release notes: Deduplicate contributor, remove bots & LLM users. Update also the RELEASE.md artifact.
 - [ ] Artifacts on **Maven Central** (e.g. check `https://repo1.maven.org/maven2/org/operaton/bpm/operaton-engine/X.Y.Z/`).
 - [ ] Next development version `-SNAPSHOT` committed back to `BRANCH` (`[releng] Bump version ...`).
+- [ ] **`main` version bumped** — REQUIRED when `X.Y.0` (no qualifier) was released from `release/X.Y.x`. See "Bump `main` after a minor release" below.
 - [ ] **Docker** build dispatched to `operaton/operaton-docker` (the workflow notifies it)
 - [ ] Watch the Docker build
 - [ ] Docker image pushed to Docker Hub (check `https://hub.docker.com/r/operaton/operaton/tags`).
 - [ ] Confirm `latest` / version tags appear on Docker Hub.
 - [ ] **Helm chart** published (see below): chart PR on `operaton/operaton-helm` opened, merged, and the new chart version listed in `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Snapshot pre-release tags cleaned up.
+
+## Bump `main` after a minor release
+
+`release.yml` only bumps the branch it ran on. Releasing `X.Y.0` from `release/X.Y.x` moves that branch to
+`X.Y.1-SNAPSHOT`; `main` stays at `X.Y.0-SNAPSHOT` and must be moved to the next minor or major version by hand.
+
+| Released | From | `main` action |
+|----------|------|---------------|
+| `X.Y.0` | `release/X.Y.x` | bump `main` (this section) |
+| `X.Y.0` | `main` (no release branch) | none — `release.yml` already bumped `main` to `X.(Y+1).0-SNAPSHOT` |
+| `X.Y.Z` (Z>0), `-Mx`, `-RCx` | any | none |
+
+The target of `main` is always `X.(Y+1).0-SNAPSHOT` or `(X+1).0.0-SNAPSHOT` — never `X.Y.1-SNAPSHOT` (patch versions belong to `release/X.Y.x`).
+
+1. Check `main`'s version:
+   `gh api "repos/operaton/operaton/contents/pom.xml?ref=main" -q .content | base64 -d | grep -m1 '<version>'`.
+   If it is already above `X.Y.0-SNAPSHOT`, skip this section.
+2. **Ask the user** (AskUserQuestion) for the next version: `X.(Y+1).0-SNAPSHOT` (next minor, recommended default) or
+   `(X+1).0.0-SNAPSHOT` (next major). Do not pick on your own.
+3. Branch from `origin/main` (e.g. `chore/bump-version-X.(Y+1).0`), use a worktree if the current checkout is busy.
+4. From the repository root run:
+   ```bash
+   .github/scripts/set-project-version.sh <NEXT>-SNAPSHOT
+   ```
+   It sets all reactor poms (`versions:set`), `package.json` + `package-lock.json` (needs `npm`), the non-reactor
+   `distro/run/**` poms, and points `.github/jreleaser/changelog.tpl` at `release-notes/<NEXT_MAJOR>_<NEXT_MINOR>/`.
+5. Verify:
+   ```bash
+   git grep -n 'X.Y.0-SNAPSHOT' -- '*pom.xml' '*package.json' '*package-lock.json' \
+     | grep -v '<operaton.version.current>'                                         # must be empty
+   grep release-notes .github/jreleaser/changelog.tpl                               # new MAJOR_MINOR
+   ```
+   Expected leftover: `<operaton.version.current>X.Y.0-SNAPSHOT</operaton.version.current>` in the newest
+   `qa/test-db-instance-migration/test-fixture-*/pom.xml`. It records the version that created the DB fixture and is set by
+   `finalize-qa-db-fixture.sh` during the release — leave it unchanged. The script's closing
+   `⚠️ The following files still contain the old version:` list includes that file for the same reason.
+   Any other hit is a miss: fix it, re-run the check, and report it.
+6. Commit `chore(release): bump project version to <NEXT>-SNAPSHOT` and open a PR against `main`. Never push to `main`
+   directly.
+7. Make sure the GitHub milestone for `<NEXT>` (e.g. `2.3.0`) exists.
 
 ## Helm chart publishing (automated)
 

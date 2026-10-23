@@ -1,10 +1,26 @@
 # Directory `release`
 
-Helpers for the **post-release announcement** phase (the ANNOUNCE action of the
-`operaton-release` skill). Run from the repository root.
+Helpers for the `operaton-release` skill: release checks (PREPARE) and the
+**post-release announcement** phase (ANNOUNCE). Run from the repository root.
 
 These scripts prepare and list; they never publish or delete. Posting to Slack /
 forum and deleting branches stay manual, human-confirmed steps.
+
+## `check-db-schema.py`
+
+Report database schema changes for an upcoming release (PREPARE). Compares the
+branch with the previous final release (highest `vX.Y.Z` tag below the version;
+milestone/RC tags ignored) and prints the schema version before/after, the
+changed files in the engine `db` directory, whether the change is version-only
+or structural, and the commits with their PRs and closed issues.
+**Read-only**, uses only the GitHub API through `gh` (works in shallow clones).
+
+```bash
+.devenv/scripts/release/check-db-schema.py --branch release/2.2.x --version 2.2.1
+```
+
+Exit code `0` = no schema change, `2` = schema changed (read the verdict),
+`1` = error.
 
 ## `list-merged-branches.sh`
 

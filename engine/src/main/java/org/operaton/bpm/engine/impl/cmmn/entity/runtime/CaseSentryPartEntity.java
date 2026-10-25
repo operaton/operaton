@@ -20,6 +20,8 @@ import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
@@ -32,7 +34,7 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
 /**
  * @author Roman Smirnov
  */
-public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, HasDbRevision, HasDbReferences {
+public @NullUnmarked class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, HasDbRevision, HasDbReferences {
 
   @Serial
   private static final long serialVersionUID = 1L;
@@ -61,7 +63,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(@NonNull String id) {
     this.id = id;
   }
 

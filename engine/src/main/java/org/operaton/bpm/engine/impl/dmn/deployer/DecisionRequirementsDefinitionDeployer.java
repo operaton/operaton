@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
@@ -36,6 +37,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.model.dmn.instance.Decision;
 
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
@@ -44,11 +46,11 @@ import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXE
  * {@link Deployer} responsible to parse DMN 1.1 XML files and create the proper
  * {@link DecisionRequirementsDefinitionEntity}s.
  */
-public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDeployer<DecisionRequirementsDefinitionEntity> {
+public @NullMarked class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDeployer<DecisionRequirementsDefinitionEntity> {
 
   protected static final DecisionLogger LOG = ProcessEngineLogger.DECISION_LOGGER;
 
-  protected DmnTransformer transformer;
+  protected @Nullable DmnTransformer transformer;
 
   @Override
   protected String[] getResourcesSuffixes() {
@@ -59,7 +61,7 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
 
   @Override
   protected List<DecisionRequirementsDefinitionEntity> transformDefinitions(DeploymentEntity deployment, ResourceEntity resource, Properties properties) {
-    byte[] bytes = resource.getBytes();
+    byte[] bytes = resource.getBytes() != null ? resource.getBytes() : new byte[0];
     ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
 
     if (!deployment.isNew()) {
@@ -67,7 +69,7 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
     }
 
     try {
-      DecisionRequirementsDefinitionEntity drd = transformer
+      DecisionRequirementsDefinitionEntity drd = getTransformer()
           .createTransform()
           .modelInstance(inputStream)
           .transformDecisionRequirementsGraph();
@@ -84,17 +86,17 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
   }
 
   public void skipEnforceTtl(boolean skipEnforceTtl) {
-    DmnElementTransformHandler<Decision, DmnDecisionImpl> handler = transformer.getElementTransformHandlerRegistry().getHandler(Decision.class);
+    DmnElementTransformHandler<Decision, DmnDecisionImpl> handler = getTransformer().getElementTransformHandlerRegistry().getHandler(Decision.class);
     ((DecisionDefinitionHandler) handler).setSkipEnforceTtl(skipEnforceTtl);
   }
 
   @Override
-  protected DecisionRequirementsDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
+  protected @Nullable DecisionRequirementsDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     return getDecisionRequirementsDefinitionManager().findDecisionRequirementsDefinitionByDeploymentAndKey(deploymentId, definitionKey);
   }
 
   @Override
-  protected DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
+  protected @Nullable DecisionRequirementsDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, @Nullable String tenantId) {
     return getDecisionRequirementsDefinitionManager().findLatestDecisionRequirementsDefinitionByKeyAndTenantId(definitionKey, tenantId);
   }
 
@@ -129,7 +131,7 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
 
   @Override
   protected void updateDefinitionByPersistedDefinition(DeploymentEntity deployment, DecisionRequirementsDefinitionEntity definition,
-      DecisionRequirementsDefinitionEntity persistedDefinition) {
+      @Nullable DecisionRequirementsDefinitionEntity persistedDefinition) {
     // cannot update the definition if it is not persistent
     if (persistedDefinition != null) {
       super.updateDefinitionByPersistedDefinition(deployment, definition, persistedDefinition);
@@ -145,6 +147,7 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
   // getters/setters ///////////////////////////////////////////////////////////////////////////////////
 
   public DmnTransformer getTransformer() {
+    EnsureUtil.ensureNotNull("transformer", transformer);
     return transformer;
   }
 

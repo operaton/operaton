@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -23,7 +25,7 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 
-public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
+public @NullUnmarked class OperatonFormDefinitionEntity implements OperatonFormDefinition,
     ResourceDefinitionEntity<OperatonFormDefinitionEntity>, DbEntity, HasDbRevision {
 
   protected String id;
@@ -47,7 +49,7 @@ public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(@NonNull String id) {
     this.id = id;
   }
 

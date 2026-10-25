@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 /**
  * {@link JobHandler} implementation for timer start events which are embedded into an event subprocess.
@@ -34,7 +37,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * @author Kristin Polenz
  *
  */
-public class TimerStartEventSubprocessJobHandler extends TimerEventJobHandler {
+public @NullMarked class TimerStartEventSubprocessJobHandler extends TimerEventJobHandler {
 
   public static final String TYPE = "timer-start-event-subprocess";
 
@@ -46,7 +49,9 @@ public class TimerStartEventSubprocessJobHandler extends TimerEventJobHandler {
   @Override
   public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, @Nullable String tenantId) {
     String activityId = configuration.getTimerElementKey();
-    ActivityImpl eventSubprocessActivity = execution.getProcessDefinition()
+    ProcessDefinitionEntity processDefinition = execution.getProcessDefinition();
+    EnsureUtil.ensureNotNull("processDefinition", processDefinition);
+    ActivityImpl eventSubprocessActivity = processDefinition
       .findActivity(activityId);
 
     if(eventSubprocessActivity != null) {

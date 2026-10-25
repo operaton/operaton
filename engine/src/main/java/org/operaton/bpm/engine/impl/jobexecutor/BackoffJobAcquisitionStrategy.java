@@ -16,10 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static java.util.Objects.requireNonNullElse;
 
 /**
  * Determines the number of jobs to acquire and the time to wait between acquisition cycles
@@ -57,7 +61,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author Thorben Lindhauer
  */
-public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
+public @NullMarked class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
 
   public static final long DEFAULT_EXECUTION_SATURATION_WAIT_TIME = 100;
 
@@ -289,7 +293,7 @@ public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
   }
 
   protected long calculateBackoffTime() {
-    long backoffTime = 0;
+    long backoffTime;
 
     if (backoffLevel <= 0) {
       backoffTime = 0;
@@ -303,7 +307,7 @@ public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
     if (applyJitter) {
       // add a bounded random jitter to avoid multiple job acquisitions getting exactly the same
       // polling interval
-      backoffTime += ThreadLocalRandom.current().nextDouble() * ((double) backoffTime / 2);
+        backoffTime = (long) (backoffTime + ThreadLocalRandom.current().nextDouble() * ((double) backoffTime / 2));
     }
 
     return backoffTime;
@@ -312,11 +316,6 @@ public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
   @Override
   public int getNumJobsToAcquire(String processEngine) {
     Integer numJobsToAcquire = jobsToAcquire.get(processEngine);
-    if (numJobsToAcquire != null) {
-      return numJobsToAcquire;
-    }
-    else {
-      return baseNumJobsToAcquire;
-    }
+    return requireNonNullElse(numJobsToAcquire, baseNumJobsToAcquire);
   }
 }

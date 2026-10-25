@@ -428,6 +428,11 @@
 
       <dependency>
         <groupId>com.konghq</groupId>
+        <artifactId>unirest-java-core</artifactId>
+        <version>${version.unirest-java}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.konghq</groupId>
         <artifactId>unirest-modules-gson</artifactId>
         <version>${version.unirest-java}</version>
       </dependency>

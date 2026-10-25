@@ -39,7 +39,6 @@ public @NullMarked class BpmPlatformPlugins {
 
   public void add(@Nullable BpmPlatformPlugin plugin) {
     if (plugin != null) {
-      if (plugin != null) {
       this.plugins.add(plugin);
     }
   }

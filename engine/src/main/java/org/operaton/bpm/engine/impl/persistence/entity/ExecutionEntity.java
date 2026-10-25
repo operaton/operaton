@@ -1742,7 +1742,6 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
     if (variableStore.containsKey(variableName)) {
       VariableInstanceEntity existingVariable = variableStore.getVariable(variableName);
       if (existingVariable != null) {
-        if (existingVariable != null) {
         existingVariable.setValue(requireNonNull(variable.getTypedValue()));
       }
       variable.delete();

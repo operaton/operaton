@@ -759,7 +759,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
     }
     requireNonNull(activity);
 
-    SignallableActivityBehavior activityBehavior = requireNonNull((SignallableActivityBehavior) activity.getActivityBehavior());
+    SignallableActivityBehavior activityBehavior = requireNonNull((SignallableActivityBehavior) requireNonNull(activity).getActivityBehavior());
     try {
       activityBehavior.signal(this, signalName, signalData);
     } catch (RuntimeException e) {
@@ -1192,7 +1192,7 @@ public abstract @NullMarked class PvmExecutionImpl extends CoreExecution impleme
   }
 
   public @Nullable ProcessDefinitionImpl getProcessDefinition() {
-    return processDefinition;
+    return requireNonNull(processDefinition);
   }
 
   // process instance /////////////////////////////////////////////////////////

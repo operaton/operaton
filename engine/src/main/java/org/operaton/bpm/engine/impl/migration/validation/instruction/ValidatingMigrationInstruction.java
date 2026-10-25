@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 

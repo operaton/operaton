@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
@@ -1055,7 +1056,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
     return true;
   }
 
-  protected List<TaskListener> getListenersForEvent(String event) {
+  protected @NonNull List<TaskListener> getListenersForEvent(String event) {
     TaskDefinition resolvedTaskDefinition = getTaskDefinition();
     if (resolvedTaskDefinition != null) {
       if (skipCustomListeners) {
@@ -1244,7 +1245,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
       }
 
       if (authorizations != null) {
-        saveAuthorizations(authorizations);
+        saveAuthorizations(requireNonNull(authorizations));
       }
     }
   }
@@ -1261,7 +1262,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
       }
 
       if (authorizations != null) {
-        saveAuthorizations(authorizations);
+        saveAuthorizations(requireNonNull(authorizations));
       }
     }
   }
@@ -1278,7 +1279,7 @@ public @NullMarked class TaskEntity extends AbstractVariableScope implements Tas
       }
 
       if (authorizations != null) {
-        deleteAuthorizations(authorizations);
+        deleteAuthorizations(requireNonNull(authorizations));
       }
     }
   }

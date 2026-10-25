@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.cfg.standalone;
 
 import java.util.*;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
@@ -31,13 +33,13 @@ import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 /**
  * @author Sebastian Menski
  */
-public class StandaloneTransactionContext implements TransactionContext {
+public @NullMarked class StandaloneTransactionContext implements TransactionContext {
 
   private static final TransactionLogger LOG = ProcessEngineLogger.TX_LOGGER;
 
   protected CommandContext commandContext;
-  protected Map<TransactionState, List<TransactionListener>> stateTransactionListeners;
-  private TransactionState lastTransactionState;
+  protected @Nullable Map<TransactionState, List<TransactionListener>> stateTransactionListeners;
+  private @Nullable TransactionState lastTransactionState;
 
   public StandaloneTransactionContext(CommandContext commandContext) {
     this.commandContext = commandContext;

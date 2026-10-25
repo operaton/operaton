@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.calendar;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.bpm.engine.task.Task;
@@ -26,7 +28,7 @@ import org.operaton.bpm.engine.task.Task;
 /**
  * @author Tom Baeyens
  */
-public class DurationBusinessCalendar implements BusinessCalendar {
+public @NullMarked class DurationBusinessCalendar implements BusinessCalendar {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -34,17 +36,17 @@ public class DurationBusinessCalendar implements BusinessCalendar {
 
 
   @Override
-  public Date resolveDuedate(String duedate, Task task) {
+  public @Nullable Date resolveDuedate(String duedate, Task task) {
     return resolveDuedate(duedate);
   }
 
   @Override
-  public Date resolveDuedate(String duedate) {
+  public @Nullable Date resolveDuedate(String duedate) {
     return resolveDuedate(duedate, (Date)null);
   }
 
   @Override
-  public Date resolveDuedate(String duedate, Date startDate) {
+  public @Nullable Date resolveDuedate(String duedate, @Nullable Date startDate) {
     try {
       DurationHelper dh = new DurationHelper(duedate, startDate);
       return dh.getDateAfter(startDate);

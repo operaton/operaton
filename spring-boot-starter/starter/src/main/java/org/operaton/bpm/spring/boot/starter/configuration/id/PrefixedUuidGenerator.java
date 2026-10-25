@@ -18,12 +18,13 @@ package org.operaton.bpm.spring.boot.starter.configuration.id;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 
 import static java.util.Objects.requireNonNull;
 
-public class PrefixedUuidGenerator implements IdGenerator {
+public @NullMarked class PrefixedUuidGenerator implements IdGenerator {
 
   private final StrongUuidGenerator strongUuidGenerator = new StrongUuidGenerator();
 

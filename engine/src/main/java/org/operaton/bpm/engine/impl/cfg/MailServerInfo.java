@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullUnmarked;
 
 /**
  * @author Tom Baeyens
  */
-public class MailServerInfo {
+public @NullUnmarked class MailServerInfo {
 
   protected String mailServerDefaultFrom;
   protected String mailServerHost;

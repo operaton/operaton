@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.runtime;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 
-public interface ModificationBuilder extends InstantiationBuilder<ModificationBuilder>{
+public @NullMarked interface ModificationBuilder extends InstantiationBuilder<ModificationBuilder>{
 
   /**
    * <i>Submits the instruction:</i>

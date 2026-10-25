@@ -24,6 +24,8 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavio
 import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
+import static java.util.Objects.requireNonNull;
+
 public class SameBehaviorInstructionValidator implements MigrationInstructionValidator {
 
   private static final List<Set<Class<?>>> EQUIVALENT_BEHAVIORS = List.of(
@@ -31,7 +33,7 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     Set.of(SubProcessActivityBehavior.class, EventSubProcessActivityBehavior.class)
   );
 
-  private Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<>();
+  private final Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<>();
 
   public SameBehaviorInstructionValidator() {
     this(EQUIVALENT_BEHAVIORS);
@@ -50,8 +52,8 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     ActivityImpl sourceActivity = instruction.getSourceActivity();
     ActivityImpl targetActivity = instruction.getTargetActivity();
 
-    Class<?> sourceBehaviorClass = sourceActivity.getActivityBehavior().getClass();
-    Class<?> targetBehaviorClass = targetActivity.getActivityBehavior().getClass();
+    Class<?> sourceBehaviorClass = requireNonNull(sourceActivity.getActivityBehavior()).getClass();
+    Class<?> targetBehaviorClass = requireNonNull(targetActivity.getActivityBehavior()).getClass();
 
     if (!sameBehavior(sourceBehaviorClass, targetBehaviorClass)) {
       report.addFailure("Activities have incompatible types (%s is not compatible with %s)".formatted(sourceBehaviorClass.getSimpleName(), targetBehaviorClass.getSimpleName()));

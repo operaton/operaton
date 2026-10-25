@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.spring;
 
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -31,11 +33,11 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Frederik Heremans
  * @author Joram Barrez
  */
-public class SpringTransactionContext implements TransactionContext {
+public @NullMarked class SpringTransactionContext implements TransactionContext {
 
   protected PlatformTransactionManager transactionManager;
   protected CommandContext commandContext;
-  protected TransactionState lastTransactionState;
+  protected @Nullable TransactionState lastTransactionState;
 
   public SpringTransactionContext(PlatformTransactionManager transactionManager, CommandContext commandContext) {
     this.transactionManager = transactionManager;
@@ -125,36 +127,7 @@ public class SpringTransactionContext implements TransactionContext {
            !TransactionState.ROLLINGBACK.equals(lastTransactionState);
   }
 
-  protected abstract class TransactionSynchronizationAdapter implements TransactionSynchronization {
-
-    @Override
-    public void suspend() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void flush() {
-    }
-
-    @Override
-    public void beforeCommit(boolean readOnly) {
-    }
-
-    @Override
-    public void beforeCompletion() {
-    }
-
-    @Override
-    public void afterCommit() {
-    }
-
-    @Override
-    public void afterCompletion(int status) {
-    }
-
+  protected abstract static @NullMarked class TransactionSynchronizationAdapter implements TransactionSynchronization {
   }
 
 }

@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -41,7 +42,7 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
  * @author Roman Smirnov
  *
  */
-public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefinition, ResourceDefinitionEntity<CaseDefinitionEntity>, DbEntity, HasDbRevision {
+public @NullUnmarked class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefinition, ResourceDefinitionEntity<CaseDefinitionEntity>, DbEntity, HasDbRevision {
 
   @Serial private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -223,6 +224,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
     return previousCaseDefinitionId;
   }
 
+  @SuppressWarnings("unused")
   protected void setPreviousCaseDefinitionId(String previousCaseDefinitionId) {
     this.previousCaseDefinitionId = previousCaseDefinitionId;
   }
@@ -274,7 +276,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
 
   /**
    * Updates all modifiable fields from another case definition entity.
-   * @param updatingCaseDefinition
+   * @param updatingCaseDefinition the case definition entity to update from
    */
   @Override
   public void updateModifiableFieldsFromEntity(CaseDefinitionEntity updatingCaseDefinition) {

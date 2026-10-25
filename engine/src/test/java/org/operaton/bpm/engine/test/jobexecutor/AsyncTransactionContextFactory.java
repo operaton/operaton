@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
 import org.operaton.bpm.engine.impl.cfg.standalone.StandaloneTransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  * @author Daniel Meyer
  *
  */
-public class AsyncTransactionContextFactory extends StandaloneTransactionContextFactory {
+public @NullMarked class AsyncTransactionContextFactory extends StandaloneTransactionContextFactory {
 
   @Override
   public TransactionContext openTransactionContext(CommandContext commandContext) {

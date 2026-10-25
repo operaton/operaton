@@ -3,4 +3,6 @@
  * Provides standard error codes and a registry for exception code providers
  * used throughout the engine.
  */
-package org.operaton.bpm.engine.impl.errorcode;
+@NullMarked package org.operaton.bpm.engine.impl.errorcode;
+
+import org.jspecify.annotations.NullMarked;

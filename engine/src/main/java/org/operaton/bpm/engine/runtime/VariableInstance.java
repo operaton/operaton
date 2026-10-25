@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -27,80 +28,80 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author roman.smirnov
  *
  */
-public interface VariableInstance {
+public @NullMarked interface VariableInstance {
 
   /**
    * @return the Id of this variable instance
    */
-  String getId();
+  @Nullable String getId();
 
   /**
    * Returns the name of this variable instance.
    */
-  String getName();
+  @Nullable String getName();
 
   /**
    * Returns the name of the type of this variable instance
    *
    * @return the type name of the variable
    */
-  String getTypeName();
+  @Nullable String getTypeName();
 
   /**
    * Returns the value of this variable instance.
    */
-  Object getValue();
+  @Nullable Object getValue();
 
   /**
    * Returns the TypedValue of this variable instance.
    */
-  TypedValue getTypedValue();
+  @Nullable TypedValue getTypedValue();
 
   /**
    * Returns the corresponding process instance id.
    */
-  String getProcessInstanceId();
+  @Nullable String getProcessInstanceId();
 
   /**
    * Returns the corresponding execution id.
    */
-  String getExecutionId();
+  @Nullable String getExecutionId();
 
   /**
    * Return the corresponding process definition id.
    */
-  String getProcessDefinitionId();
+  @Nullable String getProcessDefinitionId();
 
   /**
    * Returns the corresponding case instance id.
    */
-  String getCaseInstanceId();
+  @Nullable String getCaseInstanceId();
 
   /**
    * Returns the corresponding case execution id.
    */
-  String getCaseExecutionId();
+  @Nullable String getCaseExecutionId();
 
   /**
    * Returns the corresponding task id.
    */
-  String getTaskId();
+  @Nullable String getTaskId();
 
   /**
    * Returns the corresponding batch id.
    */
-  String getBatchId();
+  @Nullable String getBatchId();
 
   /**
    * Returns the corresponding activity instance id.
    */
-  String getActivityInstanceId();
+  @Nullable String getActivityInstanceId();
 
   /**
    * If the variable value could not be loaded, this returns the error message.
    * @return an error message indicating why the variable value could not be loaded.
    */
-  String getErrorMessage();
+  @Nullable String getErrorMessage();
 
   /**
    * The id of the tenant this variable belongs to. Can be <code>null</code>

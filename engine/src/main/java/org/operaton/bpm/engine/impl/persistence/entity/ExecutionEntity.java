@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.*;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -242,7 +243,7 @@ public @NullMarked class ExecutionEntity extends PvmExecutionImpl implements Exe
 
   /**
    * Contains observers which are observe the execution.
-   * 
+   *
    */
   protected transient List<ExecutionObserver> executionObservers = new ArrayList<>();
 

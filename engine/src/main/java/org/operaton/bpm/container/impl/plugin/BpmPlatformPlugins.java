@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.plugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 

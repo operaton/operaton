@@ -18,13 +18,14 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public abstract class AcquireJobsRunnable implements Runnable {
+public abstract @NullMarked class AcquireJobsRunnable implements Runnable {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 

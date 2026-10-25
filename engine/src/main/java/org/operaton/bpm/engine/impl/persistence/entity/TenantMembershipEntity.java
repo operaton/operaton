@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.db.DbEntity;
 /**
  * A relationship between a tenant and a user or a group.
  */
-public class TenantMembershipEntity implements DbEntity {
+public @NullUnmarked class TenantMembershipEntity implements DbEntity {
 
   protected TenantEntity tenant;
   protected UserEntity user;
@@ -43,7 +44,7 @@ public class TenantMembershipEntity implements DbEntity {
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(@Nullable String id) {
     this.id = id;
   }
 

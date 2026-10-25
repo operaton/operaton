@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,7 +29,7 @@ import java.util.Set;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class AcquiredJobs {
+public @NullMarked class AcquiredJobs {
 
   protected int numberOfJobsAttemptedToAcquire;
 

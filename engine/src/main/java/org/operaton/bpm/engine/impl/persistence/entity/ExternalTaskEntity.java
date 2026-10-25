@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.EntityTypes;
 
 import org.jspecify.annotations.Nullable;
@@ -38,6 +40,7 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.incident.IncidentHandling;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
@@ -45,6 +48,7 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
 
@@ -53,7 +57,7 @@ import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
  * @author Askar Akhmerov
  *
  */
-public class ExternalTaskEntity implements ExternalTask, DbEntity,
+public @NullUnmarked class ExternalTaskEntity implements ExternalTask, DbEntity,
   HasDbRevision, HasDbReferences {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
@@ -103,7 +107,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     return id;
   }
   @Override
-  public void setId(String id) {
+  public void setId(@NonNull String id) {
     this.id = id;
   }
   @Override
@@ -323,7 +327,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
 
     if(byteArray == null) {
       byteArray = createExceptionByteArray(EXCEPTION_NAME,exceptionBytes, ResourceTypes.RUNTIME);
-      errorDetailsByteArrayId = byteArray.getId();
+      errorDetailsByteArrayId = byteArray != null ? byteArray.getId() : null;
       errorDetailsByteArray = byteArray;
     }
     else {
@@ -521,8 +525,9 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   }
 
   protected boolean evaluateThrowBpmnError(ExecutionEntity execution, boolean continueOnException) {
+    PvmActivity activity = requireNonNull(execution.getActivity());
     @SuppressWarnings("unchecked")
-    List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) execution.getActivity().getProperty(BpmnProperties.OPERATON_ERROR_EVENT_DEFINITION.name());
+    List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = (List<OperatonErrorEventDefinition>) activity.getProperty(BpmnProperties.OPERATON_ERROR_EVENT_DEFINITION.name());
     if (operatonErrorEventDefinitions != null && !operatonErrorEventDefinitions.isEmpty()) {
       for (OperatonErrorEventDefinition operatonErrorEventDefinition : operatonErrorEventDefinitions) {
         if (errorEventDefinitionMatches(operatonErrorEventDefinition, continueOnException)) {
@@ -583,7 +588,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     externalTask.setPriority(priority);
     externalTask.setCreateTime(ClockUtil.getCurrentTime());
 
-    ProcessDefinitionEntity processDefinition = execution.getProcessDefinition();
+    ProcessDefinitionEntity processDefinition = requireNonNull(execution.getProcessDefinition());
     externalTask.setProcessDefinitionKey(processDefinition.getKey());
 
     externalTask.insert();

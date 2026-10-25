@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 
@@ -46,6 +47,7 @@ public class TimerStartEventJobHandler extends TimerEventJobHandler {
 
     String definitionKey = configuration.getTimerElementKey();
     ProcessDefinition processDefinition = deploymentCache.findDeployedLatestProcessDefinitionByKeyAndTenantId(definitionKey, tenantId);
+    EnsureUtil.ensureNotNull("processDefinition", processDefinition);
     startProcessInstance(commandContext, tenantId, processDefinition);
   }
 

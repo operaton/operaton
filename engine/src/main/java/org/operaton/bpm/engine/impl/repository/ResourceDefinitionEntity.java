@@ -43,6 +43,7 @@ public interface ResourceDefinitionEntity<T extends ResourceDefinition> extends 
 
   void setTenantId(@Nullable String tenantId);
 
+  @SuppressWarnings("rawtypes")
   ResourceDefinitionEntity getPreviousDefinition();
 
   void updateModifiableFieldsFromEntity(T updatingDefinition);

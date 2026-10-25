@@ -24,8 +24,7 @@ import org.operaton.bpm.engine.impl.cmd.SuspendProcessDefinitionCmd;
  * @author Joram Barrez
  * @author roman.smirnov
  */
-@NullMarked
-public class TimerSuspendProcessDefinitionHandler extends TimerChangeProcessDefinitionSuspensionStateJobHandler {
+public @NullMarked class TimerSuspendProcessDefinitionHandler extends TimerChangeProcessDefinitionSuspensionStateJobHandler {
 
   public static final String TYPE = "suspend-processdefinition";
 

@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cmd.AbstractSetJobDefinitionStateCmd;
 import org.operaton.bpm.engine.impl.cmd.SuspendJobDefinitionCmd;
 
 /**
  * @author roman.smirnov
  */
-public class TimerSuspendJobDefinitionHandler extends TimerChangeJobDefinitionSuspensionStateJobHandler {
+public @NullMarked class TimerSuspendJobDefinitionHandler extends TimerChangeJobDefinitionSuspensionStateJobHandler {
 
   public static final String TYPE = "suspend-job-definition";
 

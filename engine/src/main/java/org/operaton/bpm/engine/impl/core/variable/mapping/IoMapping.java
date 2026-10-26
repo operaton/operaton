@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 
 /**
@@ -37,6 +38,12 @@ public class IoMapping {
   public void executeInputParameters(AbstractVariableScope variableScope) {
     for (InputParameter inputParameter : getInputParameters()) {
       inputParameter.execute(variableScope);
+    }
+  }
+
+  public void executeInputParameters(AbstractVariableScope variableScope, VariableScope evaluationScope) {
+    for (InputParameter inputParameter : getInputParameters()) {
+      inputParameter.execute(variableScope, evaluationScope);
     }
   }
 

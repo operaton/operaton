@@ -389,35 +389,16 @@
       )
     </if>
 
-    <bind name="HPI_JOIN" value="false" />
-    <bind name="D_JOIN" value="false" />
-    <bind name="CD_JOIN" value="false" />
-    <bind name="JOIN_TYPE" value="'inner join'" />
+    <bind name="joinFlags" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@computeHistoricTaskInstanceJoinFlags(queries)" />
 
-    <foreach collection="queries" item="query">
-      <if test="query.isOrQueryActive">
-        <bind name="JOIN_TYPE" value="'left join'" />
-      </if>
-      <if test="query != null &amp;&amp; (query.processFinished || query.processUnfinished || query.processInstanceBusinessKey != null || query.processInstanceBusinessKeyLike != null ||
-              (query.processInstanceBusinessKeys != null &amp;&amp; query.processInstanceBusinessKeys.length > 0))">
-        <bind name="HPI_JOIN" value="true" />
-      </if>
-      <if test="query != null &amp;&amp; (query.processDefinitionKey != null || query.processDefinitionName != null)">
-        <bind name="D_JOIN" value="true" />
-      </if>
-      <if test="query != null &amp;&amp; (query.caseDefinitionKey != null || query.caseDefinitionName != null)">
-        <bind name="CD_JOIN" value="true" />
-      </if>
-    </foreach>
-
-    <if test="HPI_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_HI_PROCINST HPI ON RES.PROC_INST_ID_ = HPI.ID_
+    <if test="joinFlags.historicProcessInstanceJoin">
+      ${joinFlags.joinType} ${prefix}ACT_HI_PROCINST HPI ON RES.PROC_INST_ID_ = HPI.ID_
     </if>
-    <if test="D_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_RE_PROCDEF D on RES.PROC_DEF_ID_ = D.ID_
+    <if test="joinFlags.processDefinitionJoin">
+      ${joinFlags.joinType} ${prefix}ACT_RE_PROCDEF D on RES.PROC_DEF_ID_ = D.ID_
     </if>
-    <if test="CD_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_RE_CASE_DEF CD on RES.CASE_DEF_ID_ = CD.ID_
+    <if test="joinFlags.caseDefinitionJoin">
+      ${joinFlags.joinType} ${prefix}ACT_RE_CASE_DEF CD on RES.CASE_DEF_ID_ = CD.ID_
     </if>
     <where>
       <foreach collection="queries" item="query" index="i">

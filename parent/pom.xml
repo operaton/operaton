@@ -61,8 +61,11 @@
     <version.nodejs>24.22.1</version.nodejs>
     <version.npm>11.19.1</version.npm>
     <jacoco.argLine/>
+    <!-- jacoco agent fills this at runtime -->
+    <argLine/>
+    <surefire.localeArgs>-Duser.language=en -Duser.country=US</surefire.localeArgs>
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
-    <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
+    <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} ${surefire.localeArgs} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
     <surefire.forkCount>1</surefire.forkCount>
     <!-- profile activation properties -->
     <with-sources>false</with-sources>
@@ -93,6 +96,7 @@
             </systemPropertyVariables>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <forkCount>${surefire.forkCount}</forkCount>
+            <argLine>@{argLine} ${surefire.localeArgs}</argLine>
           </configuration>
         </plugin>
         <plugin>

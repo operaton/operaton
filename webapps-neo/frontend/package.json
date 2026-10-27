@@ -12,7 +12,6 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
-    "test:e2e:large-definitions": "playwright test --config e2e/large-definitions.config.js",
     "test:e2e:sub-path": "E2E_SUB_PATH=1 playwright test --project=sub-path",
     "test:a11y:axe": "playwright test a11y",
     "test:a11y:pa11y": "node e2e/a11y-pa11y.mjs",

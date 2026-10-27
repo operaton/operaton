@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:9f8a59cf-5fe8-4e4a-b117-730ed8832673",
+  "serialNumber": "urn:uuid:7b86a611-9fa2-4deb-ba23-6615bc16ffb1",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-27T17:54:46Z",
+    "timestamp": "2026-10-27T18:36:52Z",
     "tools": {
       "components": [
         {
@@ -22666,7 +22666,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "91a54a5d-f811-48c1-9d5f-8c16b67a1746",
+      "bom-ref": "a58033a2-3a84-422f-ac40-3fd13c1cbed4",
       "name": "package-lock.json",
       "properties": [
         {
@@ -27257,9 +27257,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/qs@6.16.0",
+      "bom-ref": "pkg:npm/qs@6.17.0",
       "name": "qs",
-      "version": "6.16.0",
+      "version": "6.17.0",
       "licenses": [
         {
           "license": {
@@ -27267,11 +27267,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/qs@6.16.0",
+      "purl": "pkg:npm/qs@6.17.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "qs@6.16.0"
+          "value": "qs@6.17.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -27922,7 +27922,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "98b2d2b3-b6b0-441c-94e2-a91af84de174",
+      "bom-ref": "44e52e00-d315-4094-a74c-d74a18d04317",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27933,7 +27933,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "1804b446-462d-4f40-a918-8a161549223c",
+      "bom-ref": "c14fce03-7a10-432d-a29b-3f7766178b2c",
       "name": "package-lock.json",
       "properties": [
         {
@@ -29066,7 +29066,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "788279f0-ac9a-4098-bbeb-1b7db4fe66e8",
+      "bom-ref": "95f7cb3e-a965-416f-94a2-25f4f3aa56a2",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -31881,7 +31881,13 @@
       "dependsOn": []
     },
     {
-      "ref": "91a54a5d-f811-48c1-9d5f-8c16b67a1746",
+      "ref": "44e52e00-d315-4094-a74c-d74a18d04317",
+      "dependsOn": [
+        "a58033a2-3a84-422f-ac40-3fd13c1cbed4"
+      ]
+    },
+    {
+      "ref": "a58033a2-3a84-422f-ac40-3fd13c1cbed4",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -31928,12 +31934,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
-      ]
-    },
-    {
-      "ref": "98b2d2b3-b6b0-441c-94e2-a91af84de174",
-      "dependsOn": [
-        "91a54a5d-f811-48c1-9d5f-8c16b67a1746"
       ]
     },
     {
@@ -33174,7 +33174,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/qs@6.16.0",
+      "ref": "pkg:npm/qs@6.17.0",
       "dependsOn": [
         "pkg:npm/es-define-property@1.0.1",
         "pkg:npm/side-channel@1.1.1"
@@ -33273,7 +33273,7 @@
         "pkg:npm/formidable@3.5.4",
         "pkg:npm/methods@1.1.2",
         "pkg:npm/mime@2.6.0",
-        "pkg:npm/qs@6.16.0"
+        "pkg:npm/qs@6.17.0"
       ]
     },
     {
@@ -33332,7 +33332,13 @@
       "dependsOn": []
     },
     {
-      "ref": "1804b446-462d-4f40-a918-8a161549223c",
+      "ref": "95f7cb3e-a965-416f-94a2-25f4f3aa56a2",
+      "dependsOn": [
+        "c14fce03-7a10-432d-a29b-3f7766178b2c"
+      ]
+    },
+    {
+      "ref": "c14fce03-7a10-432d-a29b-3f7766178b2c",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -33350,12 +33356,6 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "788279f0-ac9a-4098-bbeb-1b7db4fe66e8",
-      "dependsOn": [
-        "1804b446-462d-4f40-a918-8a161549223c"
       ]
     },
     {

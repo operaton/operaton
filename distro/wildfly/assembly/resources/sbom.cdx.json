@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:45d41300-df2c-4bd1-87f6-a99ce2aee9ee",
+  "serialNumber": "urn:uuid:2166736b-9504-4cd9-9813-f445ab1ef46f",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-27T18:36:54Z",
+    "timestamp": "2026-10-27T21:13:55Z",
     "tools": {
       "components": [
         {
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "a58033a2-3a84-422f-ac40-3fd13c1cbed4",
+      "bom-ref": "3ada7aee-ec5d-46bf-84ee-ff2c0276b4a7",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36276,7 +36276,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "44e52e00-d315-4094-a74c-d74a18d04317",
+      "bom-ref": "2c654ceb-9c73-4769-b280-7090709486fb",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36287,7 +36287,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c14fce03-7a10-432d-a29b-3f7766178b2c",
+      "bom-ref": "ec098641-9034-4ebc-b053-6293139e330a",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37420,7 +37420,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "95f7cb3e-a965-416f-94a2-25f4f3aa56a2",
+      "bom-ref": "0d02ed23-253a-4527-a4d7-58b5ff4ee52b",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -41138,13 +41138,13 @@
       "dependsOn": []
     },
     {
-      "ref": "44e52e00-d315-4094-a74c-d74a18d04317",
+      "ref": "2c654ceb-9c73-4769-b280-7090709486fb",
       "dependsOn": [
-        "a58033a2-3a84-422f-ac40-3fd13c1cbed4"
+        "3ada7aee-ec5d-46bf-84ee-ff2c0276b4a7"
       ]
     },
     {
-      "ref": "a58033a2-3a84-422f-ac40-3fd13c1cbed4",
+      "ref": "3ada7aee-ec5d-46bf-84ee-ff2c0276b4a7",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -42589,13 +42589,13 @@
       "dependsOn": []
     },
     {
-      "ref": "95f7cb3e-a965-416f-94a2-25f4f3aa56a2",
+      "ref": "0d02ed23-253a-4527-a4d7-58b5ff4ee52b",
       "dependsOn": [
-        "c14fce03-7a10-432d-a29b-3f7766178b2c"
+        "ec098641-9034-4ebc-b053-6293139e330a"
       ]
     },
     {
-      "ref": "c14fce03-7a10-432d-a29b-3f7766178b2c",
+      "ref": "ec098641-9034-4ebc-b053-6293139e330a",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",

@@ -103,12 +103,13 @@ describe("ProcessesPage — definition list", () => {
     expect(order.getAttribute("href")).toBe("/processes/proc:2/instances");
   });
 
-  it("shows incident and instance counts in the row", () => {
+  it("shows incident and instance counts in the row", async () => {
     signal_response(state.api.process.definition.list, definition_rows);
     const { getAllByRole } = renderPage(state);
-    const cells = getAllByRole("cell").map((c) => c.textContent);
-    expect(cells).toContain("3/0"); // active/suspended instances
-    expect(cells).toContain("invoice"); // key
+    await vi.waitFor(() =>
+      expect(getAllByRole("cell").map((c) => c.textContent)).toContain("3/0"),
+    );
+    expect(getAllByRole("cell").map((c) => c.textContent)).toContain("invoice");
   });
 
   it("renders the empty state when the list is an empty success with no filter", () => {
@@ -775,5 +776,153 @@ describe("ProcessesPage — sub navigation", () => {
     const { getByText } = renderPage(state);
     fireEvent.click(getByText("processes.enable-history-mode"));
     expect(routeFn).toHaveBeenCalledWith("/processes?history=true");
+  });
+});
+
+describe('ProcessesPage — bounded definition overview', () => {
+  let state;
+  const many_rows = Array.from({ length: 2369 }, (_, i) => ({
+    definition: {
+      id: `version:${i}`,
+      name: `Definition ${String(i).padStart(4, '0')}`,
+      key: `process-${i % 14}`,
+      version: i + 1,
+    },
+    instances: i % 2 === 0 ? 2 : 0,
+    incidents: [],
+  }));
+  beforeEach(() => {
+    state = create_mock_state();
+    mockParams = {};
+    mockQuery = {};
+    engine_rest.process_instance.suspended_count.mockResolvedValue(1);
+    signal_response(state.api.process.definition.list, many_rows);
+  });
+  afterEach(cleanup);
+
+  it('bounds rows and counts across 2369 versions', async () => {
+    const { container, getByText } = renderPage(state);
+    await vi.waitFor(() =>
+      expect(
+        engine_rest.process_instance.suspended_count,
+      ).toHaveBeenCalledTimes(25),
+    );
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(50);
+    expect(getByText('Definition 0000')).toBeTruthy();
+    expect(container.textContent).not.toContain('Definition 0050');
+    expect(
+      engine_rest.process_instance.suspended_count.mock.calls.map(
+        (call) => call[1],
+      ),
+    ).toEqual(
+      many_rows
+        .slice(0, 50)
+        .filter((row) => row.instances > 0)
+        .map((row) => row.definition.id),
+    );
+    expect(getByText('processes.pagination.previous').disabled).toBe(true);
+  });
+
+  it('pages through every version with page-scoped bulk actions', async () => {
+    const { container, getByText } = renderPage(state);
+    fireEvent.click(container.querySelector('thead input[type="checkbox"]'));
+    expect(container.querySelectorAll('tbody input:checked')).toHaveLength(50);
+    fireEvent.click(getByText('processes.pagination.next'));
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(50);
+    expect(getByText('Definition 0050')).toBeTruthy();
+    expect(container.querySelectorAll('tbody input:checked')).toHaveLength(0);
+    expect(getByText('processes.bulk.activate').disabled).toBe(true);
+    fireEvent.click(container.querySelector('thead input[type="checkbox"]'));
+    engine_rest.process_definition.activate.mockResolvedValue(undefined);
+    fireEvent.click(getByText('processes.bulk.activate'));
+    fireEvent.click(getByText('common.ok'));
+    await vi.waitFor(() =>
+      expect(engine_rest.process_definition.activate).toHaveBeenCalledTimes(50),
+    );
+    expect(
+      engine_rest.process_definition.activate.mock.calls.map((call) => call[1]),
+    ).toEqual(many_rows.slice(50, 100).map((row) => row.definition.id));
+    for (let page = 2; page < 48; page++)
+      fireEvent.click(getByText('processes.pagination.next'));
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(19);
+    expect(getByText('Definition 2368')).toBeTruthy();
+    expect(getByText('processes.pagination.next').disabled).toBe(true);
+  });
+
+  it('searches and sorts historical versions, resetting selection', () => {
+    const view = renderPage(state);
+    fireEvent.click(view.getByText('processes.pagination.next'));
+    fireEvent.click(
+      view.container.querySelector('thead input[type="checkbox"]'),
+    );
+    mockQuery = { sortBy: 'version', sortOrder: 'desc' };
+    view.rerender(
+      h(AppState.Provider, { value: { ...state } }, h(ProcessesPage, {})),
+    );
+    expect(view.container.querySelector('tbody a').textContent).toBe(
+      'Definition 2368',
+    );
+    expect(view.container.querySelectorAll('tbody input:checked')).toHaveLength(
+      0,
+    );
+    mockQuery = { 'q.nameLike': '%Definition 2300%' };
+    view.rerender(
+      h(AppState.Provider, { value: { ...state } }, h(ProcessesPage, {})),
+    );
+    expect(view.container.querySelectorAll('tbody tr')).toHaveLength(1);
+    expect(view.getByText('Definition 2300')).toBeTruthy();
+    expect(view.getByText('processes.pagination.previous').disabled).toBe(true);
+  });
+
+  it('aborts pending counts and handles rejected requests', async () => {
+    engine_rest.process_instance.suspended_count.mockImplementation(
+      (_state, _id, { signal }) =>
+        new Promise((_resolve, reject) => {
+          signal.addEventListener('abort', () =>
+            reject(new DOMException('Aborted', 'AbortError')),
+          );
+        }),
+    );
+    const { getByText, container } = renderPage(state);
+    await vi.waitFor(() =>
+      expect(
+        engine_rest.process_instance.suspended_count,
+      ).toHaveBeenCalledTimes(25),
+    );
+    const signals = engine_rest.process_instance.suspended_count.mock.calls.map(
+      (call) => call[2].signal,
+    );
+    engine_rest.process_instance.suspended_count.mockRejectedValue(
+      new TypeError('Failed to fetch'),
+    );
+    fireEvent.click(getByText('processes.pagination.next'));
+    await vi.waitFor(() => {
+      expect(signals.every((signal) => signal.aborted)).toBe(true);
+      expect(
+        engine_rest.process_instance.suspended_count,
+      ).toHaveBeenCalledTimes(50);
+    });
+    expect(
+      container.querySelectorAll(
+        'td[title="processes.instances-status-unavailable"]',
+      ),
+    ).toHaveLength(25);
+    expect(
+      container.querySelector(
+        'td[title="processes.instances-status-unavailable"]',
+      ).textContent,
+    ).toBe('—/—');
+  });
+
+  it('refreshes counts after reloading unchanged statistics', async () => {
+    signal_response(state.api.process.definition.list, [many_rows[0]]);
+    const { getByText } = renderPage(state);
+    await vi.waitFor(() => expect(getByText('1/1')).toBeTruthy());
+    engine_rest.process_instance.suspended_count.mockResolvedValue(2);
+    signal_response(state.api.process.definition.list, [{ ...many_rows[0] }]);
+    await vi.waitFor(() => expect(getByText('0/2')).toBeTruthy());
+    expect(engine_rest.process_instance.suspended_count).toHaveBeenCalledTimes(
+      2,
+    );
   });
 });

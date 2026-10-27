@@ -23,6 +23,7 @@ import java.util.List;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -70,6 +71,11 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
 
     // runtime service
     when(processEngine.getHistoryService()).thenReturn(historyServiceMock);
+  }
+
+  @AfterEach
+  void resetClock() {
+    ClockUtil.reset();
   }
 
   @Test

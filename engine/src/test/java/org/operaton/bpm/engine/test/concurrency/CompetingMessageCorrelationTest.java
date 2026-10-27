@@ -217,6 +217,7 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
+  @RequiredDatabase(excludes = DbSqlSessionFactory.MSSQL)
   void testConcurrentExclusiveCorrelationToDifferentExecutionsCase2() {
     InvocationLogListener.reset();
 

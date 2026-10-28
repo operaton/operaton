@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:66c4b00c-e2f9-4fa0-b4b6-91aed82ac4c8",
+  "serialNumber": "urn:uuid:53885812-f3f0-4142-ba0a-304776382451",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-27T17:42:39Z",
+    "timestamp": "2026-10-28T09:40:25Z",
     "tools": {
       "components": [
         {
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e29eaa22-4da4-4aa3-bd36-9d67bbc2bf95",
+      "bom-ref": "fde45487-9701-4cde-92ea-526b720fd0da",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33205,9 +33205,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/core-js@3.50.0",
+      "bom-ref": "pkg:npm/core-js@3.51.0",
       "name": "core-js",
-      "version": "3.50.0",
+      "version": "3.51.0",
       "licenses": [
         {
           "license": {
@@ -33215,11 +33215,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/core-js@3.50.0",
+      "purl": "pkg:npm/core-js@3.51.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "core-js@3.50.0"
+          "value": "core-js@3.51.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33541,6 +33541,30 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/didi@12.0.0",
+      "name": "didi",
+      "version": "12.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/didi@12.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "didi@12.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/didi@4.0.0",
       "name": "didi",
       "version": "4.0.0",
@@ -33589,9 +33613,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.12.3",
+      "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.13.0",
       "name": "dmn-js-boxed-expression",
-      "version": "17.12.3",
+      "version": "17.13.0",
       "licenses": [
         {
           "license": {
@@ -33599,11 +33623,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-boxed-expression@17.12.3",
+      "purl": "pkg:npm/dmn-js-boxed-expression@17.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-boxed-expression@17.12.3"
+          "value": "dmn-js-boxed-expression@17.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33613,9 +33637,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.12.3",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.13.0",
       "name": "dmn-js-decision-table",
-      "version": "17.12.3",
+      "version": "17.13.0",
       "licenses": [
         {
           "license": {
@@ -33623,11 +33647,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-decision-table@17.12.3",
+      "purl": "pkg:npm/dmn-js-decision-table@17.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.12.3"
+          "value": "dmn-js-decision-table@17.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33637,9 +33661,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-drd@17.12.3",
+      "bom-ref": "pkg:npm/dmn-js-drd@17.13.0",
       "name": "dmn-js-drd",
-      "version": "17.12.3",
+      "version": "17.13.0",
       "licenses": [
         {
           "license": {
@@ -33647,11 +33671,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-drd@17.12.3",
+      "purl": "pkg:npm/dmn-js-drd@17.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-drd@17.12.3"
+          "value": "dmn-js-drd@17.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33661,9 +33685,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.12.3",
+      "bom-ref": "pkg:npm/dmn-js-literal-expression@17.13.0",
       "name": "dmn-js-literal-expression",
-      "version": "17.12.3",
+      "version": "17.13.0",
       "licenses": [
         {
           "license": {
@@ -33671,11 +33695,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-literal-expression@17.12.3",
+      "purl": "pkg:npm/dmn-js-literal-expression@17.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-literal-expression@17.12.3"
+          "value": "dmn-js-literal-expression@17.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33709,9 +33733,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-shared@17.12.3",
+      "bom-ref": "pkg:npm/dmn-js-shared@17.13.0",
       "name": "dmn-js-shared",
-      "version": "17.12.3",
+      "version": "17.13.0",
       "licenses": [
         {
           "license": {
@@ -33719,11 +33743,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-shared@17.12.3",
+      "purl": "pkg:npm/dmn-js-shared@17.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-shared@17.12.3"
+          "value": "dmn-js-shared@17.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33733,9 +33757,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js@17.12.3",
+      "bom-ref": "pkg:npm/dmn-js@17.13.0",
       "name": "dmn-js",
-      "version": "17.12.3",
+      "version": "17.13.0",
       "licenses": [
         {
           "license": {
@@ -33743,11 +33767,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js@17.12.3",
+      "purl": "pkg:npm/dmn-js@17.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js@17.12.3"
+          "value": "dmn-js@17.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36276,7 +36300,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9704cba5-0431-4cb8-a8c7-03b7cdb532d8",
+      "bom-ref": "7a2a7a5b-8110-4ede-b814-a3174cee7b6d",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36287,7 +36311,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "8b2d8591-8b58-44db-891b-65b2170434ec",
+      "bom-ref": "2bc28591-43a9-445c-8892-fcfb7f078874",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37420,7 +37444,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "1d4cfd5e-db34-4585-a604-4080d731e429",
+      "bom-ref": "5d8ec31d-f7cd-4f2b-8a91-89ed1f4fb145",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -41138,13 +41162,13 @@
       "dependsOn": []
     },
     {
-      "ref": "9704cba5-0431-4cb8-a8c7-03b7cdb532d8",
+      "ref": "7a2a7a5b-8110-4ede-b814-a3174cee7b6d",
       "dependsOn": [
-        "e29eaa22-4da4-4aa3-bd36-9d67bbc2bf95"
+        "fde45487-9701-4cde-92ea-526b720fd0da"
       ]
     },
     {
-      "ref": "e29eaa22-4da4-4aa3-bd36-9d67bbc2bf95",
+      "ref": "fde45487-9701-4cde-92ea-526b720fd0da",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -41169,14 +41193,14 @@
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
-        "pkg:npm/core-js@3.50.0",
+        "pkg:npm/core-js@3.51.0",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.12.3",
-        "pkg:npm/dmn-js-drd@17.12.3",
-        "pkg:npm/dmn-js-literal-expression@17.12.3",
+        "pkg:npm/dmn-js-decision-table@17.13.0",
+        "pkg:npm/dmn-js-drd@17.13.0",
+        "pkg:npm/dmn-js-literal-expression@17.13.0",
         "pkg:npm/dmn-js-properties-panel@3.12.0",
-        "pkg:npm/dmn-js-shared@17.12.3",
-        "pkg:npm/dmn-js@17.12.3",
+        "pkg:npm/dmn-js-shared@17.13.0",
+        "pkg:npm/dmn-js@17.13.0",
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.4.17",
         "pkg:npm/events@3.3.0",
@@ -41714,10 +41738,10 @@
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
         "pkg:npm/diagram-js@15.28.1",
-        "pkg:npm/dmn-js-drd@17.12.3",
+        "pkg:npm/dmn-js-drd@17.13.0",
         "pkg:npm/dmn-js-properties-panel@3.12.0",
-        "pkg:npm/dmn-js-shared@17.12.3",
-        "pkg:npm/dmn-js@17.12.3",
+        "pkg:npm/dmn-js-shared@17.13.0",
+        "pkg:npm/dmn-js@17.13.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/zeebe-dmn-moddle@1.0.0"
@@ -41823,7 +41847,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/core-js@3.50.0",
+      "ref": "pkg:npm/core-js@3.51.0",
       "dependsOn": []
     },
     {
@@ -41919,6 +41943,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/didi@12.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/didi@4.0.0",
       "dependsOn": []
     },
@@ -41927,11 +41955,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dmn-js-boxed-expression@17.12.3",
+      "ref": "pkg:npm/dmn-js-boxed-expression@17.13.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/diagram-js@15.28.1",
-        "pkg:npm/dmn-js-shared@17.12.3",
+        "pkg:npm/dmn-js-shared@17.13.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0",
@@ -41939,12 +41967,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.12.3",
+      "ref": "pkg:npm/dmn-js-decision-table@17.13.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
         "pkg:npm/diagram-js@15.28.1",
-        "pkg:npm/dmn-js-shared@17.12.3",
+        "pkg:npm/dmn-js-shared@17.13.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -41954,11 +41982,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-drd@17.12.3",
+      "ref": "pkg:npm/dmn-js-drd@17.13.0",
       "dependsOn": [
         "pkg:npm/diagram-js-direct-editing@3.6.0",
         "pkg:npm/diagram-js@15.28.1",
-        "pkg:npm/dmn-js-shared@17.12.3",
+        "pkg:npm/dmn-js-shared@17.13.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.1.0",
@@ -41968,11 +41996,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-literal-expression@17.12.3",
+      "ref": "pkg:npm/dmn-js-literal-expression@17.13.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/diagram-js@15.28.1",
-        "pkg:npm/dmn-js-shared@17.12.3",
+        "pkg:npm/dmn-js-shared@17.13.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.1.0",
@@ -41985,17 +42013,17 @@
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.47.0",
         "pkg:npm/diagram-js@15.28.1",
-        "pkg:npm/dmn-js@17.12.3",
+        "pkg:npm/dmn-js@17.13.0",
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/min-dom@5.3.0"
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-shared@17.12.3",
+      "ref": "pkg:npm/dmn-js-shared@17.13.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.6.0",
         "pkg:npm/diagram-js@15.28.1",
-        "pkg:npm/didi@11.0.0",
+        "pkg:npm/didi@12.0.0",
         "pkg:npm/dmn-moddle@12.2.1",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inferno@5.6.3",
@@ -42007,13 +42035,13 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js@17.12.3",
+      "ref": "pkg:npm/dmn-js@17.13.0",
       "dependsOn": [
-        "pkg:npm/dmn-js-boxed-expression@17.12.3",
-        "pkg:npm/dmn-js-decision-table@17.12.3",
-        "pkg:npm/dmn-js-drd@17.12.3",
-        "pkg:npm/dmn-js-literal-expression@17.12.3",
-        "pkg:npm/dmn-js-shared@17.12.3"
+        "pkg:npm/dmn-js-boxed-expression@17.13.0",
+        "pkg:npm/dmn-js-decision-table@17.13.0",
+        "pkg:npm/dmn-js-drd@17.13.0",
+        "pkg:npm/dmn-js-literal-expression@17.13.0",
+        "pkg:npm/dmn-js-shared@17.13.0"
       ]
     },
     {
@@ -42589,13 +42617,7 @@
       "dependsOn": []
     },
     {
-      "ref": "1d4cfd5e-db34-4585-a604-4080d731e429",
-      "dependsOn": [
-        "8b2d8591-8b58-44db-891b-65b2170434ec"
-      ]
-    },
-    {
-      "ref": "8b2d8591-8b58-44db-891b-65b2170434ec",
+      "ref": "2bc28591-43a9-445c-8892-fcfb7f078874",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -42613,6 +42635,12 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
+      ]
+    },
+    {
+      "ref": "5d8ec31d-f7cd-4f2b-8a91-89ed1f4fb145",
+      "dependsOn": [
+        "2bc28591-43a9-445c-8892-fcfb7f078874"
       ]
     },
     {

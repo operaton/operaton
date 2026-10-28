@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:2166736b-9504-4cd9-9813-f445ab1ef46f",
+  "serialNumber": "urn:uuid:0a855665-29a8-4ad4-844c-d4661645d889",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-27T21:13:55Z",
+    "timestamp": "2026-10-28T09:36:55Z",
     "tools": {
       "components": [
         {
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "3ada7aee-ec5d-46bf-84ee-ff2c0276b4a7",
+      "bom-ref": "71ddbda8-ab8a-4a2e-9a35-b8cacf1631ec",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33205,9 +33205,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/core-js@3.50.0",
+      "bom-ref": "pkg:npm/core-js@3.51.0",
       "name": "core-js",
-      "version": "3.50.0",
+      "version": "3.51.0",
       "licenses": [
         {
           "license": {
@@ -33215,11 +33215,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/core-js@3.50.0",
+      "purl": "pkg:npm/core-js@3.51.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "core-js@3.50.0"
+          "value": "core-js@3.51.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36276,7 +36276,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2c654ceb-9c73-4769-b280-7090709486fb",
+      "bom-ref": "e63b614c-1d9a-40a7-9299-df0d734f3d99",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36287,7 +36287,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ec098641-9034-4ebc-b053-6293139e330a",
+      "bom-ref": "ebaaa1a4-b999-4950-8232-d82e686798bb",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37420,7 +37420,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0d02ed23-253a-4527-a4d7-58b5ff4ee52b",
+      "bom-ref": "83074b21-aada-47d9-9af1-d055fefd0035",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -41138,13 +41138,7 @@
       "dependsOn": []
     },
     {
-      "ref": "2c654ceb-9c73-4769-b280-7090709486fb",
-      "dependsOn": [
-        "3ada7aee-ec5d-46bf-84ee-ff2c0276b4a7"
-      ]
-    },
-    {
-      "ref": "3ada7aee-ec5d-46bf-84ee-ff2c0276b4a7",
+      "ref": "71ddbda8-ab8a-4a2e-9a35-b8cacf1631ec",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -41169,7 +41163,7 @@
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
-        "pkg:npm/core-js@3.50.0",
+        "pkg:npm/core-js@3.51.0",
         "pkg:npm/dmn-font@0.6.2",
         "pkg:npm/dmn-js-decision-table@17.12.3",
         "pkg:npm/dmn-js-drd@17.12.3",
@@ -41191,6 +41185,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
+      ]
+    },
+    {
+      "ref": "e63b614c-1d9a-40a7-9299-df0d734f3d99",
+      "dependsOn": [
+        "71ddbda8-ab8a-4a2e-9a35-b8cacf1631ec"
       ]
     },
     {
@@ -41823,7 +41823,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/core-js@3.50.0",
+      "ref": "pkg:npm/core-js@3.51.0",
       "dependsOn": []
     },
     {
@@ -42589,13 +42589,13 @@
       "dependsOn": []
     },
     {
-      "ref": "0d02ed23-253a-4527-a4d7-58b5ff4ee52b",
+      "ref": "83074b21-aada-47d9-9af1-d055fefd0035",
       "dependsOn": [
-        "ec098641-9034-4ebc-b053-6293139e330a"
+        "ebaaa1a4-b999-4950-8232-d82e686798bb"
       ]
     },
     {
-      "ref": "ec098641-9034-4ebc-b053-6293139e330a",
+      "ref": "ebaaa1a4-b999-4950-8232-d82e686798bb",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",

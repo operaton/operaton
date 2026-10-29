@@ -149,6 +149,12 @@
         name = "annotation"
         type = "string"
         desc = "The annotation set to the incident."
+    />
+
+    <@lib.property
+        name = "rootCauseIncidentMessage"
+        type = "string"
+        desc = "The incident message of the root cause incident."
         last = true
     />
 

@@ -10,14 +10,15 @@ import {
 // Count a definition's suspended instances directly (returns the number instead
 // of writing a shared signal), so the overview can ask for several at once
 // without the queries clobbering each other.
-const get_suspended_count = async (state, definition_id) => {
+const get_suspended_count = async (state, definition_id, { signal } = {}) => {
   const headers = set_request_headers(new Headers(), state);
   const res = await fetch(
     `${_url_engine_rest(state)}/process-instance/count` +
       `?processDefinitionId=${encodeURIComponent(definition_id)}&suspended=true`,
-    { headers, credentials: "include" },
+    { headers, credentials: 'include', signal },
   );
-  if (!res.ok) return 0;
+  if (!res.ok)
+    throw new Error(`Suspended instance count failed: ${res.status}`);
   return (await res.json())?.count ?? 0;
 };
 

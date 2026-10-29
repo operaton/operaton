@@ -154,7 +154,7 @@ public @NullMarked interface HistoryEventProducer {
    * Creates the history event fired when a task instances is <strong>completed</strong>.
    *
    * @param task the task
-   * @param deleteReason
+   * @param deleteReason the reason for the deletion of the task
    * @return the history event
    */
   HistoryEvent createTaskInstanceCompleteEvt(DelegateTask task, @Nullable String deleteReason);
@@ -180,7 +180,7 @@ public @NullMarked interface HistoryEventProducer {
    * @param sourceVariableScope the scope to which the variable is linked
    * @return the history event
    */
-  HistoryEvent createHistoricVariableCreateEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope);
+  HistoryEvent createHistoricVariableCreateEvt(VariableInstanceEntity variableInstance, @Nullable VariableScope sourceVariableScope);
 
   /**
    * Creates the history event fired when a variable is <strong>updated</strong>.
@@ -189,7 +189,7 @@ public @NullMarked interface HistoryEventProducer {
    * @param sourceVariableScope the scope to which the variable is linked
    * @return the history event
    */
-  HistoryEvent createHistoricVariableUpdateEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope);
+  HistoryEvent createHistoricVariableUpdateEvt(VariableInstanceEntity variableInstance, @Nullable VariableScope sourceVariableScope);
 
   /**
    * Creates the history event fired when a variable is <strong>migrated</strong>.
@@ -206,7 +206,7 @@ public @NullMarked interface HistoryEventProducer {
    * @param sourceVariableScope the scope to which the variable is linked
    * @return the history event
    */
-  HistoryEvent createHistoricVariableDeleteEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope);
+  HistoryEvent createHistoricVariableDeleteEvt(VariableInstanceEntity variableInstance, @Nullable VariableScope sourceVariableScope);
 
   // Form properties //////////////////////////////////////////
 

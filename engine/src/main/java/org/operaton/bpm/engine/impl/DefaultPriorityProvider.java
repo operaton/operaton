@@ -72,7 +72,7 @@ public abstract @NullMarked class DefaultPriorityProvider<T> implements Priority
    * @param errorMessageHeading the heading which is used for the error message
    * @return the valid priority value
    */
-  protected Long evaluateValueProvider(ParameterValueProvider valueProvider, ExecutionEntity execution, String errorMessageHeading) {
+  protected Long evaluateValueProvider(ParameterValueProvider valueProvider, @Nullable ExecutionEntity execution, String errorMessageHeading) {
     Object value;
     try {
       value = valueProvider.getValue(execution);
@@ -168,11 +168,11 @@ public abstract @NullMarked class DefaultPriorityProvider<T> implements Priority
    * @param value the current value
    * @param e the exception which was catched
    */
-  protected abstract void logNotDeterminingPriority(ExecutionEntity execution, Object value, ProcessEngineException e);
+  protected abstract void logNotDeterminingPriority(@Nullable ExecutionEntity execution, Object value, ProcessEngineException e);
 
 
   @SuppressWarnings("unused")
-  protected boolean isSymptomOfContextSwitchFailure(Throwable t, ExecutionEntity contextExecution) {
+  protected boolean isSymptomOfContextSwitchFailure(Throwable t, @Nullable ExecutionEntity contextExecution) {
     // a context switch failure can occur, if the current engine has no PA registration for the deployment
     // subclasses may assert the actual throwable to narrow down the diagnose
     return ProcessApplicationContextUtil.getTargetProcessApplication(contextExecution) == null;

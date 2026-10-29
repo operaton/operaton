@@ -17,9 +17,12 @@
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  *
@@ -28,17 +31,20 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 public @NullMarked class CmmnVariableInvocationListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   @Override
-  public void onCreate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onCreate(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
+    requireNonNull(sourceScope);
     sourceScope.dispatchEvent(new VariableEvent(variable, VariableListener.CREATE, sourceScope));
   }
 
   @Override
-  public void onUpdate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onUpdate(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
+    requireNonNull(sourceScope);
     sourceScope.dispatchEvent(new VariableEvent(variable, VariableListener.UPDATE, sourceScope));
   }
 
   @Override
-  public void onDelete(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onDelete(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
+    requireNonNull(sourceScope);
     sourceScope.dispatchEvent(new VariableEvent(variable, VariableListener.DELETE, sourceScope));
   }
 }

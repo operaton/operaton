@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.MigrationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 
@@ -198,7 +199,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
   }
 
   @Override
-  public ExecutionEntity resolveRepresentativeExecution() {
+  public @Nullable ExecutionEntity resolveRepresentativeExecution() {
     return instanceBehavior.resolveRepresentativeExecution();
   }
 
@@ -283,7 +284,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
     return requireNonNull(activityInstance);
   }
 
-  public String getActivityInstanceId() {
+  public @Nullable String getActivityInstanceId() {
     if (activityInstance != null) {
       return activityInstance.getId();
     }
@@ -292,7 +293,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
       // - emerging activity instances are never leaf activities
       // - therefore it is fine to always look up the activity instance id on the parent
       ExecutionEntity execution = resolveRepresentativeExecution();
-      return execution.getParentActivityInstanceId();
+      return execution != null ? execution.getParentActivityInstanceId() : null;
     }
   }
 
@@ -330,6 +331,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
     return childTransitionInstances;
   }
 
+  @SuppressWarnings("unused")
   public Set<MigratingEventScopeInstance> getChildCompensationInstances() {
     return childCompensationInstances;
   }
@@ -367,6 +369,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
 
   protected void migrateProcessInstanceHistory(final DelegateExecution execution) {
     HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
+    ensureNotNull("historyLevel", historyLevel);
     if (!historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_MIGRATE, this)) {
       return;
     }
@@ -382,6 +385,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
   @SuppressWarnings("unused")
   protected void migrateActivityInstanceHistory(final DelegateExecution execution) {
     HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
+    ensureNotNull("historyLevel", historyLevel);
     if (!historyLevel.isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_MIGRATE, this)) {
       return;
     }
@@ -428,7 +432,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
 
     void remove(boolean skipCustomListeners, boolean skipIoMappings);
 
-    ExecutionEntity resolveRepresentativeExecution();
+    @Nullable ExecutionEntity resolveRepresentativeExecution();
 
     ExecutionEntity createAttachableExecution();
 
@@ -439,12 +443,15 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
 
     @Override
     public boolean isDetached() {
-      return resolveRepresentativeExecution().getActivity() == null;
+      ExecutionEntity currentExecution = resolveRepresentativeExecution();
+      ensureNotNull("currentExecution", currentExecution);
+      return currentExecution.getActivity() == null;
     }
 
     @Override
     public void detachState() {
       ExecutionEntity currentExecution = resolveRepresentativeExecution();
+      ensureNotNull("currentExecution", currentExecution);
 
       currentExecution.setActivity(null);
       currentExecution.leaveActivityInstance();
@@ -474,6 +481,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
       ensureNotNull("targetScope", targetScope);
       requireNonNull(targetScope);
       ExecutionEntity currentExecution = resolveRepresentativeExecution();
+      ensureNotNull("currentExecution", currentExecution);
       currentExecution.setProcessDefinition(targetScope.getProcessDefinition());
       currentExecution.setActivity((PvmActivity) targetScope);
 
@@ -492,6 +500,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
       }
 
       ExecutionEntity currentExecution = resolveRepresentativeExecution();
+      ensureNotNull("currentExecution", currentExecution);
 
       currentExecution = currentExecution.createExecution();
       ExecutionEntity parent = currentExecution.getParent();
@@ -512,7 +521,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
     }
 
     @Override
-    public ExecutionEntity resolveRepresentativeExecution() {
+    public @Nullable ExecutionEntity resolveRepresentativeExecution() {
       if (representativeExecution.getReplacedBy() != null) {
         return representativeExecution.resolveReplacedBy();
       }
@@ -569,6 +578,7 @@ public @NullMarked class MigratingActivityInstance extends MigratingScopeInstanc
     @Override
     public void attachState() {
       MigratingActivityInstance parent = getParent();
+      EnsureUtil.ensureNotNull("parent", parent);
       ExecutionEntity newParentExecution = parent.createAttachableExecution();
 
       ExecutionEntity currentScopeExecution = resolveRepresentativeExecution();

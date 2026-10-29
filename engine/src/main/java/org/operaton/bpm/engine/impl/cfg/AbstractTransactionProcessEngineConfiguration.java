@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.interceptor.TxContextCommandContextFactory;
  * Base class for a JTA-based process engine configuration. Integrates with
  * transaction managers Java Enterprise environments.
  */
-public @NullMarked abstract class AbstractTransactionProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
+public abstract @NullMarked class AbstractTransactionProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
 
   protected @Nullable String transactionManagerJndiName;
 
@@ -95,7 +95,9 @@ public @NullMarked abstract class AbstractTransactionProcessEngineConfiguration 
       commandInterceptorsDbSchemaOperations.add(new LogInterceptor());
       commandInterceptorsDbSchemaOperations.add(new CommandCounterInterceptor(this));
       commandInterceptorsDbSchemaOperations.add(new CommandContextInterceptor(dbSchemaOperationsCommandContextFactory, this));
-      commandInterceptorsDbSchemaOperations.add(actualCommandExecutor);
+      if (actualCommandExecutor != null) {
+        commandInterceptorsDbSchemaOperations.add(actualCommandExecutor);
+      }
       commandExecutorSchemaOperations = initInterceptorChain(commandInterceptorsDbSchemaOperations);
     }
   }

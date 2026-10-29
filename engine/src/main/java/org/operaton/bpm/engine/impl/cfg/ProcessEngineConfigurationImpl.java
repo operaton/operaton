@@ -769,6 +769,7 @@ public abstract @NullMarked class ProcessEngineConfigurationImpl extends Process
   protected boolean isMetricsEnabled = true;
   protected boolean isDbMetricsReporterActivate = true;
 
+  @SuppressWarnings("java:S5738")
   protected @Nullable MetricsReporterIdProvider metricsReporterIdProvider;
 
   protected boolean isTaskMetricsEnabled = true;
@@ -1585,7 +1586,8 @@ public @Nullable ExceptionCodeProvider getCustomExceptionCodeProvider() {
 
   protected void initService(Object service) {
     if (service instanceof ServiceImpl serviceImpl) {
-      serviceImpl.setCommandExecutor(getCommandExecutorTxRequired());
+      CommandExecutor commandExecutor = requireNonNull(getCommandExecutorTxRequired());
+      serviceImpl.setCommandExecutor(commandExecutor);
     }
     if (service instanceof RepositoryServiceImpl repositorySrvc) {
       repositorySrvc.setDeploymentCharset(getDefaultCharset());

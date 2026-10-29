@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.externaltask;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -31,7 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider<ExternalTaskActivityBehavior> {
+public @NullMarked class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider<ExternalTaskActivityBehavior> {
 
   public static final ExternalTaskLogger LOG = ProcessEngineLogger.EXTERNAL_TASK_LOGGER;
 
@@ -41,7 +42,10 @@ public class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
   }
 
   @Override
-  public @Nullable Long getSpecificPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param, @Nullable String jobDefinitionId) {
+  public @Nullable Long getSpecificPriority(@Nullable ExecutionEntity execution, @Nullable ExternalTaskActivityBehavior param, @Nullable String jobDefinitionId) {
+    if (param == null) {
+      return null;
+    }
     ParameterValueProvider priorityProvider = param.getPriorityValueProvider();
     if (priorityProvider != null) {
       return evaluateValueProvider(priorityProvider, execution, "");
@@ -50,7 +54,10 @@ public class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider
   }
 
   @Override
-  protected @Nullable Long getProcessDefinitionPriority(ExecutionEntity execution, ExternalTaskActivityBehavior param) {
+  protected @Nullable Long getProcessDefinitionPriority(@Nullable ExecutionEntity execution, @Nullable ExternalTaskActivityBehavior param) {
+    if (execution == null || param == null) {
+      return null;
+    }
     return getProcessDefinedPriority(execution.getProcessDefinition(), BpmnParse.PROPERTYNAME_TASK_PRIORITY, execution, "");
   }
 }

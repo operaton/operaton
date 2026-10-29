@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
 
@@ -27,12 +28,12 @@ import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycl
 public @NullMarked class VariableInstanceEntityPersistenceListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   @Override
-  public void onCreate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onCreate(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     VariableInstanceEntity.insert(variable);
   }
 
   @Override
-  public void onDelete(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onDelete(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     variable.delete();
   }
 

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:e3ed5eb0-909b-408a-82cd-fa5001112ced",
+  "serialNumber": "urn:uuid:3c670a0a-27e1-4451-9647-f8717bb96792",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-28T09:41:16Z",
+    "timestamp": "2026-10-30T17:57:48Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-d18962e8f"
+          "version": "0.76.0-SNAPSHOT-e2c05f7ae"
         }
       ]
     },
@@ -4449,45 +4449,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/joda-time/joda-time@2.15.0?type=jar",
+      "bom-ref": "pkg:maven/joda-time/joda-time@2.15.1?type=jar",
       "publisher": "Joda.org",
       "group": "joda-time",
       "name": "joda-time",
-      "version": "2.15.0",
+      "version": "2.15.1",
       "description": "Date and time library to replace JDK date handling",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "653b6ed4aa651fcc86a007dcb773879b"
+          "content": "deb359e99b95117af7eba38c77e45818"
         },
         {
           "alg": "SHA-1",
-          "content": "e397927acf956932f516fff70427f3f521029548"
+          "content": "7b94a946a5e2e7b260f5abf708e49f592a27ec46"
         },
         {
           "alg": "SHA-256",
-          "content": "6bbe1302e5bec0f03eb7e7442334b475bb225361a5498369d6a0a9a472630c33"
+          "content": "035f145e2f7a47e6eee02e4ff488c1a9a28c0d61dadd69861662039b9e88ca2a"
         },
         {
           "alg": "SHA-512",
-          "content": "b31d05bfe141b36c332945046428d1e964b3db17ab167034f4735773615d58e3e394be28f1e837b9599f08c238d724a2c341f5b9bd5710dd867be5c9b1665e1a"
+          "content": "328499bcb118ce6bf95e44849ab454b34170dda836899f63f07458a229da7574a0e0ccf17af6beed4a4f8d9eb851bf5253c20bad5813f7bf09978f787aa0cba2"
         },
         {
           "alg": "SHA-384",
-          "content": "82783823ee62ace6aa1a72f5f0ef4686d09de003434b7ac0636bd43a902a666bd48197aae189f115c2584707f5b72f8d"
+          "content": "3eedb0547cef6ebbb38fc62e307a48b3ce424c2d4aaaa5b4b2e7c57af0c60cb2b9f6d96a480bd907ecb63c126e1d15e4"
         },
         {
           "alg": "SHA3-384",
-          "content": "d62bed79d0d3d2ce79b68af3b82852f97eb3d50051f341e89b29b61fb5c7a8233d89752c02f5488a7ff0a345bf171486"
+          "content": "d50e3bfacf492dcc0eabab769bd1879e5c0b41454e54592b8851a8030604fe01b4393bf13de85a2840fc0e2ffdc625c3"
         },
         {
           "alg": "SHA3-256",
-          "content": "02dd06d69707308fcf3cb28dd5e495c595d63c59b3f92a9697b66202e183d455"
+          "content": "f9f424d5a4a6d07579010990450f45014de73a78a36b2f8b4c060d948980594c"
         },
         {
           "alg": "SHA3-512",
-          "content": "7fa0ea375b50ce0b3f55fedfd77e5bd44cfd9811eb1da9e49e10858825c57218b763d08f38e3564a0aaffa169571525b9a52a386c1d1bc0d049bbf64698c3450"
+          "content": "ac0db24f5b1704e7893fd841f9944f2c22d678a3e6b2d27e7d6ae9590e953a7754a585b4cb182d4337362b15f344f06b425bfb6cd34f37afc91b657e0d393257"
         }
       ],
       "licenses": [
@@ -4497,7 +4497,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/joda-time/joda-time@2.15.0?type=jar",
+      "purl": "pkg:maven/joda-time/joda-time@2.15.1?type=jar",
       "externalReferences": [
         {
           "url": "https://www.joda.org/joda-time/",
@@ -17099,44 +17099,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.10.3?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.10.5?type=jar",
       "group": "com.konghq",
       "name": "unirest-java-core",
-      "version": "4.10.3",
+      "version": "4.10.5",
       "description": "Simplified, lightweight HTTP client library.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6df83e4a699d3e6c7881a4a7d0a42de5"
+          "content": "9a4098bfe84ca276e2f13ad6cbf178f2"
         },
         {
           "alg": "SHA-1",
-          "content": "c074129ae1de7af4680e80452fc5b138e3b8c01b"
+          "content": "3c3953fb2d8dcd705289006c763568002e779b3e"
         },
         {
           "alg": "SHA-256",
-          "content": "9aa77b8ad161fbd6e299394ca614f9aff90e4ebdb5f806d58de3337a4e8719c1"
+          "content": "58605f194624800aa0f2a8eb992d5c3a8c9e1750571eb800b8c5de304c1aa52b"
         },
         {
           "alg": "SHA-512",
-          "content": "4b74bb8fb56b7f290fd50b5d87883852b050c84e24fe65187d8602118960e3c4f33323cee5b50972756f63a04c477813c5a825452894b4e72b5fd0d9d13e615c"
+          "content": "efaf7b52f76802bf445a02cf33268291278ac1239bd0237632dce3e22f9688f52cf06456c5f3a46b552aedd2dfe0a989c7975f71ad98af43fe9c491c26aa7ffe"
         },
         {
           "alg": "SHA-384",
-          "content": "c6e743fa26a84c5ebcc34c6f5d0a3e56066e5fec0f5b01ddc1487f0b7430f1eb25deb1b54eb12a2fa8d62a20bbdda7d8"
+          "content": "c325f1ee4b6e1fc3faa50d2827f668f4d0a27c2cf2ae3e3a8e8554f59229435aa2c08f850e049d748e670bd04eb7bdae"
         },
         {
           "alg": "SHA3-384",
-          "content": "dd319a9901dafe851eb5f4d70928e218c325c26cf61e3d894b02eb7323961e4a3ce9e6c434c00b00f17eab2a4f4adad7"
+          "content": "c13da1b212e2d9ffc1b85ca73c778275ac6a3c7807d005d2105c2613efe2ee4fa1909fbfa7315a4e998de8aa9c23dd3f"
         },
         {
           "alg": "SHA3-256",
-          "content": "4874f58c84f2e822e857e60c4497cb39b6412713fa748588c48849b8a950df5d"
+          "content": "5389b8e83e783f466f62dc927cbc1daf99bbf3f3d9eaf5f98b85a0b069d5a1e6"
         },
         {
           "alg": "SHA3-512",
-          "content": "bbe9d675b0feb5883c1006cf295cb3400053ce4cefdeba40127e46f2a2aef53b0847df287a97d464d2e76f7113458d33511d871c64ba6aa1cd520fa91973c81f"
+          "content": "0fa768ed3d160183ac7ade58b06be38ba88332105c495a1c6eeb0d4f6964b5823a134aa34a62b7e6a7bbb8a249fdcc12aa9c5eeddd8995d1408445ea26af9f4d"
         }
       ],
       "licenses": [
@@ -17147,7 +17147,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-java-core@4.10.3?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-java-core@4.10.5?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-java-core/",
@@ -17165,44 +17165,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.3?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.5?type=jar",
       "group": "com.konghq",
       "name": "unirest-modules-gson",
-      "version": "4.10.3",
+      "version": "4.10.5",
       "description": "Gson based object mapper for Unirest",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "05563d0edf42a2f12886032d6dad8182"
+          "content": "a949096f5fdd445b3e823643dbb90ba6"
         },
         {
           "alg": "SHA-1",
-          "content": "4b6a310ad9830593728c55762ea04bb763e89ba2"
+          "content": "14a194594792f5926dd250bf2bce77aec066242d"
         },
         {
           "alg": "SHA-256",
-          "content": "2efcf6ee6d8011c7a485ca146b0aa3a6fe569c6a2675254f468ae625cf6f2ec2"
+          "content": "6a3a62c6beb3772762ed1f8efbb596498649495828f7bfbae349f7b1ac1dde8e"
         },
         {
           "alg": "SHA-512",
-          "content": "2440f064a54c0056732fc156e01910820260dc985d9c637337b6494497444eca3dd0e7b805339a31497d527e51a920e5bd77a7a4f77252b6551c1b911ad4fdcb"
+          "content": "b4b3e70b434e4db6777253dbc461f7a3ca4bd77369e676913dd84f3210bc52219b5558f5f4a55b54d3f9877bf093feeeb105232448817d917d7d4bd697ac01ca"
         },
         {
           "alg": "SHA-384",
-          "content": "f70f7623b676c4acda51fbdd9af92f14c9ac739dbe2be7afa68d7242593293bbf0549db3e0b60e685af345beccfc8f60"
+          "content": "78f5e246b9b3d985992dfa9ac361106b7f42f99b964b7f2ed86144d004f0eac858a73a70e8a0ed0ad31a7408361e229d"
         },
         {
           "alg": "SHA3-384",
-          "content": "f73e360f97f171cfcacbfa75eb2c165c3c9c412bb1218d4abeafa304655b0196a9214642c7fba63bf7b2daa0441af943"
+          "content": "a80350af411b0c80f896c0c1e48a2022a211bcfe7700350a95bc8ecb7023be06a43b45c7068a963b75d5a4f98bbf55c6"
         },
         {
           "alg": "SHA3-256",
-          "content": "70e28259b281ca51b836b072db5f01ce66408a30cc6cd1314c13e3e6fdbd6ef1"
+          "content": "6c98d285b2c7234c132abf73270787cf267e76534adbdc7f0230d0dc3ab32912"
         },
         {
           "alg": "SHA3-512",
-          "content": "f3358412c8036c115f06719379e59579959d47e0280af0eb602cc59cddf5e3ebce8849025f084d8440e6bdda245631e7690fe41ad719b734c233726418ee47e2"
+          "content": "77b2b5c2e39cddeb1f542982fc9c5d3ac16c445124b2e2b273bc3c705e681a2d0bebf3e7a786e4ffef5d5d9d64a1e26c0cb63e2be6f36b16dcac3370483b9e50"
         }
       ],
       "licenses": [
@@ -17213,7 +17213,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.10.3?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.10.5?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-modules-gson/",
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ca7fcdfa-c53d-4f16-a615-eb3f677b9e1a",
+      "bom-ref": "e034ffda-4038-46c5-9be3-f6e749cd80f2",
       "name": "package-lock.json",
       "properties": [
         {
@@ -32715,9 +32715,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.31.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.31.1",
       "name": "bpmn-js",
-      "version": "18.31.0",
+      "version": "18.31.1",
       "licenses": [
         {
           "license": {
@@ -32725,11 +32725,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.31.0",
+      "purl": "pkg:npm/bpmn-js@18.31.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.31.0"
+          "value": "bpmn-js@18.31.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -32859,9 +32859,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/chart.js@4.5.1",
+      "bom-ref": "pkg:npm/chart.js@4.6.1",
       "name": "chart.js",
-      "version": "4.5.1",
+      "version": "4.6.1",
       "licenses": [
         {
           "license": {
@@ -32869,11 +32869,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/chart.js@4.5.1",
+      "purl": "pkg:npm/chart.js@4.6.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "chart.js@4.5.1"
+          "value": "chart.js@4.6.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36300,7 +36300,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "3c392c2b-f371-43a1-a47d-4e7047992d8c",
+      "bom-ref": "2dd888a8-efd0-4306-902c-99dd777b2bce",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36311,7 +36311,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "812f2fb3-cd9a-4716-8662-3de7963a1ba0",
+      "bom-ref": "81edd576-3afa-4fdd-89fc-6c8eee41ceaa",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37012,9 +37012,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/i18next-http-backend@4.0.2",
+      "bom-ref": "pkg:npm/i18next-http-backend@4.0.4",
       "name": "i18next-http-backend",
-      "version": "4.0.2",
+      "version": "4.0.4",
       "licenses": [
         {
           "license": {
@@ -37022,11 +37022,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/i18next-http-backend@4.0.2",
+      "purl": "pkg:npm/i18next-http-backend@4.0.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "i18next-http-backend@4.0.2"
+          "value": "i18next-http-backend@4.0.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -37444,7 +37444,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "bfa7e5f9-955b-47e6-a9ec-1d0dd721fc0d",
+      "bom-ref": "5a7f2142-805a-4250-a0e1-9d6704e0ae7c",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -37968,7 +37968,7 @@
         "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.10?type=jar",
-        "pkg:maven/joda-time/joda-time@2.15.0?type=jar",
+        "pkg:maven/joda-time/joda-time@2.15.1?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.15.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
@@ -38012,7 +38012,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/joda-time/joda-time@2.15.0?type=jar",
+      "ref": "pkg:maven/joda-time/joda-time@2.15.1?type=jar",
       "dependsOn": []
     },
     {
@@ -38725,8 +38725,8 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/com.konghq/unirest-java-core@4.10.3?type=jar",
-        "pkg:maven/com.konghq/unirest-modules-gson@4.10.3?type=jar",
+        "pkg:maven/com.konghq/unirest-java-core@4.10.5?type=jar",
+        "pkg:maven/com.konghq/unirest-modules-gson@4.10.5?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar"
       ]
     },
@@ -39191,11 +39191,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-java-core@4.10.3?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-java-core@4.10.5?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.3?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.10.5?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.code.gson/gson@2.15.0?type=jar"
       ]
@@ -39363,7 +39363,7 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.22?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.22.4?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.4?type=jar",
-        "pkg:maven/joda-time/joda-time@2.15.0?type=jar"
+        "pkg:maven/joda-time/joda-time@2.15.1?type=jar"
       ]
     },
     {
@@ -39393,7 +39393,7 @@
         "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.10?type=jar",
-        "pkg:maven/joda-time/joda-time@2.15.0?type=jar",
+        "pkg:maven/joda-time/joda-time@2.15.1?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.15.0?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar"
       ]
@@ -39460,7 +39460,7 @@
         "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.10?type=jar",
-        "pkg:maven/joda-time/joda-time@2.15.0?type=jar",
+        "pkg:maven/joda-time/joda-time@2.15.1?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.15.0?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar"
       ]
@@ -41162,13 +41162,13 @@
       "dependsOn": []
     },
     {
-      "ref": "3c392c2b-f371-43a1-a47d-4e7047992d8c",
+      "ref": "2dd888a8-efd0-4306-902c-99dd777b2bce",
       "dependsOn": [
-        "ca7fcdfa-c53d-4f16-a615-eb3f677b9e1a"
+        "e034ffda-4038-46c5-9be3-f6e749cd80f2"
       ]
     },
     {
-      "ref": "ca7fcdfa-c53d-4f16-a615-eb3f677b9e1a",
+      "ref": "e034ffda-4038-46c5-9be3-f6e749cd80f2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -41188,9 +41188,9 @@
         "pkg:npm/bootstrap-icons@1.13.2",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.13.0",
-        "pkg:npm/bpmn-js@18.31.0",
+        "pkg:npm/bpmn-js@18.31.1",
         "pkg:npm/camunda-dmn-js@3.9.0",
-        "pkg:npm/chart.js@4.5.1",
+        "pkg:npm/chart.js@4.6.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.51.0",
@@ -41696,7 +41696,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.31.0",
+      "ref": "pkg:npm/bpmn-js@18.31.1",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.3.1",
         "pkg:npm/diagram-js-direct-editing@3.6.0",
@@ -41752,7 +41752,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/chart.js@4.5.1",
+      "ref": "pkg:npm/chart.js@4.6.1",
       "dependsOn": [
         "pkg:npm/%40kurkle/color@0.3.4"
       ]
@@ -42617,7 +42617,13 @@
       "dependsOn": []
     },
     {
-      "ref": "812f2fb3-cd9a-4716-8662-3de7963a1ba0",
+      "ref": "5a7f2142-805a-4250-a0e1-9d6704e0ae7c",
+      "dependsOn": [
+        "81edd576-3afa-4fdd-89fc-6c8eee41ceaa"
+      ]
+    },
+    {
+      "ref": "81edd576-3afa-4fdd-89fc-6c8eee41ceaa",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -42628,19 +42634,13 @@
         "pkg:npm/dompurify@3.4.17",
         "pkg:npm/htm@3.1.1",
         "pkg:npm/i18next-browser-languagedetector@8.2.1",
-        "pkg:npm/i18next-http-backend@4.0.2",
+        "pkg:npm/i18next-http-backend@4.0.4",
         "pkg:npm/i18next@26.3.6",
         "pkg:npm/preact-iso@2.12.1",
         "pkg:npm/preact@10.29.7",
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "bfa7e5f9-955b-47e6-a9ec-1d0dd721fc0d",
-      "dependsOn": [
-        "812f2fb3-cd9a-4716-8662-3de7963a1ba0"
       ]
     },
     {
@@ -42948,7 +42948,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/i18next-http-backend@4.0.2",
+      "ref": "pkg:npm/i18next-http-backend@4.0.4",
       "dependsOn": []
     },
     {

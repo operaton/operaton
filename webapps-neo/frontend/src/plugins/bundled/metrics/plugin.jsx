@@ -503,6 +503,52 @@ const translations = {
       },
     },
   },
+  "zh-CN": {
+    plugins: {
+      metrics: {
+        nav: "指标",
+        title: "引擎指标",
+        version: "引擎版本",
+        "update-available": "有可用更新：{{version}}",
+        "up-to-date": "已是最新版本",
+        "process-starts": "流程启动次数（近 12 个月）",
+        "flow-nodes": "已执行的流程节点（近 12 个月）",
+        "failed-jobs": "失败的作业",
+        snapshot: "流程实例：运行中与已完成",
+        running: "运行中",
+        completed: "已完成",
+        activity: "每日流程启动次数（近 30 天）",
+        "no-activity": "近 30 天没有流程启动。",
+        "top-processes": "按运行中实例数排序的流程",
+        "no-running": "没有运行中的实例。",
+        "top-tasks": "按数量排序的用户任务",
+        "no-tasks": "没有已完成的用户任务。",
+      },
+    },
+  },
+  "zh-TW": {
+    plugins: {
+      metrics: {
+        nav: "指標",
+        title: "引擎指標",
+        version: "引擎版本",
+        "update-available": "有可用更新：{{version}}",
+        "up-to-date": "已是最新版本",
+        "process-starts": "流程啟動次數（近 12 個月）",
+        "flow-nodes": "已執行的流程節點（近 12 個月）",
+        "failed-jobs": "失敗的作業",
+        snapshot: "流程執行個體：執行中與已完成",
+        running: "執行中",
+        completed: "已完成",
+        activity: "每日流程啟動次數（近 30 天）",
+        "no-activity": "近 30 天沒有流程啟動。",
+        "top-processes": "依執行中執行個體數排序的流程",
+        "no-running": "沒有執行中的執行個體。",
+        "top-tasks": "依數量排序的使用者任務",
+        "no-tasks": "沒有已完成的使用者任務。",
+      },
+    },
+  },
   "de-DE": {
     plugins: {
       metrics: {

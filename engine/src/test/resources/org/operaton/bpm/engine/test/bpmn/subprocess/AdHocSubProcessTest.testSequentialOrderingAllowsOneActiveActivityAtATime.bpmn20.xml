@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2026 the Operaton contributors.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at:
+  ~
+  ~     https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<definitions id="definitions"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="adHocSubProcessSequentialOrdering" isExecutable="true">
+
+    <startEvent id="start" />
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="adHocSubProcess" />
+
+    <adHocSubProcess id="adHocSubProcess" ordering="Sequential" operaton:autoComplete="false">
+      <userTask id="taskA" name="Task A" />
+      <userTask id="taskB" name="Task B" />
+    </adHocSubProcess>
+
+    <sequenceFlow id="flow2" sourceRef="adHocSubProcess" targetRef="taskAfter" />
+    <userTask id="taskAfter" name="Task After" />
+    <sequenceFlow id="flow3" sourceRef="taskAfter" targetRef="end" />
+    <endEvent id="end" />
+
+  </process>
+
+</definitions>

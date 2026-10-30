@@ -179,6 +179,7 @@ public final class BpmnModelConstants {
   public static final String BPMN_ELEMENT_RENDERING = "rendering";
   public static final String BPMN_ELEMENT_BOUNDARY_EVENT = "boundaryEvent";
   public static final String BPMN_ELEMENT_SUB_PROCESS = "subProcess";
+  public static final String BPMN_ELEMENT_AD_HOC_SUB_PROCESS = "adHocSubProcess";
   public static final String BPMN_ELEMENT_TRANSACTION = "transaction";
   public static final String BPMN_ELEMENT_GATEWAY = "gateway";
   public static final String BPMN_ELEMENT_PARALLEL_GATEWAY = "parallelGateway";
@@ -353,6 +354,8 @@ public final class BpmnModelConstants {
   public static final String BPMN_ATTRIBUTE_CANCEL_ACTIVITY = "cancelActivity";
   public static final String BPMN_ATTRIBUTE_ATTACHED_TO_REF = "attachedToRef";
   public static final String BPMN_ATTRIBUTE_TRIGGERED_BY_EVENT = "triggeredByEvent";
+  public static final String BPMN_ATTRIBUTE_ORDERING = "ordering";
+  public static final String BPMN_ATTRIBUTE_CANCEL_REMAINING_INSTANCES = "cancelRemainingInstances";
   public static final String BPMN_ATTRIBUTE_GATEWAY_DIRECTION = "gatewayDirection";
   public static final String BPMN_ATTRIBUTE_CALLED_ELEMENT = "calledElement";
   public static final String BPMN_ATTRIBUTE_MINIMUM = "minimum";

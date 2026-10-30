@@ -115,7 +115,7 @@
         <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
         <database.tc.url>operatondb2:12.1.2.0</database.tc.url>
-        <database.tc.params>/${database.name}</database.tc.params>
+        <database.tc.params>/${database.name}?TC_DAEMON=true</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
       <dependencies>
@@ -265,7 +265,7 @@
         <database.datasource.class>org.mariadb.jdbc.MariaDbDataSource</database.datasource.class>
         <database.tc.url>operatonmariadb:10.11</database.tc.url>
         <jboss.datasource.filename>mariadb-ds.xml</jboss.datasource.filename>
-        <database.tc.params>/${database.name}</database.tc.params>
+        <database.tc.params>/${database.name}?TC_DAEMON=true</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 
@@ -303,7 +303,7 @@
         <database.datasource.class>com.mysql.cj.jdbc.MysqlDataSource</database.datasource.class>
         <database.tc.url>operatonmysql:8.4</database.tc.url>
         <jboss.datasource.filename>mysql-ds.xml</jboss.datasource.filename>
-        <database.tc.params>/${database.name}?sendFractionalSeconds=false&amp;amp;user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
+        <database.tc.params>/${database.name}?sendFractionalSeconds=false&amp;amp;user=${database.username}&amp;amp;password=${database.password}&amp;amp;TC_DAEMON=true</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 
@@ -633,7 +633,7 @@
         <database.name>operaton_test</database.name>
         <database.username>sa</database.username>
         <database.password>A_Str0ng_Required_Password</database.password>
-        <database.tc.params>;DatabaseName=${database.name}</database.tc.params>
+        <database.tc.params>;DatabaseName=${database.name};TC_DAEMON=true</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>
 

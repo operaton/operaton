@@ -66,8 +66,10 @@ class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
     thread2.makeContinue();
 
-    await().atMost(2, TimeUnit.SECONDS)
-           .until(() -> thread2.syncAvailable || thread2.getException() != null);
+    // thread 2 blocks on thread 1's lock
+    await().during(1, TimeUnit.SECONDS)
+           .atMost(2, TimeUnit.SECONDS)
+           .until(() -> !thread2.syncAvailable && thread2.getException() == null);
 
     thread1.waitUntilDone();
 

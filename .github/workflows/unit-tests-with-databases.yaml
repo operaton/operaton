@@ -37,6 +37,9 @@ jobs:
   unit-tests:
     name: Unit Tests (${{ matrix.database }})
     runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      DB_MODULES: engine,webapps/assembly
     permissions:
       contents: read
       checks: write
@@ -51,12 +54,19 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Cache Maven packages
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      # Restore-only: build.yml on main writes both caches
+      - name: Restore Maven packages
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
+      - name: Restore Maven build cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.m2/build-cache
+          key: "${{ runner.os }}-build-cache-${{ github.sha }}"
+          restore-keys: ${{ runner.os }}-build-cache-
 
       - name: Set up Java
         uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
@@ -66,13 +76,21 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
 
+      - name: Build Upstream Modules
+        run: |
+          ./mvnw install -pl "${DB_MODULES}" -am -DskipTests \
+            -Dskip.frontend.build=true -Dmaven.build.cache.enabled=true
+
+      # No build cache here: restored modules skip their tests
       - name: Run Unit Tests
         id: maven-unit-tests
         shell: bash
         env:
           MATRIX_DATABASE: ${{ matrix.database }}
         run: |
-          .devenv/scripts/build/build-and-run-unit-tests.sh --db=${MATRIX_DATABASE}
+          ./mvnw -P"${MATRIX_DATABASE}" verify -pl "${DB_MODULES}" \
+            -Dmaven.test.failure.ignore=true \
+            -Dskip.frontend.build=true -Dmaven.build.cache.enabled=false
 
       - name: Publish Test Report
         if: always()
@@ -80,6 +98,7 @@ jobs:
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
+          fail_on_failure: true
           check_name: Test Report (${{ matrix.database }})
 
       - name: Upload Test Reports

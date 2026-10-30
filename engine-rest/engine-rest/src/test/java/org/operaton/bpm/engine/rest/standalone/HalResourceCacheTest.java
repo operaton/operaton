@@ -63,6 +63,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
   @AfterEach
   void destroy() {
     contextListener.contextDestroyed(null);
+    ClockUtil.reset();
   }
 
   @Test

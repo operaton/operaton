@@ -1301,6 +1301,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       }
     }
 
+    if (procInstance == null) {
+      // the process instance was deleted by a concurrent transaction after this execution was loaded
+      throw LOG.processInstanceDeletedConcurrently(processInstanceId);
+    }
+
     procInstance.restoreProcessInstance(executionEntities, null, null, null, null, null, null);
   }
 

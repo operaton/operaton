@@ -238,53 +238,18 @@
   <sql id="selectTaskByQueryCriteriaSql">
 
     from ${prefix}ACT_RU_TASK RES
-    <bind name="I_JOIN" value="false" />
-    <bind name="D_JOIN" value="false" />
-    <bind name="E_JOIN" value="false" />
-    <bind name="CD_JOIN" value="false" />
-    <bind name="CE_JOIN" value="false" />
-    <bind name="E1_JOIN" value="false" />
-    <bind name="JOIN_TYPE" value="'inner join'" />
+    <bind name="joinFlags" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@computeTaskJoinFlags(queries)" />
 
-    <foreach collection="queries" item="query">
-      <if test="query.isOrQueryActive">
-        <bind name="JOIN_TYPE" value="'left join'" />
-      </if>
-      <if test="query != null &amp;&amp; (query.candidateUser != null || query.candidateGroups != null  || query.candidateGroupLike != null || query.involvedUser != null || query.withCandidateGroups || query.withCandidateUsers)">
-        <bind name="I_JOIN" value="true" />
-      </if>
-      <!-- the process definition table is joined if
-      1. a process-definition-related filter is used
-      2. authorization check is enabled (as permissions are defined per process definition) -->
-      <if test="query != null &amp;&amp;
-        (query.processDefinitionKey != null || query.processDefinitionName != null ||
-        query.processDefinitionNameLike != null ||
-        (query.processDefinitionKeys != null &amp;&amp; query.processDefinitionKeys.length > 0)) ||
-        authCheck.shouldPerformAuthorizatioCheck &amp;&amp; authCheck.authUserId != null">
-        <bind name="D_JOIN" value="true" />
-      </if>
-      <if test="query != null &amp;&amp; (query.processInstanceBusinessKey != null || query.processInstanceBusinessKeyLike != null ||
-              (query.processInstanceBusinessKeys != null &amp;&amp; query.processInstanceBusinessKeys.length > 0))">
-        <bind name="E_JOIN" value="true" />
-      </if>
-      <if test="query != null &amp;&amp; (query.caseDefinitionKey != null || query.caseDefinitionName != null || query.caseDefinitionNameLike != null)">
-        <bind name="CD_JOIN" value="true" />
-      </if>
-      <if test="query != null &amp;&amp; (query.caseInstanceBusinessKey != null || query.caseInstanceBusinessKeyLike != null)">
-        <bind name="CE_JOIN" value="true" />
-      </if>
-      <if test="query != null &amp;&amp; (query.activityInstanceIdIn != null &amp;&amp; query.activityInstanceIdIn.length > 0)">
-        <bind name="E1_JOIN" value="true" />
-      </if>
-    </foreach>
-
-    <if test="I_JOIN">
+    <if test="joinFlags.identityLinkJoin">
       <!-- Identity links are always left-joined, because the involvedUser criterion
         either requires an identity link or a not-null assignee or owner field (i.e.
         it can be fulfilled without an identity link) -->
       left join ${prefix}ACT_RU_IDENTITYLINK I on I.TASK_ID_ = RES.ID_
     </if>
-    <if test="D_JOIN">
+    <!-- the process definition table is joined if
+    1. a process-definition-related filter is used
+    2. authorization check is enabled (as permissions are defined per process definition) -->
+    <if test="joinFlags.processDefinitionJoin || (authCheck.shouldPerformAuthorizatioCheck &amp;&amp; authCheck.authUserId != null)">
       <choose>
         <!-- if we do not query for cmmn or standalone tasks, then an inner join is
           always correct, regardless if it is an 'and' or 'or' query. Every task
@@ -295,21 +260,21 @@
           left join
         </when>
         <otherwise>
-          ${JOIN_TYPE}
+          ${joinFlags.joinType}
         </otherwise>
       </choose>
       ${prefix}ACT_RE_PROCDEF D on RES.PROC_DEF_ID_ = D.ID_
     </if>
-    <if test="E_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_RU_EXECUTION E on RES.PROC_INST_ID_ = E.ID_
+    <if test="joinFlags.executionJoin">
+      ${joinFlags.joinType} ${prefix}ACT_RU_EXECUTION E on RES.PROC_INST_ID_ = E.ID_
     </if>
-    <if test="CD_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_RE_CASE_DEF CD on RES.CASE_DEF_ID_ = CD.ID_
+    <if test="joinFlags.caseDefinitionJoin">
+      ${joinFlags.joinType} ${prefix}ACT_RE_CASE_DEF CD on RES.CASE_DEF_ID_ = CD.ID_
     </if>
-    <if test="CE_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_RU_CASE_EXECUTION CE on RES.CASE_INST_ID_ = CE.ID_
+    <if test="joinFlags.caseExecutionJoin">
+      ${joinFlags.joinType} ${prefix}ACT_RU_CASE_EXECUTION CE on RES.CASE_INST_ID_ = CE.ID_
     </if>
-    <if test="E1_JOIN">
+    <if test="joinFlags.subProcessExecutionJoin">
       left join ${prefix}ACT_RU_EXECUTION E1 on RES.EXECUTION_ID_ = E1.ID_
     </if>
 

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.sub.identity.impl;
 
 import java.net.URI;
+import java.util.List;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.UriBuilder;
@@ -134,12 +135,29 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
 
   protected User findUserObject() {
     try {
-      return identityService.createUserQuery()
+      List<User> users = identityService.createUserQuery()
           .userId(resourceId)
-          .singleResult();
+          .list();
+
+      return selectMatchingUser(users, resourceId);
     } catch(ProcessEngineException e) {
       throw new InvalidRequestException(Status.INTERNAL_SERVER_ERROR, "Exception while performing user query: "+e.getMessage());
     }
+  }
+
+  private User selectMatchingUser(List<User> users, String requestedUserId) {
+    if (users.isEmpty()) {
+      return null;
+    }
+
+    if (users.size() == 1) {
+      return users.get(0);
+    }
+
+    return users.stream()
+        .filter(user -> requestedUserId.equals(user.getId()))
+        .findFirst()
+        .orElse(users.get(0));
   }
 
   @SuppressWarnings("java:S110")

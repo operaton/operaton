@@ -74,10 +74,7 @@ public @NullMarked class EventSubscriptionDeclaration {
     if (scope == null) {
       return Collections.emptyMap();
     }
-
-    Map<String, EventSubscriptionDeclaration> declarationsForScope = scope.getProperties()
-            .get(BpmnProperties.EVENT_SUBSCRIPTION_DECLARATIONS);
-    return declarationsForScope != null ? declarationsForScope : Collections.emptyMap();
+    return scope.getProperties().get(BpmnProperties.EVENT_SUBSCRIPTION_DECLARATIONS);
   }
 
   /**

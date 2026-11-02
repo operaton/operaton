@@ -60,7 +60,7 @@
         dto = "ExceptionDto"
         desc = "Returned if some of the query parameters are invalid or the engine
                 does not participate in history cleanup. See
-                [Cleanup Execution Participation per Node](${docsUrl}/user-guide/process-engine/history/#cleanup-execution-participation-per-node)."
+                [Cleanup Execution Participation per Node](${docsUrl}/user-guide/process-engine/history/history-cleanup#cleanup-execution-participation-per-node)."
     />
 
     <@lib.errorResponses docsUrl=docsUrl last = true />

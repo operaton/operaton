@@ -27,7 +27,7 @@
                 [Process Engine Configuration](${docsUrl}/reference/deployment-descriptors/tags/process-engine/#history-cleanup-enabled).
 
                 For more details, see
-                [Cleanup Execution Participation per Node](${docsUrl}/user-guide/process-engine/history/#cleanup-execution-participation-per-node)."
+                [Cleanup Execution Participation per Node](${docsUrl}/user-guide/process-engine/history/history-cleanup#cleanup-execution-participation-per-node)."
         last = true
     />
 

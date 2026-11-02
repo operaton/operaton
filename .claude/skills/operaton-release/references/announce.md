@@ -60,28 +60,51 @@ After announcements are out:
 - **`changelog.tpl`** — on `main` it is updated by the `main` version bump after a minor release (`perform-release.md` → "Bump `main` after a minor release"); verify that PR is merged.
 - **Close milestone** — `gh api repos/operaton/operaton/milestones/<N> -X PATCH -f state=closed`
 - **Open next milestone** — verify the next milestone exists (e.g. 2.1.3) with a due date matching the calendar (`references/calendar.md`). Skip this when the release line is being closed (see below).
-- **Close the release line** — REQUIRED check after a `X.Y.6` patch release; see "6. Closing a release branch".
+- **SECURITY.md** — REQUIRED after a final feature release `X.Y.0` (no `-Mx`/`-RCx`); see "7. SECURITY.md".
+- **Close the release line** — REQUIRED check after every patch release; see "6. Closing a release branch".
 - **Calendar** — mark the released version as done in `references/calendar.md`.
 - **Docs / download page** — verify https://docs.operaton.org shows the new version; verify the download page links resolve.
 
 ## 6. Closing a release branch
 
-A release line usually ends with its `.6` patch. After releasing `X.Y.6` from `release/X.Y.x`:
+A release line ends with its last planned patch release, usually `.6`. After every patch release `X.Y.Z` from
+`release/X.Y.x`:
 
 1. Check the release calendar (`references/calendar.md`) for **any** future event `Operaton X.Y.*` — use the full
-   future range, not the usual 14 days. If one exists, the line stays open; stop here.
+   future range, not the usual 14 days. If one exists, the line stays open; stop here. If none exists, `X.Y.Z` is the
+   last planned patch release.
 2. **Ask the user explicitly** (AskUserQuestion) whether `release/X.Y.x` is to be closed. Do not close it on your own.
    On "no", stop here.
-3. On "yes", raise one PR against `main` that removes every `.github/dependabot.yml` entry with
-   `target-branch: "release/X.Y.x"` (precedent: #3409, "Remove 1.x from dependabot"). Otherwise Dependabot keeps opening
-   update PRs and the milestone automation keeps editing those entries.
+3. On "yes", raise one PR against `main` that:
+   - removes every `.github/dependabot.yml` entry with `target-branch: "release/X.Y.x"` (precedent: #3409, "Remove 1.x
+     from dependabot"). Otherwise Dependabot keeps opening update PRs and the milestone automation keeps editing those
+     entries.
+   - marks the line end of life in `SECURITY.md`: change the `X.Y.x` row to
+     `❌ End of life (final release: X.Y.Z)` — see "7. SECURITY.md".
 4. Close what still targets the line, after listing it to the user:
    - open PRs with base `release/X.Y.x` (`gh pr list --repo operaton/operaton --base release/X.Y.x --state open`)
-   - the automatic "Update dependabot milestone after release X.Y.6" PR on `main` (obsolete once the entries are removed)
-   - the next patch milestone (`X.Y.7`) if one was created — move open items first, then close it
-5. Deleting `release/X.Y.x` (which also stops the nightly integration builds, as `nightly-trigger.yml` picks up every
-   `release/*` branch) is irreversible: only after the dependabot PR is merged and the user confirms the deletion
-   separately. The `vX.Y.*` tags keep the code. Never delete it as part of the branch-cleanup list in step 4.
+   - the automatic "Update dependabot milestone after release X.Y.Z" PR on `main` (obsolete once the entries are removed)
+   - the next patch milestone (`X.Y.(Z+1)`) if one was created — move open items first, then close it
+5. Once the PR from step 3 is merged, **ask the user** (AskUserQuestion, a separate question) whether to delete
+   `release/X.Y.x` now. Deleting it is irreversible and also stops the nightly integration builds
+   (`nightly-trigger.yml` picks up every `release/*` branch); the `vX.Y.*` tags keep the code. Delete only on an
+   explicit yes (`git push origin --delete release/X.Y.x`); on "no" or "later", leave it and list it as pending in the
+   output. Never delete it as part of the branch-cleanup list in step 4 of ANNOUNCE.
+
+## 7. SECURITY.md
+
+`SECURITY.md` on `main` (GitHub shows the default branch's copy) lists the supported release lines in the
+"Supported Versions" table, newest first. Update it by PR against `main`:
+
+| Event | Change |
+|-------|--------|
+| Final feature release `X.Y.0` (also `X.0.0`; not `-Mx`/`-RCx`) | Add a row `\| X.Y.x   \| ✅ Fully maintained \|` at the top of the table. Leave the other rows unchanged. |
+| Last planned patch release `X.Y.Z` of a line (see section 6) | Change the `X.Y.x` row to `\| X.Y.x   \| ❌ End of life (final release: X.Y.Z) \|`. |
+
+Keep the column alignment of the existing table. Skip the change if the row already reads as required. For a
+feature release from `release/X.Y.x`, the change can ride along with the `main` version bump PR
+(`perform-release.md` → "Bump `main` after a minor release"); otherwise raise a separate
+`docs: update SECURITY.md for X.Y.0` PR.
 
 ## Output
 
@@ -90,4 +113,6 @@ End ANNOUNCE with:
 - Slack post URL (or confirmation it was posted)
 - Forum post URL (or confirmation)
 - Merged-branch list (for user to delete)
+- SECURITY.md PR URL (after a final `X.Y.0` or when closing a line)
+- Release branch `release/X.Y.x`: deleted, or kept/pending by user decision (when closing a line)
 - Housekeeping items completed vs. pending

@@ -7,7 +7,7 @@
       summary = "Get Cleanable Batch Report"
       desc = "Retrieves a report about a historic batch operations relevant to history cleanup
               (see
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)
               ) so that you can tune the history time to live.
               These reports include the count of the finished batches, cleanable
               batches and type of the batch.

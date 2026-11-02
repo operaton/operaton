@@ -7,7 +7,7 @@
       summary = "Get Cleanable Decision Instance Report Count"
       desc = "Queries for the number of report results about a decision definition and finished
               decision instances relevant to history cleanup (see
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)).
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)).
               Takes the same parameters as the [Get Cleanable Decision Instance Report](${docsUrl}/reference/rest/history/decision-definition/get-cleanable-decision-instance-report/) 
               method."
   />

@@ -6,7 +6,7 @@
       tag = "History Cleanup"
       summary = "Get History Cleanup Configuration"
       desc = "Retrieves history cleanup batch window configuration (See
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup))."
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup))."
   />
 
   "responses": {

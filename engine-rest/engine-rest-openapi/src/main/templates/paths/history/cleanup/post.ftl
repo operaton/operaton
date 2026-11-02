@@ -6,7 +6,7 @@
       tag = "History Cleanup"
       summary = "Trigger History Cleanup"
       desc = "Schedules asynchronous history cleanup (See
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)).
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)).
 
               **Note:** This endpoint will return at most a single history cleanup job.
               Since version `7.9.0` it is possible to configure multiple

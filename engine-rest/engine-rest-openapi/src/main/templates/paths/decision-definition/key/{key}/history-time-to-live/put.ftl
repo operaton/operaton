@@ -6,7 +6,7 @@
       tag = "Decision Definition"
       summary = "Update History Time to Live By Key"
       desc = "Updates the latest version of the decision definition which belongs to no tenant.
-              The field is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)." />
+              The field is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)." />
 
   "parameters" : [
 

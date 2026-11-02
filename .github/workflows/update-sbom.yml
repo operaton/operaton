@@ -12,6 +12,10 @@ on:
       - ci-dev/**
     paths:
       - '**/pom.xml'
+      - 'webapps/frontend/package.json'
+      - 'webapps/frontend/package-lock.json'
+      - 'webapps-neo/frontend/package.json'
+      - 'webapps-neo/frontend/package-lock.json'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -21,7 +25,6 @@ jobs:
   update_sbom:
     name: Update SBOMs
     runs-on: ubuntu-latest
-    if: contains(join(github.event.commits.*.message, ' '), 'deps')
     steps:
       - name: Install Homebrew (Ubuntu/Linux)
         if: runner.os == 'Linux'
@@ -44,7 +47,7 @@ jobs:
           persist-credentials: true
 
       - name: Set up JDK 17
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: temurin
           java-version: '17'

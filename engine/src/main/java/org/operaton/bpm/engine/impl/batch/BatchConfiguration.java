@@ -16,15 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.batch;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.util.List;
 
 
-public class BatchConfiguration {
+public @NullMarked class BatchConfiguration {
 
   protected List<String> ids;
-  protected DeploymentMappings idMappings;
+  protected @Nullable DeploymentMappings idMappings;
   protected boolean failIfNotExists;
-  protected String batchId;
+  protected @Nullable String batchId;
 
   public BatchConfiguration(List<String> ids) {
     this(ids, true);
@@ -38,7 +41,7 @@ public class BatchConfiguration {
     this(ids, mappings, true);
   }
 
-  public BatchConfiguration(List<String> ids, DeploymentMappings mappings, boolean failIfNotExists) {
+  public BatchConfiguration(List<String> ids, @Nullable DeploymentMappings mappings, boolean failIfNotExists) {
     this.ids = ids;
     this.idMappings = mappings;
     this.failIfNotExists = failIfNotExists;
@@ -58,10 +61,11 @@ public class BatchConfiguration {
     this.ids = ids;
   }
 
-  public DeploymentMappings getIdMappings() {
+  public @Nullable DeploymentMappings getIdMappings() {
     return idMappings;
   }
 
+  @SuppressWarnings("unused")
   public void setIdMappings(DeploymentMappings idMappings) {
     this.idMappings = idMappings;
   }
@@ -74,7 +78,7 @@ public class BatchConfiguration {
     this.failIfNotExists = failIfNotExists;
   }
 
-  public String getBatchId() {
+  public @Nullable String getBatchId() {
     return batchId;
   }
 

@@ -21,7 +21,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProcessEngineMultipleDeploymentTest {
 
   @RegisterExtension
-  protected static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  protected static final QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
           .addAsResource("org/operaton/bpm/quarkus/engine/test/deployment/simpleServiceTaskProcess.bpmn"));
 

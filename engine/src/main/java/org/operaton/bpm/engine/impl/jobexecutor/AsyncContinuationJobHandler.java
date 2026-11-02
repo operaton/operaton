@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineException;
 
 import org.jspecify.annotations.Nullable;
@@ -31,6 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 
+import static java.util.Objects.requireNonNullElse;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static java.util.Objects.requireNonNull;
 
@@ -39,7 +41,7 @@ import static java.util.Objects.requireNonNull;
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
-public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuationConfiguration> {
+public @NullMarked class AsyncContinuationJobHandler implements JobHandler<AsyncContinuationConfiguration> {
 
   public static final String TYPE = "async-continuation";
 
@@ -75,6 +77,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     String transitionId = configuration.getTransitionId();
     if (transitionId != null) {
       PvmActivity activity = execution.getActivity();
+      ensureNotNull("activity", activity);
       TransitionImpl transition = (TransitionImpl) activity.findOutgoingTransition(transitionId);
       execution.setTransition(transition);
     }
@@ -113,7 +116,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
    * <ul><li>First element: pvm atomic operation name
    * <li>Second element: transition id (may be {@code null})
    */
-  protected String[] tokenizeJobConfiguration(String jobConfiguration) {
+  protected String[] tokenizeJobConfiguration(@Nullable String jobConfiguration) {
 
     String[] configuration = new String[2];
 
@@ -131,12 +134,12 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     return configuration;
   }
 
-  public static class AsyncContinuationConfiguration implements JobHandlerConfiguration {
+  public static @NullMarked class AsyncContinuationConfiguration implements JobHandlerConfiguration {
 
-    protected String atomicOperation;
-    protected String transitionId;
+    protected @Nullable String atomicOperation;
+    protected @Nullable String transitionId;
 
-    public String getAtomicOperation() {
+    public @Nullable String getAtomicOperation() {
       return atomicOperation;
     }
 
@@ -144,7 +147,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
       this.atomicOperation = atomicOperation;
     }
 
-    public String getTransitionId() {
+    public @Nullable String getTransitionId() {
       return transitionId;
     }
 
@@ -163,7 +166,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
         configuration += "$" + transitionId;
       }
 
-      return configuration;
+      return requireNonNullElse(configuration, "");
     }
 
   }

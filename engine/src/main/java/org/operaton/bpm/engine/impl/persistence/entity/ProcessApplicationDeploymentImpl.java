@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.application.ProcessApplicationRegistration;
@@ -28,7 +29,7 @@ import org.operaton.bpm.engine.repository.*;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationDeploymentImpl implements ProcessApplicationDeployment {
+public @NullMarked class ProcessApplicationDeploymentImpl implements ProcessApplicationDeployment {
 
   protected DeploymentWithDefinitions deployment;
   protected ProcessApplicationRegistration registration;

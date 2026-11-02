@@ -1,13 +1,16 @@
 import { describe, it, vi, beforeEach } from "vitest";
 
 vi.mock("../helper.jsx", () => ({
+  encode_id: (id) => encodeURIComponent(id ?? ""),
+  GET_LIST: vi.fn(),
+  PAGE_SIZE: 50,
   GET: vi.fn(),
   POST: vi.fn(),
   PUT: vi.fn(),
   DELETE: vi.fn(),
 }));
 
-import { GET, POST, PUT, DELETE } from "../helper.jsx";
+import { GET, POST, PUT, DELETE, GET_LIST } from "../helper.jsx";
 import { create_mock_state, expect_api_call } from "../../test/helpers.js";
 import group from "./group.js";
 
@@ -17,14 +20,19 @@ describe("api/resources/group", () => {
     state = create_mock_state();
   });
 
-  it("all() POSTs the paged query to /group", () => {
+  it("all() asks for the first page, sorted by id", () => {
     group.all(state);
-    expect_api_call(POST, {
-      url: "/group",
-      body: { firstResult: 0, maxResults: 50, sortBy: "id", sortOrder: "asc" },
-      state,
-      signal: state.api.group.list,
-    });
+    expect(GET_LIST).toHaveBeenCalled();
+    const [url, , signal] = GET_LIST.mock.lastCall;
+    expect(url).toBe(
+      "/group?firstResult=0&maxResults=50&sortBy=id&sortOrder=asc",
+    );
+    expect(signal).toBe(state.api.group.list);
+  });
+
+  it("all() puts a search query into the request", () => {
+    group.all(state, { nameLike: "admin%" });
+    expect(GET_LIST.mock.lastCall[0]).toContain("nameLike=admin%25");
   });
 
   it("create() POSTs the group to /group/create", () => {
@@ -106,6 +114,36 @@ describe("api/resources/group", () => {
       body: { id: "admins", userId: "alice" },
       state,
       signal: state.api.group.remove_member,
+    });
+  });
+
+  it("escapes a slash in the group id", () => {
+    group.update(state, "sales/emea", { id: "sales/emea" });
+    expect_api_call(PUT, {
+      url: "/group/sales%2Femea",
+      body: { id: "sales/emea" },
+      state,
+      signal: state.api.group.update,
+    });
+  });
+
+  it("escapes a backslash in the group id", () => {
+    group.delete(state, "domain\\admins");
+    expect_api_call(DELETE, {
+      url: "/group/domain%5Cadmins",
+      body: {},
+      state,
+      signal: state.api.group.delete,
+    });
+  });
+
+  it("escapes both ids when adding a member", () => {
+    group.add_user(state, "sales/emea", "a/b");
+    expect_api_call(PUT, {
+      url: "/group/sales%2Femea/members/a%2Fb",
+      body: { id: "sales/emea", userId: "a/b" },
+      state,
+      signal: state.api.group.add_user,
     });
   });
 });

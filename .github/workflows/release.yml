@@ -46,7 +46,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up JDK
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -124,7 +124,7 @@ jobs:
           persist-credentials: true
 
       - name: Set up JDK
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -135,6 +135,15 @@ jobs:
         env:
           GITHUB_EVENT_INPUTS_PRELIMINARY_RELEASE_QUALIFIER: ${{github.event.inputs.preliminary_release_qualifier}}
         run: .github/scripts/prepare-release-version.sh
+
+      - name: Generate SBOMs
+        # Must run after the release version is applied and before the Maven
+        # build: the distribution assemblies copy
+        # distro/*/assembly/resources/sbom.cdx.json into the archives, so the
+        # SBOM has to describe the release version and dependencies before the
+        # archives are assembled. The regenerated files are part of the
+        # release commit below. See https://github.com/operaton/operaton/issues/3852
+        run: .devenv/scripts/build/build-sbom.sh
 
       - name: Maven Build
         run: |
@@ -158,6 +167,16 @@ jobs:
           .github/scripts/prepare-deploy.sh
           ./mvnw -Dmaven.build.cache.enabled=false -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
+      - name: Verify SBOMs in release archives
+        env:
+          VERSION: ${{steps.version.outputs.version}}
+        run: |
+          for ARCHIVE in distro/run/distro/target/operaton-bpm-$VERSION.zip \
+                         distro/tomcat/distro/target/operaton-bpm-tomcat-$VERSION.zip \
+                         distro/wildfly/distro/target/operaton-bpm-wildfly-$VERSION.zip; do
+            ACTUAL=$(unzip -p "$ARCHIVE" sbom.cdx.json | jq -r .metadata.component.version)
+            [[ "$ACTUAL" == "$VERSION" ]] || { echo "::error::$ARCHIVE ships SBOM version '$ACTUAL', expected '$VERSION'"; exit 1; }
+          done
       - name: Commit changes
         uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         if: ${{github.event.inputs.dry_run == 'false' }}
@@ -173,6 +192,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/sbom/**
             target/*.zip
           key: ${{ github.run_id }}-build-artifacts
 
@@ -191,7 +211,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up JDK
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -207,7 +227,6 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
-          .devenv/scripts/build/build-sbom.sh
           pip install --only-binary :all: pystache==0.6.8
 
       - name: Cache documentation artifacts
@@ -219,7 +238,6 @@ jobs:
             target/clirr-reports.zip
             target/rest-api.zip
             target/rest-api/**
-            target/sbom/**
             **/target/reports/**
           key: ${{ github.run_id }}-documentation-artifacts
 
@@ -231,6 +249,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      checks: write
     steps:
       - name: Check out the code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -248,6 +267,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/sbom/**
             target/*.zip
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
@@ -261,7 +281,6 @@ jobs:
             target/clirr-reports.zip
             target/rest-api.zip
             target/rest-api/**
-            target/sbom/**
             **/target/reports/**
           key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
@@ -294,25 +313,40 @@ jobs:
 
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@b7b80d7ac5b1da46d6aaff9fb57ad50d8453bcb3 #v6.6.0
+        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d #v6.6.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: staging
           path: |
             ./*/staging-deploy/**
           retention-days: 10
+
+  update_dependabot_milestone:
+    name: Update Dependabot Milestone
+    needs:
+      - release
+      - release_build
+    if: ${{github.event.inputs.dry_run == 'false' && needs.release_build.outputs.is_prerelease == 'false' }}
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    uses: $/.github/workflows/update-dependabot-milestone.yml
+    with:
+      release_tag: ${{needs.release_build.outputs.version}}
+      release_target_branch: ${{github.ref_name}}
 
   post_release:
     name: Post-Release
@@ -330,8 +364,21 @@ jobs:
           DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
           NEEDS_RELEASE_BUILD_OUTPUTS_VERSION: ${{ needs.release_build.outputs.version}}
         run: |
-          PAYLOAD=$(jq -n --arg version "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION" \
-            '{ref: "main", inputs: {version: $version, snapshot: "false"}}')
+          # A release of an older line (a newer release/* branch exists) must not move the 'latest' Docker tag
+          IFS=. read -r MAJOR MINOR _ <<< "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION"
+          TAG_LATEST=auto
+          for BRANCH in $(git ls-remote --heads "https://github.com/${GITHUB_REPOSITORY}.git" 'refs/heads/release/*' | sed 's|.*refs/heads/||'); do
+            if [[ "$BRANCH" =~ ^release/([0-9]+)\.([0-9]+)\.x$ ]]; then
+              B_MAJOR=${BASH_REMATCH[1]}
+              B_MINOR=${BASH_REMATCH[2]}
+              if (( B_MAJOR > MAJOR || (B_MAJOR == MAJOR && B_MINOR > MINOR) )); then
+                echo "Newer release branch $BRANCH exists, not tagging 'latest'"
+                TAG_LATEST=false
+              fi
+            fi
+          done
+          PAYLOAD=$(jq -n --arg version "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION" --arg tag_latest "$TAG_LATEST" \
+            '{ref: "main", inputs: {version: $version, snapshot: "false", tag_latest: $tag_latest}}')
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
@@ -340,6 +387,25 @@ jobs:
             https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
           if [ "$response" -ne 204 ]; then
             echo "Failed to notify Docker repository. HTTP response code: $response"
+            exit 1
+          fi
+
+      - name: Notify Helm Chart Repository
+        if: ${{github.event.inputs.dry_run == 'false' && needs.release_build.outputs.is_prerelease == 'false' }}
+        env:
+          HELM_ACTION_DISPATCH_TOKEN: ${{ secrets.HELM_ACTION_DISPATCH_TOKEN }}
+          NEEDS_RELEASE_BUILD_OUTPUTS_VERSION: ${{ needs.release_build.outputs.version }}
+        run: |
+          PAYLOAD=$(jq -n --arg version "$NEEDS_RELEASE_BUILD_OUTPUTS_VERSION" \
+            '{ref: "main", inputs: {operaton_version: $version}}')
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            -H "Authorization: Bearer $HELM_ACTION_DISPATCH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d "$PAYLOAD" \
+            https://api.github.com/repos/operaton/operaton-helm/actions/workflows/update-operaton-release.yaml/dispatches)
+          if [ "$response" -ne 204 ]; then
+            echo "Failed to notify Helm chart repository. HTTP response code: $response"
             exit 1
           fi
 

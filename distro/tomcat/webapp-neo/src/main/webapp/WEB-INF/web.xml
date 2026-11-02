@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+  version="6.0"
+  xmlns="https://jakarta.ee/xml/ns/jakartaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+
+  <display-name>Operaton webapp neo</display-name>
+
+  <!-- http session mutex listener -->
+  <listener>
+    <listener-class>org.operaton.bpm.webapp.neo.impl.security.filter.util.HttpSessionMutexListener</listener-class>
+  </listener>
+
+  <session-config>
+    <cookie-config>
+      <http-only>true</http-only>
+      <secure>false</secure>
+    </cookie-config>
+    <tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+
+  <!-- Disabled unless operaton.bpm.webapp.neo.enabled=true -->
+  <filter>
+    <filter-name>NeoEnabledFilter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.web.NeoEnabledFilter</filter-class>
+    <init-param>
+      <param-name>disabledRedirect</param-name>
+      <param-value>/operaton/</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>NeoEnabledFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- HTTP Header Security Filter -->
+  <filter>
+    <filter-name>HttpHeaderSecurity</filter-name>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.headersec.HttpHeaderSecurityFilter</filter-class>
+
+    <!--
+    The Strict Transport Security header is disabled by default.
+    You can enable it by uncommenting the configuration below.
+    Read more about it in the documentation
+    https://docs.operaton.org/manual/latest/webapps/shared-options/header-security/#strict-transport-security
+    -->
+
+    <!--
+    <init-param>
+      <param-name>hstsDisabled</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    -->
+  </filter>
+  <filter-mapping>
+    <filter-name>HttpHeaderSecurity</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- Session Cookie filter -->
+  <filter>
+    <filter-name>SessionCookieFilter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.SessionCookieFilter</filter-class>
+    <!--<init-param>-->
+    <!--<param-name>enableSecureCookie</param-name>-->
+    <!--<param-value>true</param-value>-->
+    <!--</init-param>-->
+  </filter>
+  <filter-mapping>
+    <filter-name>SessionCookieFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- Authentication filter -->
+  <filter>
+    <filter-name>Authentication Filter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.auth.AuthenticationFilter</filter-class>
+    <!-- See https://docs.operaton.org/manual/latest/webapps/shared-options/authentication/#cache -->
+    <init-param>
+      <param-name>cacheTimeToLive</param-name>
+      <param-value>300000</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Authentication Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- Security filter -->
+  <filter>
+    <filter-name>SecurityFilter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.SecurityFilter</filter-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>/WEB-INF/securityFilterRules.json</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- CSRF Prevention filter -->
+  <filter>
+    <filter-name>CsrfPreventionFilter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.security.filter.CsrfPreventionFilter</filter-class>
+    <!--<init-param>-->
+    <!--<param-name>targetOrigin</param-name>-->
+    <!--<param-value>http://localhost:8080</param-value>-->
+    <!--</init-param>-->
+  </filter>
+  <filter-mapping>
+    <filter-name>CsrfPreventionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- Empty body filter -->
+  <filter>
+    <filter-name>EmptyBodyFilter</filter-name>
+    <filter-class>org.operaton.bpm.engine.rest.filter.EmptyBodyFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EmptyBodyFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
+  </filter-mapping>
+
+  <!-- REST cache control filter -->
+  <filter>
+    <filter-name>CacheControlFilter</filter-name>
+    <filter-class>org.operaton.bpm.engine.rest.filter.CacheControlFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CacheControlFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
+    <url-pattern>/assets/*</url-pattern>
+  </filter-mapping>
+
+  <!-- SPA shell for deep links -->
+  <filter>
+    <filter-name>SpaFallbackFilter</filter-name>
+    <filter-class>org.operaton.bpm.webapp.neo.impl.web.SpaFallbackFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SpaFallbackFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <!-- admin rest api -->
+  <servlet>
+    <servlet-name>Admin Api</servlet-name>
+    <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    <init-param>
+      <param-name>jakarta.ws.rs.Application</param-name>
+      <param-value>org.operaton.bpm.webapp.neo.impl.web.AdminApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>resteasy.servlet.mapping.prefix</param-name>
+      <param-value>/api/admin</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Admin Api</servlet-name>
+    <url-pattern>/api/admin/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- engine rest api (embedded) -->
+  <servlet>
+    <servlet-name>Engine Api</servlet-name>
+    <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    <init-param>
+      <param-name>jakarta.ws.rs.Application</param-name>
+      <param-value>org.operaton.bpm.webapp.neo.impl.engine.EngineRestApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>resteasy.servlet.mapping.prefix</param-name>
+      <param-value>/api/engine</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Engine Api</servlet-name>
+    <url-pattern>/api/engine/*</url-pattern>
+  </servlet-mapping>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <!-- default error page -->
+  <error-page>
+    <!-- Missing resource -->
+    <error-code>404</error-code>
+    <location>/error-404-page.html</location>
+  </error-page>
+  <error-page>
+    <!-- Uncaught exception -->
+    <error-code>500</error-code>
+    <location>/error-500-page.html</location>
+  </error-page>
+</web-app>

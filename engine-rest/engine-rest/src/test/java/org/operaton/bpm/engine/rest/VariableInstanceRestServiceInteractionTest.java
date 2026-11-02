@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.rest;
 
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
@@ -316,7 +317,7 @@ public class VariableInstanceRestServiceInteractionTest extends AbstractRestServ
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
     //due to some problems with wildfly we gotta check this separately
     String contentType = response.getContentType();
-    assertThat(contentType).isEqualTo(ContentType.TEXT.toString() + "; charset=UTF-8");
+    assertThat(MediaType.valueOf(contentType)).isEqualTo(MediaType.TEXT_PLAIN_TYPE.withCharset(encoding));
   }
 
   @Test

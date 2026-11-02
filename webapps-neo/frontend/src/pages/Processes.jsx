@@ -1,5 +1,5 @@
 import { useSignal } from "@preact/signals";
-import { useContext, useEffect } from "preact/hooks";
+import { useContext, useEffect, useRef } from "preact/hooks";
 import { useLocation, useRoute } from "preact-iso";
 import { useTranslation } from "react-i18next";
 import engine_rest, {
@@ -10,26 +10,21 @@ import * as Icons from "../assets/icons.jsx";
 import { AppState } from "../state.js";
 import { BPMNViewer } from "../components/BPMNViewer.jsx";
 import { Dialog, ConfirmDialog } from "../components/Dialog.jsx";
+import { SuspensionDialog } from "../components/SuspensionDialog.jsx";
 import { ListFilter } from "../components/ListFilter.jsx";
-import { ManageFilters } from "../components/ManageFilters.jsx";
+import { ListSearch } from "../components/ListSearch.jsx";
 import { Breadcrumbs } from "../components/Breadcrumbs.jsx";
+import { parse_list_query, write_list_query } from "../helper/list_query.js";
 import {
-  filter_share_link,
-  parse_list_query,
-  with_manage,
-  without_manage,
-  write_list_query,
-} from "../helper/list_query.js";
-import {
-  create_saved_filter,
-  delete_saved_filter,
-  hydrate_signal,
-  update_saved_filter,
-} from "../helper/saved_filters.js";
-import { formatDuration } from "../helper/date_formatter.js";
-
-const RESOURCE_TYPE = "process_definition";
-const INSTANCE_RESOURCE_TYPE = "process_instance";
+  VARIABLE_TYPES,
+  coerce_variable_value,
+  variable_input_type,
+  variable_edit_value,
+  object_type_label,
+  format_variable_value,
+} from "../helper/variables.js";
+import { formatDuration, formatTimestamp } from "../helper/date_formatter.js";
+import { app_path } from "../config.js";
 
 const INSTANCE_SORT_OPTIONS = [
   { key: "startTime", nameKey: "processes.instance.sort.startTime" },
@@ -39,69 +34,36 @@ const INSTANCE_SORT_OPTIONS = [
   { key: "tenantId", nameKey: "processes.instance.sort.tenantId" },
 ];
 
-const INSTANCE_FILTER_KEYS = [
-  {
-    key: "businessKey",
-    nameKey: "processes.instance.filter_keys.businessKey",
-    type: "string",
-  },
-  {
-    key: "businessKeyLike",
-    nameKey: "processes.instance.filter_keys.businessKeyLike",
-    type: "string",
-  },
-  {
-    key: "active",
-    nameKey: "processes.instance.filter_keys.active",
-    type: "boolean",
-  },
-  {
-    key: "suspended",
-    nameKey: "processes.instance.filter_keys.suspended",
-    type: "boolean",
-  },
-  {
-    key: "finished",
-    nameKey: "processes.instance.filter_keys.finished",
-    type: "boolean",
-  },
-  {
-    key: "withIncidents",
-    nameKey: "processes.instance.filter_keys.withIncidents",
-    type: "boolean",
-  },
-  {
-    key: "withoutIncidents",
-    nameKey: "processes.instance.filter_keys.withoutIncidents",
-    type: "boolean",
-  },
-  {
-    key: "startedBefore",
-    nameKey: "processes.instance.filter_keys.startedBefore",
-    type: "date",
-  },
-  {
-    key: "startedAfter",
-    nameKey: "processes.instance.filter_keys.startedAfter",
-    type: "date",
-  },
-];
-
 const INSTANCE_DEFAULTS = { sortBy: "startTime", sortOrder: "asc" };
 
-const instance_params_from_query = (state, query) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(
-    state.api.process.instance.saved_filters,
-    saved_filter_id,
-  );
-  return {
-    ...(saved?.query ?? {}),
-    ...criteria,
+// The inline instance search (variable + business key). Its parts ride the
+// list-query criteria under their own keys; here they are translated into the
+// engine's `variables` (name_operator_value) and `businessKeyLike` params.
+const INSTANCE_SEARCH_OPERATORS = [
+  "eq",
+  "neq",
+  "gt",
+  "gteq",
+  "lt",
+  "lteq",
+  "like",
+];
+
+const instance_params_from_query = (query) => {
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
+  const { var_name, var_op, var_value, business_key, ...rest } = criteria;
+  const params = {
+    ...rest,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
   };
+  // The history wrapper serialises variables from {name, operator, value}.
+  if (var_name && var_value !== undefined && var_value !== "")
+    params.variables = [
+      { name: var_name, operator: var_op || "eq", value: var_value },
+    ];
+  if (business_key) params.businessKeyLike = `%${business_key}%`;
+  return params;
 };
 
 const SORT_OPTIONS = [
@@ -114,67 +76,27 @@ const SORT_OPTIONS = [
   { key: "tenantId", nameKey: "processes.sort.tenantId" },
 ];
 
-const FILTER_KEYS = [
-  { key: "name", nameKey: "processes.filter_keys.name", type: "string" },
-  {
-    key: "nameLike",
-    nameKey: "processes.filter_keys.nameLike",
-    type: "string",
-  },
-  { key: "key", nameKey: "processes.filter_keys.key", type: "string" },
-  { key: "keyLike", nameKey: "processes.filter_keys.keyLike", type: "string" },
-  {
-    key: "category",
-    nameKey: "processes.filter_keys.category",
-    type: "string",
-  },
-  {
-    key: "categoryLike",
-    nameKey: "processes.filter_keys.categoryLike",
-    type: "string",
-  },
-  {
-    key: "versionTag",
-    nameKey: "processes.filter_keys.versionTag",
-    type: "string",
-  },
-  { key: "active", nameKey: "processes.filter_keys.active", type: "boolean" },
-  {
-    key: "suspended",
-    nameKey: "processes.filter_keys.suspended",
-    type: "boolean",
-  },
-  {
-    key: "latestVersion",
-    nameKey: "processes.filter_keys.latestVersion",
-    type: "boolean",
-  },
-  {
-    key: "startableInTasklist",
-    nameKey: "processes.filter_keys.startableInTasklist",
-    type: "boolean",
-  },
-];
-
-const find_saved = (signal, id) => {
-  if (!id || id === "all") return null;
-  return (signal.value?.data ?? []).find((f) => f.id === id) ?? null;
-};
-
 const load_definitions = (state, query) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(
-    state.api.process.definition.saved_filters,
-    saved_filter_id,
-  );
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
   const params = {
-    ...(saved?.query ?? {}),
     ...criteria,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
   };
   void engine_rest.process_definition.list(state, params);
+};
+
+// Compare two definition-statistics rows by a definition field — numbers
+// numerically, everything else as text, nullish last. Used to sort the list
+// client-side (the statistics endpoint ignores sortBy).
+const compare_definitions = (key) => (a, b) => {
+  const av = a?.definition?.[key],
+    bv = b?.definition?.[key];
+  if (av == null && bv == null) return 0;
+  if (av == null) return 1;
+  if (bv == null) return -1;
+  if (typeof av === "number" && typeof bv === "number") return av - bv;
+  return String(av).localeCompare(String(bv));
 };
 
 /**
@@ -213,11 +135,6 @@ const ProcessesPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.definition_id, JSON.stringify(query)]);
-
-  useEffect(() => {
-    hydrate_signal(RESOURCE_TYPE, state.api.process.definition.saved_filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Activity instances power the diagram tokens and the activity history tab.
   // Live instances use the runtime endpoint; historic (finished) instances use
@@ -426,14 +343,14 @@ const ProcessSidebar = () => {
     <nav aria-label={t("nav.processes")}>
       <div class="sidebar-scroll">
         <div class="definition-block">
-          <h2 class="definition-heading">
-            {def?.name ?? def?.key ?? def_id}
-          </h2>
+          <h2 class="definition-heading">{def?.name ?? def?.key ?? def_id}</h2>
           <dl class="definition-summary">
             <dt>{t("processes.definition-id")}</dt>
             <dd class="entity-id">{def?.id ?? "—"}</dd>
             <dt>{t("processes.version")}</dt>
             <dd>{def?.version ?? "—"}</dd>
+            <dt>{t("processes.version-tag")}</dt>
+            <dd>{def?.versionTag ?? "—"}</dd>
           </dl>
         </div>
         <menu class="list">
@@ -445,7 +362,7 @@ const ProcessSidebar = () => {
             return (
               <li key={entry.nameKey}>
                 <a
-                  href={`/processes/${def_id}/${entry.panel}${hq}`}
+                  href={app_path(`/processes/${def_id}/${entry.panel}${hq}`)}
                   aria-current={active ? "page" : undefined}
                 >
                   {t(entry.nameKey)}
@@ -648,29 +565,48 @@ const ProcessDefinitionSelection = () => {
     { query } = useRoute(),
     { route } = useLocation(),
     selected = useSignal(new Set()),
-    bulk_running = useSignal(false);
+    bulk_running = useSignal(false),
+    // Suspending is not one decision but three: what, whether the instances go
+    // with it, and when. The dialog asks before anything is sent. Declared with
+    // the other hooks, before any early return, so the hook order is stable.
+    suspension_open = useSignal(false),
+    suspend_next = useSignal(true),
+    bulk_error = useSignal(null);
 
   const parsed = parse_list_query(query);
   const has_criteria = Object.keys(parsed.criteria).length > 0;
 
+  // The name search filters client-side: this list is backed by the statistics
+  // endpoint, which takes no nameLike. The term is kept in the URL so it
+  // survives a reload and a shared link.
+  const search_term = (parsed.criteria.nameLike ?? "").replace(/^%+|%+$/g, "");
+  const term_lc = search_term.toLowerCase();
+
   const list_value = definition.list.value;
-  const rows = list_value?.data ?? [];
+  const all_rows = list_value?.data ?? [];
+  const filtered = term_lc
+    ? all_rows.filter((r) =>
+        [r.definition?.name, r.definition?.key].some((s) =>
+          (s ?? "").toLowerCase().includes(term_lc),
+        ),
+      )
+    : all_rows;
+  // Sort client-side too: this list is backed by /process-definition/statistics,
+  // which ignores sortBy. The sort controls would otherwise do nothing.
+  const sortBy = parsed.sortBy ?? "name";
+  const sortOrder = parsed.sortOrder ?? "asc";
+  const rows = [...filtered].sort(compare_definitions(sortBy));
+  if (sortOrder === "desc") rows.reverse();
   const has_data = list_value?.status === RESPONSE_STATE.SUCCESS;
-  const is_empty = has_data && rows.length === 0 && !has_criteria;
+  const is_empty = has_data && all_rows.length === 0 && !has_criteria;
 
   const apply_patch = (patch) => {
     const next = write_list_query(window.location.href, patch);
     route(next, true);
   };
-  const open_manage = () => route(with_manage(), false);
-  const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
-    sortBy: parsed.sortBy ?? "name",
-    sortOrder: parsed.sortOrder ?? "asc",
-    criteria: parsed.criteria,
-  };
-
-  if (query.filters === "manage") return <DefinitionsManage />;
+  const list_current = { sortBy, sortOrder };
+  const on_search = (term) =>
+    apply_patch({ criteria: term ? { nameLike: `%${term}%` } : {} });
 
   const toggle_one = (id) => {
     const next = new Set(selected.value);
@@ -687,18 +623,34 @@ const ProcessDefinitionSelection = () => {
   };
   const all_selected = rows.length > 0 && selected.value.size === rows.length;
 
-  const run_bulk = async (op) => {
+  const run_bulk = async (op, options) => {
     if (selected.value.size === 0 || bulk_running.value) return;
     bulk_running.value = true;
+    bulk_error.value = null;
     try {
       const ids = [...selected.value];
+      // What the engine refused. Without this the action simply did nothing
+      // visible — a definition the user may not suspend looked like a dead
+      // button, the 403 only in the network tab.
+      const refused = [];
       for (const id of ids) {
         try {
-          await engine_rest.process_definition[op](state, id);
+          const result = await engine_rest.process_definition[op](
+            state,
+            id,
+            options,
+          );
+          if (result?.status === RESPONSE_STATE.ERROR)
+            refused.push(result.error?.message ?? id);
         } catch (e) {
-          console.error(`bulk ${op} failed for ${id}`, e);
+          refused.push(e?.message ?? id);
         }
       }
+      if (refused.length > 0)
+        bulk_error.value = t("processes.bulk.failed", {
+          count: refused.length,
+          reason: refused[0],
+        });
       selected.value = new Set();
       // Refetch to reflect new state.
       load_definitions(state, query);
@@ -713,7 +665,7 @@ const ProcessDefinitionSelection = () => {
     <div class="fade-in">
       <header>
         <h1>{t("processes.deployed-definitions")}</h1>
-        <a class="button" href="/deployments">
+        <a class="button" href={app_path("/deployments")}>
           {t("processes.deploy")}
         </a>
       </header>
@@ -725,24 +677,9 @@ const ProcessDefinitionSelection = () => {
             class="secondary"
             disabled={!has_selection || bulk_running.value}
             onClick={() => {
-              if (
-                window.confirm(
-                  t("processes.bulk.confirm-remove", {
-                    count: selected.value.size,
-                  }),
-                )
-              ) {
-                void run_bulk("remove");
-              }
+              suspend_next.value = false;
+              suspension_open.value = true;
             }}
-          >
-            {t("processes.bulk.remove")}
-          </button>
-          <button
-            type="button"
-            class="secondary"
-            disabled={!has_selection || bulk_running.value}
-            onClick={() => run_bulk("activate")}
           >
             {t("processes.bulk.activate")}
           </button>
@@ -750,24 +687,46 @@ const ProcessDefinitionSelection = () => {
             type="button"
             class="secondary"
             disabled={!has_selection || bulk_running.value}
-            onClick={() => run_bulk("suspend")}
+            onClick={() => {
+              suspend_next.value = true;
+              suspension_open.value = true;
+            }}
           >
             {t("processes.bulk.suspend")}
           </button>
+          <SuspensionDialog
+            open={suspension_open}
+            suspend={suspend_next.value}
+            scope="definition"
+            on_confirm={({ include, execution_date }) =>
+              void run_bulk(suspend_next.value ? "suspend" : "activate", {
+                include_instances: include,
+                execution_date,
+              })
+            }
+          />
           {has_selection && (
             <small>
               {t("processes.bulk.count", { count: selected.value.size })}
             </small>
           )}
         </div>
+        {bulk_error.value && (
+          <p class="error" role="alert">
+            {bulk_error.value}
+          </p>
+        )}
       </div>
+      <ListSearch
+        label={t("processes.search")}
+        value={search_term}
+        on_search={on_search}
+      />
       <ListFilter
         sort_options={SORT_OPTIONS}
-        saved_filters_signal={definition.saved_filters}
         current={list_current}
         defaults={{ sortBy: "name", sortOrder: "asc" }}
         on_change={apply_patch}
-        on_manage={open_manage}
       />
 
       {is_empty ? (
@@ -789,8 +748,8 @@ const ProcessDefinitionSelection = () => {
                 <th class="num" title={t("processes.tabs.incidents")}>
                   {t("processes.col-abbr.incidents")}
                 </th>
-                <th class="num" title={t("dashboard.instances")}>
-                  {t("processes.col-abbr.instances")}
+                <th class="num" title={t("processes.instances-status-title")}>
+                  {t("processes.col-abbr.instances-status")}
                 </th>
                 <th>{t("common.key")}</th>
                 <th class="num" title={t("processes.version")}>
@@ -824,7 +783,7 @@ const DefinitionsEmpty = () => {
   return (
     <div class="empty-state">
       <p>{t("processes.empty.heading")}</p>
-      <a href="/deployments">{t("processes.empty.upload")}</a>
+      <a href={app_path("/deployments")}>{t("processes.empty.upload")}</a>
       <a
         href="https://docs.operaton.org/docs/documentation/user-guide/process-engine/deployments"
         target="_blank"
@@ -848,7 +807,9 @@ const ProcessDefinitionDetails = () => {
   useEffect(() => {
     if (!params.panel) {
       route(
-        `/processes/${params.definition_id}/instances${keep_history_query(query)}`,
+        app_path(
+          `/processes/${params.definition_id}/instances${keep_history_query(query)}`,
+        ),
         true,
       );
     }
@@ -878,7 +839,26 @@ const ProcessDefinition = ({
   checked,
   onToggle,
 }) => {
-  const { query } = useRoute();
+  const state = useContext(AppState),
+    { query } = useRoute(),
+    // statistics gives the running total; ask the engine how many are suspended
+    // so the status column can show active vs. suspended.
+    suspended = useSignal(null);
+
+  useEffect(() => {
+    let alive = true;
+    void Promise.resolve(
+      engine_rest.process_instance.suspended_count(state, id),
+    ).then((n) => alive && (suspended.value = n ?? 0));
+    return () => {
+      alive = false;
+    };
+  }, [id]);
+
+  const total = instances ?? 0,
+    susp = suspended.value ?? 0,
+    active = Math.max(total - susp, 0);
+
   return (
     <tr aria-selected={checked}>
       <td onClick={(e) => e.stopPropagation()}>
@@ -890,12 +870,18 @@ const ProcessDefinition = ({
         />
       </td>
       <td>
-        <a href={`/processes/${id}/instances${keep_history_query(query)}`}>
+        <a
+          href={app_path(
+            `/processes/${id}/instances${keep_history_query(query)}`,
+          )}
+        >
           {name ?? key}
         </a>
       </td>
       <td class="num">{incidents?.length ?? 0}</td>
-      <td class="num">{instances ?? 0}</td>
+      <td class="num">
+        {active}/{susp}
+      </td>
       <td>{key}</td>
       <td class="num">{version}</td>
       <td class="font-mono">{id}</td>
@@ -914,16 +900,8 @@ const Instances = () => {
     // (finished vs unfinished), so it always holds the historic shape.
     list = state.api.history.process_instance.list;
 
-  useEffect(() => {
-    hydrate_signal(
-      INSTANCE_RESOURCE_TYPE,
-      state.api.process.instance.saved_filters,
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const fetch_page = (firstResult) => {
-    const extra = instance_params_from_query(state, query);
+    const extra = instance_params_from_query(query);
     if (history_mode) {
       void engine_rest.history.process_instance.all(
         state,
@@ -968,29 +946,21 @@ const Instances = () => {
 
   const parsed = parse_list_query(query);
   const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
     sortBy: parsed.sortBy ?? INSTANCE_DEFAULTS.sortBy,
     sortOrder: parsed.sortOrder ?? INSTANCE_DEFAULTS.sortOrder,
-    criteria: parsed.criteria,
   };
   const apply_patch = (patch) => {
     route(write_list_query(window.location.href, patch), true);
   };
-  const open_manage = () => route(with_manage(), false);
-
-  if (!params?.selection_id && query?.filters === "manage") {
-    return <InstancesManage />;
-  }
 
   return !params?.selection_id ? (
     <>
+      <InstanceSearch criteria={parsed.criteria} on_change={apply_patch} />
       <ListFilter
         sort_options={INSTANCE_SORT_OPTIONS}
-        saved_filters_signal={state.api.process.instance.saved_filters}
         current={list_current}
         defaults={INSTANCE_DEFAULTS}
         on_change={apply_patch}
-        on_manage={open_manage}
       />
       <div>
         <table>
@@ -1059,7 +1029,9 @@ const InstanceDetails = () => {
     <>
       <ProcessTertiaryNav
         tabs={visible_tabs}
-        base_path={`/processes/${definition_id}/${panel}/${selection_id}`}
+        base_path={app_path(
+          `/processes/${definition_id}/${panel}/${selection_id}`,
+        )}
       />
       <div>{active_tab ? <active_tab.Component /> : null}</div>
     </>
@@ -1075,9 +1047,10 @@ const InstanceDetailsDescription = () => {
     confirm_cancel = useSignal(false),
     // Live and historic instance details live in separate signals; read the one
     // matching the current mode so a stale shape can't leak across a toggle.
-    data = (history_mode
-      ? state.api.history.process_instance.one
-      : state.api.process.instance.one
+    data = (
+      history_mode
+        ? state.api.history.process_instance.one
+        : state.api.process.instance.one
     ).value?.data;
 
   const toggle_suspended = async (suspended) => {
@@ -1091,7 +1064,7 @@ const InstanceDetailsDescription = () => {
 
   const cancel_instance = async () => {
     await engine_rest.process_instance.delete(state, params.selection_id);
-    route(`/processes/${params.definition_id}/instances`);
+    route(app_path(`/processes/${params.definition_id}/instances`));
   };
 
   return (
@@ -1151,6 +1124,40 @@ const InstanceDetailsDescription = () => {
             <dd>{data.deleteReason}</dd>
           </>
         )}
+        {/* Where this instance came from. Only the historic payload carries it,
+            and only a called instance has a caller — from a child the way back
+            up was otherwise a manual search. */}
+        {data?.superProcessInstanceId && (
+          <>
+            <dt>{t("processes.super-instance")}</dt>
+            <dd class="entity-id">
+              <a
+                href={app_path(
+                  `/processes/${data.superProcessDefinitionId ?? ""}/instances/${data.superProcessInstanceId}${keep_history_query(query)}`,
+                )}
+              >
+                {data.superProcessInstanceId}
+              </a>
+            </dd>
+          </>
+        )}
+        {data?.rootProcessInstanceId &&
+          data.rootProcessInstanceId !== data.id && (
+            <>
+              <dt>{t("processes.root-instance")}</dt>
+              <dd class="entity-id">{data.rootProcessInstanceId}</dd>
+            </>
+          )}
+        {data?.removalTime && (
+          <>
+            <dt>{t("processes.removal-time")}</dt>
+            <dd>
+              <time datetime={data.removalTime}>
+                {formatTimestamp(data.removalTime)}
+              </time>
+            </dd>
+          </>
+        )}
       </dl>
       {!history_mode && data && (
         <div class="button-group">
@@ -1189,7 +1196,9 @@ const ProcessInstance = ({ id, startTime, state, businessKey }) => {
     <tr>
       <td class="font-mono">
         <a
-          href={`/processes/${params.definition_id}/instances/${id}/vars${keep_history_query(query)}`}
+          href={app_path(
+            `/processes/${params.definition_id}/instances/${id}/vars${keep_history_query(query)}`,
+          )}
         >
           {id.substring(0, 8)}
         </a>
@@ -1205,42 +1214,6 @@ const ProcessInstance = ({ id, startTime, state, businessKey }) => {
   );
 };
 
-// Operaton stores typed variables; coerce the raw text input to the JS type the
-// REST API expects for the chosen variable type.
-const VARIABLE_TYPES = [
-  "String",
-  "Boolean",
-  "Integer",
-  "Long",
-  "Double",
-  "Short",
-  "Json",
-];
-
-const coerce_variable_value = (type, raw) => {
-  switch (type) {
-    case "Boolean":
-      return raw === "true" || raw === true;
-    case "Integer":
-    case "Long":
-    case "Short":
-      return raw === "" ? null : parseInt(raw, 10);
-    case "Double":
-    case "Float":
-      return raw === "" ? null : parseFloat(raw);
-    default:
-      return raw;
-  }
-};
-
-// Render any variable value as text: JSX skips boolean children, and Object/Json
-// values arrive deserialized (real objects), so format them explicitly (#91).
-const format_variable_value = (value) => {
-  if (value === null || value === undefined) return "—";
-  if (typeof value === "object") return JSON.stringify(value);
-  return String(value);
-};
-
 const InstanceVariables = () => {
   const state = useContext(AppState),
     { params, query } = useRoute(),
@@ -1252,13 +1225,16 @@ const InstanceVariables = () => {
     edit_name = useSignal(""),
     edit_type = useSignal("String"),
     edit_value = useSignal(""),
+    edit_value_info = useSignal(null),
     delete_name = useSignal(null),
+    edit_scope = useSignal(""),
     // Live and historic variables live in separate signals, each holding a
     // single shape (live: object map; historic: array). Read the one for the
     // current mode and render once it has loaded — no cross-shape guard needed.
-    vars_data = (history_mode
-      ? state.api.history.variable_instance.by_process_instance
-      : state.api.process.instance.variables
+    vars_data = (
+      history_mode
+        ? state.api.history.variable_instance.by_process_instance
+        : state.api.process.instance.variables
     ).value?.data,
     vars_ready = vars_data != null;
 
@@ -1282,27 +1258,58 @@ const InstanceVariables = () => {
     edit_name.value = "";
     edit_type.value = "String";
     edit_value.value = "";
+    edit_value_info.value = null;
+    edit_scope.value = "";
     edit_open.value = true;
   };
 
-  const open_edit = (name, type, value) => {
+  const open_edit = (name, type, value, value_info) => {
     edit_new.value = false;
     edit_name.value = name;
     edit_type.value = type ?? "String";
-    edit_value.value = value ?? "";
+    edit_value.value = variable_edit_value(type, value);
+    edit_value_info.value = value_info ?? null;
+    edit_scope.value = "";
     edit_open.value = true;
   };
 
+  // Every running activity instance is a scope a variable can belong to.
+  const scopes = flatten_activity_instances(
+    state.api.process.instance.activity_instances.value?.data,
+  )
+    .filter((node) => node.executionIds?.length)
+    .map((node) => ({
+      execution_id: node.executionIds[0],
+      label: node.activityName || node.activityId,
+    }));
+
   const save_variable = async () => {
-    await engine_rest.process_instance.set_variable(
-      state,
-      params.selection_id,
-      edit_name.value,
-      {
-        value: coerce_variable_value(edit_type.value, edit_value.value),
-        type: edit_type.value,
-      },
-    );
+    const body = {
+      value: coerce_variable_value(edit_type.value, edit_value.value),
+      type: edit_type.value,
+      // An Object variable must go back with the serialization it came with,
+      // or the engine cannot read it again.
+      ...(edit_type.value === "Object" && edit_value_info.value
+        ? { valueInfo: edit_value_info.value }
+        : {}),
+    };
+    // An empty scope means the process instance itself, which is where a
+    // variable belongs unless a parallel branch needs its own.
+    if (edit_scope.value) {
+      await engine_rest.execution.set_local_variable(
+        state,
+        edit_scope.value,
+        edit_name.value,
+        body,
+      );
+    } else {
+      await engine_rest.process_instance.set_variable(
+        state,
+        params.selection_id,
+        edit_name.value,
+        body,
+      );
+    }
     edit_open.value = false;
     load();
   };
@@ -1330,33 +1337,37 @@ const InstanceVariables = () => {
         <tbody>
           {vars_ready
             ? !history_mode
-              ? Object.entries(vars_data).map(([name, { type, value }]) => (
-                  <tr key={name}>
-                    <td>{name}</td>
-                    <td>{type}</td>
-                    <td>{format_variable_value(value)}</td>
-                    <td>
-                      <div class="button-group">
-                        <button
-                          type="button"
-                          onClick={() => open_edit(name, type, value)}
-                        >
-                          {t("common.edit")}
-                        </button>
-                        <button
-                          type="button"
-                          class="danger"
-                          onClick={() => {
-                            delete_name.value = name;
-                            delete_open.value = true;
-                          }}
-                        >
-                          {t("common.delete")}
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+              ? Object.entries(vars_data).map(
+                  ([name, { type, value, valueInfo }]) => (
+                    <tr key={name}>
+                      <td>{name}</td>
+                      <td>{type}</td>
+                      <td>{format_variable_value(value)}</td>
+                      <td>
+                        <div class="button-group">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              open_edit(name, type, value, valueInfo)
+                            }
+                          >
+                            {t("common.edit")}
+                          </button>
+                          <button
+                            type="button"
+                            class="danger"
+                            onClick={() => {
+                              delete_name.value = name;
+                              delete_open.value = true;
+                            }}
+                          >
+                            {t("common.delete")}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ),
+                )
               : vars_data.map(({ id, name, type, value }) => (
                   <tr key={id ?? name}>
                     <td>{name}</td>
@@ -1406,14 +1417,47 @@ const InstanceVariables = () => {
               ))}
             </select>
           </label>
-          <label>
-            {t("common.value")}
-            <input
-              type="text"
-              value={edit_value.value}
-              onInput={(e) => (edit_value.value = e.target.value)}
-            />
-          </label>
+          {edit_new.value && scopes.length > 0 && (
+            <label>
+              {t("processes.variables.scope")}
+              <select
+                value={edit_scope.value}
+                onChange={(e) => (edit_scope.value = e.target.value)}
+              >
+                <option value="">
+                  {t("processes.variables.scope-instance")}
+                </option>
+                {scopes.map((scope) => (
+                  <option key={scope.execution_id} value={scope.execution_id}>
+                    {scope.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+          {variable_input_type(edit_type.value) === "none" ? null : (
+            <label>
+              {t("common.value")}
+              {variable_input_type(edit_type.value) === "select" ? (
+                <select
+                  value={edit_value.value}
+                  onChange={(e) => (edit_value.value = e.target.value)}
+                >
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+                </select>
+              ) : (
+                <input
+                  type={variable_input_type(edit_type.value)}
+                  value={edit_value.value}
+                  onInput={(e) => (edit_value.value = e.target.value)}
+                />
+              )}
+            </label>
+          )}
+          {edit_type.value === "Object" && edit_value_info.value ? (
+            <p class="hint">{object_type_label(edit_value_info.value)}</p>
+          ) : null}
         </div>
         <div class="button-group">
           <button
@@ -1745,7 +1789,9 @@ const CalledProcessInstances = () => {
                 <td>{state_label}</td>
                 <td>
                   <a
-                    href={`/processes/${instance.id}${keep_history_query(query)}`}
+                    href={app_path(
+                      `/processes/${instance.id}${keep_history_query(query)}`,
+                    )}
                   >
                     {instance.id}
                   </a>
@@ -1922,7 +1968,9 @@ const CalledProcessDefinitions = () => {
               <tr key={definition.id}>
                 <td>
                   <a
-                    href={`/processes/${definition.id}${keep_history_query(query)}`}
+                    href={app_path(
+                      `/processes/${definition.id}${keep_history_query(query)}`,
+                    )}
                   >
                     {definition.name}
                   </a>
@@ -1963,10 +2011,24 @@ const JobDefinitions = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [definition_id]);
 
-  const toggle_suspended = async (id, suspended) => {
-    await engine_rest.job_definition.set_suspended(state, id, suspended);
-    load();
-  };
+  // Same three questions as for a process definition: what, whether the jobs
+  // go with it, and when.
+  const suspension_open = useSignal(false),
+    suspend_next = useSignal(true),
+    ask_suspension = (id, suspended) => {
+      target_id.value = id;
+      suspend_next.value = suspended;
+      suspension_open.value = true;
+    },
+    toggle_suspended = async ({ include, execution_date }) => {
+      await engine_rest.job_definition.set_suspended(
+        state,
+        target_id.value,
+        suspend_next.value,
+        { include_jobs: include, execution_date },
+      );
+      load();
+    };
 
   const save_priority = async () => {
     await engine_rest.job_definition.set_priority(
@@ -2027,14 +2089,14 @@ const JobDefinitions = () => {
                       {definition.suspended ? (
                         <button
                           type="button"
-                          onClick={() => toggle_suspended(definition.id, false)}
+                          onClick={() => ask_suspension(definition.id, false)}
                         >
                           {t("common.activate")}
                         </button>
                       ) : (
                         <button
                           type="button"
-                          onClick={() => toggle_suspended(definition.id, true)}
+                          onClick={() => ask_suspension(definition.id, true)}
                         >
                           {t("processes.jobs.suspend")}
                         </button>
@@ -2069,6 +2131,12 @@ const JobDefinitions = () => {
           )}
         </tbody>
       </table>
+      <SuspensionDialog
+        open={suspension_open}
+        suspend={suspend_next.value}
+        scope="jobs"
+        on_confirm={(options) => void toggle_suspended(options)}
+      />
       <Dialog open={priority_open} title={t("processes.jobs.change-priority")}>
         <div class="dialog-fields">
           <label>
@@ -2122,70 +2190,93 @@ const JobDefinitions = () => {
   );
 };
 
-const DefinitionsManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
+// Inline instance search: find instances by a process variable (name,
+// comparison, value) and/or business key. Replaces the saved-filter variable
+// criteria, which were a Tasklist-style feature. The parts ride the list-query
+// criteria and are turned into the engine query by instance_params_from_query.
+const InstanceSearch = ({ criteria, on_change }) => {
+  const [t] = useTranslation(),
+    name = useSignal(criteria.var_name ?? ""),
+    op = useSignal(criteria.var_op ?? "eq"),
+    value = useSignal(criteria.var_value ?? ""),
+    business_key = useSignal(criteria.business_key ?? ""),
+    timer = useRef(null);
 
-  const refresh = () =>
-    hydrate_signal(RESOURCE_TYPE, state.api.process.definition.saved_filters);
+  // Search as the fields change (debounced). A variable needs both a name and
+  // a value to count; the business key stands on its own.
+  const run = () => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      const has_var = name.value.trim() && value.value.trim();
+      on_change({
+        criteria: {
+          ...(has_var
+            ? {
+                var_name: name.value.trim(),
+                var_op: op.value,
+                var_value: value.value.trim(),
+              }
+            : {}),
+          ...(business_key.value.trim()
+            ? { business_key: business_key.value.trim() }
+            : {}),
+        },
+      });
+    }, 300);
+  };
+
   return (
-    <div class="fade-in">
-      <ManageFilters
-        title={t("processes.filter.manage_title")}
-        saved_filters_signal={state.api.process.definition.saved_filters}
-        filter_keys={FILTER_KEYS}
-        sort_options={SORT_OPTIONS}
-        on_save={(f) => {
-          create_saved_filter(RESOURCE_TYPE, f);
-          refresh();
-        }}
-        on_update={(id, f) => {
-          update_saved_filter(RESOURCE_TYPE, id, f);
-          refresh();
-        }}
-        on_delete={(id) => {
-          delete_saved_filter(RESOURCE_TYPE, id);
-          refresh();
-        }}
-        on_close={() => route(without_manage(), true)}
-        build_share_link={(f) => filter_share_link(window.location.href, f)}
-      />
-    </div>
-  );
-};
-
-const InstancesManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
-
-  const refresh = () =>
-    hydrate_signal(
-      INSTANCE_RESOURCE_TYPE,
-      state.api.process.instance.saved_filters,
-    );
-  return (
-    <ManageFilters
-      title={t("processes.instance.manage_title")}
-      saved_filters_signal={state.api.process.instance.saved_filters}
-      filter_keys={INSTANCE_FILTER_KEYS}
-      sort_options={INSTANCE_SORT_OPTIONS}
-      on_save={(f) => {
-        create_saved_filter(INSTANCE_RESOURCE_TYPE, f);
-        refresh();
-      }}
-      on_update={(id, f) => {
-        update_saved_filter(INSTANCE_RESOURCE_TYPE, id, f);
-        refresh();
-      }}
-      on_delete={(id) => {
-        delete_saved_filter(INSTANCE_RESOURCE_TYPE, id);
-        refresh();
-      }}
-      on_close={() => route(without_manage(), true)}
-      build_share_link={(f) => filter_share_link(window.location.href, f)}
-    />
+    <search class="instance-search">
+      <label>
+        <span>{t("processes.instance.search.variable")}</span>
+        <input
+          type="search"
+          value={name.value}
+          onInput={(e) => {
+            name.value = e.currentTarget.value;
+            run();
+          }}
+        />
+      </label>
+      <label>
+        <span>{t("processes.instance.search.comparison")}</span>
+        <select
+          value={op.value}
+          onChange={(e) => {
+            op.value = e.currentTarget.value;
+            run();
+          }}
+        >
+          {INSTANCE_SEARCH_OPERATORS.map((o) => (
+            <option key={o} value={o}>
+              {t(`processes.instance.search.op.${o}`)}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <span>{t("common.value")}</span>
+        <input
+          type="search"
+          value={value.value}
+          onInput={(e) => {
+            value.value = e.currentTarget.value;
+            run();
+          }}
+        />
+      </label>
+      <label>
+        <span>{t("processes.business-key")}</span>
+        <input
+          type="search"
+          value={business_key.value}
+          onInput={(e) => {
+            business_key.value = e.currentTarget.value;
+            run();
+          }}
+        />
+      </label>
+    </search>
   );
 };
 
@@ -2216,8 +2307,11 @@ const process_definition_tabs = [
   },
 ];
 
+// An empty `path` means "stay on this page", so it must not be prefixed.
 const UUIDLink = ({ uuid = "?", path }) => (
-  <a href={`${path}${keep_history_query(useRoute().query)}`}>
+  <a
+    href={`${path ? app_path(path) : ""}${keep_history_query(useRoute().query)}`}
+  >
     {uuid.substring(0, 8)}
   </a>
 );

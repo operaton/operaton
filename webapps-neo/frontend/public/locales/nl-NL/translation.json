@@ -527,7 +527,6 @@
     "authorization": {
       "title": "Autorisatie",
       "create": "Nieuwe autorisatie aanmaken",
-      "cancel-create": "Aanmaken van autorisatie annuleren",
       "user-group": "Gebruiker / Groep",
       "permissions": "Rechten",
       "resource-id": "Bron-ID",

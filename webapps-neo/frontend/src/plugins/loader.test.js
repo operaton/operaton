@@ -4,6 +4,7 @@ import { plugins_for, _reset_registry } from "./registry.js";
 import { PLUGIN_POINTS } from "./points.js";
 import { plugin_apis } from "../api/plugins.js";
 import { set_config } from "../config.js";
+import { with_base_uri } from "../test/helpers.js";
 
 const remote_good = {
   default: {
@@ -85,11 +86,20 @@ describe("plugins/loader", () => {
     expect(importer).not.toHaveBeenCalled();
   });
 
-  it("always registers bundled plugins (the metrics example)", async () => {
+  it("registers the bundled Metrics page only when it is enabled", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => ({ ok: false })),
     );
+    // Off in the standard delivery.
+    await load_plugins({ importer: vi.fn() });
+    expect(plugins_for(PLUGIN_POINTS.PAGE).map((p) => p.id)).not.toContain(
+      "metrics",
+    );
+
+    // On once configured.
+    _reset_registry();
+    set_config({ metricsEnabled: true });
     await load_plugins({ importer: vi.fn() });
     expect(plugins_for(PLUGIN_POINTS.PAGE).map((p) => p.id)).toContain(
       "metrics",
@@ -105,10 +115,6 @@ describe("plugins/loader", () => {
 
     expect(fetch_spy).not.toHaveBeenCalled();
     expect(importer).not.toHaveBeenCalled();
-    // bundled plugins are unaffected by the gate
-    expect(plugins_for(PLUGIN_POINTS.PAGE).map((p) => p.id)).toContain(
-      "metrics",
-    );
   });
 
   it("refuses a cross-origin plugin that is not in the allow list", async () => {
@@ -153,7 +159,9 @@ describe("plugins/loader is_allowed_location", () => {
   it("rejects other origins unless listed", () => {
     expect(is_allowed_location("https://evil.example/p")).toBe(false);
     expect(
-      is_allowed_location("https://evil.example/p", ["https://trusted.example"]),
+      is_allowed_location("https://evil.example/p", [
+        "https://trusted.example",
+      ]),
     ).toBe(false);
     expect(
       is_allowed_location("https://trusted.example/p", [
@@ -164,11 +172,36 @@ describe("plugins/loader is_allowed_location", () => {
 
   it("rejects a location it cannot parse, and ignores unparseable allow entries", () => {
     expect(is_allowed_location(undefined)).toBe(false);
-    expect(is_allowed_location("http://[bad", ["https://trusted.example"])).toBe(
-      false,
-    );
+    expect(
+      is_allowed_location("http://[bad", ["https://trusted.example"]),
+    ).toBe(false);
     expect(is_allowed_location("https://evil.example/p", ["not a url"])).toBe(
       false,
     );
   });
+
+  it("looks for the manifest at the application root", async () => {
+    enable_remote();
+    const fetch_spy = manifest([]);
+    vi.stubGlobal("fetch", fetch_spy);
+
+    await with_base_uri("http://localhost:3000/app-neo/", () =>
+      load_plugins({ importer: vi.fn() }),
+    );
+
+    expect(fetch_spy).toHaveBeenCalledWith("/app-neo/plugins/plugins.json");
+  });
+
+  it("leaves a configured plugins URL alone", async () => {
+    set_config({ remotePluginsEnabled: true, pluginsUrl: "/elsewhere.json" });
+    const fetch_spy = manifest([]);
+    vi.stubGlobal("fetch", fetch_spy);
+
+    await with_base_uri("http://localhost:3000/app-neo/", () =>
+      load_plugins({ importer: vi.fn() }),
+    );
+
+    expect(fetch_spy).toHaveBeenCalledWith("/elsewhere.json");
+  });
+
 });

@@ -34,6 +34,23 @@ The `MM` page already exists. Decide whether this patch needs an **addition** (t
 3. If nothing user-facing → record "no release-notes change needed" (not a blocker).
 4. Any addition → PR on operaton/documentation; list URL.
 
+## Database Schema
+Source: `.devenv/scripts/release/check-db-schema.py --branch BRANCH --version VER` (see `prepare-checklist.md` →
+"Database schema"). Write the *API → Database Schema* section from its report:
+
+- **No change:** "Operaton X.Y does not introduce changes to the database schema. The database schema remains
+  version A.B."
+- **Version-only:** state the version change (e.g. 7.24 → 7.25), that tables, columns and indexes do not change, the
+  upgrade script name pattern (`<database>_engine_A.B_to_C.D.sql`), that users run it or the Liquibase changelog so
+  `ACT_GE_SCHEMA_LOG` matches the engine, and where the scripts are (`operaton-sql-scripts-<schema>.tar.gz` GitHub
+  release asset).
+- **Structural:** additionally describe every table/column/index change and its impact (migration time, locks), with a
+  link per change.
+- Link the PRs, issues and commits listed in the report (e.g. "This was introduced by
+  [PR #3225](https://github.com/operaton/operaton/pull/3225).").
+
+Patch releases never change the schema; their notes need no schema statement.
+
 ## changelog.tpl
 `.github/jreleaser/changelog.tpl` in operaton/operaton must point to the right `release-notes/MM_/` URL. If wrong, fix via PR on operaton/operaton.
 

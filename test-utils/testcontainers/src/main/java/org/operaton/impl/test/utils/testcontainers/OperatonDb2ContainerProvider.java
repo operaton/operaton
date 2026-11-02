@@ -15,6 +15,8 @@
  */
 package org.operaton.impl.test.utils.testcontainers;
 
+import java.util.Map;
+
 import org.testcontainers.containers.Db2ContainerProvider;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.db2.Db2Container;
@@ -33,6 +35,12 @@ public class OperatonDb2ContainerProvider extends Db2ContainerProvider {
   public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("ibmdb2", tag, "icr.io/db2_community/db2");
-    return new Db2Container(dockerImageName).acceptLicense();
+    // rootless Podman: DB2 needs suid mount
+    return new Db2Container(dockerImageName)
+      .acceptLicense()
+      .withPrivilegedMode(true)
+      // jdbc:tc driver overwrites withTmpFs
+      .withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
+        .withTmpFs(Map.of("/database", "rw,exec,suid")));
   }
 }

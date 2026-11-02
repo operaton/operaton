@@ -187,7 +187,7 @@ Recommendations:
 * use unix line endings
 * to add links use markdown, e.g. `[link](http://example.com)`
 * Add `docsUrl` to resolve doc link - [User guide](${docsUrl}/user-guide/process-engine/process-instance-modification/)
-`docsUrl="https://docs.operaton.org/manual/${docsVersion}"
+`docsUrl="https://docs.operaton.org/docs/documentation"
 * keep line length to a maximum of 120 characters
 * use indentation, avoid adding long descriptions on a single line,
 improve the readibility by splitting the next with single or multiple line breaks:
@@ -204,7 +204,7 @@ improve the readibility by splitting the next with single or multiple line break
                   Instructions are executed immediately and in the order they are provided in this request's body.
                   Variables can be provided with every starting instruction.
 
-                  The exact semantics of modification can be read about in the [User guide](https://docs.operaton.org/manual/develop/user-guide/process-engine/process-instance-modification/)."
+                  The exact semantics of modification can be read about in the [User guide](https://docs.operaton.org/docs/documentation/user-guide/process-engine/process-instance-modification/)."
 ```
 
 #### Formats
@@ -218,10 +218,10 @@ Specify the `date-time` format of the date properties whenever is possible,
         type = "string"
         format = "date-time"
         description = "Restrict to instances that were started before the given date.
-                       By default (https://docs.operaton.org/manual/${docsVersion}/reference/rest/overview/date-format/),
+                       By default (https://docs.operaton.org/docs/documentation/reference/rest/overview/date-format/),
                        the date must have the format `yyyy-MM-dd'T'HH:mm:ss.SSSZ`, e.g., 2013-01-23T14:42:45.000+0200." />
 ```
-That will improve the clients that are generated from the OpenAPI documentation. **Note:** When using a 'date-time' in a 'GET' request (as URL parameter), it is important to use proper URL encoding as described in the [Date Format Overview](https://docs.operaton.org/manual/develop/reference/rest/overview/date-format/)
+That will improve the clients that are generated from the OpenAPI documentation. **Note:** When using a 'date-time' in a 'GET' request (as URL parameter), it is important to use proper URL encoding as described in the [Date Format Overview](https://docs.operaton.org/docs/documentation/reference/rest/overview/date-format/)
 
 #### Nullable
 

@@ -6,7 +6,7 @@
         type = "integer"
         format = "int32"
         desc = "The type of the authorization (0=global, 1=grant, 2=revoke). See the
-                [User Guide](${docsUrl}/user-guide/process-engine/authorization-service.md#authorization-type)
+                [User Guide](${docsUrl}/user-guide/process-engine/authorization-service/#authorization-type)
                 for more information about authorization types."
     />
     

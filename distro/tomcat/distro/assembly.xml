@@ -14,6 +14,12 @@
   <dependencySets>
     <dependencySet>
       <unpack>true</unpack>
+      <unpackOptions>
+        <excludes>
+          <!-- replaced by the neo webapp -->
+          <exclude>**/webapps/ROOT/**</exclude>
+        </excludes>
+      </unpackOptions>
       <includes>
         <include>org.operaton.bpm.tomcat:operaton-tomcat-assembly</include>
       </includes>
@@ -46,6 +52,14 @@
             <include>org.operaton.bpm.webapp:operaton-webapp-tomcat:war:*</include>
         </includes>
         <outputDirectory>server/apache-tomcat-${version.tomcat}/webapps/operaton</outputDirectory>
+        <unpack>true</unpack>
+    </dependencySet>
+
+    <dependencySet>
+        <includes>
+            <include>org.operaton.bpm.webapp-neo:operaton-webapp-neo-tomcat:war:*</include>
+        </includes>
+        <outputDirectory>server/apache-tomcat-${version.tomcat}/webapps/ROOT</outputDirectory>
         <unpack>true</unpack>
     </dependencySet>
 

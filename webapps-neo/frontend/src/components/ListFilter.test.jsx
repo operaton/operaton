@@ -79,9 +79,7 @@ describe("ListFilter", () => {
 
   it("invokes on_manage when the Edit button is clicked", () => {
     const on_manage = vi.fn();
-    const { getByText } = render(
-      <ListFilter {...base_props({ on_manage })} />,
-    );
+    const { getByText } = render(<ListFilter {...base_props({ on_manage })} />);
     fireEvent.click(getByText("list_filter.edit"));
     expect(on_manage).toHaveBeenCalledTimes(1);
   });

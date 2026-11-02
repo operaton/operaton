@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public interface AcquireJobsCommandFactory {
+public @NullMarked interface AcquireJobsCommandFactory {
 
   Command<AcquiredJobs> getCommand(int numJobsToAcquire);
 }

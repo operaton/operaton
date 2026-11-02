@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
-    <version>2.2.0-SNAPSHOT</version>
+    <version>2.3.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-engine-rest-openapi</artifactId>
   <name>Operaton - Engine - REST - OpenAPI</name>
@@ -17,7 +17,7 @@
     <!-- update them during openapi.generator version update  -->
     <gson-fire-version>1.9.0</gson-fire-version>
     <swagger-core-version>2.1.48</swagger-core-version>
-    <okhttp-version>5.5.0</okhttp-version>
+    <okhttp-version>5.5.1</okhttp-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <surefire.forkCount>1</surefire.forkCount>
   </properties>
@@ -60,7 +60,7 @@
     <dependency>
       <groupId>org.openapitools</groupId>
       <artifactId>jackson-databind-nullable</artifactId>
-      <version>0.2.12</version>
+      <version>0.2.13</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>

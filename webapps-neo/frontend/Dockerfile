@@ -16,9 +16,9 @@ FROM nginx:alpine
 # Copy Nginx config if you have custom routing
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Copy the built app from the builder stage
-COPY --from=builder /app/dist /var/www/html/
-#COPY --from=builder /app/dist /user/share/nginx/html
+# Copy the built app from the builder stage. Vite writes to `target` (see
+# vite.config.js) so the Maven assembly can pick the bundle up from there.
+COPY --from=builder /app/target /var/www/html/
 
 # Copy the runtime injection script into the container
 COPY env.sh /docker-entrypoint.d/env.sh

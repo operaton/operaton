@@ -52,6 +52,13 @@
 
     <dependencySet>
         <includes>
+          <include>org.operaton.bpm.webapp-neo:operaton-webapp-neo-wildfly:war:*</include>
+        </includes>
+        <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>
+    </dependencySet>
+
+    <dependencySet>
+        <includes>
           <include>org.operaton.bpm.example:operaton-example-invoice:war:*</include>
         </includes>
         <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>

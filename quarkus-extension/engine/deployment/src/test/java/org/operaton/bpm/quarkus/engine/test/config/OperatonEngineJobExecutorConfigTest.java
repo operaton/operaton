@@ -18,7 +18,7 @@ package org.operaton.bpm.quarkus.engine.test.config;
 
 import jakarta.inject.Inject;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OperatonEngineJobExecutorConfigTest {
 
   @RegisterExtension
-  static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
+  static final QuarkusExtensionTest unitTest = new ProcessEngineAwareExtension()
       .withConfigurationResource("org/operaton/bpm/quarkus/engine/test/config/" +
                                      "job-executor-application.properties")
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));

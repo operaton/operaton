@@ -66,6 +66,10 @@ describe("DashboardPage", () => {
 
   it("renders the count cards from the populated signals", () => {
     signal_response(state.api.task.list, [{ id: "t1" }, { id: "t2" }]);
+    state.api.task.summary.value = {
+      status: "SUCCESS",
+      data: { total: 2, assigned: 1, unassigned: 1, unattended: 1 },
+    };
     signal_response(state.api.process.definition.list, [
       { id: "p1", definition: { key: "p", name: "P" } },
     ]);
@@ -180,5 +184,66 @@ describe("DashboardPage — plugin widgets", () => {
   it("renders no widget markup when no widget plugin is registered", () => {
     const { queryByTestId } = renderPage(state);
     expect(queryByTestId("demo-widget")).toBeNull();
+  });
+
+  describe("open tasks", () => {
+    it("separates assigned, unassigned and nobody responsible", () => {
+      state.api.task.summary.value = {
+        status: "SUCCESS",
+        data: { total: 9, assigned: 4, unassigned: 5, unattended: 2 },
+      };
+      const { getByText } = renderPage(state);
+      const card = getByText("dashboard.open-tasks").closest("a");
+      expect(card.querySelector("strong").textContent).toBe("9");
+      expect(card.textContent).toContain("4");
+      expect(card.textContent).toContain("5");
+      expect(card.textContent).toContain("2");
+    });
+
+    it("counts the open tasks of each group", () => {
+      signal_response(state.api.task.by_group, [
+        { groupName: "reviewers", taskCount: 3 },
+        { groupName: null, taskCount: 1 },
+      ]);
+      const { getByText } = renderPage(state);
+      expect(getByText("reviewers")).toBeTruthy();
+      expect(getByText("dashboard.no-group")).toBeTruthy();
+      expect(getByText("dashboard.multiple-groups-hint")).toBeTruthy();
+    });
+
+    it("asks the engine for both breakdowns", () => {
+      renderPage(state);
+      expect(engine_rest.task.summary).toHaveBeenCalled();
+      expect(engine_rest.task.by_group).toHaveBeenCalled();
+    });
+  });
+
+  describe("folding a section away", () => {
+    it("remembers what was folded", () => {
+      localStorage.clear();
+      const { container } = renderPage(state);
+      const section = container.querySelector(
+        "details.dashboard-section[open]",
+      );
+      section.open = false;
+      section.dispatchEvent(new Event("toggle"));
+      expect(localStorage.getItem("dashboard.hidden-sections")).toContain(
+        "tasks-by-group",
+      );
+    });
+
+    it("starts folded when it was folded before", () => {
+      localStorage.setItem(
+        "dashboard.hidden-sections",
+        JSON.stringify(["incidents"]),
+      );
+      const { container } = renderPage(state);
+      const sections = [
+        ...container.querySelectorAll("details.dashboard-section"),
+      ];
+      const incidents = sections[1];
+      expect(incidents.open).toBe(false);
+      localStorage.clear();
+    });
   });
 });

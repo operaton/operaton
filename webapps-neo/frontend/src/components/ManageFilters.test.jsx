@@ -3,9 +3,7 @@ import { render, cleanup, fireEvent } from "@testing-library/preact";
 import { signal } from "@preact/signals";
 import { ManageFilters } from "./ManageFilters.jsx";
 
-const SORT_OPTIONS = [
-  { key: "name", nameKey: "list_filter.sort.name" },
-];
+const SORT_OPTIONS = [{ key: "name", nameKey: "list_filter.sort.name" }];
 const FILTER_KEYS = [
   { key: "nameLike", nameKey: "list_filter.keys.nameLike", type: "string" },
 ];
@@ -51,8 +49,8 @@ describe("ManageFilters", () => {
       ]),
     });
     const { getByText, getAllByText } = render(<ManageFilters {...props} />);
-    expect(getByText("Active orders")).toBeTruthy();
-    expect(getAllByText("common.edit").length).toBeGreaterThan(0);
+    // The name itself is the edit trigger (a button), not a separate "edit".
+    expect(getByText("Active orders").closest("button")).toBeTruthy();
     expect(getAllByText("list_filter.duplicate").length).toBeGreaterThan(0);
     expect(getAllByText("list_filter.share_link").length).toBeGreaterThan(0);
     expect(getAllByText("common.delete").length).toBeGreaterThan(0);
@@ -88,5 +86,51 @@ describe("ManageFilters", () => {
     fireEvent.click(getByText("common.save"));
     expect(on_save).toHaveBeenCalledTimes(1);
     expect(on_save.mock.calls[0][0].query).toEqual({ nameLike: "x" });
+  });
+
+  it("opens the editor inline when a filter name is clicked (no dialog)", () => {
+    const props = base_props({
+      saved_filters_signal: make_saved_filters([
+        { id: "abc", name: "Active orders", query: { nameLike: "order" } },
+      ]),
+    });
+    const { getByText, getByLabelText } = render(<ManageFilters {...props} />);
+    // Nothing selected yet: the hint shows on the right.
+    expect(getByText("list_filter.select_hint")).toBeTruthy();
+    fireEvent.click(getByText("Active orders"));
+    expect(getByLabelText("list_filter.name").value).toBe("Active orders");
+  });
+
+  it("passes the sharing grants to on_save when sharing is enabled", () => {
+    const on_save = vi.fn();
+    const props = base_props({ on_save, sharing: { can_share: true } });
+    const { getByText, getByLabelText } = render(<ManageFilters {...props} />);
+    fireEvent.click(getByText("list_filter.new_filter"));
+    fireEvent.input(getByLabelText("list_filter.name"), {
+      target: { value: "Team filter" },
+    });
+    fireEvent.click(getByText("list_filter.share_all"));
+    fireEvent.click(getByText("common.save"));
+
+    expect(on_save).toHaveBeenCalledTimes(1);
+    expect(on_save.mock.calls[0][1]).toEqual({
+      readable_by_all: true,
+      grants: [],
+    });
+  });
+
+  it("omits sharing from on_save when sharing is not enabled", () => {
+    const on_save = vi.fn();
+    const props = base_props({ on_save });
+    const { getByText, getByLabelText, queryByText } = render(
+      <ManageFilters {...props} />,
+    );
+    fireEvent.click(getByText("list_filter.new_filter"));
+    expect(queryByText("list_filter.share_section")).toBeNull();
+    fireEvent.input(getByLabelText("list_filter.name"), {
+      target: { value: "Private" },
+    });
+    fireEvent.click(getByText("common.save"));
+    expect(on_save.mock.calls[0][1]).toBeUndefined();
   });
 });

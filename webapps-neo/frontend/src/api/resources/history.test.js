@@ -27,6 +27,30 @@ describe("api/resources/history", () => {
     expect(PAGINATED_GET.mock.lastCall[4]).toBe(20);
   });
 
+  it("process_instance.all() writes a variable comparison the engine can read", () => {
+    history.process_instance.all(state, "def-1", {
+      variables: [{ name: "amount", operator: "gt", value: 100 }],
+    });
+    expect(PAGINATED_GET.mock.lastCall[0]).toContain("variables=amount_gt_100");
+  });
+
+  it("process_instance.all() joins several comparisons with a comma", () => {
+    history.process_instance.all(state, "def-1", {
+      variables: [
+        { name: "amount", operator: "gt", value: 10 },
+        { name: "amount", operator: "lt", value: 20 },
+      ],
+    });
+    expect(decodeURIComponent(PAGINATED_GET.mock.lastCall[0])).toContain(
+      "variables=amount_gt_10,amount_lt_20",
+    );
+  });
+
+  it("process_instance.all() leaves the parameter out when nothing was compared", () => {
+    history.process_instance.all(state, "def-1", { variables: [] });
+    expect(PAGINATED_GET.mock.lastCall[0]).not.toContain("variables=");
+  });
+
   it("process_instance.all() defaults firstResult to 0", () => {
     history.process_instance.all(state, "def-1");
     expect(PAGINATED_GET.mock.lastCall[3]).toBe(0);
@@ -157,5 +181,21 @@ describe("api/resources/history", () => {
       state,
       signal: state.api.history.batch.one,
     });
+  });
+
+  it("get_user_operation asks about a whole process instance", () => {
+    history.get_user_operation(state, "pi-1");
+    expect(GET.mock.lastCall[0]).toBe(
+      "/history/user-operation?processInstanceId=pi-1&sortBy=timestamp&sortOrder=desc",
+    );
+  });
+
+  it("get_user_operation_by_task asks about the task, not its instance", () => {
+    // The task carries an executionId that is not the process instance id, so
+    // asking by instance with it answers nothing at all.
+    history.get_user_operation_by_task(state, "task-1");
+    expect(GET.mock.lastCall[0]).toBe(
+      "/history/user-operation?taskId=task-1&sortBy=timestamp&sortOrder=desc",
+    );
   });
 });

@@ -122,6 +122,7 @@ docker run --name operaton-tomcat -p 8080:8080 operaton/tomcat:SNAPSHOT
 - [ ] Release Build executed
 - [ ] Artifacts are available on Maven Central
 - [ ] Docker Images are available with tag `latest`
+- [ ] Helm chart PR on [operaton-helm](https://github.com/operaton/operaton-helm/pulls) opened automatically, reviewed and merged; chart listed in [index.yaml](https://operaton.github.io/operaton-helm/index.yaml)
 - [ ] Generated Release documentation is checked and updated
 
 **Post Release**

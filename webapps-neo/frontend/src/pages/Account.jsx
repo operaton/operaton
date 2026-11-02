@@ -4,6 +4,7 @@ import { AppState } from '../state.js'
 import engine_rest, { RequestState } from '../api/engine_rest.jsx'
 import { useContext, useEffect } from 'preact/hooks'
 import { useComputed, useSignal } from '@preact/signals'
+import { app_path } from '../config.js'
 
 const AccountPage = () => {
   const
@@ -13,7 +14,7 @@ const AccountPage = () => {
 
   useEffect(() => {
     if (page_id === undefined) {
-      route('/account/profile', true)
+      route(app_path('/account/profile'), true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page_id])
@@ -23,11 +24,11 @@ const AccountPage = () => {
   return <main id="content" class="account-page">
     <nav aria-label={t("nav.account")}>
       <menu class="list">
-        <li><a href="/account/profile" aria-current={current('profile')}>{t("account.profile")}</a></li>
-        <li><a href="/account/account" aria-current={current('account')}>{t("account.password")}</a></li>
-        <li><a href="/account/groups" aria-current={current('groups')}>{t("admin.groups")}</a></li>
-        <li><a href="/account/tenants" aria-current={current('tenants')}>{t("admin.tenants")}</a></li>
-        <li><a href="/account/settings" aria-current={current('settings')}>{t("account.settings")}</a></li>
+        <li><a href={app_path("/account/profile")} aria-current={current('profile')}>{t("account.profile")}</a></li>
+        <li><a href={app_path("/account/account")} aria-current={current('account')}>{t("account.password")}</a></li>
+        <li><a href={app_path("/account/groups")} aria-current={current('groups')}>{t("admin.groups")}</a></li>
+        <li><a href={app_path("/account/tenants")} aria-current={current('tenants')}>{t("admin.tenants")}</a></li>
+        <li><a href={app_path("/account/settings")} aria-current={current('settings')}>{t("account.settings")}</a></li>
       </menu>
     </nav>
 
@@ -114,7 +115,7 @@ const ProfileEditPage = () => {
              onInput={(e) => set_value('email', e)} required />
 
       <div class="button-group">
-        <a href="/account/profile" class="button secondary">{t("common.cancel")}</a>
+        <a href={app_path("/account/profile")} class="button secondary">{t("common.cancel")}</a>
         <button type="submit">{t("account.update-profile")}</button>
       </div>
     </form>
@@ -137,7 +138,7 @@ const ProfileDetails = () => {
       <dt>{t("account.email")}</dt>
       <dd>{profile.value.data.email}</dd>
     </dl>
-    <a href={`/admin/users/${profile.value.data.id}`} class="button">{t("account.edit")}</a>
+    <a href={app_path(`/admin/users/${profile.value.data.id}`)} class="button">{t("account.edit")}</a>
   </section>
 }
 
@@ -213,7 +214,7 @@ const GroupAccountPage = () => {
             <tbody>
             {groups.value.data.map((group) => (
               <tr key={group.id}>
-                <td><a href={`/admin/groups/${group.id}`}>{group.id}</a></td>
+                <td><a href={app_path(`/admin/groups/${group.id}`)}>{group.id}</a></td>
                 <td>{group.name}</td>
                 <td>{group.type}</td>
               </tr>
@@ -266,7 +267,7 @@ const TenantsAccountPage = () => {
           <tbody>
           {tenants_without_user_tenants.value.map((tenant) => (
             <tr key={tenant.id}>
-              <td><a href={`/admin/tenants/${tenant.id}`}>{tenant.id}</a></td>
+              <td><a href={app_path(`/admin/tenants/${tenant.id}`)}>{tenant.id}</a></td>
               <td class="fill">{tenant.name}</td>
               <td><button type="button" class="link" onClick={() => handle_add_tenant(tenant.id)}>{t("account.add")}</button></td>
             </tr>
@@ -276,7 +277,7 @@ const TenantsAccountPage = () => {
         : <p>{t("account.no-additional-tenants")}</p>
       }
       <div class="button-group">
-        <a href="/account/tenants" class="button secondary">{t("common.back")}</a>
+        <a href={app_path("/account/tenants")} class="button secondary">{t("common.back")}</a>
       </div>
     </section>
   }
@@ -294,7 +295,7 @@ const TenantsAccountPage = () => {
         <tbody>
         {user_tenants.value.data.map((tenant) => (
           <tr key={tenant.id}>
-            <td><a href={`/admin/tenants/${tenant.id}`}>{tenant.id}</a></td>
+            <td><a href={app_path(`/admin/tenants/${tenant.id}`)}>{tenant.id}</a></td>
             <td>{tenant.name}</td>
             <td><button type="button" class="link" onClick={() => handle_remove_tenant(tenant.id)}>{t("common.remove")}</button></td>
           </tr>
@@ -304,7 +305,7 @@ const TenantsAccountPage = () => {
       : <p>{t("account.no-tenants")}</p>
     }
     <div class="button-group">
-      <a href="/account/tenants/add" class="button primary">{t("account.add-tenants")}</a>
+      <a href={app_path("/account/tenants/add")} class="button primary">{t("account.add-tenants")}</a>
     </div>
   </section>
 }

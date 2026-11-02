@@ -46,6 +46,15 @@ Contents:
         http://localhost:8080/operaton
         http://localhost:8080/engine-rest
 
+        The new web apps are disabled by default. Enable them
+        by setting the system property
+            operaton.bpm.webapp.neo.enabled=true
+        (see bin/standalone.conf{.bat}) or the environment variable
+            OPERATON_BPM_WEBAPP_NEO_ENABLED=true
+        They are then served at
+
+        http://localhost:8080/
+
     sql/
         This directory contains the create and upgrade sql script
         for the different databases.

@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 
 /**
  * @author Sebastian Menski
  */
-public class AsyncAfterMessageJobDeclaration extends MessageJobDeclaration {
+public @NullMarked class AsyncAfterMessageJobDeclaration extends MessageJobDeclaration {
 
   private static final String[] asyncAfterOperations = new String[] {PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName(), PvmAtomicOperation.ACTIVITY_END.getCanonicalName()};
 

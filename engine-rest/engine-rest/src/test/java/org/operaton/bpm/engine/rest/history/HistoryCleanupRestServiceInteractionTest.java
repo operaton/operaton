@@ -23,6 +23,7 @@ import java.util.List;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -70,6 +71,11 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
 
     // runtime service
     when(processEngine.getHistoryService()).thenReturn(historyServiceMock);
+  }
+
+  @AfterEach
+  void resetClock() {
+    ClockUtil.reset();
   }
 
   @Test
@@ -150,8 +156,6 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   @Test
   void testHistoryConfigurationOutsideBatchWindow() throws Exception {
     ProcessEngineConfigurationImpl processEngineConfigurationImplMock = mock(ProcessEngineConfigurationImpl.class);
-    Date startDate = HistoryCleanupHelper.parseTimeConfiguration("23:59");
-    Date endDate = HistoryCleanupHelper.parseTimeConfiguration("00:00");
     when(processEngine.getProcessEngineConfiguration()).thenReturn(processEngineConfigurationImplMock);
     when(processEngineConfigurationImplMock.getHistoryCleanupBatchWindowStartTime()).thenReturn("23:59");
     when(processEngineConfigurationImplMock.getHistoryCleanupBatchWindowEndTime()).thenReturn("00:00");
@@ -160,8 +164,10 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
 
     SimpleDateFormat sdf = new SimpleDateFormat(JacksonConfigurator.getDateFormatString());
     Date now = sdf.parse("2017-09-01T22:00:00.000+0000");
-
     ClockUtil.setCurrentTime(now);
+    // parse relative to fixed clock
+    Date startDate = HistoryCleanupHelper.parseTimeConfiguration("23:59");
+    Date endDate = HistoryCleanupHelper.parseTimeConfiguration("00:00");
     Calendar today = Calendar.getInstance();
     today.setTime(now);
     Calendar tomorrow = Calendar.getInstance();
@@ -185,8 +191,6 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
   @Test
   void testHistoryConfigurationWithinBatchWindow() throws Exception {
     ProcessEngineConfigurationImpl processEngineConfigurationImplMock = mock(ProcessEngineConfigurationImpl.class);
-    Date startDate = HistoryCleanupHelper.parseTimeConfiguration("22:00+0200");
-    Date endDate = HistoryCleanupHelper.parseTimeConfiguration("23:00+0200");
     when(processEngine.getProcessEngineConfiguration()).thenReturn(processEngineConfigurationImplMock);
     when(processEngineConfigurationImplMock.getHistoryCleanupBatchWindowStartTime()).thenReturn("22:00+0200");
     when(processEngineConfigurationImplMock.getHistoryCleanupBatchWindowEndTime()).thenReturn("23:00+0200");
@@ -196,6 +200,9 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
     SimpleDateFormat sdf = new SimpleDateFormat(JacksonConfigurator.getDateFormatString());
     Date now = sdf.parse("2017-09-01T22:00:00.000+0200");
     ClockUtil.setCurrentTime(now);
+    // parse relative to fixed clock
+    Date startDate = HistoryCleanupHelper.parseTimeConfiguration("22:00+0200");
+    Date endDate = HistoryCleanupHelper.parseTimeConfiguration("23:00+0200");
 
     Calendar today = Calendar.getInstance();
     today.setTime(now);

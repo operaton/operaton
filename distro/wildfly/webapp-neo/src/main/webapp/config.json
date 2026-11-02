@@ -1,0 +1,4 @@
+{
+  "backends": [{ "name": "Operaton", "url": "" }],
+  "authMode": "basic"
+}

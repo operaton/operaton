@@ -30,7 +30,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 23
+    milestone: 32
     groups:
       spring-boot:
         patterns:
@@ -82,7 +82,7 @@ updates:
         update-types: ["version-update:semver-major"]
     labels:
       - "dependencies:maven"
-    milestone: 23
+    milestone: 32
     groups:
       spring-boot:
         patterns:
@@ -99,7 +99,7 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:npm"
-    milestone: 23
+    milestone: 32
     groups:
       angular:
         patterns:
@@ -137,7 +137,7 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:npm"
-    milestone: 23
+    milestone: 32
     groups:
       react:
         patterns:
@@ -154,7 +154,7 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:github-action"
-    milestone: 23
+    milestone: 32
     groups:
       github-actions:
         patterns:
@@ -169,9 +169,9 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:devcontainers"
-    milestone: 23
+    milestone: 32
 
-# Release 2.1.x branch - all updates
+# Release 2.2.x branch - all updates
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -179,7 +179,7 @@ updates:
       time: "00:45"
     reviewers:
       - "kthoms"
-    target-branch: "release/2.1.x"
+    target-branch: "release/2.2.x"
     cooldown:
       exclude:
         - "org.springframework.boot:*"
@@ -188,7 +188,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 30
+    milestone: 33
     groups:
       all:
         patterns:
@@ -202,10 +202,10 @@ updates:
       default-days: 7
     reviewers:
       - "kthoms"
-    target-branch: "release/2.1.x"
+    target-branch: "release/2.2.x"
     labels:
       - "dependencies:npm"
-    milestone: 30
+    milestone: 33
     groups:
       all:
         patterns:
@@ -222,10 +222,10 @@ updates:
       default-days: 7
     reviewers:
       - "kthoms"
-    target-branch: "release/2.1.x"
+    target-branch: "release/2.2.x"
     labels:
       - "dependencies:npm"
-    milestone: 30
+    milestone: 33
     groups:
       all:
         patterns:
@@ -241,10 +241,10 @@ updates:
       default-days: 7
     reviewers:
       - "kthoms"
-    target-branch: "release/2.1.x"
+    target-branch: "release/2.2.x"
     labels:
       - "dependencies:github-action"
-    milestone: 30
+    milestone: 33
     groups:
       github-actions:
         patterns:
@@ -256,7 +256,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    target-branch: "release/2.1.x"
+    target-branch: "release/2.2.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 30
+    milestone: 33

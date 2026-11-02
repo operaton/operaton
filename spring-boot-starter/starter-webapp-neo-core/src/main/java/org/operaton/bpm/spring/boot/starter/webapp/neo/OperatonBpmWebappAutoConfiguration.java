@@ -142,10 +142,14 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
     // index.html for client-side routes (deep links). More specific servlet
     // mappings (e.g. /engine-rest/*, the legacy /operaton/* webapp) take
     // precedence over this catch-all, so they are not shadowed.
+    // The index.html transformer states the application root in <base href> so the
+    // bundle's relative URLs resolve inside the app from any (deep) route. The href is
+    // fixed for the life of the deployment, so caching the transformed shell is safe.
     registry.addResourceHandler(base + "/**")
         .addResourceLocations(classpath)
         .resourceChain(true)
-        .addResolver(new SpaResourceResolver());
+        .addResolver(new SpaResourceResolver())
+        .addTransformer(new SpaIndexTransformer(base));
   }
 
   @Override

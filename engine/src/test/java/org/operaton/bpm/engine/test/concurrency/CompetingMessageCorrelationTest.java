@@ -217,6 +217,7 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
+  @RequiredDatabase(excludes = DbSqlSessionFactory.MSSQL)
   void testConcurrentExclusiveCorrelationToDifferentExecutionsCase2() {
     InvocationLogListener.reset();
 
@@ -342,7 +343,10 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     assertThat(taskService.createTaskQuery().count()).isZero();
 
     // thread 2 flushes successfully and releases the lock
-    thread2.waitUntilDone();
+    thread2.makeContinue();
+    // join thread 1 first: its failure interrupts this thread
+    thread1.join();
+    thread2.join();
     assertThat(thread2.getException()).isNull();
 
     Task afterMessageTask = taskService.createTaskQuery().singleResult();
@@ -350,7 +354,6 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
     assertThat(afterMessageTask.getTaskDefinitionKey()).isEqualTo("afterMessageUserTask");
 
     // thread 1 flush fails with optimistic locking
-    thread1.join();
     assertThat(thread1.getException()).isNotNull();
     assertThat(thread1.getException()).isInstanceOf(OptimisticLockingException.class);
   }

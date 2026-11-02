@@ -1,6 +1,6 @@
 <#import "/lib/utils.ftl" as lib>
 
-<#assign docsUrl = "https://docs.operaton.org/manual/${docsVersion}">
+<#assign docsUrl = "https://docs.operaton.org/docs/documentation">
 {
   "openapi": "3.0.2",
   "info": {

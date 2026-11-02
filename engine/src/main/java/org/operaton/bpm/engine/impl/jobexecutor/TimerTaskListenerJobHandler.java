@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
+
+import java.util.Objects;
 
 /**
  * {@link JobHandler} implementation for timer task listeners which can be defined for user tasks.
@@ -31,7 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
  * </p>
  *
  */
-public class TimerTaskListenerJobHandler extends TimerEventJobHandler {
+public @NullMarked class TimerTaskListenerJobHandler extends TimerEventJobHandler {
 
   public static final String TYPE = "timer-task-listener";
 
@@ -45,7 +48,7 @@ public class TimerTaskListenerJobHandler extends TimerEventJobHandler {
     String activityId = configuration.getTimerElementKey();
     TaskEntity targetTask = null;
     for (TaskEntity task : execution.getTasks()) {
-      if (task.getTaskDefinitionKey().equals(activityId)) {
+      if (Objects.equals(task.getTaskDefinitionKey(), activityId)) {
         targetTask = task;
       }
     }

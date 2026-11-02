@@ -53,6 +53,12 @@ export const _url_auth = () =>
 export const resolve_user = (state, user_name) =>
   user_name ?? state.auth.user.id.value;
 
+/**
+ * Escape an identity id for use in a URL. User, group and tenant ids may
+ * contain a slash or a backslash, which would otherwise split the path.
+ */
+export const encode_id = (id) => encodeURIComponent(id ?? "");
+
 export const get_credentials = (state) =>
   `${state.auth.credentials.value.username}:${state.auth.credentials.value.password}`;
 
@@ -69,7 +75,9 @@ export const basic_auth_header = (username, password) =>
  */
 export const get_auth_header = (state) => {
   if (state.auth.mode === "oauth2") {
-    return state.auth.token.value ? `Bearer ${state.auth.token.value}` : undefined;
+    return state.auth.token.value
+      ? `Bearer ${state.auth.token.value}`
+      : undefined;
   }
   if (_is_own_backend(state)) return undefined;
   const { username, password } = state.auth.credentials.value;
@@ -110,7 +118,10 @@ export const set_auth_header = set_request_headers;
 const form_urlencoded_headers = (state) => {
   const headers = new Headers();
   set_request_headers(headers, state);
-  headers.set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+  headers.set(
+    "Content-Type",
+    "application/x-www-form-urlencoded;charset=UTF-8",
+  );
   return headers;
 };
 
@@ -301,6 +312,21 @@ export const GET = async (url, state, signl) => {
   } catch (error) {
     return (signl.value = { status: RESPONSE_STATE.ERROR, error });
   }
+};
+
+/** How many identity rows one page of the admin lists holds. */
+export const PAGE_SIZE = 50;
+
+/**
+ * Like GET, but able to append the next page to the rows already loaded, so
+ * "load more" grows the list instead of replacing it.
+ */
+export const GET_LIST = async (url, state, signl, append = false) => {
+  const previous = append ? (signl.peek?.()?.data ?? []) : null;
+  const result = await GET(url, state, signl);
+  if (previous && result?.status === RESPONSE_STATE.SUCCESS)
+    signl.value = { ...result, data: [...previous, ...result.data] };
+  return signl.peek();
 };
 
 export const GET_SERVER_URL = (url, state, signl) => {

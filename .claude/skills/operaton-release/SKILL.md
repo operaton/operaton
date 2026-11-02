@@ -30,7 +30,7 @@ PERFORM is outward-facing and hard to reverse. Always dry-run first, always conf
    - Qualifier `-M#` / `-RC#` → **milestone/preliminary release** of a `.0`, from `main` (or its release branch if one exists). Pass as `preliminary_release_qualifier`.
 3. **Sanity check:** the branch's `pom.xml` version must equal the target base version + `-SNAPSHOT`. Mismatch = blocker, report it.
 
-For multiple releases, process each independently and give a **separate confidence vote per release**.
+For multiple releases, process each independently and give a **separate confidence vote per release**. When PERFORM covers releases of different lines on one day, Docker `latest` must end on the highest version — follow perform-release.md → "Docker `latest` with several releases on one day".
 
 ## PREPARE workflow
 
@@ -41,7 +41,7 @@ Work the checklist in `references/prepare-checklist.md`. Create a TodoWrite item
 3. **Docker images** — `operaton/operaton`, `operaton/wildfly`, `operaton/tomcat` SNAPSHOT images current on Docker Hub.
 4. **Dependencies** — no open HIGH/CRITICAL Dependabot alerts (except legacy webapp deps).
 5. **Label & milestone hygiene** — closed issues/PRs without milestone; merged PRs in the milestone that look noteworthy but lack the `noteworthy` label. See `references/noteworthy.md`.
-6. **Documentation** — release notes correct for the type. See `references/release-notes.md`.
+6. **Documentation** — release notes correct for the type, including the *Database Schema* section from `.devenv/scripts/release/check-db-schema.py`. See `references/release-notes.md`.
 7. **Smoke tests** — hybrid. See `references/smoke-tests.md`.
 8. **Raise PRs** for every fixable gap (docs, labels, config). Collect links.
 9. **Confidence vote** — see rubric below.
@@ -66,8 +66,9 @@ See `references/perform-release.md`. In short:
 2. **Confirm** the version, branch, and qualifier with the user explicitly.
 3. **Dry run:** `gh workflow run release.yml --ref <branch> -f dry_run=true [-f preliminary_release_qualifier=M1]`. Monitor to green.
 4. **Confirm again**, then real run with `-f dry_run=false`.
-5. **Verify:** GitHub release created, Maven Central artifacts present, `operaton-docker` build dispatched / `latest` tag updated, next `-SNAPSHOT` version committed.
-6. **Report** run URLs and verification results.
+5. **Verify:** GitHub release created, Maven Central artifacts present, `operaton-docker` build dispatched / `latest` tag updated, Helm chart PR opened on `operaton-helm` (merge it → chart auto-published), next `-SNAPSHOT` version committed.
+6. **Bump `main`** if `X.Y.0` was released from `release/X.Y.x`: ask the user for next minor vs. major, then `.github/scripts/set-project-version.sh` via PR (see perform-release.md → "Bump `main` after a minor release").
+7. **Report** run URLs and verification results.
 
 ## ANNOUNCE workflow
 
@@ -78,6 +79,7 @@ See `references/announce.md`. **Only after PERFORM verified the release is live.
 3. **Forum** (forum.operaton.org, "Announcement" category) — fuller markdown version. Draft → confirm → post.
 4. **Branch cleanup** — `.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>"` lists merged branches with links. **List only — you MUST NOT delete any branch.** Hand the list to the user.
 5. **Housekeeping** — `changelog.tpl`, close milestone + open next, calendar, docs/download verification, optional wider social.
+6. **Close the release line** after a `X.Y.6` patch if the calendar has no further `X.Y.*` release: **ask the user**, then remove its `dependabot.yml` entries via PR; branch deletion only on separate confirmation (see `references/announce.md` → "6. Closing a release branch").
 
 ## Output
 
@@ -89,6 +91,8 @@ PREPARE and PERFORM end with a structured report: per-release status, confidence
 - About to give a 🟢 GO without having actually run the build/image/doc checks → verify first, evidence before assertion.
 - About to run PERFORM with `dry_run=false` without a prior dry-run or user confirmation → STOP.
 - Branch pom version ≠ target version → blocker, do not proceed.
+- Patch release whose schema check reports a database schema change → blocker; release branches take no schema updates.
 - About to delete a branch during ANNOUNCE (`git push origin --delete`, `git branch -D`) → **STOP.** List branches only; the human deletes them.
+- About to close a `release/X.Y.x` line (dependabot entries, milestone, branch) without the user's explicit yes → **STOP**, ask first.
 - About to post to Slack `@channel` or the forum without showing the user the draft first → STOP, draft and confirm.
 - About to announce a release whose GitHub release / Maven Central / release-notes page is not yet live → STOP, verify the links resolve first.

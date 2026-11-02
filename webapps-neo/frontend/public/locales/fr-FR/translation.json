@@ -527,7 +527,6 @@
     "authorization": {
       "title": "Autorisation",
       "create": "Créer une nouvelle autorisation",
-      "cancel-create": "Annuler la création de l'autorisation",
       "user-group": "Utilisateur / Groupe",
       "permissions": "Permissions",
       "resource-id": "ID de ressource",

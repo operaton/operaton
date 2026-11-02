@@ -116,5 +116,22 @@ export const filter_share_link = (current_url, filter) => {
   return url.host === "_" ? serialize(url) : url.toString();
 };
 
+/**
+ * The list's own state — chosen filter, sorting and criteria — as a query
+ * string to hang on a link.
+ *
+ * Opening a task and coming back would otherwise land on the unfiltered list:
+ * the state lives in the address, so a link that drops it drops the filter.
+ */
+export const keep_list_query = (query = {}) => {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(query ?? {})) {
+    const belongs = RESERVED_KEYS.has(key) || key.startsWith(CRITERION_PREFIX);
+    if (belongs && !is_empty(value)) params.set(key, value);
+  }
+  const serialized = params.toString();
+  return serialized ? `?${serialized}` : "";
+};
+
 export const RESERVED_LIST_QUERY_KEYS = RESERVED_KEYS;
 export const LIST_QUERY_CRITERION_PREFIX = CRITERION_PREFIX;

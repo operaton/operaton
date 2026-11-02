@@ -151,14 +151,16 @@ describe("StartProcessList", () => {
     });
     engine_rest.process_definition.start_form.mockResolvedValue(undefined);
     // The dispatch resets rendered_form then fetches it; the mock populates it.
-    engine_rest.process_definition.rendered_start_form.mockImplementation(() => {
-      signal_response(
-        state.api.process.definition.rendered_form,
-        '<form><div class="form-group"><label>Full name</label>' +
-          '<input cam-variable-name="fullName" cam-variable-type="String" type="text" value="Erika" required/>' +
-          "</div></form>",
-      );
-    });
+    engine_rest.process_definition.rendered_start_form.mockImplementation(
+      () => {
+        signal_response(
+          state.api.process.definition.rendered_form,
+          '<form><div class="form-group"><label>Full name</label>' +
+            '<input cam-variable-name="fullName" cam-variable-type="String" type="text" value="Erika" required/>' +
+            "</div></form>",
+        );
+      },
+    );
     const { findByTestId } = renderPage(state);
     const schema = JSON.parse((await findByTestId("camunda-form")).textContent);
     expect(schema.components.map((c) => c.key)).toEqual(["fullName"]);
@@ -252,7 +254,8 @@ describe("StartProcessList", () => {
     it.each([
       ["a generated form", generated_form],
       ["a form-js form", form_js_form],
-    ])("submits the typed business key alongside the variables for %s",
+    ])(
+      "submits the typed business key alongside the variables for %s",
       async (_label, setup) => {
         setup();
         engine_rest.process_definition.submit_form.mockResolvedValue({
@@ -268,7 +271,8 @@ describe("StartProcessList", () => {
           engine_rest.process_definition.submit_form.mock.lastCall[2];
         expect(payload.businessKey).toBe("BK-42");
         expect(payload.variables).toBeTruthy();
-      });
+      },
+    );
 
     it("omits businessKey from the payload when left empty", async () => {
       generated_form();

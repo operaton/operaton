@@ -12,7 +12,7 @@
  * a slow/broken manifest server can never brick the app (see `with_timeout`).
  */
 import { register } from "./registry.js";
-import { get_config } from "../config.js";
+import { app_path, get_config } from "../config.js";
 
 const VERSION = import.meta.env.VITE_APP_VERSION || "dev";
 
@@ -23,8 +23,12 @@ const register_descriptors = (module) => {
 
 /** Register plugins that ship inside the app bundle. */
 const register_bundled = () => {
+  // The Metrics page ships bundled but is off in the standard delivery; enable
+  // it with VITE_METRICS_ENABLED or config.json "metricsEnabled": true.
+  const metrics_enabled = get_config().metrics_enabled;
   const modules = import.meta.glob("./bundled/*/plugin.jsx", { eager: true });
   for (const path in modules) {
+    if (path.includes("/metrics/") && !metrics_enabled) continue;
     try {
       register_descriptors(modules[path]);
     } catch (error) {
@@ -41,7 +45,8 @@ const register_bundled = () => {
  * injection) wins; otherwise fetch the static manifest. A missing manifest is
  * not an error — it just means no remote plugins.
  */
-const manifest_url = () => get_config().plugins_url ?? "/plugins/plugins.json";
+const manifest_url = () =>
+  get_config().plugins_url ?? app_path("/plugins/plugins.json");
 
 const discover_packages = async () => {
   if (Array.isArray(window.PLUGIN_PACKAGES)) return window.PLUGIN_PACKAGES;

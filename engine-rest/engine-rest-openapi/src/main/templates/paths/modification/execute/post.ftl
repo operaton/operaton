@@ -14,7 +14,7 @@
               For more information about the difference between synchronous and
               asynchronous execution of a modification, please refer to the related
               section of the
-              [user guide](${docsUrl}/user-guide/process-engine/process-instance-migration.md#executing-a-migration-plan)."
+              [user guide](${docsUrl}/user-guide/process-engine/process-instance-migration/#executing-a-migration-plan)."
   />
 
   <@lib.requestBody

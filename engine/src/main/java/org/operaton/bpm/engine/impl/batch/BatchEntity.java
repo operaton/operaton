@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.batch.Batch;
@@ -34,7 +36,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.util.ByteArrayField;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 
-public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, HasDbRevision {
+@SuppressWarnings("UnusedReturnValue")
+public @NullUnmarked class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, HasDbRevision {
 
   public static final BatchSeedJobDeclaration BATCH_SEED_JOB_DECLARATION = new BatchSeedJobDeclaration();
   public static final BatchMonitorJobDeclaration BATCH_MONITOR_JOB_DECLARATION = new BatchMonitorJobDeclaration();
@@ -77,7 +80,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
   }
 
   @Override
-  public void setId(String id) {
+  public void setId(@NonNull String id) {
     this.id = id;
   }
 
@@ -281,7 +284,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     return persistentState;
   }
 
-  public JobDefinitionEntity createSeedJobDefinition(String deploymentId) {
+  public @NonNull JobDefinitionEntity createSeedJobDefinition(String deploymentId) {
     seedJobDefinition = new JobDefinitionEntity(BATCH_SEED_JOB_DECLARATION);
     seedJobDefinition.setJobConfiguration(id);
     seedJobDefinition.setTenantId(tenantId);
@@ -294,7 +297,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     return seedJobDefinition;
   }
 
-  public JobDefinitionEntity createMonitorJobDefinition() {
+  public @NonNull JobDefinitionEntity createMonitorJobDefinition() {
     monitorJobDefinition = new JobDefinitionEntity(BATCH_MONITOR_JOB_DECLARATION);
     monitorJobDefinition.setJobConfiguration(id);
     monitorJobDefinition.setTenantId(tenantId);
@@ -306,7 +309,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     return monitorJobDefinition;
   }
 
-  public JobDefinitionEntity createBatchJobDefinition() {
+  public @NonNull JobDefinitionEntity createBatchJobDefinition() {
     batchJobDefinition = new JobDefinitionEntity(getBatchJobHandler().getJobDeclaration());
     batchJobDefinition.setJobConfiguration(id);
     batchJobDefinition.setTenantId(tenantId);
@@ -318,7 +321,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     return batchJobDefinition;
   }
 
-  public JobEntity createSeedJob() {
+  public @NonNull JobEntity createSeedJob() {
     JobEntity seedJob = BATCH_SEED_JOB_DECLARATION.createJobInstance(this);
 
     Context.getCommandContext().getJobManager().insertAndHintJobExecutor(seedJob);
@@ -336,7 +339,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     }
   }
 
-  public JobEntity createMonitorJob(boolean setDueDate) {
+  public @NonNull JobEntity createMonitorJob(boolean setDueDate) {
     // Maybe use an other job declaration
     JobEntity monitorJob = BATCH_MONITOR_JOB_DECLARATION.createJobInstance(this);
     if (setDueDate) {
@@ -353,7 +356,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     int pollTime = Context.getCommandContext()
       .getProcessEngineConfiguration()
       .getBatchPollTime();
-    long dueTime = ClockUtil.getCurrentTime().getTime() + (pollTime * 1000);
+    long dueTime = ClockUtil.getCurrentTime().getTime() + (pollTime * 1000L);
     return new Date(dueTime);
   }
 

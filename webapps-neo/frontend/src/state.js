@@ -41,6 +41,7 @@ const createAppState = () => {
       create: signal(null),
       update: signal(null),
       delete: signal(null),
+      sections: signal(null),
     },
     engine: {
       telemetry: signal(null),
@@ -62,6 +63,13 @@ const createAppState = () => {
       },
       credentials: signal(null),
       unlock: signal(null),
+      // The engine's password policy, and the answer when a password is
+      // checked against it. Absent (404) when no policy is configured.
+      password_policy: signal(null),
+      password_check: signal(null),
+    },
+    execution: {
+      set_variable: signal(null),
     },
     group: {
       list: signal(null),
@@ -83,7 +91,6 @@ const createAppState = () => {
       delete: signal(null),
       update: signal(null),
       retry: signal(null),
-      saved_filters: signal(null),
     },
     tenant: {
       list: signal(null),
@@ -113,7 +120,6 @@ const createAppState = () => {
         activity_instance_statistics: signal(null),
         suspend: signal(null),
         remove: signal(null),
-        saved_filters: signal(null),
       },
       instance: {
         called: signal(null),
@@ -127,7 +133,6 @@ const createAppState = () => {
         modification: signal(null),
         suspend: signal(null),
         delete: signal(null),
-        saved_filters: signal(null),
       },
     },
     incident: {
@@ -146,8 +151,12 @@ const createAppState = () => {
       error_details: signal(null),
     },
     task: {
+      summary: signal(null),
+      by_group: signal(null),
+      scratch: signal(null),
       list: signal(null),
       one: signal(null),
+      create: signal(null),
       by_process_instance: signal(null),
       form: signal(null),
       rendered_form: signal(null),
@@ -190,7 +199,6 @@ const createAppState = () => {
       process_definition: signal(null),
       delete: signal(null),
       create: signal(null),
-      saved_filters: signal(null),
     },
     decision: {
       definitions: signal(null),
@@ -198,7 +206,6 @@ const createAppState = () => {
       dmn: signal(null),
       instances: signal(null),
       instance: signal(null),
-      saved_filters: signal(null),
     },
     history: {
       incident: {

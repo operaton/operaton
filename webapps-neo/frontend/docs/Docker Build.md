@@ -37,3 +37,21 @@ Replace:
 - {a-port} with your desired port. If you want to run on :80, remove `-p {a-port}:80` from the command
 - {a-env-file} either use a `.env` file or supply the environment variables with `-e` one-by-one
 - {a-version} choose a version tag – either from docker hub, if available, or the version you defined while creating the image locally {a-version-number}
+
+## Serving from a sub-path
+
+By default the image serves the app from `/`. Set
+`DOCKER_RUN_PLACEHOLDER_APPLICATION_PATH` to serve it from somewhere else:
+
+```bash
+docker run -p 8080:80 \
+  -e ASSET_DIR=/var/www/html \
+  -e APP_PREFIX=DOCKER_RUN_PLACEHOLDER_ \
+  -e DOCKER_RUN_PLACEHOLDER_APPLICATION_PATH=/app-neo \
+  operaton-webapps-standalone:{a-version}
+```
+
+`env.sh` then rewrites the `<base href>` in `index.html` and the location blocks
+in `nginx.conf` before nginx starts. `/` redirects to the application path, and
+the bundle keeps living at the web root — the prefix is stripped by nginx rather
+than baked into the file layout, so the image is the same either way.

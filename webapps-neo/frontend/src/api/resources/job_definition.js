@@ -15,11 +15,15 @@ const set_job_definition_suspended = (
   state,
   id,
   suspended,
-  includeJobs = true,
+  { include_jobs = true, execution_date } = {},
 ) =>
   PUT(
     `/job-definition/${id}/suspended`,
-    { suspended, includeJobs },
+    {
+      suspended,
+      includeJobs: include_jobs,
+      ...(execution_date ? { executionDate: execution_date } : {}),
+    },
     state,
     state.api.job_definition.update,
   );

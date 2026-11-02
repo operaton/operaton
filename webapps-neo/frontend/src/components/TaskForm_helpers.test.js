@@ -32,7 +32,9 @@ describe("TaskForm_helpers", () => {
           { type: "text" }, // no key
         ],
       };
-      expect(schema_variable_keys(schema)).toEqual(new Set(["amount", "credit"]));
+      expect(schema_variable_keys(schema)).toEqual(
+        new Set(["amount", "credit"]),
+      );
     });
 
     it("walks nested groups", () => {
@@ -62,7 +64,10 @@ describe("TaskForm_helpers", () => {
     };
 
     it("flattens all variables when no allow-set is given", () => {
-      expect(vars_to_form_data(vars)).toEqual({ amount: 100, payload: { a: 1 } });
+      expect(vars_to_form_data(vars)).toEqual({
+        amount: 100,
+        payload: { a: 1 },
+      });
     });
 
     it("keeps only allowed keys, dropping untouched Json/Object vars (#92)", () => {

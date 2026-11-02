@@ -11,24 +11,11 @@ import { BPMNViewer } from "../components/BPMNViewer.jsx";
 import { CamundaForm } from "../components/CamundaForm.jsx";
 import { Dialog } from "../components/Dialog.jsx";
 import { DmnViewer } from "../components/DMNViewer.jsx";
-import { formatRelativeDate } from "../helper/date_formatter.js";
+import {} from "../helper/date_formatter.js";
 import { ListFilter } from "../components/ListFilter.jsx";
-import { ManageFilters } from "../components/ManageFilters.jsx";
-import {
-  filter_share_link,
-  parse_list_query,
-  with_manage,
-  without_manage,
-  write_list_query,
-} from "../helper/list_query.js";
-import {
-  create_saved_filter,
-  delete_saved_filter,
-  hydrate_signal,
-  update_saved_filter,
-} from "../helper/saved_filters.js";
-
-const RESOURCE_TYPE = "deployment";
+import { RelativeTime } from "../components/RelativeTime.jsx";
+import { parse_list_query, write_list_query } from "../helper/list_query.js";
+import { app_path } from "../config.js";
 
 const SORT_OPTIONS = [
   { key: "deploymentTime", nameKey: "deployments.sort.deploymentTime" },
@@ -37,37 +24,12 @@ const SORT_OPTIONS = [
   { key: "tenantId", nameKey: "deployments.sort.tenantId" },
 ];
 
-const FILTER_KEYS = [
-  { key: "name", nameKey: "deployments.filter_keys.name", type: "string" },
-  {
-    key: "nameLike",
-    nameKey: "deployments.filter_keys.nameLike",
-    type: "string",
-  },
-  { key: "source", nameKey: "deployments.filter_keys.source", type: "string" },
-  {
-    key: "tenantIdIn",
-    nameKey: "deployments.filter_keys.tenantIdIn",
-    type: "string",
-  },
-  { key: "after", nameKey: "deployments.filter_keys.after", type: "date" },
-  { key: "before", nameKey: "deployments.filter_keys.before", type: "date" },
-];
-
 const DEPLOYMENT_DEFAULTS = { sortBy: "deploymentTime", sortOrder: "desc" };
 
-const find_saved = (signal, id) => {
-  if (!id || id === "all") return null;
-  return (signal.value?.data ?? []).find((f) => f.id === id) ?? null;
-};
-
 const load_deployments = (state, query) => {
-  const { saved_filter_id, sortBy, sortOrder, criteria } =
-    parse_list_query(query);
-  const saved = find_saved(state.api.deployment.saved_filters, saved_filter_id);
+  const { sortBy, sortOrder, criteria } = parse_list_query(query);
   const params = {
     ...DEPLOYMENT_DEFAULTS,
-    ...(saved?.query ?? {}),
     ...criteria,
     ...(sortBy ? { sortBy } : {}),
     ...(sortOrder ? { sortOrder } : {}),
@@ -80,29 +42,25 @@ const DeploymentsPage = () => {
     // Ephemeral, single-page selection state — not a fetched resource.
     selected_resource = useSignal(null),
     {
-      params: { deployment_id, resource_name },
-      query,
+      params: { deployment_id },
+      query: { resource: resource_name, ...list_query } = {},
     } = useRoute(),
     { route } = useLocation(),
     [t] = useTranslation();
 
-  // Load the deployment list once on mount.
+  // The selected resource is not part of the list query, so picking one does
+  // not reload the deployment list.
   useEffect(() => {
-    hydrate_signal(RESOURCE_TYPE, state.api.deployment.saved_filters);
+    load_deployments(state, list_query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    load_deployments(state, query);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(query)]);
+  }, [JSON.stringify(list_query)]);
 
   // When the deployment list has loaded and the user is on /deployments with
   // no specific deployment selected, redirect to the first one.
   useEffect(() => {
     const list = state.api.deployment.all.value?.data;
     if (!deployment_id && list?.length) {
-      route(`/deployments/${list[0].id}`, true);
+      route(app_path(`/deployments/${list[0].id}`), true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deployment_id, state.api.deployment.all.value]);
@@ -180,29 +138,22 @@ const DeploymentsList = () => {
 
   const parsed = parse_list_query(query);
   const list_current = {
-    saved_filter_id: parsed.saved_filter_id,
     sortBy: parsed.sortBy ?? DEPLOYMENT_DEFAULTS.sortBy,
     sortOrder: parsed.sortOrder ?? DEPLOYMENT_DEFAULTS.sortOrder,
-    criteria: parsed.criteria,
   };
 
   const apply_patch = (patch) => {
     route(write_list_query(window.location.href, patch), true);
   };
-  const open_manage = () => route(with_manage(), false);
-
-  if (query?.filters === "manage") return <DeploymentsManage />;
 
   return (
     <div class="deployment-list">
       <div class="deployment-toolbar">
         <ListFilter
           sort_options={SORT_OPTIONS}
-          saved_filters_signal={state.api.deployment.saved_filters}
           current={list_current}
           defaults={DEPLOYMENT_DEFAULTS}
           on_change={apply_patch}
-          on_manage={open_manage}
         />
         <DeploymentUpload />
       </div>
@@ -223,14 +174,12 @@ const DeploymentsList = () => {
                   aria-selected={params.deployment_id === deployment.id}
                 >
                   <th scope="row">
-                    <a href={`/deployments/${deployment.id}`}>
+                    <a href={app_path(`/deployments/${deployment.id}`)}>
                       {deployment?.name || deployment?.id}
                     </a>
                   </th>
                   <td>
-                    <time datetime={deployment.deploymentTime}>
-                      {formatRelativeDate(deployment.deploymentTime)}
-                    </time>
+                    <RelativeTime datetime={deployment.deploymentTime} />
                   </td>
                 </tr>
               ))
@@ -279,13 +228,17 @@ const DeploymentUpload = () => {
     dedup.value = false;
     changed_only.value = false;
     void engine_rest.deployment.all(state);
-    if (result?.data?.id) route(`/deployments/${result.data.id}`);
+    if (result?.data?.id) route(app_path(`/deployments/${result.data.id}`));
   };
 
   return (
     <>
       <div class="button-group">
-        <button type="button" class="primary" onClick={() => (open.value = true)}>
+        <button
+          type="button"
+          class="primary"
+          onClick={() => (open.value = true)}
+        >
           {t("deployments.upload.title")}
         </button>
       </div>
@@ -346,7 +299,7 @@ const DeploymentUpload = () => {
 
 const ResourcesList = () => {
   const state = useContext(AppState),
-    { params } = useRoute(),
+    { params, query } = useRoute(),
     [t] = useTranslation();
 
   if (!params.deployment_id) {
@@ -357,6 +310,7 @@ const ResourcesList = () => {
 
   return (
     <div class="resource-list">
+      <DeploymentDelete deployment_id={params.deployment_id} />
       <table>
         <thead>
           <tr>
@@ -370,11 +324,13 @@ const ResourcesList = () => {
               state.api.deployment.resources.value?.data.map((resource) => (
                 <tr
                   key={resource.id}
-                  aria-selected={params.resource_name === resource.name}
+                  aria-selected={query.resource === resource.name}
                 >
                   <th scope="row">
                     <a
-                      href={`/deployments/${params.deployment_id}/${resource.name}`}
+                      href={app_path(
+                        `/deployments/${params.deployment_id}?resource=${encodeURIComponent(resource.name)}`,
+                      )}
                     >
                       {resource.name.includes("/")
                         ? resource.name.split("/").pop().trim()
@@ -391,6 +347,85 @@ const ResourcesList = () => {
   );
 };
 
+const DeploymentDelete = ({ deployment_id }) => {
+  const state = useContext(AppState),
+    { route } = useLocation(),
+    [t] = useTranslation(),
+    open = useSignal(false),
+    cascade = useSignal(false),
+    error = useSignal(null);
+
+  const remove = async () => {
+    // A deployment with running instances is refused unless cascade is set, so
+    // the engine's own answer decides — the UI does not guess.
+    const result = await engine_rest.deployment.delete(state, deployment_id, {
+      cascade: cascade.value,
+      skipCustomListeners: true,
+    });
+    if (result?.status === RESPONSE_STATE.ERROR) {
+      error.value = t("deployments.delete.failed");
+      return;
+    }
+    open.value = false;
+    error.value = null;
+    void engine_rest.deployment.all(state);
+    route(app_path("/deployments"));
+  };
+
+  return (
+    <>
+      <div class="button-group">
+        <button
+          type="button"
+          class="danger"
+          onClick={() => (open.value = true)}
+        >
+          {t("deployments.delete.title")}
+        </button>
+      </div>
+      <Dialog open={open} title={t("deployments.delete.title")}>
+        <p>{t("deployments.delete.message")}</p>
+        <label>
+          <input
+            type="checkbox"
+            checked={cascade.value}
+            onChange={(e) => (cascade.value = e.target.checked)}
+          />
+          {t("deployments.delete.cascade")}
+        </label>
+        {error.value && <p class="error">{error.value}</p>}
+        <div class="button-group">
+          <button type="button" class="danger" onClick={remove}>
+            {t("common.delete")}
+          </button>
+          <button type="button" onClick={() => (open.value = false)}>
+            {t("common.cancel")}
+          </button>
+        </div>
+      </Dialog>
+    </>
+  );
+};
+
+/** Hand the deployed file back, so what is running can be compared to the source. */
+const ResourceDownload = ({ name, content }) => {
+  const [t] = useTranslation();
+  if (typeof content !== "string") return null;
+
+  const file_name = name?.split("/").pop() || "resource",
+    href = URL.createObjectURL(
+      new Blob([content], { type: "application/octet-stream" }),
+    );
+
+  return (
+    <div class="button-group">
+      <a class="button" href={href} download={file_name}>
+        {t("deployments.download")}
+      </a>
+    </div>
+  );
+};
+
 const ResourceDetails = () => {
   const state = useContext(AppState),
     {
@@ -402,7 +437,7 @@ const ResourceDetails = () => {
       },
     } = state,
     {
-      params: { resource_name },
+      query: { resource: resource_name },
     } = useRoute(),
     [t] = useTranslation(),
     resource_file_type = resource_name?.split(".").pop();
@@ -449,6 +484,7 @@ const ResourceDetails = () => {
           ) : null
         }
       />
+      <ResourceDownload name={resource_name} content={resource.value?.data} />
       {(resource_file_type === "bpmn" || resource_file_type === "dmn") && (
         <div id="diagram-container" />
       )}
@@ -498,39 +534,6 @@ const FormPreview = ({ data }) => {
       <h3>{t("deployments.raw-data-json")}</h3>
       <pre>{JSON.stringify(schema, null, 2)}</pre>
     </>
-  );
-};
-
-const DeploymentsManage = () => {
-  const state = useContext(AppState),
-    { route } = useLocation(),
-    [t] = useTranslation();
-
-  const refresh = () =>
-    hydrate_signal(RESOURCE_TYPE, state.api.deployment.saved_filters);
-  return (
-    <div class="fade-in">
-      <ManageFilters
-        title={t("deployments.filter.manage_title")}
-        saved_filters_signal={state.api.deployment.saved_filters}
-        filter_keys={FILTER_KEYS}
-        sort_options={SORT_OPTIONS}
-        on_save={(f) => {
-          create_saved_filter(RESOURCE_TYPE, f);
-          refresh();
-        }}
-        on_update={(id, f) => {
-          update_saved_filter(RESOURCE_TYPE, id, f);
-          refresh();
-        }}
-        on_delete={(id) => {
-          delete_saved_filter(RESOURCE_TYPE, id);
-          refresh();
-        }}
-        on_close={() => route(without_manage(), true)}
-        build_share_link={(f) => filter_share_link(window.location.href, f)}
-      />
-    </div>
   );
 };
 

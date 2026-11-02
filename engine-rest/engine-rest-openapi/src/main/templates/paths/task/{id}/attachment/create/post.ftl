@@ -76,12 +76,12 @@
         code = "400"
         dto = "ExceptionDto"
         desc = "The task does not exists or task id is null. No content or url to remote content exists. See the
-                [Introduction](/reference/rest/overview/#error-handling) for the error response format." />
+                [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format." />
 
     <@lib.response
         code = "403"
         dto = "AuthorizationExceptionDto"
-        desc = "The history of the engine is disabled. See the [Introduction](/reference/rest/overview/#error-handling)
+        desc = "The history of the engine is disabled. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
 
     <@lib.errorResponses docsUrl=docsUrl last = true />

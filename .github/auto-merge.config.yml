@@ -99,6 +99,7 @@ auto-merge-rules:
       - 'version.testcontainers'
       - 'version.tomcat'
       - 'version.undertow'
+      - 'version.unirest-java'
       # Dependency groups
       - 'all group'
       - 'arquillian group'
@@ -109,6 +110,12 @@ auto-merge-rules:
       - 'maven-plugins group'
       - 'openrewrite group'
       - 'spring-boot group'
+
+  # Node.js
+  - author: 'github-actions[bot]'
+    labels: ['dependencies:npm']
+    includes:
+      - 'Node.js'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

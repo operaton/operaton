@@ -68,7 +68,7 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        desc = "No task exists for the given task id. See the [Introduction](/reference/rest/overview/#error-handling)
+        desc = "No task exists for the given task id. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
 
     <@lib.errorResponses docsUrl=docsUrl last = true />

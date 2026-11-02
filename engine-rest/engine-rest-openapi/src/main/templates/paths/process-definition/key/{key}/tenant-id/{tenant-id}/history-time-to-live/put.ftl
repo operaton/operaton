@@ -6,7 +6,7 @@
       tag = "Process Definition"
       summary = "Update History Time to Live"
       desc = "Updates history time to live for the latest version of the process definition for a tenant.
-              The field is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)." />
+              The field is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)." />
 
   "parameters" : [
 

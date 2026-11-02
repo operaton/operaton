@@ -7,7 +7,7 @@
       summary = "Get Cleanable Process Instance Report Count"
       desc = "Queries for the number of report results about a process definition and finished
               process instances relevant to history cleanup (see
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)).
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)).
               Takes the same parameters as the
               [Get Cleanable Process Instance Report](${docsUrl}/reference/rest/history/process-definition/get-cleanable-process-instance-report/)
               method."

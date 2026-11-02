@@ -22,7 +22,7 @@
         name = "skipIoMappings"
         type = "boolean"
         desc = "Skip execution of
-                [input/output variable mappings](${docsUrl}/user-guide/process-engine/variables/#input-output-variable-mapping)
+                [input/output variable mappings](${docsUrl}/user-guide/process-engine/variables#inputoutput-variable-mapping)
                 for activities that are started as part of this request." />
                 
 

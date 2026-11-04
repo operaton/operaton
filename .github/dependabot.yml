@@ -28,6 +28,9 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
       - dependency-name: "io.quarkus:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # MyBatis 3.6 changed default behavior (e.g. <bind> scoping inside <foreach>); observe how it evolves
+      - dependency-name: "org.mybatis:mybatis"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
     milestone: 32

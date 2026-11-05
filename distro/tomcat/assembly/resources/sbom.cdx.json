@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:847368be-3e1d-4732-adec-5cc6e1178441",
+  "serialNumber": "urn:uuid:a591a08f-8797-4ee9-867f-9675489e5d7e",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-05T08:10:54Z",
+    "timestamp": "2026-11-05T08:17:33Z",
     "tools": {
       "components": [
         {
@@ -16693,44 +16693,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.11.2?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.11.3?type=jar",
       "group": "com.konghq",
       "name": "unirest-java-core",
-      "version": "4.11.2",
+      "version": "4.11.3",
       "description": "Simplified, lightweight HTTP client library.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "0ef35fbe808c2c4e9f37b66743e17ac7"
+          "content": "8db7b62701505d2ae929baa6279d11c3"
         },
         {
           "alg": "SHA-1",
-          "content": "9e0d0e980426654f388bde131020ee38f31e531e"
+          "content": "3b8e9cfcdf589a28392b164e53d3435ca8f05f73"
         },
         {
           "alg": "SHA-256",
-          "content": "fc0c46f1f1b17d6b01a4a77fa5238fd380cb64bf478b8b510bbc6efe68f33b58"
+          "content": "bd7bba97578a1dc6e09a2c439d1bc30fd772a4ead51dc6bd838128915aff1783"
         },
         {
           "alg": "SHA-512",
-          "content": "f2cd6943f301b97582178d8f48a168a81d7bda174c962598826253a234352c2a8bc5df1f1c2c8971a973d7d266afead667eef719ae6e48f0834688eb71003e46"
+          "content": "4bd7b66e63c3a5598bdbf1c6885b9006c9d057f1342cd18c846f6b05efc1648e936609c830f57d45b1abe08f354836d63b226be78853fdbaca3e984da13c4a0e"
         },
         {
           "alg": "SHA-384",
-          "content": "4d9b1ca3946d2c8d9532d164ca465f034cd5e9e8a65593fcb7ffedebc540097f93f8c28fa0979aa384699b01d65ec61b"
+          "content": "dd0b3bc86a20ec72e42bb6387dbdb6fab0c8dbf81d0f3dfff87d451770efd4472462aa661bf20898fff61eae476cafbf"
         },
         {
           "alg": "SHA3-384",
-          "content": "3411f58e47abae06a8f76baec541f52f74546a6a9a81d477026089deb771f2a0bfa74c9c34b1a2a5f652b1f5a648490b"
+          "content": "b87537d89e7f45c548746af56fef46a0d6f46add99860e0d138c41f03e81405970ab7ba75df137d2c0d6f8a1c21ab0d7"
         },
         {
           "alg": "SHA3-256",
-          "content": "c6a7a6ee2dc871e5f7592ef16e920a8bfa388efdf034df756a5c5f8f6e069c6a"
+          "content": "673c94db2fd0ed43ba6ee33b0d400e81e46148b7b14e450137865981ab5937a9"
         },
         {
           "alg": "SHA3-512",
-          "content": "314b9ceafac3887b8e46e5002fba27b460204bcd7ac500bc274d3f9a2e4a4da411dcb22e896bd5f22f444d48cb05e07b3d38f976b7b79c986fba21e433de4e42"
+          "content": "ee33c79915e7032d24e796b53825d43590f5f537ca5cef59a31a67c37519e91d528bff12af14d27f55d6f4e057fb674b096c5efba477c18067e804156d3ca78a"
         }
       ],
       "licenses": [
@@ -16741,7 +16741,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-java-core@4.11.2?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-java-core@4.11.3?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-java-core/",
@@ -16759,44 +16759,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.2?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.3?type=jar",
       "group": "com.konghq",
       "name": "unirest-modules-gson",
-      "version": "4.11.2",
+      "version": "4.11.3",
       "description": "Gson based object mapper for Unirest",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e63a5dcf581b58c06da806d751f58dce"
+          "content": "a1257384d4408387d1be2ab0f440420a"
         },
         {
           "alg": "SHA-1",
-          "content": "f41e665acc3f111f7f7c8b6dab0deb2c04cf7572"
+          "content": "1814badc0bc375a100b7abe56761c142e38f6294"
         },
         {
           "alg": "SHA-256",
-          "content": "54b97e7c99fe95717bd751a313cd5e2085bb17bc516d5aed075d30528c1e2c0c"
+          "content": "697555ff58eb97a1510332b23c5195e66dd9266444084be489d76ccc4f16e9b6"
         },
         {
           "alg": "SHA-512",
-          "content": "1ed6c652418599b119e4f6270349e7cc27b98f9aeb2ade396b2a0b09136f6659425a5184c272981ae2f3d39364d621515615d50d46ca67719e9bacdc5bc4585c"
+          "content": "bf446997a11363db9fe5407deccb6c8a2d68324be4cc25f50aedb39402909420b87699bfd49786081638e2ebbde2fca4e09d465dc79eb444d25828e10e7d0d5a"
         },
         {
           "alg": "SHA-384",
-          "content": "4b9ade67f55de383005844d858c601b5cef5bfa85f8eea0fd89e614829193aec5ccb2be97e813681a90fbe6cb63667db"
+          "content": "2be7c1304e0e16b26aa2f818319bbff08e4863832b7c84d544ad097d3a113973aacee520228b3c0f4b4e7265480fcd68"
         },
         {
           "alg": "SHA3-384",
-          "content": "237ed5694b478ad3bc8a6a9338bb187164d9d1b0d06ee26e36642a821dd77d863f7a58a2dadcaa691e271d9524901860"
+          "content": "c31166cede28c2c26bb48ed41260d047ef4f0146701d46f84bb3a0c7d543b9ec23f2904093e38a7ccb381faa0eadc862"
         },
         {
           "alg": "SHA3-256",
-          "content": "d19c2754dbee4912336c2b2023cacd460f75d66434593a0beff26fba0dc85d59"
+          "content": "543e47e8d6380a67171774df8862902c6f4e97c19de301860336cb552634de06"
         },
         {
           "alg": "SHA3-512",
-          "content": "e83a5651511ac0d887ea06979e6b35b974e6c583c2db5027d3111c6fac7cbef4650bf3d2ac77e2c8ac52a8ca4d5092e26fe54143624839d4b1d9f608059d1b50"
+          "content": "c51e4f5c296c4952262860f4746059b021043b50853a9464f446123fd96af4bdacc4c77d724fcf94cda42e1a9f54e3ad29d0d55d032e82d74de660912805814d"
         }
       ],
       "licenses": [
@@ -16807,7 +16807,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.11.2?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.11.3?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-modules-gson/",
@@ -19410,7 +19410,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "54b3b422-3c12-44e0-9231-04b29d6e90c5",
+      "bom-ref": "525c56f2-7c29-4762-80e8-ec7f4e13bba6",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24690,7 +24690,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "761dfa1d-2fd4-430e-ab47-94d1a396cdd6",
+      "bom-ref": "ca4de763-64df-4bb7-983a-9fe2afeb8579",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24701,7 +24701,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "325773c0-76f5-43f4-b39e-16bb572a6bfd",
+      "bom-ref": "6f4f2e4a-a951-4ed1-b18f-186a9dcfbab8",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25834,7 +25834,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0661ce69-af7a-419b-8c0f-d4a27150336b",
+      "bom-ref": "bafcad82-8c71-4523-8f0d-a18419f0e99e",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -27114,8 +27114,8 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/com.konghq/unirest-java-core@4.11.2?type=jar",
-        "pkg:maven/com.konghq/unirest-modules-gson@4.11.2?type=jar",
+        "pkg:maven/com.konghq/unirest-java-core@4.11.3?type=jar",
+        "pkg:maven/com.konghq/unirest-modules-gson@4.11.3?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar"
       ]
     },
@@ -27580,11 +27580,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-java-core@4.11.2?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-java-core@4.11.3?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.2?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.3?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.code.gson/gson@2.15.0?type=jar"
       ]
@@ -28257,7 +28257,7 @@
       "dependsOn": []
     },
     {
-      "ref": "54b3b422-3c12-44e0-9231-04b29d6e90c5",
+      "ref": "525c56f2-7c29-4762-80e8-ec7f4e13bba6",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -28307,9 +28307,9 @@
       ]
     },
     {
-      "ref": "761dfa1d-2fd4-430e-ab47-94d1a396cdd6",
+      "ref": "ca4de763-64df-4bb7-983a-9fe2afeb8579",
       "dependsOn": [
-        "54b3b422-3c12-44e0-9231-04b29d6e90c5"
+        "525c56f2-7c29-4762-80e8-ec7f4e13bba6"
       ]
     },
     {
@@ -29712,13 +29712,7 @@
       "dependsOn": []
     },
     {
-      "ref": "0661ce69-af7a-419b-8c0f-d4a27150336b",
-      "dependsOn": [
-        "325773c0-76f5-43f4-b39e-16bb572a6bfd"
-      ]
-    },
-    {
-      "ref": "325773c0-76f5-43f4-b39e-16bb572a6bfd",
+      "ref": "6f4f2e4a-a951-4ed1-b18f-186a9dcfbab8",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -29736,6 +29730,12 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
+      ]
+    },
+    {
+      "ref": "bafcad82-8c71-4523-8f0d-a18419f0e99e",
+      "dependsOn": [
+        "6f4f2e4a-a951-4ed1-b18f-186a9dcfbab8"
       ]
     },
     {

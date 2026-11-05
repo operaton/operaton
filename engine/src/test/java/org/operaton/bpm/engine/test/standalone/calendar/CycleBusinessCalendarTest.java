@@ -162,4 +162,48 @@ class CycleBusinessCalendarTest {
       .hasMessageContaining("Exception while parsing cycle expression");
 
   }
+
+  @Test
+  void shouldResolveQuartzCronExpressionWhenConfigured() throws Exception {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
+    CycleBusinessCalendar cbc = new CycleBusinessCalendar("QUARTZ", true);
+
+    Date startDate = sdf.parse("2025 02 14 12:00");
+
+    assertThat(sdf.format(cbc.resolveDuedate("0 0 12 15 2 ? 2025", startDate))).isEqualTo("2025 02 15 12:00");
+  }
+
+  @Test
+  void shouldRejectQuartzSevenFieldCronExpressionByDefault() throws Exception {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
+    CycleBusinessCalendar cbc = new CycleBusinessCalendar();
+
+    Date startDate = sdf.parse("2025 02 14 12:00");
+
+    assertThatThrownBy(() -> cbc.resolveDuedate("0 0 12 15 2 ? 2025", startDate))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Exception while parsing cycle expression");
+  }
+
+  @Test
+  void shouldPatchLegacyQuartzCronExpressionWhenEnabled() throws Exception {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
+    CycleBusinessCalendar cbc = new CycleBusinessCalendar("QUARTZ", true);
+
+    Date startDate = sdf.parse("2010 02 11 17:23");
+
+    assertThat(sdf.format(cbc.resolveDuedate("0 0 0 * * *", startDate))).isEqualTo("2010 02 12 00:00");
+  }
+
+  @Test
+  void shouldRejectLegacyQuartzCronExpressionWhenDisabled() throws Exception {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
+    CycleBusinessCalendar cbc = new CycleBusinessCalendar("QUARTZ", false);
+
+    Date startDate = sdf.parse("2010 02 11 17:23");
+
+    assertThatThrownBy(() -> cbc.resolveDuedate("0 0 0 * * *", startDate))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Exception while parsing cycle expression");
+  }
 }

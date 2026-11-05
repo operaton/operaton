@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.calendar;
 
 import java.util.Date;
 
+import com.cronutils.model.CronType;
+
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
@@ -28,6 +30,18 @@ public class CycleBusinessCalendar implements BusinessCalendar {
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   public static final String NAME = "cycle";
+
+  protected final CronType cronType;
+  protected final boolean supportLegacyQuartzSyntax;
+
+  public CycleBusinessCalendar() {
+    this(CronType.SPRING53.name(), true);
+  }
+
+  public CycleBusinessCalendar(String cronType, boolean supportLegacyQuartzSyntax) {
+    this.cronType = CronType.valueOf(cronType);
+    this.supportLegacyQuartzSyntax = supportLegacyQuartzSyntax;
+  }
 
   @Override
   public Date resolveDuedate(String duedateDescription, Task task) {
@@ -51,7 +65,7 @@ public class CycleBusinessCalendar implements BusinessCalendar {
         durationHelper.setRepeatOffset(repeatOffset);
         return durationHelper.getDateAfter(startDate);
       } else {
-        CronTimer cronTimer = CronTimer.parse(duedateDescription);
+        CronTimer cronTimer = CronTimer.parse(duedateDescription, cronType, supportLegacyQuartzSyntax);
         return cronTimer.getDueDate(startDate == null ? ClockUtil.getCurrentTime() : startDate);
       }
 

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:806b14d0-9c5a-4a1d-a946-af41f0c07239",
+  "serialNumber": "urn:uuid:b632ab3b-226f-4446-a36e-c093db610993",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-04T07:02:56Z",
+    "timestamp": "2026-11-05T08:10:55Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-4918c342b"
+          "version": "0.76.0-SNAPSHOT-c5b87b773"
         }
       ]
     },
@@ -10521,45 +10521,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
+      "bom-ref": "pkg:maven/net.minidev/accessors-smart@2.6.1?type=jar",
       "publisher": "Chemouni Uriel",
       "group": "net.minidev",
       "name": "accessors-smart",
-      "version": "2.6.0",
+      "version": "2.6.1",
       "description": "Java reflect give poor performance on getter setter an constructor calls, accessors-smart use ASM to speed up those calls.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "0ad72639eea293193f68898da9b0b902"
+          "content": "4d88b9877bd4bc2fa22800e700b7e8e7"
         },
         {
           "alg": "SHA-1",
-          "content": "2d96f1d9b6ab7f13261aa81b15703574185747a0"
+          "content": "26d8824c13860b02dfed35416276da586a365566"
         },
         {
           "alg": "SHA-256",
-          "content": "222c9f547bb20a99fc486403a398352d1306fb671b38abd7ecab6401df170e61"
+          "content": "05d0bbc1ca20163b8ed60a45596d95ed526a71732c47e5cc58e6454d6a5c9694"
         },
         {
           "alg": "SHA-512",
-          "content": "220eb28c94fdd15e7ac9b7e80d238a9871fc78db3127db9ca6207251e0e5563c62cfd5ab7625d69eb9e2563fc726e71a25562a4081f089f564dc206e0569665f"
+          "content": "f2495263152848f96e288996422b71631c05524d978fb772aa9675f0e79d6cdd86ee6d05db1979c37a471399b312b3ecdda1a3aae02098fe3fd9f45ac361034f"
         },
         {
           "alg": "SHA-384",
-          "content": "c861d37b7a3a5d3d42a699239e3437cf094a8359b2371bacce5f7a17da02f9a0eb65ca2456d0168c4870be36bddc135f"
+          "content": "73adcab86e08212bf43266f2dfd27a5634e6b50dc223d5be1e696a66e284734b2d93f72e1e72cee4435abfa6df042fd8"
         },
         {
           "alg": "SHA3-384",
-          "content": "4fa8ea0794e22ccc34ecc9b73cb9cad062cd82561227b15f1261541180d584ba745611ff31e98653e4f5d481846de361"
+          "content": "6aaeefe4c704d943e9919077260a0686aed26f41d9198e6800f24fd2aff8e2089a343f18af51b05699e7c2103aaad34b"
         },
         {
           "alg": "SHA3-256",
-          "content": "1b170bf2e79abd9a77bb330c51b73d695c17e5db41817efab22294f4ee65a2c1"
+          "content": "0e1ae344b37fb7a3a5d3f807453d98bd5cb0cb4e08845b0006d926de0b14961a"
         },
         {
           "alg": "SHA3-512",
-          "content": "224c001707e5b478f6503b88ab8c07b94f82bfb02bc81094a3ffdcf05d29f1377a8e518b223f9282d0147f386f13faf319692002d59f4c6f452b282aa6b000c0"
+          "content": "3407456ff9b80cf9211adc798d4c1925d0efb7bc817148c484f06513a63e4009954131f7e543fa72bf77a8a9a235e63ba7a351878db93600fb0a5a7d4102234e"
         }
       ],
       "licenses": [
@@ -10569,7 +10569,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
+      "purl": "pkg:maven/net.minidev/accessors-smart@2.6.1?type=jar",
       "externalReferences": [
         {
           "url": "https://urielch.github.io/",
@@ -11174,45 +11174,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "bom-ref": "pkg:maven/org.ow2.asm/asm@9.11.1?type=jar",
       "publisher": "OW2",
       "group": "org.ow2.asm",
       "name": "asm",
-      "version": "9.7.1",
+      "version": "9.11.1",
       "description": "ASM, a very small and fast Java bytecode manipulation framework",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e2cdd32d198ad31427d298eee9d39d8d"
+          "content": "d51057fdaa233712077744fd148fb978"
         },
         {
           "alg": "SHA-1",
-          "content": "f0ed132a49244b042cd0e15702ab9f2ce3cc8436"
+          "content": "edb29aa0c2da2918ce338fb7b218c21ea138dde2"
         },
         {
           "alg": "SHA-256",
-          "content": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281"
+          "content": "ae4e6e10d59d0a1500317764b21881ad883f8550e33c66e6142f7032c6fb566c"
         },
         {
           "alg": "SHA-512",
-          "content": "4767b01603dad5c79cc1e2b5f3722f72b1059d928f184f446ba11badeb1b381b3a3a9a801cc43d25d396df950b09d19597c73173c411b1da890de808b94f1f50"
+          "content": "c31cb163f4a86df9f85e6ceeabb0f672080e1aed64c50aeffb84d5adadde7ad19ec3d3e01b8adfc29677d7a5f2ce5a182e4c593fba72626bf9c2d6d7c36640af"
         },
         {
           "alg": "SHA-384",
-          "content": "166e2be10a19ca6a6d7cadb542eb1c948562483f02557b467a50a3d19d01318e12e5c3b495c482f3f5369be1b7f20eed"
+          "content": "1169fbab7b53ea1f770e15236bdbdf31aaa8c3ef26bdb42d9c1e9ccc79913bca0e49932a79e5a62d78410d0547c71334"
         },
         {
           "alg": "SHA3-384",
-          "content": "e301862376e84df61c3547dbf637252750224fb5b74feb82f20e1527a8e3152c45f620192a9111a2db5e2f0e73ebd7ca"
+          "content": "a7d9ff452ae42eed5ddd581daae05a44f8635bf82a0b357b58ba312c9e7ba74cb1ea43709365d359df0f5d6cb0ded92c"
         },
         {
           "alg": "SHA3-256",
-          "content": "7edcc4ff09b3ace15091a8c550f552a324b5cee6c1527944db5823df7eba8d64"
+          "content": "24e0e4663357c90e97b4e991db310a711ff3373965465139314ecd2543d21c75"
         },
         {
           "alg": "SHA3-512",
-          "content": "9d220edc5528e4d788605721490f3d29483dd4bd506765e85d781048419aa89b686a70e316b82ef2a856ead56bb7be6b5d52d77b7ca6f27d5e0e347e9669d731"
+          "content": "b358c39521d6264347cea02af9bda100b64a34a93a5aa4988427e032a354a80f5ecb39365fb3d19ea6642ffd9e90b5cbcecfe53a0ecd4a73b8bdb92135db6239"
         }
       ],
       "licenses": [
@@ -11223,7 +11223,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "purl": "pkg:maven/org.ow2.asm/asm@9.11.1?type=jar",
       "externalReferences": [
         {
           "url": "http://asm.ow2.io/",
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "cf8bced0-6921-4c8f-ae08-168e6a2da481",
+      "bom-ref": "54b3b422-3c12-44e0-9231-04b29d6e90c5",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36300,7 +36300,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2d5b3389-6a48-431a-8542-93b374644941",
+      "bom-ref": "761dfa1d-2fd4-430e-ab47-94d1a396cdd6",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36311,7 +36311,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "8b185b9c-8422-4ac6-be5e-bcd272600357",
+      "bom-ref": "325773c0-76f5-43f4-b39e-16bb572a6bfd",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37444,7 +37444,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "f2462fe5-c790-4ba5-b61c-e38c9d21c9a3",
+      "bom-ref": "0661ce69-af7a-419b-8c0f-d4a27150336b",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -38473,11 +38473,11 @@
     {
       "ref": "pkg:maven/net.minidev/json-smart@2.6.1?type=jar",
       "dependsOn": [
-        "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar"
+        "pkg:maven/net.minidev/accessors-smart@2.6.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
+      "ref": "pkg:maven/net.minidev/accessors-smart@2.6.1?type=jar",
       "dependsOn": [
         "pkg:maven/org.ow2.asm/asm@7.3.1?type=jar"
       ]
@@ -39429,7 +39429,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "ref": "pkg:maven/org.ow2.asm/asm@9.11.1?type=jar",
       "dependsOn": []
     },
     {
@@ -40905,7 +40905,7 @@
         "pkg:maven/org.freemarker/freemarker@2.3.35?type=jar",
         "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.3.0-SNAPSHOT?type=jar",
         "pkg:maven/com.h2database/h2@2.5.252?type=jar",
-        "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
+        "pkg:maven/net.minidev/accessors-smart@2.6.1?type=jar",
         "pkg:maven/net.minidev/json-smart@2.6.1?type=jar",
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar"
       ]
@@ -41162,13 +41162,7 @@
       "dependsOn": []
     },
     {
-      "ref": "2d5b3389-6a48-431a-8542-93b374644941",
-      "dependsOn": [
-        "cf8bced0-6921-4c8f-ae08-168e6a2da481"
-      ]
-    },
-    {
-      "ref": "cf8bced0-6921-4c8f-ae08-168e6a2da481",
+      "ref": "54b3b422-3c12-44e0-9231-04b29d6e90c5",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -41215,6 +41209,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.1"
+      ]
+    },
+    {
+      "ref": "761dfa1d-2fd4-430e-ab47-94d1a396cdd6",
+      "dependsOn": [
+        "54b3b422-3c12-44e0-9231-04b29d6e90c5"
       ]
     },
     {
@@ -42617,7 +42617,13 @@
       "dependsOn": []
     },
     {
-      "ref": "8b185b9c-8422-4ac6-be5e-bcd272600357",
+      "ref": "0661ce69-af7a-419b-8c0f-d4a27150336b",
+      "dependsOn": [
+        "325773c0-76f5-43f4-b39e-16bb572a6bfd"
+      ]
+    },
+    {
+      "ref": "325773c0-76f5-43f4-b39e-16bb572a6bfd",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -42635,12 +42641,6 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "f2462fe5-c790-4ba5-b61c-e38c9d21c9a3",
-      "dependsOn": [
-        "8b185b9c-8422-4ac6-be5e-bcd272600357"
       ]
     },
     {

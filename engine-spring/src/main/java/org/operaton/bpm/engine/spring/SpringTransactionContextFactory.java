@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import org.operaton.bpm.engine.impl.cfg.TransactionContext;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Frederik Heremans
  */
-public class SpringTransactionContextFactory implements TransactionContextFactory {
+public @NullMarked class SpringTransactionContextFactory implements TransactionContextFactory {
 
   protected PlatformTransactionManager transactionManager;
 

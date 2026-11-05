@@ -20,6 +20,8 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Validates that the target process definition cannot add a new inner activity to a migrating multi-instance body.
  *
@@ -30,7 +32,7 @@ public class CannotAddMultiInstanceInnerActivityValidator implements MigrationIn
   @Override
   public void validate(ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions,
       MigrationInstructionValidationReportImpl report) {
-    ActivityImpl targetActivity = instruction.getTargetActivity();
+    ActivityImpl targetActivity = requireNonNull(instruction.getTargetActivity());
 
     if (isMultiInstance(targetActivity)) {
       ActivityImpl innerActivity = getInnerActivity(targetActivity);
@@ -46,7 +48,7 @@ public class CannotAddMultiInstanceInnerActivityValidator implements MigrationIn
   }
 
   protected ActivityImpl getInnerActivity(ActivityImpl multiInstanceBody) {
-    MultiInstanceActivityBehavior activityBehavior = (MultiInstanceActivityBehavior) multiInstanceBody.getActivityBehavior();
+    MultiInstanceActivityBehavior activityBehavior = requireNonNull((MultiInstanceActivityBehavior) multiInstanceBody.getActivityBehavior());
     return activityBehavior.getInnerActivity(multiInstanceBody);
   }
 

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**
@@ -30,7 +32,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  * Use to encapsulate common behavior (like engine configuration).
  * </p>
  */
-public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
+public @NullMarked class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
 
   protected final List<ProcessEnginePlugin> plugins;
 
@@ -69,6 +71,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
    * @param additionalPlugins additional vararg plugins
    * @return self for fluent usage
    */
+  @SuppressWarnings("UnusedReturnValue")
   public CompositeProcessEnginePlugin addProcessEnginePlugin(ProcessEnginePlugin plugin, ProcessEnginePlugin... additionalPlugins) {
     return this.addProcessEnginePlugins(toList(plugin, additionalPlugins));
   }
@@ -125,7 +128,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
   }
 
 
-  private static List<ProcessEnginePlugin> toList(ProcessEnginePlugin plugin, ProcessEnginePlugin... additionalPlugins) {
+  private static List<ProcessEnginePlugin> toList(ProcessEnginePlugin plugin, ProcessEnginePlugin @Nullable... additionalPlugins) {
     final List<ProcessEnginePlugin> plugins = new ArrayList<>();
     plugins.add(plugin);
     if (additionalPlugins != null && additionalPlugins.length > 0) {

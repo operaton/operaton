@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.repository;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Fluent builder to update the suspension state of process definitions.
  */
-public interface UpdateProcessDefinitionSuspensionStateTenantBuilder extends UpdateProcessDefinitionSuspensionStateBuilder {
+public @NullMarked interface UpdateProcessDefinitionSuspensionStateTenantBuilder extends UpdateProcessDefinitionSuspensionStateBuilder {
 
   /**
    * Specify that the process definition belongs to no tenant.

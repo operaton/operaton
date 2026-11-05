@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.repository;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.query.Query;
 
 /**
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("UnusedReturnValue")
 public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefinition> {
 
   /**
@@ -29,21 +31,21 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param caseDefinitionId the id of the case definition
    */
-  CaseDefinitionQuery caseDefinitionId(String caseDefinitionId);
+  CaseDefinitionQuery caseDefinitionId(@Nullable String caseDefinitionId);
 
   /**
    * Only select case definitions with the given ids.
    *
    * @param ids list of case definition ids
    */
-  CaseDefinitionQuery caseDefinitionIdIn(String... ids);
+  CaseDefinitionQuery caseDefinitionIdIn(String @Nullable... ids);
 
   /**
    * Only select case definitions with the given category.
    *
    * @param caseDefinitionCategory the category of the case definition
    */
-  CaseDefinitionQuery caseDefinitionCategory(String caseDefinitionCategory);
+  CaseDefinitionQuery caseDefinitionCategory(@Nullable String caseDefinitionCategory);
 
   /**
    * Only select case definitions where the category matches the given parameter.
@@ -51,21 +53,21 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param caseDefinitionCategoryLike the pattern to match the case definition category
    */
-  CaseDefinitionQuery caseDefinitionCategoryLike(String caseDefinitionCategoryLike);
+  CaseDefinitionQuery caseDefinitionCategoryLike(@Nullable String caseDefinitionCategoryLike);
 
   /**
    * Only select case definitions with the given name.
    *
    * @param caseDefinitionName the name of the case definition
    */
-  CaseDefinitionQuery caseDefinitionName(String caseDefinitionName);
+  CaseDefinitionQuery caseDefinitionName(@Nullable String caseDefinitionName);
 
   /**
    * Only select case definition with the given key.
    *
    * @param caseDefinitionKey the key of the case definition
    */
-  CaseDefinitionQuery caseDefinitionKey(String caseDefinitionKey);
+  CaseDefinitionQuery caseDefinitionKey(@Nullable String caseDefinitionKey);
 
   /**
    * Only select case definitions where the key matches the given parameter.
@@ -73,7 +75,7 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param caseDefinitionKeyLike the pattern to match the case definition key
    */
-  CaseDefinitionQuery caseDefinitionKeyLike(String caseDefinitionKeyLike);
+  CaseDefinitionQuery caseDefinitionKeyLike(@Nullable String caseDefinitionKeyLike);
 
   /**
    * Only select case definitions where the name matches the given parameter.
@@ -81,7 +83,7 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param caseDefinitionNameLike the pattern to match the case definition name
    */
-  CaseDefinitionQuery caseDefinitionNameLike(String caseDefinitionNameLike);
+  CaseDefinitionQuery caseDefinitionNameLike(@Nullable String caseDefinitionNameLike);
 
   /**
    * Only select case definitions that are deployed in a deployment with the
@@ -89,7 +91,7 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param deploymentId the id of the deployment
    */
-  CaseDefinitionQuery deploymentId(String deploymentId);
+  CaseDefinitionQuery deploymentId(@Nullable String deploymentId);
 
   /**
    * Only select case definition with a certain version.
@@ -97,7 +99,7 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param caseDefinitionVersion the version of the case definition
    */
-  CaseDefinitionQuery caseDefinitionVersion(Integer caseDefinitionVersion);
+  CaseDefinitionQuery caseDefinitionVersion(@Nullable Integer caseDefinitionVersion);
 
   /**
    * Only select the case definitions which are the latest deployed
@@ -118,7 +120,7 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param resourceName the name of the resource
    */
-  CaseDefinitionQuery caseDefinitionResourceName(String resourceName);
+  CaseDefinitionQuery caseDefinitionResourceName(@Nullable String resourceName);
 
   /**
    * Only select case definition with a resource name like the given.
@@ -126,10 +128,10 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    *
    * @param resourceNameLike the pattern to match the resource name
    */
-  CaseDefinitionQuery caseDefinitionResourceNameLike(String resourceNameLike);
+  CaseDefinitionQuery caseDefinitionResourceNameLike(@Nullable String resourceNameLike);
 
   /** Only select case definitions with one of the given tenant ids. */
-  CaseDefinitionQuery tenantIdIn(String... tenantIds);
+  CaseDefinitionQuery tenantIdIn(String @Nullable... tenantIds);
 
   /** Only select case definitions which have no tenant id. */
   CaseDefinitionQuery withoutTenantId();

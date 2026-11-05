@@ -212,8 +212,9 @@ public @NullMarked class ProcessSetRemovalTimeJobHandler extends AbstractBatchJo
       Integer chunkSize,
       MessageEntity currentJob,
       CommandExecutor newCommandExecutor) {
+    String jobId = requireNonNull(currentJob.getId());
     return new ProcessSetRemovalTimeResultHandler(configuration, chunkSize, newCommandExecutor, this,
-        currentJob.getId(), operations);
+            jobId, operations);
   }
 
   @Override

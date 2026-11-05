@@ -21,6 +21,8 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 
+import static java.util.Objects.requireNonNull;
+
 public class OnlyOnceMappedActivityInstructionValidator implements MigrationInstructionValidator {
 
   @Override
@@ -29,7 +31,7 @@ public class OnlyOnceMappedActivityInstructionValidator implements MigrationInst
     List<ValidatingMigrationInstruction> instructionsForSourceActivity = instructions.getInstructionsBySourceScope(sourceActivity);
 
     if (instructionsForSourceActivity.size() > 1) {
-      addFailure(sourceActivity.getId(), instructionsForSourceActivity, report);
+      addFailure(requireNonNull(sourceActivity.getId()), instructionsForSourceActivity, report);
     }
   }
 

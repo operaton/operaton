@@ -73,6 +73,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.runtime.CompensationBehavior;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -505,7 +506,7 @@ public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProd
   }
 
   @SuppressWarnings("unused")
-  protected HistoricVariableUpdateEventEntity newVariableUpdateEventEntity(ExecutionEntity execution) {
+  protected HistoricVariableUpdateEventEntity newVariableUpdateEventEntity(@Nullable ExecutionEntity execution) {
     return new HistoricVariableUpdateEventEntity();
   }
 
@@ -649,10 +650,11 @@ public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProd
       Date removalTime = calculateRemovalTime(evt);
 
       if (removalTime != null) {
-        addRemovalTimeToHistoricProcessInstances(evt.getRootProcessInstanceId(), removalTime);
+        String rootProcessInstanceId = requireNonNull(evt.getRootProcessInstanceId());
+        addRemovalTimeToHistoricProcessInstances(rootProcessInstanceId, removalTime);
 
         if (isDmnEnabled()) {
-          addRemovalTimeToHistoricDecisions(evt.getRootProcessInstanceId(), removalTime);
+          addRemovalTimeToHistoricDecisions(rootProcessInstanceId, removalTime);
         }
       }
     }
@@ -808,7 +810,7 @@ public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProd
   }
 
   @Override
-  public HistoryEvent createTaskInstanceCompleteEvt(DelegateTask task, String deleteReason) {
+  public HistoryEvent createTaskInstanceCompleteEvt(DelegateTask task, @Nullable String deleteReason) {
 
     // create event instance
     HistoricTaskInstanceEventEntity evt = loadTaskInstanceEvent(task);
@@ -853,17 +855,17 @@ public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProd
   // variables /////////////////////////////////
 
   @Override
-  public HistoryEvent createHistoricVariableCreateEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope) {
+  public HistoryEvent createHistoricVariableCreateEvt(VariableInstanceEntity variableInstance, @Nullable VariableScope sourceVariableScope) {
     return createHistoricVariableEvent(variableInstance, sourceVariableScope, HistoryEventTypes.VARIABLE_INSTANCE_CREATE);
   }
 
   @Override
-  public HistoryEvent createHistoricVariableDeleteEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope) {
+  public HistoryEvent createHistoricVariableDeleteEvt(VariableInstanceEntity variableInstance, @Nullable VariableScope sourceVariableScope) {
     return createHistoricVariableEvent(variableInstance, sourceVariableScope, HistoryEventTypes.VARIABLE_INSTANCE_DELETE);
   }
 
   @Override
-  public HistoryEvent createHistoricVariableUpdateEvt(VariableInstanceEntity variableInstance, VariableScope sourceVariableScope) {
+  public HistoryEvent createHistoricVariableUpdateEvt(VariableInstanceEntity variableInstance, @Nullable VariableScope sourceVariableScope) {
     return createHistoricVariableEvent(variableInstance, sourceVariableScope, HistoryEventTypes.VARIABLE_INSTANCE_UPDATE);
   }
 
@@ -983,6 +985,7 @@ public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProd
           .getCommandContext()
           .getTaskManager()
           .findTaskById(identityLink.getTaskId());
+      EnsureUtil.ensureNotNull("task " + identityLink.getTaskId() + " cannot be found", "task", task);
 
       if (task.getProcessDefinition() != null) {
         fillProcessDefinitionData(evt, task.getProcessDefinitionId());
@@ -1105,6 +1108,7 @@ public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProd
       byte[] exceptionBytes = toByteArray(exceptionStacktrace);
 
       ByteArrayEntity byteArray = createJobExceptionByteArray(exceptionBytes, ResourceTypes.HISTORY);
+      EnsureUtil.ensureNotNull("byteArray", byteArray);
 
       byteArray.setRootProcessInstanceId(event.getRootProcessInstanceId());
       byteArray.setRemovalTime(event.getRemovalTime());
@@ -1304,8 +1308,9 @@ public @NullMarked class DefaultHistoryEventProducer implements HistoryEventProd
   }
 
   protected @Nullable Date calculateRemovalTime(HistoryEvent historyEvent) {
-    String processDefinitionId = historyEvent.getProcessDefinitionId();
+    String processDefinitionId = requireNonNull(historyEvent.getProcessDefinitionId());
     ProcessDefinition processDefinition = findProcessDefinitionById(processDefinitionId);
+    EnsureUtil.ensureNotNull("processDefinition", "Cannot find process definition for id " + processDefinitionId, processDefinition);
 
     return Context.getProcessEngineConfiguration()
       .getHistoryRemovalTimeProvider()

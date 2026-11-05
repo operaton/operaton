@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
@@ -39,17 +40,17 @@ public @NullMarked class VariableListenerInvocationListener implements VariableI
   }
 
   @Override
-  public void onCreate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onCreate(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     handleEvent(new VariableEvent(variable, VariableListener.CREATE, sourceScope));
   }
 
   @Override
-  public void onUpdate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onUpdate(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     handleEvent(new VariableEvent(variable, VariableListener.UPDATE, sourceScope));
   }
 
   @Override
-  public void onDelete(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onDelete(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     handleEvent(new VariableEvent(variable, VariableListener.DELETE, sourceScope));
   }
 
@@ -63,7 +64,7 @@ public @NullMarked class VariableListenerInvocationListener implements VariableI
       if (execution != null) {
         addEventToScopeExecution(execution, event);
       }
-    } else if(sourceScope.getParentVariableScope() instanceof ExecutionEntity executionEntity) {
+    } else if(sourceScope != null && sourceScope.getParentVariableScope() instanceof ExecutionEntity executionEntity) {
       addEventToScopeExecution(executionEntity, event);
     }
     else {
@@ -71,6 +72,7 @@ public @NullMarked class VariableListenerInvocationListener implements VariableI
     }
   }
 
+  @SuppressWarnings("UnnecessaryLocalVariable")
   protected void addEventToScopeExecution(ExecutionEntity sourceScope, VariableEvent event) {
     // ignore events of variables that are not set in an execution
     ExecutionEntity sourceExecution = sourceScope;

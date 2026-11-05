@@ -38,7 +38,7 @@ public @NullMarked class ElValueProvider implements ParameterValueProvider, Comp
   }
 
   @Override
-  public @Nullable Object getValue(VariableScope variableScope) {
+  public @Nullable Object getValue(@Nullable VariableScope variableScope) {
     EnsureUtil.ensureNotNull("variableScope", variableScope);
     return expression.getValue(variableScope);
   }

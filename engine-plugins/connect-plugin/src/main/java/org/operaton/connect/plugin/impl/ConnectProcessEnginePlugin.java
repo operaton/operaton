@@ -19,13 +19,14 @@ package org.operaton.connect.plugin.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 import org.operaton.connect.Connectors;
 
-public class ConnectProcessEnginePlugin extends AbstractProcessEnginePlugin {
+public @NullMarked class ConnectProcessEnginePlugin extends AbstractProcessEnginePlugin {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {

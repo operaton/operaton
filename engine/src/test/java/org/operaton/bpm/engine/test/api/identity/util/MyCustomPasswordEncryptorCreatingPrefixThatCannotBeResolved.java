@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.identity.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.digest.PasswordEncryptor;
 
-public class MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved implements PasswordEncryptor {
+public @NullMarked class MyCustomPasswordEncryptorCreatingPrefixThatCannotBeResolved implements PasswordEncryptor {
 
   protected int counter;
 

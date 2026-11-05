@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
@@ -26,6 +27,8 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventProcessor;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -33,7 +36,7 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 public @NullMarked class VariableInstanceHistoryListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
   @Override
-  public void onCreate(final VariableInstanceEntity variableInstance, final AbstractVariableScope sourceScope) {
+  public void onCreate(final VariableInstanceEntity variableInstance, final @Nullable AbstractVariableScope sourceScope) {
     if (getHistoryLevel().isHistoryEventProduced(HistoryEventTypes.VARIABLE_INSTANCE_CREATE, variableInstance) && !variableInstance.isTransient()) {
       HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
         @Override
@@ -45,7 +48,7 @@ public @NullMarked class VariableInstanceHistoryListener implements VariableInst
   }
 
   @Override
-  public void onDelete(final VariableInstanceEntity variableInstance, final AbstractVariableScope sourceScope) {
+  public void onDelete(final VariableInstanceEntity variableInstance, final @Nullable AbstractVariableScope sourceScope) {
     if (getHistoryLevel().isHistoryEventProduced(HistoryEventTypes.VARIABLE_INSTANCE_DELETE, variableInstance) && !variableInstance.isTransient()) {
       HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
         @Override
@@ -57,7 +60,7 @@ public @NullMarked class VariableInstanceHistoryListener implements VariableInst
   }
 
   @Override
-  public void onUpdate(final VariableInstanceEntity variableInstance, final AbstractVariableScope sourceScope) {
+  public void onUpdate(final VariableInstanceEntity variableInstance, final @Nullable AbstractVariableScope sourceScope) {
     if (getHistoryLevel().isHistoryEventProduced(HistoryEventTypes.VARIABLE_INSTANCE_UPDATE, variableInstance) && !variableInstance.isTransient()) {
       HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
         @Override
@@ -69,6 +72,7 @@ public @NullMarked class VariableInstanceHistoryListener implements VariableInst
   }
 
   protected HistoryLevel getHistoryLevel() {
-    return Context.getProcessEngineConfiguration().getHistoryLevel();
+    HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
+    return requireNonNull(historyLevel);
   }
 }

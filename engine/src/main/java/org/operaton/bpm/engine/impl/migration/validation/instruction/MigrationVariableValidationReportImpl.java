@@ -33,6 +33,7 @@ public class MigrationVariableValidationReportImpl implements MigrationVariableV
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public <T extends TypedValue> T getTypedValue() {
     return (T) typedValue;
   }

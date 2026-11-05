@@ -46,14 +46,14 @@ import org.jspecify.annotations.Nullable;
  */
 public class Authentication {
 
-  protected String authenticatedUserId;
-  protected List<String> authenticatedGroupIds;
-  protected List<String> authenticatedTenantIds;
+  protected @Nullable String authenticatedUserId;
+  protected @Nullable List<String> authenticatedGroupIds;
+  protected @Nullable List<String> authenticatedTenantIds;
 
   public Authentication() {
   }
 
-  public Authentication(String authenticatedUserId, List<String> groupIds) {
+  public Authentication(String authenticatedUserId, @Nullable List<String> groupIds) {
     this(authenticatedUserId, groupIds, null);
   }
 
@@ -69,15 +69,15 @@ public class Authentication {
     }
   }
 
-  public List<String> getGroupIds() {
+  public @Nullable List<String> getGroupIds() {
     return authenticatedGroupIds;
   }
 
-  public String getUserId() {
+  public @Nullable String getUserId() {
     return authenticatedUserId;
   }
 
-  public List<String> getTenantIds() {
+  public @Nullable List<String> getTenantIds() {
     return authenticatedTenantIds;
   }
 

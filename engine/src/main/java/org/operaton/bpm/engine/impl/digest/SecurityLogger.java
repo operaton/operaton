@@ -18,12 +18,14 @@ package org.operaton.bpm.engine.impl.digest;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
-public class SecurityLogger extends ProcessEngineLogger {
+public @NullMarked class SecurityLogger extends ProcessEngineLogger {
 
-  public ProcessEngineException cannotResolveAlgorithmPrefixFromGivenPasswordException(String resolvedHashAlgorithmName, Collection<String> availableHashAlgorithmNames) {
+  public ProcessEngineException cannotResolveAlgorithmPrefixFromGivenPasswordException(@Nullable String resolvedHashAlgorithmName, Collection<String> availableHashAlgorithmNames) {
     return new PasswordEncryptionException(exceptionMessage(
       "001",
       "Could not resolve hash algorithm name of a hashed password. Resolved hash algorithm name {}. Available hash algorithms {}",

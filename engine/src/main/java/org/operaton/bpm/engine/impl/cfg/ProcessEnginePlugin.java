@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**
@@ -24,12 +25,12 @@ import org.operaton.bpm.engine.ProcessEngine;
  * @author Daniel Meyer
  *
  */
-public interface ProcessEnginePlugin {
+public @NullMarked interface ProcessEnginePlugin {
 
   /**
    * <p>Invoked before the process engine configuration is initialized.</p>
    *
-   * @param processEngineConfiguration the process engine configuation
+   * @param processEngineConfiguration the process engine configuration
    *
    */
   void preInit(ProcessEngineConfigurationImpl processEngineConfiguration);
@@ -38,7 +39,7 @@ public interface ProcessEnginePlugin {
    * <p>Invoked after the process engine configuration is initialized.
    * and before the process engine is built.</p>
    *
-   * @param processEngineConfiguration the process engine configuation
+   * @param processEngineConfiguration the process engine configuration
    *
    */
   void postInit(ProcessEngineConfigurationImpl processEngineConfiguration);
@@ -46,7 +47,7 @@ public interface ProcessEnginePlugin {
   /**
    * <p>Invoked after the process engine has been built.</p>
    *
-   * @param processEngine
+   * @param processEngine the process engine
    */
   void postProcessEngineBuild(ProcessEngine processEngine);
 

@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
 
-public class OAuth2IdentityProviderPlugin extends SpringBootProcessEnginePlugin {
+public @NullMarked class OAuth2IdentityProviderPlugin extends SpringBootProcessEnginePlugin {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {

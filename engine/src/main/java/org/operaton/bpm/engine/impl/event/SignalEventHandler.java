@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.event;
 
 import java.util.Map;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -42,7 +43,7 @@ public class SignalEventHandler extends EventHandlerImpl {
   }
 
   @SuppressWarnings("unused")
-  protected void handleStartEvent(EventSubscriptionEntity eventSubscription, Map<String, Object> payload, String businessKey, CommandContext commandContext) {
+  protected void handleStartEvent(EventSubscriptionEntity eventSubscription, @Nullable Map<String, Object> payload, @Nullable String businessKey, CommandContext commandContext) {
     String processDefinitionId = eventSubscription.getConfiguration();
     ensureNotNull("Configuration of signal start event subscription '%s' contains no process definition id.".formatted(eventSubscription.getId()),
         processDefinitionId);
@@ -60,11 +61,12 @@ public class SignalEventHandler extends EventHandlerImpl {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void handleEvent(EventSubscriptionEntity eventSubscription,
-                          Object payload,
-                          Object payloadLocal,
-                          Object payloadToTriggeredScope,
-                          String businessKey,
+                          @Nullable Object payload,
+                          @Nullable Object payloadLocal,
+                          @Nullable Object payloadToTriggeredScope,
+                          @Nullable String businessKey,
                           CommandContext commandContext) {
     if (eventSubscription.getExecutionId() != null) {
       handleIntermediateEvent(eventSubscription, payload, payloadLocal, null, commandContext);

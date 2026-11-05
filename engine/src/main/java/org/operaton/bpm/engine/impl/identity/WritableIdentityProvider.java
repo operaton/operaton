@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.identity;
 
+import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.identity.User;
@@ -40,8 +41,8 @@ public interface WritableIdentityProvider extends Session {
    * <p>NOTE: the implementation does not validate the uniqueness of the userId
    * parameter at this time.</p>
    *
-   * @param userId
-   * @return an non-persistent user object.
+   * @param userId the id of the new user
+   * @return a non-persistent user object.
    */
   User createNewUser(String userId);
 
@@ -57,7 +58,7 @@ public interface WritableIdentityProvider extends Session {
   /**
    * Allows deleting a persistent {@link User} object.
    *
-   * @param UserId the id of the User object to delete.
+   * @param userId the id of the User object to delete.
    * @return the operation result object.
    * @throws IdentityProviderException in case an internal error occurs
    */
@@ -65,7 +66,7 @@ public interface WritableIdentityProvider extends Session {
 
   /**
    * Allows unlocking a {@link User} object.
-   * @param userId the id of the User object to delete.
+   * @param userId the id of the User object to unlock.
    * @return the operation result object.
    * @throws AuthorizationException if the user is not OPERATON_ADMIN
    */
@@ -81,8 +82,8 @@ public interface WritableIdentityProvider extends Session {
    * <p>NOTE: the implementation does not validate the uniqueness of the groupId
    * parameter at this time.</p>
    *
-   * @param groupId
-   * @return an non-persistent group object.
+   * @param groupId the id of the new group
+   * @return a non-persistent group object.
    */
   Group createNewGroup(String groupId);
 
@@ -150,7 +151,7 @@ public interface WritableIdentityProvider extends Session {
    * IdentityProviderException is thrown.
    *
    * @param userId the id of the user
-   * @param groupId id of the group
+   * @param groupId the id of the group
    * @return the operation result object.
    * @throws IdentityProviderException
    */
@@ -160,7 +161,7 @@ public interface WritableIdentityProvider extends Session {
    * Deletes a membership relation between a user and a group.
    *
    * @param userId the id of the user
-   * @param groupId id of the group
+   * @param groupId the id of the group
    * @return the operation result object.
    * @throws IdentityProviderException
    */

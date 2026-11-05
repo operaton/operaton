@@ -16,23 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.identity;
 
-import java.util.Date;
+/**
+ * @deprecated Use {@link IdentityLogger} instead.
+ */
+@Deprecated(forRemoval = true, since = "2.3")
+public class IndentityLogger extends IdentityLogger {
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
-public class IndentityLogger extends ProcessEngineLogger {
-
-  public void infoUserTemporarilyLocked(String userId, Date lockExpirationTime) {
-    logInfo(
-        "001",
-      "The user with id '%s' is locked. The lock will expire at %s".formatted(
-        userId,
-        lockExpirationTime));
-  }
-  public void infoUserPermanentlyLocked(String userId) {
-    logInfo(
-        "002",
-      "The user with id '%s' is permanently locked.".formatted(
-        userId));
-  }
 }

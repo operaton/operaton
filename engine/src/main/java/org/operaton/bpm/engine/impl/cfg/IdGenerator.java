@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.db.IdBlock;
 
 
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.db.IdBlock;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public interface IdGenerator {
+public @NullMarked interface IdGenerator {
 
   String getNextId();
 

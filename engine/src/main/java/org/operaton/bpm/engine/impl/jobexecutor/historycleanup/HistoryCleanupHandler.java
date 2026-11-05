@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
 
 import org.jspecify.annotations.Nullable;
@@ -28,16 +29,16 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 /**
  * @author Tassilo Weidner
  */
-public abstract class HistoryCleanupHandler implements TransactionListener {
+public abstract @NullMarked class HistoryCleanupHandler implements TransactionListener {
 
   /**
    * Maximum allowed batch size.
    */
   public static final int MAX_BATCH_SIZE = 500;
 
-  protected HistoryCleanupJobHandlerConfiguration configuration;
-  protected String jobId;
-  protected CommandExecutor commandExecutor;
+  protected @Nullable HistoryCleanupJobHandlerConfiguration configuration;
+  protected @Nullable String jobId;
+  protected @Nullable CommandExecutor commandExecutor;
 
   @Override
   public void execute(CommandContext commandContext) {
@@ -51,7 +52,7 @@ public abstract class HistoryCleanupHandler implements TransactionListener {
 
   abstract boolean shouldRescheduleNow();
 
-  public HistoryCleanupJobHandlerConfiguration getConfiguration() {
+  public @Nullable HistoryCleanupJobHandlerConfiguration getConfiguration() {
     return configuration;
   }
 
@@ -70,7 +71,7 @@ public abstract class HistoryCleanupHandler implements TransactionListener {
     return this;
   }
 
-  protected class HistoryCleanupHandlerCmd implements Command<Void> {
+  protected @NullMarked class HistoryCleanupHandlerCmd implements Command<Void> {
     @Override
     public @Nullable Void execute(CommandContext commandContext) {
 

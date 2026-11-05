@@ -19,6 +19,8 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 import java.util.Optional;
 import jakarta.annotation.PostConstruct;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.BeanUtils;
 
 import org.operaton.bpm.engine.AuthorizationService;
@@ -40,9 +42,9 @@ import static org.operaton.bpm.engine.authorization.Groups.OPERATON_ADMIN;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static java.util.Objects.requireNonNull;
 
-public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration {
+public @NullMarked class CreateAdminUserConfiguration extends AbstractOperatonConfiguration {
 
-  private User adminUser;
+  private @Nullable User adminUser;
 
   public CreateAdminUserConfiguration(OperatonBpmProperties operatonBpmProperties) {
     super(operatonBpmProperties);
@@ -103,6 +105,7 @@ public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration 
     return false;
   }
 
+  @SuppressWarnings("UnusedReturnValue")
   static User createUser(final IdentityService identityService, final User adminUser) {
     User newUser = identityService.newUser(adminUser.getId());
     BeanUtils.copyProperties(adminUser, newUser);

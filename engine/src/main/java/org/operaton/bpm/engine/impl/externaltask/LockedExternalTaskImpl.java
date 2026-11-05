@@ -16,25 +16,30 @@
  */
 package org.operaton.bpm.engine.impl.externaltask;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
+import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class LockedExternalTaskImpl implements LockedExternalTask {
+public @NullUnmarked class LockedExternalTaskImpl implements LockedExternalTask {
 
   protected String id;
   protected String topicName;
@@ -172,7 +177,7 @@ public class LockedExternalTaskImpl implements LockedExternalTask {
    * @return object with all fields copied from the ExternalTaskEntity, error details fetched from the
    * database and variables attached
    */
-  public static LockedExternalTaskImpl fromEntity(ExternalTaskEntity externalTaskEntity, List<String> variablesToFetch, boolean isLocal, boolean deserializeVariables, boolean includeExtensionProperties) {
+  @SuppressWarnings("unchecked")  public static LockedExternalTaskImpl fromEntity(ExternalTaskEntity externalTaskEntity, List<String> variablesToFetch, boolean isLocal, boolean deserializeVariables, boolean includeExtensionProperties) {
     LockedExternalTaskImpl result = new LockedExternalTaskImpl();
     result.id = externalTaskEntity.getId();
     result.topicName = externalTaskEntity.getTopicName();
@@ -199,7 +204,8 @@ public class LockedExternalTaskImpl implements LockedExternalTask {
     execution.collectVariables(result.variables, variablesToFetch, isLocal, deserializeVariables);
 
     if(includeExtensionProperties) {
-      result.extensionProperties = (Map<String, String>) execution.getActivity().getProperty(BpmnProperties.EXTENSION_PROPERTIES.name());
+      ActivityImpl activity = requireNonNull(execution.getActivity());
+      result.extensionProperties = (Map<String, String>) activity.getProperty(BpmnProperties.EXTENSION_PROPERTIES.name());
     }
     if(result.extensionProperties == null) {
       result.extensionProperties = Collections.emptyMap();

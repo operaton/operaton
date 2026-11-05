@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullUnmarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.QueryOperator;
 import org.operaton.bpm.engine.impl.QueryVariableValue;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -32,11 +35,11 @@ import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
  * @author Thorben Lindhauer
  *
  */
-public class TopicFetchInstruction implements Serializable {
+public @NullUnmarked class TopicFetchInstruction implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected String topicName;
+  protected @NonNull String topicName;
   protected String businessKey;
   protected String processDefinitionId;
   protected String[] processDefinitionIds;
@@ -44,7 +47,7 @@ public class TopicFetchInstruction implements Serializable {
   protected String[] processDefinitionKeys;
   protected String processDefinitionVersionTag;
   protected boolean isTenantIdSet;
-  protected String[] tenantIds;
+  protected String @Nullable[] tenantIds;
   private List<String> variablesToFetch;
 
   private final List<QueryVariableValue> filterVariables;
@@ -53,7 +56,7 @@ public class TopicFetchInstruction implements Serializable {
   protected boolean localVariables;
   protected boolean includeExtensionProperties;
 
-  public TopicFetchInstruction(String topicName, long lockDuration) {
+  public TopicFetchInstruction(@NonNull String topicName, long lockDuration) {
     this.topicName = topicName;
     this.lockDuration = lockDuration;
     this.filterVariables = new ArrayList<>();
@@ -127,7 +130,7 @@ public class TopicFetchInstruction implements Serializable {
     return tenantIds;
   }
 
-  public void setTenantIds(String[] tenantIds) {
+  public void setTenantIds(String @Nullable [] tenantIds) {
     isTenantIdSet = true;
     this.tenantIds = tenantIds;
   }
@@ -153,7 +156,7 @@ public class TopicFetchInstruction implements Serializable {
     return lockDuration;
   }
 
-  public String getTopicName() {
+  public @NonNull String getTopicName() {
     return topicName;
   }
 

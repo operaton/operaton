@@ -17,6 +17,8 @@
 package org.operaton.bpm.identity.impl.ldap;
 
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ import javax.naming.directory.SearchControls;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("unused")
 public class LdapConfiguration {
 
   public static final String LDAP_QUERY_WILDCARD = "*";
@@ -292,7 +295,7 @@ public class LdapConfiguration {
     this.authorizationCheckEnabled = authorizationCheckEnabled;
   }
 
-  public Integer getPageSize() {
+  public @Nullable Integer getPageSize() {
     return pageSize;
   }
 

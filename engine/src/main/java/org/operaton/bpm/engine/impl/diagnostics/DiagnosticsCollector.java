@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.metrics.util.MetricsUtil;
@@ -45,11 +46,11 @@ public class DiagnosticsCollector {
 
   protected TelemetryDataImpl staticData;
   protected DiagnosticsRegistry diagnosticsRegistry;
-  protected MetricsRegistry metricsRegistry;
+  protected @Nullable MetricsRegistry metricsRegistry;
 
   public DiagnosticsCollector(TelemetryDataImpl data,
                               DiagnosticsRegistry diagnosticsRegistry,
-                              MetricsRegistry metricsRegistry) {
+                              @Nullable MetricsRegistry metricsRegistry) {
     this.staticData = data;
     this.diagnosticsRegistry = diagnosticsRegistry;
     this.metricsRegistry = metricsRegistry;
@@ -106,6 +107,7 @@ public class DiagnosticsCollector {
     return commandsToReport;
   }
 
+  @SuppressWarnings("ConstantConditions")
   protected Map<String, Metric> calculateMetrics() {
 
     Map<String, Metric> metrics = new HashMap<>();

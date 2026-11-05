@@ -22,6 +22,8 @@ import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
+import java.util.Objects;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -38,7 +40,7 @@ public class SameEventTypeValidator implements MigrationInstructionValidator {
       String sourceType = sourceActivity.getProperties().get(BpmnProperties.TYPE);
       String targetType = targetActivity.getProperties().get(BpmnProperties.TYPE);
 
-      if (!sourceType.equals(targetType)) {
+      if (!Objects.equals(sourceType, targetType)) {
         report.addFailure("Events are not of the same type (%s != %s)".formatted(sourceType, targetType));
       }
     }

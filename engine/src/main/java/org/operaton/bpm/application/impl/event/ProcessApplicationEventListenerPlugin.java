@@ -19,6 +19,7 @@ package org.operaton.bpm.application.impl.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
  * @author Daniel Meyer
  *
  */
-public class ProcessApplicationEventListenerPlugin extends AbstractProcessEnginePlugin {
+public @NullMarked class ProcessApplicationEventListenerPlugin extends AbstractProcessEnginePlugin {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {

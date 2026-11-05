@@ -19,13 +19,14 @@ package org.operaton.bpm.engine.impl.migration.validation.instance;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.migration.MigratingActivityInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
 
 public class MigratingProcessInstanceValidationReportImpl implements MigratingProcessInstanceValidationReport {
 
-  protected String processInstanceId;
+  protected @Nullable String processInstanceId;
   protected List<MigratingActivityInstanceValidationReport> activityInstanceReports =
       new ArrayList<>();
   protected List<MigratingTransitionInstanceValidationReport> transitionInstanceReports =
@@ -33,7 +34,7 @@ public class MigratingProcessInstanceValidationReportImpl implements MigratingPr
   protected List<String> failures = new ArrayList<>();
 
   @Override
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 

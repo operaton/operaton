@@ -18,6 +18,8 @@ package org.operaton.bpm.engine.impl.runtime;
 
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.UpdateProcessInstancesSuspensionStateBuilderImpl;
@@ -31,25 +33,26 @@ import org.operaton.bpm.engine.runtime.UpdateProcessInstanceSuspensionStateSelec
 import org.operaton.bpm.engine.runtime.UpdateProcessInstanceSuspensionStateTenantBuilder;
 import org.operaton.bpm.engine.runtime.UpdateProcessInstancesSuspensionStateBuilder;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 
-public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdateProcessInstanceSuspensionStateBuilder,
+public @NullMarked class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdateProcessInstanceSuspensionStateBuilder,
     UpdateProcessInstanceSuspensionStateSelectBuilder, UpdateProcessInstanceSuspensionStateTenantBuilder {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
-  protected final CommandExecutor commandExecutor;
+  protected final @Nullable CommandExecutor commandExecutor;
 
-  protected String processInstanceId;
+  protected @Nullable String processInstanceId;
 
-  protected String processDefinitionKey;
-  protected String processDefinitionId;
+  protected @Nullable String processDefinitionKey;
+  protected @Nullable String processDefinitionId;
 
-  protected String processDefinitionTenantId;
+  protected @Nullable String processDefinitionTenantId;
   protected boolean isProcessDefinitionTenantIdSet;
 
-  public UpdateProcessInstanceSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {
+  public UpdateProcessInstanceSuspensionStateBuilderImpl(@Nullable CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;
   }
 
@@ -62,24 +65,28 @@ public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdatePr
     this(null);
   }
 
+  private CommandExecutor getCommandExecutor() {
+    return requireNonNull(commandExecutor);
+  }
+
   @Override
   public UpdateProcessInstancesSuspensionStateBuilder byProcessInstanceIds(List<String> processInstanceIds){
-    return new UpdateProcessInstancesSuspensionStateBuilderImpl(commandExecutor).byProcessInstanceIds(processInstanceIds);
+    return new UpdateProcessInstancesSuspensionStateBuilderImpl(getCommandExecutor()).byProcessInstanceIds(processInstanceIds);
   }
 
   @Override
   public UpdateProcessInstancesSuspensionStateBuilder byProcessInstanceIds(String... processInstanceIds) {
-    return new UpdateProcessInstancesSuspensionStateBuilderImpl(commandExecutor).byProcessInstanceIds(processInstanceIds);
+    return new UpdateProcessInstancesSuspensionStateBuilderImpl(getCommandExecutor()).byProcessInstanceIds(processInstanceIds);
   }
 
   @Override
   public UpdateProcessInstancesSuspensionStateBuilder byProcessInstanceQuery(ProcessInstanceQuery processInstanceQuery) {
-    return new UpdateProcessInstancesSuspensionStateBuilderImpl(commandExecutor).byProcessInstanceQuery(processInstanceQuery);
+    return new UpdateProcessInstancesSuspensionStateBuilderImpl(getCommandExecutor()).byProcessInstanceQuery(processInstanceQuery);
   }
 
   @Override
   public UpdateProcessInstancesSuspensionStateBuilder byHistoricProcessInstanceQuery(HistoricProcessInstanceQuery historicProcessInstanceQuery) {
-    return new UpdateProcessInstancesSuspensionStateBuilderImpl(commandExecutor).byHistoricProcessInstanceQuery(historicProcessInstanceQuery);
+    return new UpdateProcessInstancesSuspensionStateBuilderImpl(getCommandExecutor()).byHistoricProcessInstanceQuery(historicProcessInstanceQuery);
   }
 
 
@@ -125,7 +132,7 @@ public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdatePr
     validateParameters();
 
     ActivateProcessInstanceCmd command = new ActivateProcessInstanceCmd(this);
-    commandExecutor.execute(command);
+    getCommandExecutor().execute(command);
   }
 
   @Override
@@ -133,7 +140,7 @@ public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdatePr
     validateParameters();
 
     SuspendProcessInstanceCmd command = new SuspendProcessInstanceCmd(this);
-    commandExecutor.execute(command);
+    getCommandExecutor().execute(command);
   }
 
   protected void validateParameters() {
@@ -146,15 +153,15 @@ public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdatePr
     ensureNotNull("commandExecutor", commandExecutor);
   }
 
-  public String getProcessDefinitionKey() {
+  public @Nullable String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 
-  public String getProcessDefinitionId() {
+  public @Nullable String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
-  public String getProcessDefinitionTenantId() {
+  public @Nullable String getProcessDefinitionTenantId() {
     return processDefinitionTenantId;
   }
 
@@ -162,7 +169,7 @@ public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdatePr
     return isProcessDefinitionTenantIdSet;
   }
 
-  public String getProcessInstanceId() {
+  public @Nullable String getProcessInstanceId() {
     return processInstanceId;
   }
 

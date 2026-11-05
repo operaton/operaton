@@ -21,6 +21,8 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 import org.operaton.bpm.engine.identity.User;
 
+import static java.util.Objects.requireNonNull;
+
 public class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRule {
 
   public static final String PLACEHOLDER = DefaultPasswordPolicyImpl.PLACEHOLDER_PREFIX + "USER_DATA";
@@ -36,12 +38,12 @@ public class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRule {
   }
 
   @Override
-  public boolean execute(String candidatePassword, User user) {
+  @SuppressWarnings("ConstantConditions")
+  public boolean execute(String candidatePassword, @Nullable User user) {
     if (candidatePassword.isEmpty() || user == null) {
       return true;
-
     } else {
-        candidatePassword = upperCase(candidatePassword);
+        candidatePassword = requireNonNull(upperCase(candidatePassword));
 
         String id = upperCase(user.getId());
         String firstName = upperCase(user.getFirstName());
@@ -52,15 +54,14 @@ public class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRule {
             isNotBlank(firstName) && candidatePassword.contains(firstName) ||
             isNotBlank(lastName) && candidatePassword.contains(lastName) ||
             isNotBlank(email) && candidatePassword.contains(email));
-
     }
   }
 
-  public @Nullable String upperCase(String string) {
+  public @Nullable String upperCase(@Nullable String string) {
     return string == null ? null : string.toUpperCase();
   }
 
-  public boolean isNotBlank(String value) {
+  public boolean isNotBlank(@Nullable String value) {
     return value != null && !value.isEmpty();
   }
 

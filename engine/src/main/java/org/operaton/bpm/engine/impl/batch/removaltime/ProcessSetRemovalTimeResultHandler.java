@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
 import org.operaton.bpm.engine.impl.cfg.TransactionListener;
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
-public class ProcessSetRemovalTimeResultHandler implements TransactionListener {
+public @NullMarked class ProcessSetRemovalTimeResultHandler implements TransactionListener {
 
   protected SetRemovalTimeBatchConfiguration batchJobConfiguration;
   protected Integer chunkSize;

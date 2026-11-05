@@ -22,6 +22,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 /**
@@ -37,7 +38,8 @@ public @NullMarked class MapValueProvider implements ParameterValueProvider {
   }
 
   @Override
-  public Object getValue(VariableScope variableScope) {
+  @SuppressWarnings("ConstantConditions")
+  public Object getValue(@Nullable VariableScope variableScope) {
     Map<Object, Object> valueMap = new TreeMap<>();
     for (Entry<ParameterValueProvider, ParameterValueProvider> entry : providerMap.entrySet()) {
       valueMap.put(entry.getKey().getValue(variableScope), entry.getValue().getValue(variableScope));

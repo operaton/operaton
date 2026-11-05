@@ -19,20 +19,25 @@ package org.operaton.bpm.engine.impl.migration.validation.instance;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingTransitionInstance;
+import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
+
+import static java.util.Objects.requireNonNull;
 
 public class MigratingTransitionInstanceValidationReportImpl implements MigratingTransitionInstanceValidationReport {
 
   protected String transitionInstanceId;
   protected String sourceScopeId;
-  protected MigrationInstruction migrationInstruction;
+  protected @Nullable MigrationInstruction migrationInstruction;
   protected List<String> failures = new ArrayList<>();
 
   public MigratingTransitionInstanceValidationReportImpl(MigratingTransitionInstance migratingTransitionInstance) {
     this.transitionInstanceId = migratingTransitionInstance.getTransitionInstance().getId();
-    this.sourceScopeId = migratingTransitionInstance.getSourceScope().getId();
+    ScopeImpl sourceScope = requireNonNull(migratingTransitionInstance.getSourceScope());
+    this.sourceScopeId = requireNonNull(sourceScope.getId());
     this.migrationInstruction = migratingTransitionInstance.getMigrationInstruction();
   }
 

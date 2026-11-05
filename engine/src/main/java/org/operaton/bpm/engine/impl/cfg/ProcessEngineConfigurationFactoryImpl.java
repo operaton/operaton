@@ -15,6 +15,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.spi.ProcessEngineConfigurationFactory;
 
@@ -23,7 +24,7 @@ import java.io.InputStream;
 /**
  * @since 1.1
  */
-public class ProcessEngineConfigurationFactoryImpl implements ProcessEngineConfigurationFactory {
+public @NullMarked class ProcessEngineConfigurationFactoryImpl implements ProcessEngineConfigurationFactory {
   private static final String BEAN_PROCESS_ENGINE_CONFIGURATION = "processEngineConfiguration";
 
   public ProcessEngineConfiguration createProcessEngineConfigurationFromResourceDefault() {

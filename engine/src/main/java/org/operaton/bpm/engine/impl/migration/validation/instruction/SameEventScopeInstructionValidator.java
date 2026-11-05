@@ -17,7 +17,9 @@
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -54,7 +56,7 @@ public class SameEventScopeInstructionValidator implements MigrationInstructionV
     }
     else {
       ScopeImpl mappedSourceEventScope = findMappedEventScope(sourceEventScope, instruction, instructions);
-      if (mappedSourceEventScope == null || !mappedSourceEventScope.getId().equals(targetEventScope.getId())) {
+      if (mappedSourceEventScope == null || !Objects.equals(mappedSourceEventScope.getId(), targetEventScope.getId())) {
         report.addFailure("The source activity's event scope (%s) must be mapped to the target activity's event scope (%s)"
             .formatted(sourceEventScope.getId(), targetEventScope.getId()));
       }
@@ -69,11 +71,10 @@ public class SameEventScopeInstructionValidator implements MigrationInstructionV
   protected boolean isUserTaskWithTimeoutListener(ActivityImpl sourceActivity) {
     return ActivityTypes.TASK_USER_TASK.equals(sourceActivity.getProperties().get(BpmnProperties.TYPE)) &&
         sourceActivity.isScope() && sourceActivity.equals(sourceActivity.getEventScope()) &&
-        sourceActivity.getProperties().get(BpmnProperties.TIMEOUT_LISTENER_DECLARATIONS) != null &&
         !sourceActivity.getProperties().get(BpmnProperties.TIMEOUT_LISTENER_DECLARATIONS).isEmpty();
   }
 
-  protected ScopeImpl findMappedEventScope(ScopeImpl sourceEventScope, ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions) {
+  protected @Nullable ScopeImpl findMappedEventScope(@Nullable ScopeImpl sourceEventScope, ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions) {
     if (sourceEventScope != null) {
       if (sourceEventScope == sourceEventScope.getProcessDefinition()) {
         return instruction.getTargetActivity().getProcessDefinition();

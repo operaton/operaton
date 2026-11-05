@@ -30,6 +30,7 @@ import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.PagedResultsResponseControl;
 import javax.naming.ldap.SortKey;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -42,8 +43,10 @@ import org.operaton.bpm.engine.impl.identity.ReadOnlyIdentityProvider;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
+import org.operaton.bpm.engine.query.QueryProperty;
 import org.operaton.bpm.identity.impl.ldap.util.LdapPluginLogger;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.GROUP;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
@@ -57,7 +60,7 @@ import static org.operaton.bpm.identity.impl.ldap.LdapConfiguration.LDAP_QUERY_W
  *
  * @author Daniel Meyer
  */
-public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
+public @NullMarked class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   protected LdapConfiguration ldapConfiguration;
 
@@ -83,7 +86,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   // Users /////////////////////////////////////////////////
 
   @Override
-  public User findUserById(String userId) {
+  public @Nullable User findUserById(String userId) {
     return createUserQuery(getCommandContext()).userId(userId).singleResult();
   }
 
@@ -112,13 +115,13 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
     // convert DB wildcards to LDAP wildcards if necessary
     if (query.getEmailLike() != null) {
-      query.userEmailLike(query.getEmailLike().replaceAll(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
+      query.userEmailLike(query.getEmailLike().replace(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
     }
     if (query.getFirstNameLike() != null) {
-      query.userFirstNameLike(query.getFirstNameLike().replaceAll(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
+      query.userFirstNameLike(query.getFirstNameLike().replace(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
     }
     if (query.getLastNameLike() != null) {
-      query.userLastNameLike(query.getLastNameLike().replaceAll(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
+      query.userLastNameLike(query.getLastNameLike().replace(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
     }
 
     if (query.getGroupId() != null) {
@@ -211,7 +214,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   }
 
   @Override
-  public boolean checkPassword(String userId, String password) {
+  public boolean checkPassword(@Nullable String userId, @Nullable String password) {
 
     // prevent a null password
     if (password == null) {
@@ -352,7 +355,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
     // convert DB wildcards to LDAP wildcards if necessary
     if (query.getNameLike() != null) {
-      query.groupNameLike(query.getNameLike().replaceAll(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
+      query.groupNameLike(query.getNameLike().replace(DB_QUERY_WILDCARD, LDAP_QUERY_WILDCARD));
     }
 
     ldapClient.ensureContextInitialized();
@@ -513,7 +516,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     }
   }
 
-  protected String getDnForUser(String userId) {
+  protected String getDnForUser(@Nullable String userId) {
     LdapUserEntity user = (LdapUserEntity) createUserQuery(getCommandContext()).userId(userId).singleResult();
     if (user == null) {
       return "";
@@ -522,7 +525,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     }
   }
 
-  protected String getDnForGroup(String groupId) {
+  protected String getDnForGroup(@Nullable String groupId) {
     LdapGroupEntity group = (LdapGroupEntity) createGroupQuery(getCommandContext()).groupId(groupId).singleResult();
     if (group == null) {
       return "";
@@ -572,7 +575,8 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     List<QueryOrderingProperty> orderBy = query.getOrderingProperties();
     if (orderBy != null) {
       for (QueryOrderingProperty orderingProperty : orderBy) {
-        String propertyName = orderingProperty.getQueryProperty().getName();
+        QueryProperty queryProperty = requireNonNull(orderingProperty.getQueryProperty());
+        String propertyName = queryProperty.getName();
         SortKey sortKey = getSortKey(query, propertyName, orderingProperty);
 
         if (sortKey != null) {
@@ -584,7 +588,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return controls;
   }
 
-  protected SortKey getSortKey(AbstractQuery<?, ?> query, String propertyName, QueryOrderingProperty orderingProperty) {
+  protected @Nullable SortKey getSortKey(AbstractQuery<?, ?> query, String propertyName, QueryOrderingProperty orderingProperty) {
     if (query instanceof LdapUserQueryImpl) {
       if (UserQueryProperty.USER_ID.getName().equals(propertyName)) {
         return new SortKey(ldapConfiguration.getUserIdAttribute(),
@@ -616,7 +620,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return null;
   }
 
-  protected String composeDn(String... parts) {
+  protected String composeDn(@Nullable String... parts) {
     StringWriter resultDn = new StringWriter();
     for (String s : parts) {
       String part = s;
@@ -641,7 +645,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   /**
    * @return true if the passed-in user is currently authenticated
    */
-  protected boolean isAuthenticatedUser(String userid) {
+  protected boolean isAuthenticatedUser(@Nullable String userid) {
     if (userid == null) {
       return false;
     }
@@ -756,7 +760,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
    *
    * @return the pageSize
    */
-  protected Integer getPageSize() {
+  protected @Nullable Integer getPageSize() {
     return ldapConfiguration.getPageSize();
   }
 

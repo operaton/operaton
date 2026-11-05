@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 
 /**
  * @author Tom Baeyens
  */
-public class StandaloneInMemProcessEngineConfiguration extends StandaloneProcessEngineConfiguration {
+public @NullMarked class StandaloneInMemProcessEngineConfiguration extends StandaloneProcessEngineConfiguration {
 
   public StandaloneInMemProcessEngineConfiguration() {
     this.databaseSchemaUpdate = DB_SCHEMA_UPDATE_CREATE_DROP;

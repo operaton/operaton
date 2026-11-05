@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.Group;
@@ -30,8 +32,8 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.identity.IdentityLogger;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
-import org.operaton.bpm.engine.impl.identity.IndentityLogger;
 import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MembershipEntity;
@@ -40,6 +42,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TenantMembershipEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -49,9 +52,9 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implements WritableIdentityProvider {
+public @NullMarked class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider implements WritableIdentityProvider {
 
-  protected static final IndentityLogger LOG = ProcessEngineLogger.INDENTITY_LOGGER;
+  protected static final IdentityLogger LOG = ProcessEngineLogger.INDENTITY_LOGGER;
 
   // users ////////////////////////////////////////////////////////
 
@@ -109,7 +112,7 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
   }
 
   @Override
-  public boolean checkPassword(String userId, String password) {
+  public boolean checkPassword(@Nullable String userId, @Nullable String password) {
     UserEntity user = findUserById(userId);
     if (user == null || password == null) {
       return false;
@@ -159,10 +162,11 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
     long currentTime = ClockUtil.getCurrentTime().getTime();
     Date lockExpirationTime = new Date(currentTime + delay);
 
+    String userId = requireNonNull(user.getId());
     if(attempts >= processEngineConfiguration.getLoginMaxAttempts()) {
-      LOG.infoUserPermanentlyLocked(user.getId());
+      LOG.infoUserPermanentlyLocked(userId);
     } else {
-      LOG.infoUserTemporarilyLocked(user.getId(), lockExpirationTime);
+      LOG.infoUserTemporarilyLocked(userId, lockExpirationTime);
     }
 
     getIdentityInfoManager().updateUserLock(user, attempts, lockExpirationTime);
@@ -321,6 +325,8 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
 
     ensureNotNull("No tenant found with id '%s'.".formatted(tenantId), "tenant", tenant);
     ensureNotNull("No user found with id '%s'.".formatted(userId), "user", user);
+    requireNonNull(tenant);
+    requireNonNull(user);
 
     TenantMembershipEntity membership = new TenantMembershipEntity();
     membership.setTenant(tenant);

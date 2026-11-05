@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Fluent builder to update the suspension state of process instances.
  */
-public interface UpdateProcessInstanceSuspensionStateSelectBuilder extends UpdateProcessInstancesRequest {
+public @NullMarked interface UpdateProcessInstanceSuspensionStateSelectBuilder extends UpdateProcessInstancesRequest {
 
   /**
    * Selects the process instance with the given id.

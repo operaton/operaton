@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
@@ -30,7 +31,7 @@ import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.s
  * Convenience class that specializes {@link AbstractProcessEnginePlugin} to
  * use {@link SpringProcessEngineConfiguration} (to save casting).
  */
-public class SpringBootProcessEnginePlugin extends SpringProcessEnginePlugin {
+public @NullMarked class SpringBootProcessEnginePlugin extends SpringProcessEnginePlugin {
 
 
   @Override

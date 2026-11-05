@@ -22,6 +22,8 @@ import org.operaton.bpm.engine.impl.migration.validation.activity.SupportedActiv
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * @author Thorben Lindhauer
  *
@@ -32,10 +34,10 @@ public class SupportedActivityInstanceValidator implements MigratingActivityInst
   public void validate(MigratingActivityInstance migratingInstance, MigratingProcessInstance migratingProcessInstance,
       MigratingActivityInstanceValidationReportImpl instanceReport) {
 
-    ScopeImpl sourceScope = migratingInstance.getSourceScope();
+    ScopeImpl sourceScope = requireNonNull(migratingInstance.getSourceScope());
 
     if (sourceScope != sourceScope.getProcessDefinition()) {
-      ActivityImpl sourceActivity = (ActivityImpl) migratingInstance.getSourceScope();
+      ActivityImpl sourceActivity = requireNonNull((ActivityImpl) migratingInstance.getSourceScope());
 
       if (!SupportedActivityValidator.isSupportedActivity(sourceActivity)) {
         instanceReport.addFailure("The type of the source activity is not supported for activity instance migration");

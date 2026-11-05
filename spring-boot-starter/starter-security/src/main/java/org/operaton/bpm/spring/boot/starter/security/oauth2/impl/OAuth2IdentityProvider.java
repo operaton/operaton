@@ -131,7 +131,7 @@ public @NullMarked class OAuth2IdentityProvider extends DbIdentityServiceProvide
       return Stream.of(transformUser())
           .filter(Objects::nonNull)
           .filter(u -> this.id == null || this.id.equals(u.getId()))
-          .filter(u -> this.ids == null || Arrays.stream(this.ids).anyMatch(id -> u.getId().equals(id)))
+          .filter(u -> this.ids == null || Arrays.stream(this.ids).anyMatch(id -> Objects.equals(id, u.getId())))
           .filter(u -> this.firstName == null || this.firstName.equals(u.getFirstName()))
           .filter(u -> nullOrContainsIgnoreCase(this.firstNameLike, u.getFirstName()))
           .filter(u -> this.lastName == null || this.lastName.equals(u.getLastName()))
@@ -179,7 +179,7 @@ public @NullMarked class OAuth2IdentityProvider extends DbIdentityServiceProvide
   }
 
   @Override
-  public boolean checkPassword(String userId, String password) {
+  public boolean checkPassword(@Nullable String userId, @Nullable String password) {
     return !springSecurityAuthentication() && super.checkPassword(userId, password);
   }
 

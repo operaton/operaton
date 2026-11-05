@@ -21,12 +21,14 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISOPeriodFormat;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.bpm.engine.task.Task;
 
 
-public class DueDateBusinessCalendar implements BusinessCalendar {
+public @NullMarked class DueDateBusinessCalendar implements BusinessCalendar {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -43,7 +45,7 @@ public class DueDateBusinessCalendar implements BusinessCalendar {
   }
 
   @Override
-  public Date resolveDuedate(String duedate, Date startDate) {
+  public Date resolveDuedate(String duedate, @Nullable Date startDate) {
     try {
       if (duedate.startsWith("P")){
         DateTime start;

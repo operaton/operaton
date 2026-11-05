@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.query.NativeQuery;
 
 /**
  * Allows querying of {@link Execution}s via native (SQL) queries
  * @author Bernd Ruecker (Camunda)
  */
-public interface NativeExecutionQuery extends NativeQuery<NativeExecutionQuery, Execution> {
+public @NullMarked interface NativeExecutionQuery extends NativeQuery<NativeExecutionQuery, Execution> {
 
 }

@@ -46,6 +46,7 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] Watch the Docker build
 - [ ] Docker image pushed to Docker Hub (check `https://hub.docker.com/r/operaton/operaton/tags`).
 - [ ] Confirm version tags appear on Docker Hub, and `latest` points at the **highest** version released (see "Docker `latest` with several releases on one day").
+- [ ] **Resolved vulnerabilities** listed: advisories with `VER` in `patched_versions` and fix in tag `vVER` — in the report and under `## Security` in the GitHub release body (`security-advisories.md` → 7).
 - [ ] **Helm chart** published (see below): chart PR on `operaton/operaton-helm` opened, merged, and the new chart version listed in `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Snapshot pre-release tags cleaned up.
 
@@ -163,6 +164,6 @@ Caveats:
   the Helm workflow manually, then re-run only the failed `post_release` job after fixing the token.
 
 ## Report
-List: run URL + result, release URL, Maven Central status, Docker status, next-version commit. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset — these are post-release items, not done here).
+List: run URL + result, release URL, Maven Central status, Docker status, next-version commit. Resolved vulnerabilities (GHSA, severity, CVE, summary) and their publish state + URL. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset — these are post-release items, not done here).
 
 Once the release is verified live, the post-release announcement is the **ANNOUNCE** action — see `announce.md` (website + blog, Slack, forum, branch-cleanup list, housekeeping).

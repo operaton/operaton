@@ -42,6 +42,13 @@ Stale images (older than the latest green build) → 🟡, note it.
 ## 4. Dependency / security
 - [ ] No open HIGH/CRITICAL Dependabot alerts (legacy webapp deps excepted):
   `gh api repos/operaton/operaton/dependabot/alerts -X GET -f state=open -q '[.[]|select(.security_advisory.severity=="high" or .security_advisory.severity=="critical")]|length'`
+- [ ] Security advisories handled per `references/security-advisories.md` (steps 1–6):
+  - [ ] open (triage/draft) advisories inventoried; affecting ones classified
+  - [ ] you must not update the advisory data
+  - [ ] approved private-fork PRs merged into `main` via the advisory page (user confirmed); fix SHAs recorded
+  - [ ] fixes cherry-picked to `BRANCH` via PR (skip when `BRANCH == main`); PRs merged
+  - [ ] `patched_versions` = `VER` on every addressed advisory
+  - [ ] no HIGH/CRITICAL advisory with open PRs affecting the line remains unfixed in `BRANCH` (else 🔴)
 - [ ] (Milestone/minor only) dependency-updates report sane — flag if Spring/Quarkus/Tomcat/Wildfly need bumping. Heavy; for patches, skip unless asked.
 
 ## 5. Label & milestone hygiene

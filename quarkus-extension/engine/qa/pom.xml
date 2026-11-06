@@ -15,6 +15,13 @@
   </properties>
   <dependencyManagement>
     <dependencies>
+      <!-- explicit entry wins over the guava version managed by the Quarkus BOM below -->
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${version.guava}</version>
+        <scope>test</scope>
+      </dependency>
       <!-- Add Quarkus BOM to fix Maven artifact dependencies overriden by Arquillian BOM -->
       <dependency>
         <groupId>io.quarkus</groupId>

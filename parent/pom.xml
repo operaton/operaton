@@ -51,6 +51,7 @@
     <version.tomcat>11.0.27</version.tomcat>
     <version.arquillian>1.10.2.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.7</version.shrinkwrap.resolvers>
+    <version.guava>33.8.0-jre</version.guava>
     <version.selenium>4.52.0</version.selenium>
     <version.slf4j>2.0.20</version.slf4j>
     <version.logback>1.6.6</version.logback>

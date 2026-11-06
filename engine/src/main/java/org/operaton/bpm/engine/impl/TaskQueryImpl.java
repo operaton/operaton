@@ -1234,9 +1234,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   protected void ensureOrExpressionsEvaluated() {
-    // skips first query as it has already been evaluated
+    // skips first query as it has already been evaluated;
+    // the Or queries have been validated together with the first query, see #validate(Validator)
     for (int i = 1; i < queries.size(); i++) {
-      queries.get(i).validate();
       queries.get(i).evaluateExpressions();
     }
   }
@@ -1852,6 +1852,24 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   public void setOrQueryActive() {
     isOrQueryActive = true;
+  }
+
+  /**
+   * Validates this query and all of its Or queries with the given validator.
+   *
+   * <p>Or queries are created without a command executor and therefore carry no
+   * validators of their own. Expressions nested in an Or query must nevertheless
+   * be subject to the same validation as expressions of the query they belong to,
+   * otherwise the restrictions on expressions in adhoc and stored queries could be
+   * bypassed by nesting the expression in an Or query.</p>
+   */
+  @Override
+  public void validate(Validator<AbstractQuery<?, ?>> validator) {
+    super.validate(validator);
+    // the list may no longer start with this query after extend(), so skip this query by identity
+    queries.stream()
+        .filter(orQuery -> orQuery != this)
+        .forEach(validator::validate);
   }
 
   @Override

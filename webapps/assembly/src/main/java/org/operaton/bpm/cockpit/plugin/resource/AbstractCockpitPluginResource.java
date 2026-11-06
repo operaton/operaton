@@ -163,14 +163,15 @@ public class AbstractCockpitPluginResource extends AbstractAppPluginResource<Coc
     }
   }
 
+  /**
+   * Returns {@code true} if the given permission is listed in the
+   * {@code disabledPermissions} of the process engine configuration and must
+   * therefore not be taken into account in the authorization check. Mirrors
+   * {@code AuthorizationManager#isPermissionDisabled(Permission)} in the engine.
+   */
   protected boolean isPermissionDisabled(Permission permission) {
     List<String> disabledPermissions = getProcessEngine().getProcessEngineConfiguration().getDisabledPermissions();
-    for (String disabledPerm : disabledPermissions) {
-      if (!disabledPerm.equals(permission.getName())) {
-        return true;
-      }
-    }
-    return false;
+    return disabledPermissions != null && disabledPermissions.contains(permission.getName());
   }
 
 }

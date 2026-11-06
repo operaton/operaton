@@ -18,7 +18,8 @@ DEPLOY_PLUGIN=org.apache.maven.plugins:maven-deploy-plugin:3.2.0:deploy-file
 
 # Prints the deploy-file arguments for one version directory, one per line
 deploy_args() {
-  python3 -I - "$1" <<'EOF'
+  local version_dir=$1
+  python3 -I - "$version_dir" <<'EOF'
 import os, sys
 import xml.etree.ElementTree as ET
 
@@ -58,8 +59,10 @@ deploy_version_dir() {
   local args
   mapfile -t args < <(deploy_args "$version_dir")
   echo "🚀 Deploying ${version_dir#"$STAGING_DIR"/}"
+  # The root pom sets deploy.skip=true, which would make deploy-file a silent no-op
   ./mvnw --non-recursive --quiet "$DEPLOY_PLUGIN" \
     "${args[@]}" \
+    -Ddeploy.skip=false \
     -DgeneratePom=false \
     -Durl="$REPOSITORY_URL" \
     -DrepositoryId="$REPOSITORY_ID" \
@@ -69,7 +72,7 @@ export -f deploy_args deploy_version_dir
 export STAGING_DIR REPOSITORY_URL REPOSITORY_ID DEPLOY_PLUGIN
 
 mapfile -t VERSION_DIRS < <(find "$STAGING_DIR" -type d -name '*-SNAPSHOT' | sort)
-if [ ${#VERSION_DIRS[@]} -eq 0 ]; then
+if [[ ${#VERSION_DIRS[@]} -eq 0 ]]; then
   echo "❌ No SNAPSHOT artifacts found in $STAGING_DIR"
   exit 1
 fi

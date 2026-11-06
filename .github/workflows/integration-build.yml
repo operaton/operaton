@@ -589,7 +589,7 @@ jobs:
           <settings>
           <servers>
            <server>
-             <id>central-snapshots</id>
+             <id>central</id>
              <username>$USERNAME</username>
              <password>$PASSWORD</password>
              <repositoryOrigins>
@@ -603,7 +603,7 @@ jobs:
         if: ${{ github.event.inputs.dry_run == 'false' }}
         run: |
           .github/scripts/deploy-staged-snapshots.sh target/staging-deploy \
-            https://central.sonatype.com/repository/maven-snapshots/ central-snapshots \
+            https://central.sonatype.com/repository/maven-snapshots/ central \
             -s ./.mvn/settings.xml
 
   release:

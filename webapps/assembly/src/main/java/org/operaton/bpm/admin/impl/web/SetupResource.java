@@ -46,6 +46,7 @@ import org.operaton.bpm.engine.rest.util.ProvidersUtil;
 import org.operaton.bpm.webapp.impl.WebappLogger;
 import org.operaton.bpm.webapp.impl.security.SecurityActions;
 import org.operaton.bpm.webapp.impl.security.SecurityActions.SecurityAction;
+import org.operaton.bpm.webapp.impl.util.AdministratorUtil;
 
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -143,9 +144,13 @@ public class SetupResource {
   }
 
   protected void ensureSetupAvailable(ProcessEngine processEngine) {
-    if (processEngine.getIdentityService().isReadOnly()
-        || (processEngine.getIdentityService().createUserQuery().memberOfGroup(Groups.OPERATON_ADMIN).count() > 0)) {
+    if (processEngine.getIdentityService().isReadOnly()) {
+      throw LOGGER.setupActionNotAvailable();
+    }
 
+    String administrator = AdministratorUtil.findAdministrator(processEngine);
+    if (administrator != null) {
+      LOGGER.infoSetupRefusedAdministratorExists(administrator);
       throw LOGGER.setupActionNotAvailable();
     }
   }

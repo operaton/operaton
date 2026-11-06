@@ -58,6 +58,10 @@ public class WebappLogger extends BaseLogger {
     logInfo("003", "Successful logout for user {}.", username);
   }
 
+  public void infoSetupRefusedAdministratorExists(String administrator) {
+    logInfo("008", "Refused to create an initial user through the setup endpoint because {}.", administrator);
+  }
+
   public void traceCacheValidationTime(Date cacheValidationTime) {
     logTrace("004", "Cache validation time: {}", cacheValidationTime);
   }

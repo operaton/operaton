@@ -589,6 +589,9 @@ jobs:
              <id>central</id>
              <username>$USERNAME</username>
              <password>$PASSWORD</password>
+             <repositoryOrigins>
+               <repositoryOrigin>https://central.sonatype.com</repositoryOrigin>
+             </repositoryOrigins>
            </server>
           </servers>
           </settings>

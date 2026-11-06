@@ -42,6 +42,9 @@ Stale images (older than the latest green build) → 🟡, note it.
 ## 4. Dependency / security
 - [ ] No open HIGH/CRITICAL Dependabot alerts (legacy webapp deps excepted):
   `gh api repos/operaton/operaton/dependabot/alerts -X GET -f state=open -q '[.[]|select(.security_advisory.severity=="high" or .security_advisory.severity=="critical")]|length'`
+  Alerts for test-scoped dependencies are not blocking (not shipped). Check scope on `BRANCH` with all distro profiles:
+  `./mvnw -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-webjar-neo,distro-starter,h2-in-memory,check-api-compatibility,quarkus-tests,integration-test-operaton-run dependency:list | grep <artifactId>`
+  — only `:test` hits → non-blocking, list them.
 - [ ] Security advisories handled per `references/security-advisories.md` (steps 1–6):
   - [ ] open (triage/draft) advisories inventoried; affecting ones classified
   - [ ] you must not update the advisory data

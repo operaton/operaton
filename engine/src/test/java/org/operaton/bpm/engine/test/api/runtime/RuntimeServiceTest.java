@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -2617,11 +2616,7 @@ public class RuntimeServiceTest {
   @Test
   void testStartProcessInstanceByIdAfterReboot() {
 
-    // In case this test is run in a test suite, previous engines might
-    // have been initialized and cached.  First we close the
-    // existing process engines to make sure that the db is clean
-    // and that there are no existing process engines involved.
-    ProcessEngines.destroy();
+    // Own engines and DB; never destroy shared engines.
 
     // Creating the DB schema (without building a process engine)
     ProcessEngineConfigurationImpl processEngineCfg = new StandaloneInMemProcessEngineConfiguration();

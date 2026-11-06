@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.filter.Filter;
+import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -48,7 +49,7 @@ public class TaskQueryDisabledAdhocExpressionsTest {
   protected static final String EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE = "Expressions are forbidden in adhoc queries. "
       + "This behavior can be toggled in the process engine configuration";
   public static final String STATE_MANIPULATING_EXPRESSION =
-      "${''.getClass().forName('" + TaskQueryDisabledAdhocExpressionsTest.class.getName() + "').getField('MUTABLE_FIELD').setLong(null, 42)}";
+      "${''.getClass().forName('" + TaskQueryDisabledAdhocExpressionsTest.class.getName() + "').getField('mutableField').setLong(null, 42)}";
 
   public static long mutableField;
 
@@ -84,6 +85,71 @@ public class TaskQueryDisabledAdhocExpressionsTest {
     executeAndValidateFailingQuery(taskService.createTaskQuery().taskCreatedAfterExpression(STATE_MANIPULATING_EXPRESSION));
     executeAndValidateFailingQuery(taskService.createTaskQuery().taskCreatedBeforeExpression(STATE_MANIPULATING_EXPRESSION));
     executeAndValidateFailingQuery(taskService.createTaskQuery().taskOwnerExpression(STATE_MANIPULATING_EXPRESSION));
+  }
+
+  @Test
+  void testAdhocExpressionsInOrQueryFail() {
+    // expressions nested in an Or query are validated like expressions of the enclosing query
+    executeAndValidateFailingQuery(taskService.createTaskQuery()
+        .or()
+          .dueAfterExpression(STATE_MANIPULATING_EXPRESSION)
+          .taskName("task")
+        .endOr());
+    executeAndValidateFailingQuery(taskService.createTaskQuery()
+        .taskName("task")
+        .or()
+          .taskAssigneeExpression(STATE_MANIPULATING_EXPRESSION)
+          .taskOwner("owner")
+        .endOr());
+  }
+
+  @Test
+  void testAdhocExpressionsInAddedOrQueryFail() {
+    // the REST API builds Or queries with the no-argument constructor and attaches them via addOrQuery
+    TaskQueryImpl query = (TaskQueryImpl) taskService.createTaskQuery();
+    TaskQueryImpl orQuery = new TaskQueryImpl();
+    orQuery.setOrQueryActive();
+    orQuery.dueAfterExpression(STATE_MANIPULATING_EXPRESSION);
+    orQuery.taskName("task");
+    query.addOrQuery(orQuery);
+
+    executeAndValidateFailingQuery(query);
+  }
+
+  @Test
+  void testAdhocExpressionsInOrQuerySucceedWhenEnabled() {
+    processEngineConfiguration.setEnableExpressionsInAdhocQueries(true);
+    try {
+      TaskQuery query = taskService.createTaskQuery()
+          .or()
+            .dueAfterExpression("${now()}")
+            .taskName("task")
+          .endOr();
+
+      assertThat(query.list()).isEmpty();
+      assertThat(query.count()).isZero();
+    } finally {
+      processEngineConfiguration.setEnableExpressionsInAdhocQueries(false);
+    }
+  }
+
+  @Test
+  void testExtendStoredFilterByOrQueryExpression() {
+    // given a stored filter
+    TaskQuery taskQuery = taskService.createTaskQuery().dueAfterExpression("${now()}");
+    Filter filter = filterService.newTaskFilter("filter");
+    filter.setQuery(taskQuery);
+    filterService.saveFilter(filter);
+
+    // it is not possible to execute the filter with an extended query that uses an expression in an Or query
+    extendFilterAndValidateFailingQuery(filter, taskService.createTaskQuery()
+        .or()
+          .dueAfterExpression(STATE_MANIPULATING_EXPRESSION)
+          .taskName("task")
+        .endOr());
+
+    // cleanup
+    filterService.deleteFilter(filter.getId());
   }
 
   @Test

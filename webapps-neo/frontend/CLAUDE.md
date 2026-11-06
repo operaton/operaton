@@ -77,7 +77,7 @@ The backend is called Operaton which is a fork of Camunda 7. You can use Camunda
 - **CSS**: Vanilla CSS only, use CSS custom properties, prefer classless styling, prefer cascading over many single classes. Styles live in `public/css/style.css` and `src/css/`. Scope page-specific tweaks under the page id (e.g. `#processes table { … }`) rather than coining a bespoke class (`processes-table`); only add a class when the element is genuinely idiosyncratic. Navs are `<nav><menu><li><a></a></li>…</menu></nav>`; active link uses `aria-current="page"`, not an `.active` class
 - **File creation**: avoid creating unnecessary files; only create new files for reusable components
 - **Tests**: `*.test.js` / `*.test.jsx` colocated with source, using `describe`/`it`/`expect` (vitest globals), `@testing-library/preact` for component tests
-- **i18n**: `react-i18next`, translations in `public/locales/{locale}/translation.json` (en-US, de-DE), always store text strings of the UI in the translation files
+- **i18n**: `react-i18next`, translations in `public/locales/{locale}/translation.json` (en-US, de-DE, zh-CN, zh-TW), always store text strings of the UI in the translation files
 - **Icons**: JSX components in `src/assets/icons.jsx`, sourced from heroicons.com
 - **Accessibility**: semantic HTML, keyboard navigation, skip links, ARIA attributes
 - **Container commands**: when showing a `docker` command, always show the equivalent `podman` command as well

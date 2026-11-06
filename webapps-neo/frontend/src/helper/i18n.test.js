@@ -27,6 +27,24 @@ describe("i18n", () => {
 
   afterEach(() => vi.unstubAllGlobals());
 
+  it("maps Chinese locales to the right script variant", async () => {
+    const i18n = await real_i18n("http://localhost:3000/");
+    const convert = i18n.options.detection.convertDetectedLanguage;
+
+    expect(i18n.options.supportedLngs).toContain("zh-CN");
+    expect(i18n.options.supportedLngs).toContain("zh-TW");
+    // A bare `zh` (and Hans) is Simplified; TW/HK/MO and Hant are Traditional.
+    expect(convert("zh")).toBe("zh-CN");
+    expect(convert("zh-CN")).toBe("zh-CN");
+    expect(convert("zh-Hans")).toBe("zh-CN");
+    expect(convert("zh-SG")).toBe("zh-CN");
+    expect(convert("zh-TW")).toBe("zh-TW");
+    expect(convert("zh-HK")).toBe("zh-TW");
+    expect(convert("zh-Hant")).toBe("zh-TW");
+    // Other languages keep their single region file.
+    expect(convert("de-AT")).toBe("de-DE");
+  });
+
   it("loads translations from the server root by default", async () => {
     const i18n = await real_i18n("http://localhost:3000/");
 

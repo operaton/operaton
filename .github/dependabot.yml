@@ -189,7 +189,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 33
+    milestone: 34
     groups:
       all:
         patterns:
@@ -206,7 +206,7 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:npm"
-    milestone: 33
+    milestone: 34
     groups:
       all:
         patterns:
@@ -226,7 +226,7 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:npm"
-    milestone: 33
+    milestone: 34
     groups:
       all:
         patterns:
@@ -245,7 +245,7 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:github-action"
-    milestone: 33
+    milestone: 34
     groups:
       github-actions:
         patterns:
@@ -260,4 +260,4 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 33
+    milestone: 34

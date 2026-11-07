@@ -23,6 +23,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.HistoryService;
@@ -47,6 +48,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Tassilo Weidner
  */
+@Disabled("Hangs in the release workflow, see https://github.com/operaton/operaton/issues/4067")
 public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelper {
 
   // Because of the way the concurrency/JobExecuter is handled we manage the process engine manually for this test case. 

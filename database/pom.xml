@@ -46,7 +46,7 @@
       </dependency>
       <dependency>
         <groupId>com.oracle.database.jdbc</groupId>
-        <artifactId>ojdbc11</artifactId>
+        <artifactId>ojdbc17</artifactId>
         <version>${version.oracle}</version>
       </dependency>
       <dependency>
@@ -515,7 +515,7 @@
       <dependencies>
         <dependency>
           <groupId>com.oracle.database.jdbc</groupId>
-          <artifactId>ojdbc11</artifactId>
+          <artifactId>ojdbc17</artifactId>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -529,7 +529,7 @@
               <dependencies>
                 <dependency>
                   <groupId>com.oracle.database.jdbc</groupId>
-                  <artifactId>ojdbc11</artifactId>
+                  <artifactId>ojdbc17</artifactId>
                   <version>${version.oracle}</version>
                 </dependency>
               </dependencies>
@@ -552,7 +552,7 @@
       <dependencies>
         <dependency>
           <groupId>com.oracle.database.jdbc</groupId>
-          <artifactId>ojdbc11</artifactId>
+          <artifactId>ojdbc17</artifactId>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -566,7 +566,7 @@
               <dependencies>
                 <dependency>
                   <groupId>com.oracle.database.jdbc</groupId>
-                  <artifactId>ojdbc11</artifactId>
+                  <artifactId>ojdbc17</artifactId>
                   <version>${version.oracle}</version>
                 </dependency>
               </dependencies>

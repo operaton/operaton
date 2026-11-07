@@ -152,7 +152,7 @@
                     <driver name="mysql" module="com.mysql.mysql-connector-j">
                         <xa-datasource-class>com.mysql.cj.jdbc.MysqlXADataSource</xa-datasource-class>
                     </driver>
-                    <driver name="oracle" module="com.oracle.database.jdbc.ojdbc11">
+                    <driver name="oracle" module="com.oracle.database.jdbc.ojdbc17">
                         <xa-datasource-class>oracle.jdbc.xa.client.OracleXADataSource</xa-datasource-class>
                     </driver>
                     <driver name="db2" module="com.ibm.db2.jcc">

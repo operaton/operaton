@@ -27,6 +27,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.test.util.LoggingInterceptor;
 
@@ -42,6 +44,19 @@ public abstract class AbstractRestTest {
 
   @LocalServerPort
   protected int localPort;
+
+  @Autowired
+  private ProcessEngine contextProcessEngine;
+
+  /**
+   * The REST API resolves the engine by name from the static {@link ProcessEngines} registry. Closing another
+   * cached context with an engine of the same name (e.g. via {@code @DirtiesContext}) unregisters that name, so
+   * register the engine of this context again before each test.
+   */
+  @BeforeEach
+  public void registerContextProcessEngine() {
+    ProcessEngines.registerProcessEngine(contextProcessEngine);
+  }
 
   @BeforeEach
   public void enableRequestResponseLogging() {

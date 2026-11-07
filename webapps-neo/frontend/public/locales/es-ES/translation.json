@@ -256,6 +256,13 @@
     }
   },
   "processes": {
+    "pagination": {
+      "label": "Páginas de definiciones de procesos",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "range": "{{first}}–{{last}} de {{total}} definiciones"
+    },
+    "instances-status-unavailable": "El estado de las instancias se está cargando o no está disponible",
     "title": "Definiciones de procesos",
     "version": "Versión",
     "change-definition": "Cambiar definición",

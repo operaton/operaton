@@ -725,8 +725,8 @@
     <profile>
       <id>h2-in-memory</id>
       <properties>
-        <!-- Each fork gets its own in-memory database -->
-        <surefire.forkCount>4</surefire.forkCount>
+        <!-- One fork per core, own in-memory database -->
+        <surefire.forkCount>1C</surefire.forkCount>
       </properties>
       <build>
         <plugins>

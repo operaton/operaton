@@ -68,7 +68,11 @@ public class MigratingVariableInstance implements MigratingInstance {
   public void attachState(MigratingTransitionInstance owningActivityInstance) {
     ExecutionEntity representativeExecution = owningActivityInstance.resolveRepresentativeExecution();
 
-    representativeExecution.addVariableInternal(variable);
+    ExecutionEntity owningExecution = representativeExecution;
+    if (owningActivityInstance.isPendingScopedActivityEnd() && isConcurrentLocalInParentScope) {
+      owningExecution = representativeExecution.getParent();
+    }
+    owningExecution.addVariableInternal(variable);
   }
 
   @Override

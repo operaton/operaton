@@ -71,7 +71,9 @@ public class AtomicOperationInvocation {
     //execution was canceled for example via terminate end event
     if (execution.isCanceled() &&
          (operation == PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_END
-         || operation == PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END)) {
+         || operation == PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END
+         || operation == PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END_DEFERRED
+         || operation == PvmAtomicOperation.ACTIVITY_NOTIFY_LISTENER_END_RETIRE)) {
       return;
     }
 

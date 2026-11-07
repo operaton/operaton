@@ -25,6 +25,9 @@ public class AsyncMigrationValidator implements MigratingTransitionInstanceValid
   @Override
   public void validate(MigratingTransitionInstance migratingInstance, MigratingProcessInstance migratingProcessInstance,
       MigratingTransitionInstanceValidationReportImpl instanceReport) {
+    if (migratingInstance.isAdHocEnabledActivity()) {
+      return;
+    }
     ActivityImpl targetActivity = (ActivityImpl) migratingInstance.getTargetScope();
 
     if (targetActivity != null) {

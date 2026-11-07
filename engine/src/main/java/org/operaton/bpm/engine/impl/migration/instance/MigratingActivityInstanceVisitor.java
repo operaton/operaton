@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
@@ -29,6 +31,12 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  *
  */
 public class MigratingActivityInstanceVisitor extends MigratingProcessElementInstanceVisitor {
+
+  protected final List<MigratingActivityInstance> emergingActivityInstances = new ArrayList<>();
+
+  public List<MigratingActivityInstance> getEmergingActivityInstances() {
+    return emergingActivityInstances;
+  }
 
   protected boolean skipCustomListeners;
   protected boolean skipIoMappings;
@@ -64,9 +72,16 @@ public class MigratingActivityInstanceVisitor extends MigratingProcessElementIns
 
     for (ScopeImpl scope : scopesToInstantiate) {
       ExecutionEntity createdExecution = (ExecutionEntity) createdExecutions.get(scope);
-      createdExecution.setActivity(null);
+      if (scope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior) {
+        createdExecution.setActivity((PvmActivity) scope);
+        MigratingAdHocState.initializeScopeContext(createdExecution);
+      } else {
+        createdExecution.setActivity(null);
+      }
       createdExecution.setActive(false);
-      executionBranch.visited(new MigratingActivityInstance(scope, createdExecution));
+      MigratingActivityInstance emerging = new MigratingActivityInstance(scope, createdExecution);
+      emergingActivityInstances.add(emerging);
+      executionBranch.visited(emerging);
     }
   }
 

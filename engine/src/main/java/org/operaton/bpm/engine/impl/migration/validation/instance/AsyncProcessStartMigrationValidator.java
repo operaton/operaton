@@ -33,6 +33,9 @@ public class AsyncProcessStartMigrationValidator implements MigratingTransitionI
   public void validate(MigratingTransitionInstance migratingInstance, MigratingProcessInstance migratingProcessInstance,
       MigratingTransitionInstanceValidationReportImpl instanceReport) {
 
+    if (migratingInstance.isAdHocEnabledActivity()) {
+      return;
+    }
     ActivityImpl targetActivity = (ActivityImpl) migratingInstance.getTargetScope();
 
     if (targetActivity != null && isProcessStartJob(migratingInstance.getJobInstance().getJobEntity()) && !isTopLevelActivity(targetActivity)) {

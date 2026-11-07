@@ -43,6 +43,7 @@ jobs:
       needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
       needs_spring_boot_starter_tests: ${{ steps.check-pr.outputs.needs_spring_boot_starter_tests }}
       needs_quarkus_tests: ${{ steps.check-pr.outputs.needs_quarkus_tests }}
+      needs_static_analysis: ${{ steps.check-pr.outputs.needs_static_analysis }}
       testsuites: ${{ steps.compute-matrix.outputs.testsuites }}
       distros: ${{ steps.compute-matrix.outputs.distros }}
       databases: ${{ steps.compute-matrix.outputs.databases }}
@@ -106,6 +107,19 @@ jobs:
             fi
           fi
           echo "needs_quarkus_tests=$NEEDS_QUARKUS_TESTS" >> $GITHUB_OUTPUT
+
+          # Static analysis is skipped for Dependabot PRs and for PRs that only touch
+          # documentation or build files. If the changed files cannot be determined, it runs.
+          NEEDS_STATIC_ANALYSIS=true
+          CHANGED_FILES=$(git diff --name-only origin/${GITHUB_BASE_REF}...HEAD 2>/dev/null || true)
+          if [[ "$PR_AUTHOR" == "dependabot"* ]]; then
+            echo "⏭️ PR is from Dependabot — skipping static analysis"
+            NEEDS_STATIC_ANALYSIS=false
+          elif [[ -n "$CHANGED_FILES" ]] && ! echo "$CHANGED_FILES" | grep -qvE '(^|/)(package(-lock)?\.json|[^/]+\.md)$|^(docs|\.github|\.devenv|\.mvn|\.claude)/|^(mvnw(\.cmd)?|rewrite\.yml|\.gitignore|LICENSE|NOTICE)$'; then
+            echo "⏭️ PR only changes documentation or build files — skipping static analysis"
+            NEEDS_STATIC_ANALYSIS=false
+          fi
+          echo "needs_static_analysis=$NEEDS_STATIC_ANALYSIS" >> $GITHUB_OUTPUT
       - name: Compute matrix values
         id: compute-matrix
         if: steps.check-pr.outputs.needs_build == 'true'
@@ -222,11 +236,11 @@ jobs:
           path: ${{ github.workspace }}/**/target/surefire-reports/**
           retention-days: 30
       - name: Stage build output for Sonar analysis
-        if: github.event.pull_request.head.repo.fork == false
+        if: github.event.pull_request.head.repo.fork == false && needs.determine-pr-config.outputs.needs_static_analysis == 'true'
         shell: bash
         run: find . -type d -name target -not -path '*/node_modules/*' -print0 | tar -czf /tmp/sonar-workspace.tar.gz --null -T -
       - name: Upload Sonar workspace artifact
-        if: github.event.pull_request.head.repo.fork == false
+        if: github.event.pull_request.head.repo.fork == false && needs.determine-pr-config.outputs.needs_static_analysis == 'true'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: sonar-workspace
@@ -255,8 +269,10 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-    needs: build
-    if: github.event.pull_request.head.repo.fork == false
+    needs:
+      - determine-pr-config
+      - build
+    if: github.event.pull_request.head.repo.fork == false && needs.determine-pr-config.outputs.needs_static_analysis == 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

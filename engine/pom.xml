@@ -449,6 +449,8 @@
           </includes>
           <excludes combine.children="append">
             <exclude>**/*TestCase.java</exclude>
+            <!-- Nested classes run with their outer class -->
+            <exclude>**/*$*</exclude>
             <exclude>%regex[.*(${test.excludes}).*Test.*]</exclude>
             <!-- Nashorn is not part of the JDK anymore in Java 15+ -->
             <exclude>**/*NashornTest.java</exclude>
@@ -725,8 +727,8 @@
     <profile>
       <id>h2-in-memory</id>
       <properties>
-        <!-- One fork per core, own in-memory database -->
-        <surefire.forkCount>1C</surefire.forkCount>
+        <!-- Each fork gets its own in-memory database -->
+        <surefire.forkCount>4</surefire.forkCount>
       </properties>
       <build>
         <plugins>

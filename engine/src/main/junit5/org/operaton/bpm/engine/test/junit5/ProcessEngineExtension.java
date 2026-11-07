@@ -257,7 +257,7 @@ public @NullMarked class ProcessEngineExtension implements TestWatcher,
   public void beforeEach(ExtensionContext context) {
     LOG.debug("beforeEach: {}", context.getDisplayName());
 
-    if (processEngine == null || !ProcessEngines.isRegisteredProcessEngine(processEngine.getName())) {
+    if (isEngineStale()) {
       initializeProcessEngine();
       initializeServices();
     }
@@ -376,7 +376,7 @@ public @NullMarked class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
-    if (processEngine == null) {
+    if (isEngineStale()) {
       initializeProcessEngine();
     }
     // allow other extensions to access the engine instance created by this extension
@@ -393,6 +393,12 @@ public @NullMarked class ProcessEngineExtension implements TestWatcher,
             .filter(method -> method.getName().startsWith("get"))
             .map(Method::getReturnType)
             .forEach(serviceType -> injectProcessEngineService(testInstance, serviceType));
+  }
+
+  // Name may point to another engine
+  private boolean isEngineStale() {
+    return processEngine == null
+        || ProcessEngines.getProcessEngines().get(processEngine.getName()) != processEngine;
   }
 
   private Stream<Field> getAllFields(Class<?> clazz) {

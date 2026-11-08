@@ -57,7 +57,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
 
   protected static ThreadControl cleanupThread;
 
-  protected static ThreadLocal<Boolean> syncBeforeFlush = new ThreadLocal<>();
+  protected static ThreadLocal<ThreadControl> syncBeforeFlush = new ThreadLocal<>();
 
   protected static ControllableJobExecutor jobExecutor;
 
@@ -114,8 +114,9 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
       public <T> T execute(Command<T> command) {
 
         T executed = next.execute(command);
-        if(syncBeforeFlush.get() != null && syncBeforeFlush.get()) {
-          cleanupThread.sync();
+        ThreadControl monitor = syncBeforeFlush.get();
+        if (monitor != null) {
+          monitor.sync();
         }
 
         return executed;
@@ -235,7 +236,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
 
     @Override
     public Void execute(CommandContext commandContext) {
-      syncBeforeFlush.set(true);
+      syncBeforeFlush.set(monitor);
 
       managementService.executeJob(jobId);
 

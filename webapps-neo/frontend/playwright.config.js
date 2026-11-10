@@ -3,10 +3,12 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * Playwright e2e config for the Operaton Web Apps.
  *
- * Prerequisite: the Operaton backend must be running on :8084
+ * Prerequisite: a backend must be running. By default the dev server proxies
+ * /api to http://localhost:8080. For the docker compose stack on :8084 set
+ * E2E_BACKEND_TARGET=http://localhost:8084 and start it with:
  *   docker compose up        (or:  podman compose up)
- * The dev server (started automatically below via `webServer`) reads
- * VITE_BACKEND from .env.development, which points at http://localhost:8084.
+ * The dev server started below via `webServer` is handed its backend contract
+ * explicitly (see `backend_env`), overriding .env.development[.local].
  *
  * Run:  npm run test:e2e        (headless)
  *       npx playwright test --ui
@@ -19,6 +21,21 @@ import { defineConfig, devices } from "@playwright/test";
  */
 const SERVER = "http://127.0.0.1:5173";
 
+// Handed to every webServer below. Vite's loadEnv() lets process.env win over
+// the .env files, so this pins the contract regardless of what a developer has
+// in .env.development.local (which may target an external engine on another
+// port, the combination that makes the session login fail and the canvas spec
+// skip itself).
+const backend_env = {
+  // An empty `url` means "same origin as the app": the app then authenticates
+  // through the proxied session cookie instead of engine-rest + CORS.
+  VITE_BACKEND: JSON.stringify([{ name: "Operaton", url: "" }]),
+  // A Spring Boot host serves these web apps under /api, so the proxy must
+  // keep the prefix or the login call never reaches the backend.
+  VITE_PROXY_TARGET: process.env.E2E_BACKEND_TARGET ?? "http://localhost:8080",
+  VITE_PROXY_KEEP_API_PREFIX: "true",
+};
+
 const SUB_PATH = process.env.E2E_APP_PATH ?? "/app-neo";
 const sub_path_enabled = !!process.env.E2E_SUB_PATH;
 
@@ -27,6 +44,7 @@ const dev_server = {
   url: SERVER,
   reuseExistingServer: !process.env.CI,
   timeout: 120_000,
+  env: backend_env,
 };
 
 const sub_path_server = {
@@ -35,7 +53,7 @@ const sub_path_server = {
   // Always a fresh build: a stale bundle would test the wrong thing.
   reuseExistingServer: false,
   timeout: 180_000,
-  env: { PORT: "5173", E2E_APP_PATH: SUB_PATH },
+  env: { ...backend_env, PORT: "5173", E2E_APP_PATH: SUB_PATH },
 };
 
 export default defineConfig({

@@ -80,6 +80,7 @@ import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { BPMNViewer } from "./BPMNViewer.jsx";
 import { create_mock_state } from "../test/helpers.js";
+import { resolved_theme } from "../theme.js";
 
 const renderViewer = (props) => {
   const state = create_mock_state();
@@ -203,6 +204,37 @@ describe("BPMNViewer", () => {
     // The definition handle carries the running-instance count.
     const handle = htmls.find((h) => h.includes("bpmn-token-handle"));
     expect(handle).toContain('data-instances="3"');
+  });
+
+  // The canvas colours are read off <html> at construction time, so a theme
+  // switch has to rebuild the viewer. Regression guard: referencing the signal
+  // only inside the effect's dependency array subscribes to nothing, and the
+  // canvas then keeps its old colours for the rest of the session.
+  it("rebuilds the viewer when the resolved theme changes, using the new canvas colours", async () => {
+    const root = document.documentElement;
+    const set_fill = (value) => root.style.setProperty("--canvas-fill", value);
+
+    set_fill("#ffffff");
+    resolved_theme.value = "light";
+    renderViewer({ xml: "<bpmn/>", container: "diagram" });
+    await flush();
+    expect(NavigatedViewer).toHaveBeenCalledTimes(1);
+    expect(NavigatedViewer.mock.lastCall[0].bpmnRenderer.defaultFillColor).toBe(
+      "#ffffff",
+    );
+
+    set_fill("#151c25");
+    resolved_theme.value = "dark";
+    await flush();
+    await flush();
+
+    expect(NavigatedViewer).toHaveBeenCalledTimes(2);
+    expect(NavigatedViewer.mock.lastCall[0].bpmnRenderer.defaultFillColor).toBe(
+      "#151c25",
+    );
+
+    resolved_theme.value = "light";
+    root.style.removeProperty("--canvas-fill");
   });
 
   // NOTE: the full drag→drop→batch flow can't be simulated here — happy-dom

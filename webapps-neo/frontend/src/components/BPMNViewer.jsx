@@ -13,6 +13,21 @@ import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import * as Icons from '../assets/icons.jsx'
+import { resolved_theme } from '../theme.js'
+
+// bpmn-js writes shape fill, stroke and label colour inline while rendering,
+// so they cannot be themed from CSS. Read the resolved tokens off <html> and
+// hand them to the renderer instead; they are re-read whenever the viewer is
+// rebuilt, which is exactly what a theme change triggers.
+const canvas_colors = () => {
+  const css = getComputedStyle(document.documentElement)
+  const read = (name, fallback) => css.getPropertyValue(name).trim() || fallback
+  return {
+    defaultFillColor: read('--canvas-fill', '#ffffff'),
+    defaultStrokeColor: read('--canvas-stroke', '#333333'),
+    defaultLabelColor: read('--canvas-label', '#222222'),
+  }
+}
 import { app_path } from '../config.js'
 import {
   build_single_modification,
@@ -87,12 +102,18 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
     viewerRef = useRef(null),
     containerEl = document.getElementById(container),
     modify_request = useSignal(null),
+    // Read the signal during render so this component actually subscribes to
+    // it. Referencing `resolved_theme.value` only inside the effect's dependency
+    // array creates no subscription, so a theme switch would never rebuild the
+    // viewer and the canvas would keep its colours.
+    theme = resolved_theme.value,
 
     get_viewer = () => {
       if (!viewerRef.current) {
         viewerRef.current = new NavigatedViewer({
           container: containerEl,
           additionalModules: [OutlineModule],
+          bpmnRenderer: canvas_colors(),
         })
       }
       return viewerRef.current
@@ -357,7 +378,7 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
       viewer.destroy()
       viewerRef.current = null
     }
-  }, [container, definition_id, xml, mode, tokens])
+  }, [container, definition_id, xml, mode, tokens, theme])
 
   const controls = (
     <div class="bpmn-controls">

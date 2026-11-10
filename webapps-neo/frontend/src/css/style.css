@@ -370,6 +370,8 @@
 @layer pages {
   .login-page {
     --login-width: 22rem;
+    /* The theme switch in the corner is positioned against this box. */
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -475,6 +477,25 @@
     gap: var(--spacing-1);
     font-size: var(--small-font-size);
     color: var(--text-2);
+  }
+
+  /* Top-right corner, so the theme is reachable before signing in — the header
+     that normally carries the switch is not rendered on this page. */
+  .login-theme-toggle {
+    position: absolute;
+    inset-block-start: var(--spacing-2);
+    inset-inline-end: var(--spacing-2);
+    /* The global button rule adds margin-top; the corner offset is the whole
+       positioning here. */
+    margin: 0;
+    min-inline-size: 2.25rem;
+    justify-content: center;
+    font-size: var(--base-font-size);
+  }
+
+  .login-theme-toggle > span {
+    font-size: 1.15em;
+    line-height: 1;
   }
 
   .login-links {

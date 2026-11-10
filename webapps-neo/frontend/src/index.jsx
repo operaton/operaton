@@ -31,6 +31,7 @@ import { is_oauth } from "./api/oauth.js";
 import { app_path, get_config, load_config } from "./config.js";
 import { apply_branding } from "./branding.js";
 import { Logo } from "./components/Logo.jsx";
+import { ThemeToggle } from "./components/ThemeToggle.jsx";
 import { start_theme } from "./theme.js";
 import { useTranslation } from "react-i18next";
 import { load_plugins } from "./plugins/loader.js";
@@ -194,6 +195,9 @@ const Routing = () => {
 
     return (
       <section class="login-page">
+        {/* Signed-out visitors get no header, so the login page carries the
+            same three-state switch in its top-right corner. */}
+        <ThemeToggle id="login-theme-toggle" class="login-theme-toggle" />
         <Logo class="login-logo" />
 
         <div class="login-content">

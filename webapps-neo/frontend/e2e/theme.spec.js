@@ -119,4 +119,41 @@ test.describe("theme", () => {
     const dark = await read_logo("dark");
     expect(dark.background).toBe("rgb(255, 255, 255)");
   });
+
+  test("the login page carries the same three-state switch", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await open(page);
+
+    // The login screen mounts only after the config request resolves.
+    const toggle = page.locator("#login-theme-toggle");
+    await toggle.waitFor({ timeout: 15_000 });
+
+    const icon = () => toggle.locator("span").textContent();
+
+    // auto → light → dark → auto. The first two both paint light under a light
+    // OS, so the icon and the stored value are what distinguish them.
+    expect(await icon()).toBe("◐");
+    await toggle.click();
+    expect(await icon()).toBe("☀");
+    expect(await theme_of(page)).toBe("light");
+    expect(await page.evaluate(() => localStorage.getItem("theme"))).toBe(
+      "light",
+    );
+
+    await toggle.click();
+    expect(await icon()).toBe("☾");
+    expect(await theme_of(page)).toBe("dark");
+    expect(await page.evaluate(() => localStorage.getItem("theme"))).toBe(
+      "dark",
+    );
+
+    // The explicit choice survives a reload, and the login page comes back in
+    // it — no header is mounted here, so the corner switch is the only proof.
+    await open(page);
+    await toggle.waitFor({ timeout: 15_000 });
+    expect(await icon()).toBe("☾");
+    expect(await theme_of(page)).toBe("dark");
+  });
 });

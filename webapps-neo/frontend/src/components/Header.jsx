@@ -12,7 +12,7 @@ import { PLUGIN_POINTS } from "../plugins/points.js";
 import { app_path, get_config } from "../config.js";
 import { app_name } from "../branding.js";
 import { Logo } from "./Logo.jsx";
-import { cycle_theme, theme_pref } from "../theme.js";
+import { ThemeToggle } from "./ThemeToggle.jsx";
 import { page_allowed } from "../helper/authorized_apps.js";
 
 const swap_server = (e, state) => {
@@ -83,12 +83,6 @@ export function Header() {
       await engine_rest.auth.logout(state);
       if (!state.auth.user.id.peek()) route(app_path("/"));
     };
-
-  // Reading `.value` inside render subscribes this component, so both the icon
-  // and the accessible label follow the preference.
-  const pref = theme_pref.value,
-    theme_label = t(`theme.${pref}`),
-    theme_icon = pref === "light" ? "☀" : pref === "dark" ? "☾" : "◐";
 
   useHotkeys("alt+shift+0", () => route(app_path("/")));
   useHotkeys("alt+shift+1", () => route(app_path("/tasks")));
@@ -177,15 +171,7 @@ export function Header() {
               {t("nav.go-to")} <kbd>Alt+K</kbd>
             </button>
             <div>
-              <button
-                type="button"
-                id="theme-toggle"
-                title={`${t("theme.label")}: ${theme_label}`}
-                aria-label={`${t("theme.label")}: ${theme_label}`}
-                onClick={() => cycle_theme()}
-              >
-                <span aria-hidden="true">{theme_icon}</span>
-              </button>
+              <ThemeToggle id="theme-toggle" />
               <nav id="secondary-navigation">
                 <menu>
                   <li>
@@ -241,14 +227,9 @@ export function Header() {
               <a href={app_path("/help")}>{t("nav.help")}</a>
             </li>
             <li>
-              <button
-                type="button"
-                id="mobile-theme-toggle"
-                onClick={() => cycle_theme()}
-              >
-                <span aria-hidden="true">{theme_icon}</span>
-                {t("theme.label")}: {theme_label}
-              </button>
+              {/* The menu stays open: the user can watch the page change
+                  while the dialog is still in front of it. */}
+              <ThemeToggle id="mobile-theme-toggle" show_label />
             </li>
             <li>
               <a href={app_path("/account")} title={t("nav.account")}>

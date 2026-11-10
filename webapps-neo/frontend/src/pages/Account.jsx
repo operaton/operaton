@@ -1,5 +1,6 @@
 import { useLocation, useRoute } from 'preact-iso'
 import { useTranslation } from 'react-i18next'
+import { LANGUAGES } from '../helper/languages.js'
 import { AppState } from '../state.js'
 import engine_rest, { RequestState } from '../api/engine_rest.jsx'
 import { useContext, useEffect } from 'preact/hooks'
@@ -311,13 +312,8 @@ const TenantsAccountPage = () => {
   </section>
 }
 
-// Kept in step with `languages` in index.jsx: only fully translated locales are offered.
-const LANGUAGES = [
-  { code: 'en-US', label: 'English' },
-  { code: 'de-DE', label: 'Deutsch' },
-  { code: 'zh-CN', label: '简体中文' },
-  { code: 'zh-TW', label: '繁體中文' },
-]
+// The offered languages are shared with the header switcher and the login
+// card — see helper/languages.js.
 
 const SettingsAccountPage = () => {
   const [t, i18n] = useTranslation()

@@ -615,6 +615,69 @@
     border: none;
   }
 
+  /* The language button carries only the language tag (`EN`, `简`), so it keeps
+     the theme switch's width beside it; the full name is in the title and the
+     menu. No icon and no width jump when the language changes. */
+  #language-toggle {
+    min-inline-size: 2.25rem;
+    padding-inline: var(--spacing-1);
+    justify-content: center;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+  }
+
+  /* One full-width row per language, the current one checked; the check is
+     hidden, not removed, so the rows keep a common right edge. */
+  .language-menu {
+    min-inline-size: 16rem;
+  }
+
+  .language-menu > menu {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-2) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+
+  .language-menu > menu button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-1);
+    width: 100%;
+    padding: var(--spacing-1);
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    text-align: start;
+  }
+
+  .language-menu > menu button:is(:hover, :focus-visible) {
+    background: var(--background-3);
+  }
+
+  .language-menu > menu button[aria-current="true"] {
+    color: var(--color-link);
+    font-weight: bold;
+  }
+
+  .language-menu .language-check {
+    visibility: hidden;
+  }
+
+  .language-menu button[aria-current="true"] .language-check {
+    visibility: visible;
+  }
+
+  #mobile-language-select {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+  }
+
   #skip-links {
     opacity: 0;
     width: 0;

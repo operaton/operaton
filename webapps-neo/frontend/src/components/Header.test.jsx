@@ -165,6 +165,30 @@ describe("Header", () => {
     });
   });
 
+  it("offers the language switch beside the theme switch", () => {
+    const { container } = renderHeader(state);
+    const language = container.querySelector("#language-toggle");
+
+    expect(language).not.toBeNull();
+    // The tag, not the full name — the header row is narrow.
+    expect(language.textContent).toBe("EN");
+    // Both controls share the top-right group, language just before theme.
+    expect(language.nextElementSibling.id).toBe("theme-toggle");
+  });
+
+  it("offers the same choice in the mobile menu", () => {
+    const { container } = renderHeader(state);
+    const select = container.querySelector("#mobile-language-select select");
+
+    expect(select).not.toBeNull();
+    expect(Array.from(select.options).map((o) => o.value)).toEqual([
+      "en-US",
+      "de-DE",
+      "zh-CN",
+      "zh-TW",
+    ]);
+  });
+
   it("goes back to the start once the session has ended", async () => {
     mockUrl = "/tasks/t1/form";
     state.auth.user.id.value = "alice";

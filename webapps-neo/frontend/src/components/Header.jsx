@@ -13,6 +13,7 @@ import { app_path, get_config } from "../config.js";
 import { app_name } from "../branding.js";
 import { Logo } from "./Logo.jsx";
 import { ThemeToggle } from "./ThemeToggle.jsx";
+import { LanguageSelect, LanguageToggle } from "./LanguageToggle.jsx";
 import { page_allowed } from "../helper/authorized_apps.js";
 
 const swap_server = (e, state) => {
@@ -171,6 +172,7 @@ export function Header() {
               {t("nav.go-to")} <kbd>Alt+K</kbd>
             </button>
             <div>
+              <LanguageToggle id="language-toggle" />
               <ThemeToggle id="theme-toggle" />
               <nav id="secondary-navigation">
                 <menu>
@@ -230,6 +232,9 @@ export function Header() {
               {/* The menu stays open: the user can watch the page change
                   while the dialog is still in front of it. */}
               <ThemeToggle id="mobile-theme-toggle" show_label />
+            </li>
+            <li>
+              <LanguageSelect id="mobile-language-select" />
             </li>
             <li>
               <a href={app_path("/account")} title={t("nav.account")}>

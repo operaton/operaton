@@ -32,6 +32,7 @@ import { app_path, get_config, load_config } from "./config.js";
 import { apply_branding } from "./branding.js";
 import { Logo } from "./components/Logo.jsx";
 import { ThemeToggle } from "./components/ThemeToggle.jsx";
+import { LANGUAGES } from "./helper/languages.js";
 import { start_theme } from "./theme.js";
 import { useTranslation } from "react-i18next";
 import { load_plugins } from "./plugins/loader.js";
@@ -61,15 +62,8 @@ export const App = () => {
   );
 };
 
-// es-ES, fr-FR and nl-NL exist under public/locales but are only ~75% translated,
-// so offering them means a quarter of the UI silently falls back to English. They
-// stay in the repo and come back here once complete.
-const languages = [
-  { code: "en-US", label: "English" },
-  { code: "de-DE", label: "Deutsch" },
-  { code: "zh-CN", label: "简体中文" },
-  { code: "zh-TW", label: "繁體中文" },
-];
+// The offered languages live in one place — the login card, the account
+// settings and the header switcher all read helper/languages.js.
 
 const swap_server = (e, state) => {
   const server = get_config().backends.find((s) => s.url === e.target.value);
@@ -282,7 +276,7 @@ const Routing = () => {
             <select
               onChange={(e) => i18n.changeLanguage(e.currentTarget.value)}
             >
-              {languages.map((lang) => (
+              {LANGUAGES.map((lang) => (
                 <option
                   key={lang.code}
                   value={lang.code}

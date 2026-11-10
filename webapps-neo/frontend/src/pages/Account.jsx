@@ -5,6 +5,7 @@ import engine_rest, { RequestState } from '../api/engine_rest.jsx'
 import { useContext, useEffect } from 'preact/hooks'
 import { useComputed, useSignal } from '@preact/signals'
 import { app_path } from '../config.js'
+import { THEME_PREFS, apply_theme, theme_pref } from '../theme.js'
 
 const AccountPage = () => {
   const
@@ -327,6 +328,16 @@ const SettingsAccountPage = () => {
 
   return <section>
     <h2>{t("account.settings")}</h2>
+
+    <label for="theme-select">{t("theme.label")}</label>
+    <p>{t("theme.hint")}</p>
+    <select id="theme-select" value={theme_pref.value} onChange={(e) => apply_theme(e.currentTarget.value)}>
+      {THEME_PREFS.map((pref) =>
+        <option key={pref} value={pref}>{t(`theme.${pref}`)}</option>
+      )}
+    </select>
+
+    <hr />
 
     <label for="language-select">{t("account.language")}</label>
     <p>{t("account.language-hint")}</p>

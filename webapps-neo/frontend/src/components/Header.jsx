@@ -10,7 +10,9 @@ import engine_rest from "../api/engine_rest.jsx";
 import { plugins_for } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 import { app_path, get_config } from "../config.js";
-import { app_name, logo_url, logo_alt } from "../branding.js";
+import { app_name } from "../branding.js";
+import { Logo } from "./Logo.jsx";
+import { cycle_theme, theme_pref } from "../theme.js";
 import { page_allowed } from "../helper/authorized_apps.js";
 
 const swap_server = (e, state) => {
@@ -82,6 +84,12 @@ export function Header() {
       if (!state.auth.user.id.peek()) route(app_path("/"));
     };
 
+  // Reading `.value` inside render subscribes this component, so both the icon
+  // and the accessible label follow the preference.
+  const pref = theme_pref.value,
+    theme_label = t(`theme.${pref}`),
+    theme_icon = pref === "light" ? "☀" : pref === "dark" ? "☾" : "◐";
+
   useHotkeys("alt+shift+0", () => route(app_path("/")));
   useHotkeys("alt+shift+1", () => route(app_path("/tasks")));
   useHotkeys("alt+shift+2", () => route(app_path("/processes")));
@@ -134,7 +142,7 @@ export function Header() {
           aria-label={app_name()}
           aria-current={url === app_path("/") ? "page" : undefined}
         >
-          <img src={logo_url()} alt={logo_alt()} />
+          <Logo />
         </a>
         <button
           type="button"
@@ -169,6 +177,15 @@ export function Header() {
               {t("nav.go-to")} <kbd>Alt+K</kbd>
             </button>
             <div>
+              <button
+                type="button"
+                id="theme-toggle"
+                title={`${t("theme.label")}: ${theme_label}`}
+                aria-label={`${t("theme.label")}: ${theme_label}`}
+                onClick={() => cycle_theme()}
+              >
+                <span aria-hidden="true">{theme_icon}</span>
+              </button>
               <nav id="secondary-navigation">
                 <menu>
                   <li>
@@ -222,6 +239,16 @@ export function Header() {
           <menu>
             <li>
               <a href={app_path("/help")}>{t("nav.help")}</a>
+            </li>
+            <li>
+              <button
+                type="button"
+                id="mobile-theme-toggle"
+                onClick={() => cycle_theme()}
+              >
+                <span aria-hidden="true">{theme_icon}</span>
+                {t("theme.label")}: {theme_label}
+              </button>
             </li>
             <li>
               <a href={app_path("/account")} title={t("nav.account")}>

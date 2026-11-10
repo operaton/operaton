@@ -850,6 +850,14 @@
     "language": "語言",
     "language-hint": "選擇應用程式的顯示語言。"
   },
+  "theme": {
+    "label": "主題",
+    "hint": "選擇淺色、深色，或跟隨系統設定。",
+    "auto": "跟隨系統",
+    "light": "淺色",
+    "dark": "深色"
+  },
+
   "home": {
     "welcome": "歡迎使用 Operaton！",
     "info-text": "你可以在下列網站找到 Operaton 的一般資訊：",

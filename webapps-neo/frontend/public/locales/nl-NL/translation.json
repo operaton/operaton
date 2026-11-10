@@ -596,6 +596,14 @@
     "language": "Taal",
     "language-hint": "Kies de weergavetaal voor de applicatie."
   },
+  "theme": {
+    "label": "Thema",
+    "hint": "Kies licht, donker of volg de systeeminstelling.",
+    "auto": "Systeem",
+    "light": "Licht",
+    "dark": "Donker"
+  },
+
   "home": {
     "welcome": "Welkom bij Operaton!",
     "info-text": "U kunt algemene informatie over Operaton vinden op",

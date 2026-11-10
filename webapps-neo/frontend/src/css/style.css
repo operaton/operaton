@@ -94,11 +94,21 @@
   /* components */
   --border: var(--border-width) solid var(--border-color);
   --border-2: var(--border-width-2) solid var(--border-color-2);
+
+  /* Diagram canvases. bpmn-js paints shape fill, stroke and label colour
+     inline at render time, so CSS cannot reach them; BPMNViewer reads these
+     three values and hands them to the renderer instead. The fill sits one
+     step above the page surface so shapes stay distinguishable from it. */
+  --canvas-fill: var(--background-2);
+  --canvas-stroke: oklch(0.35 0.02 var(--hue));
+  --canvas-label: var(--text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
+/* The resolved theme, not the OS preference: theme.js (and the inline
+   script in index.html) writes `data-theme` on <html>, so an explicit
+   choice can override the system while `auto` still follows it. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
     --color-primary: #5ca2e4;
     /* On dark surfaces the light-blue primary already clears AA as text, so the
        link colour tracks it (a darker link would fail against the dark bg). */
@@ -118,7 +128,9 @@
     --text-2: #ccc;
     --text-disabled: #aaa;
     --text-inverted: #000;
-  }
+    /* Canvas shapes sit on --background-1 in dark mode; the stroke has to
+       flip to a light tint or the diagram disappears into the page. */
+    --canvas-stroke: oklch(0.82 0.012 var(--hue));
 }
 
 @layer components {
@@ -469,14 +481,12 @@
     color: var(--text-2);
   }
 
-  @media (prefers-color-scheme: dark) {
-    .login-page {
-      background: var(--background-1);
-    }
+  :root[data-theme="dark"] .login-page {
+    background: var(--background-1);
+  }
 
-    .login-card {
-      background: var(--background-2);
-    }
+  :root[data-theme="dark"] .login-card {
+    background: var(--background-2);
   }
 
   #app {
@@ -516,6 +526,23 @@
     display: block;
     height: 2.75em;
     width: auto;
+  }
+
+  /* The bundled mark is a single-colour SVG whose own media query follows
+     the OS, and an <img> cannot be told otherwise. Invert it only when the
+     explicit choice contradicts that query, so it keeps contrast in both
+     directions. `not all and (prefers-color-scheme: dark)` also covers
+     browsers that report no preference at all. */
+  @media (prefers-color-scheme: dark) {
+    :root[data-theme="light"] .logo-default {
+      filter: none; /* the bundled mark is masked, not inverted (see components.css) */
+    }
+  }
+
+  @media not all and (prefers-color-scheme: dark) {
+    :root[data-theme="dark"] .logo-default {
+      filter: none; /* the bundled mark is masked, not inverted (see components.css) */
+    }
   }
 
   #mobile-logo,

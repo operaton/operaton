@@ -850,6 +850,14 @@
     "language": "Sprache",
     "language-hint": "Wählen Sie die Anzeigesprache für die Anwendung."
   },
+  "theme": {
+    "label": "Darstellung",
+    "hint": "Wählen Sie Hell, Dunkel oder folgen Sie der Systemeinstellung.",
+    "auto": "System",
+    "light": "Hell",
+    "dark": "Dunkel"
+  },
+
   "home": {
     "welcome": "Willkommen bei Operaton!",
     "info-text": "Allgemeine Informationen zu Operaton finden Sie auf",

@@ -43,6 +43,12 @@ export const logo_url = () =>
 export const logo_alt = () =>
   non_empty(branding().logoAlt) ? branding().logoAlt : app_name();
 
+// True when the installation has no valid custom logo, i.e. `logo_url()` falls
+// back to the bundled mark. That mark is a single-colour SVG whose own media
+// query an <img> cannot escape, so style.css inverts it when the explicit theme
+// and the system preference disagree (see `.logo-default`).
+export const is_default_logo = () => !is_url(branding().logoUrl);
+
 // `--token: value;` declarations for the valid hex colours in `colors`.
 const color_decls = (colors) =>
   Object.entries(COLOR_TOKENS)
@@ -60,7 +66,7 @@ export const build_css = (b) => {
   if (light.length) blocks.push(`:root { ${light.join(" ")} }`);
   if (dark.length)
     blocks.push(
-      `@media (prefers-color-scheme: dark) { :root { ${dark.join(" ")} } }`,
+      `:root[data-theme="dark"] { ${dark.join(" ")} }`,
     );
   return blocks.join("\n");
 };

@@ -850,6 +850,13 @@
     "language": "Language",
     "language-hint": "Choose the display language for the application."
   },
+  "theme": {
+    "label": "Theme",
+    "hint": "Choose light, dark, or follow the system setting.",
+    "auto": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
   "home": {
     "welcome": "Welcome to Operaton!",
     "info-text": "You can find general information on operaton on",

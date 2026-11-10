@@ -2022,3 +2022,27 @@ nav:has(> .breadcrumbs) {
   display: flex;
   gap: var(--spacing-2);
 }
+/* The bundled mark (see components/Logo.jsx) is painted through a mask, so its
+   colour is a theme token: it follows html[data-theme] whatever the OS prefers,
+   which an <img> pointing at that SVG cannot do (the SVG recolours itself with
+   its own prefers-color-scheme query). --logo-mask carries the
+   app_path()-resolved URL, since a CSS file cannot know a sub-path deployment. */
+.logo-default {
+  display: block;
+  width: 2.75em;
+  height: 2.75em;
+  background-color: var(--text);
+  -webkit-mask-image: var(--logo-mask);
+  mask-image: var(--logo-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.login-logo.logo-default {
+  width: 5rem;
+  height: 5rem;
+}

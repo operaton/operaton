@@ -29,7 +29,9 @@ import engine_rest from "./api/engine_rest.jsx";
 import { useSignal } from "@preact/signals";
 import { is_oauth } from "./api/oauth.js";
 import { app_path, get_config, load_config } from "./config.js";
-import { apply_branding, logo_url, logo_alt } from "./branding.js";
+import { apply_branding } from "./branding.js";
+import { Logo } from "./components/Logo.jsx";
+import { start_theme } from "./theme.js";
 import { useTranslation } from "react-i18next";
 import { load_plugins } from "./plugins/loader.js";
 import { install_plugin_host } from "./plugins/host.js";
@@ -192,7 +194,7 @@ const Routing = () => {
 
     return (
       <section class="login-page">
-        <img class="login-logo" src={logo_url()} alt={logo_alt()} />
+        <Logo class="login-logo" />
 
         <div class="login-content">
           <h1>{t("login.title")}</h1>
@@ -307,6 +309,10 @@ const Routing = () => {
 // (bundled + remote) before the first render so the registry is frozen and
 // every seam — routes, nav, tabs, state — sees a stable plugin list. A broken
 // plugin server can never block boot; the loader guards itself with a timeout.
+// Publish the stored theme choice and start following the OS while `auto` is
+// selected. The inline script in index.html already painted it, so this only
+// has to bring the signal and the media listener in line with the DOM.
+start_theme();
 install_plugin_host();
 // The runtime configuration must be in place before anything reads it, and the
 // plugin loader needs it to know where the manifest lives.

@@ -596,6 +596,14 @@
     "language": "Langue",
     "language-hint": "Choisissez la langue d'affichage de l'application."
   },
+  "theme": {
+    "label": "Thème",
+    "hint": "Choisissez clair, sombre, ou suivez le réglage du système.",
+    "auto": "Système",
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+
   "home": {
     "welcome": "Bienvenue sur Operaton !",
     "info-text": "Vous pouvez trouver des informations générales sur Operaton sur",

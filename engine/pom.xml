@@ -22,6 +22,8 @@
     <mail.server.port>5025</mail.server.port>
     <authorizationCheckRevokes>auto</authorizationCheckRevokes>
     <jdbcBatchProcessing>true</jdbcBatchProcessing>
+    <!-- Forks for H2 runs, lowered on CI -->
+    <engine.test.forkCount>4</engine.test.forkCount>
 
     <!-- We shade artifacts into the jar, so we need to generate a dependency BOM
     for the license book -->
@@ -449,6 +451,8 @@
           </includes>
           <excludes combine.children="append">
             <exclude>**/*TestCase.java</exclude>
+            <!-- Nested classes run with their outer class -->
+            <exclude>**/*$*</exclude>
             <exclude>%regex[.*(${test.excludes}).*Test.*]</exclude>
             <!-- Nashorn is not part of the JDK anymore in Java 15+ -->
             <exclude>**/*NashornTest.java</exclude>
@@ -723,7 +727,24 @@
     </profile>
 
     <profile>
+      <!-- GitHub runners have only 4 vCPU -->
+      <id>ci-forks</id>
+      <activation>
+        <property>
+          <name>env.CI</name>
+        </property>
+      </activation>
+      <properties>
+        <engine.test.forkCount>2</engine.test.forkCount>
+      </properties>
+    </profile>
+
+    <profile>
       <id>h2-in-memory</id>
+      <properties>
+        <!-- Each fork gets its own in-memory database -->
+        <surefire.forkCount>${engine.test.forkCount}</surefire.forkCount>
+      </properties>
       <build>
         <plugins>
           <plugin>

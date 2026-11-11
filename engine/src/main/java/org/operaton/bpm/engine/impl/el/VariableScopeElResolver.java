@@ -24,6 +24,7 @@ import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.behavior.ExternalTaskActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceInputMappingExecution;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -93,7 +94,8 @@ public class VariableScopeElResolver extends ELResolver {
   }
 
   private boolean isScopeReference(VariableScope variableScope, String property) {
-    return (EXECUTION_KEY.equals(property) && variableScope instanceof ExecutionEntity)
+    return (EXECUTION_KEY.equals(property) && (variableScope instanceof ExecutionEntity
+            || variableScope instanceof MultiInstanceInputMappingExecution))
         || (TASK_KEY.equals(property) && variableScope instanceof TaskEntity)
         || (variableScope instanceof CaseExecutionEntity
             && (CASE_EXECUTION_KEY.equals(property) || EXECUTION_KEY.equals(property)));

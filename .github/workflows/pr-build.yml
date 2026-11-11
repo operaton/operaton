@@ -224,7 +224,7 @@ jobs:
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@8a133bfa3ecb0ea9024c1e2ae788b4c25f6cdb9d #v6.6.2
+        uses: mikepenz/action-junit-report@4a26df3e2ae132254ba12a53f65a388d0961e786 #v6.7.0
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/TEST-*.xml
           require_passed_tests: true
@@ -379,7 +379,7 @@ jobs:
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${MATRIX_DATABASE} --no-build
       - name: Publish Test Report
         if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
-        uses: mikepenz/action-junit-report@8a133bfa3ecb0ea9024c1e2ae788b4c25f6cdb9d #v6.6.2
+        uses: mikepenz/action-junit-report@4a26df3e2ae132254ba12a53f65a388d0961e786 #v6.7.0
         with:
           # TEST-*.xml only: the glob must not match failsafe-summary.xml,
           # which has no testsuite root and makes the action emit annotations
@@ -437,7 +437,7 @@ jobs:
           .devenv/scripts/build/build-and-run-spring-boot-starter.sh
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@8a133bfa3ecb0ea9024c1e2ae788b4c25f6cdb9d #v6.6.2
+        uses: mikepenz/action-junit-report@4a26df3e2ae132254ba12a53f65a388d0961e786 #v6.7.0
         with:
           report_paths: ${{ github.workspace }}/spring-boot-starter/**/target/failsafe-reports/TEST-*.xml
           require_passed_tests: true
@@ -494,7 +494,7 @@ jobs:
           ./mvnw -Pquarkus-tests -f quarkus-extension test
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@8a133bfa3ecb0ea9024c1e2ae788b4c25f6cdb9d #v6.6.2
+        uses: mikepenz/action-junit-report@4a26df3e2ae132254ba12a53f65a388d0961e786 #v6.7.0
         with:
           report_paths: ${{ github.workspace }}/quarkus-extension/**/target/surefire-reports/TEST-*.xml
           require_passed_tests: true

@@ -528,15 +528,20 @@
     top: 0;
     position: sticky;
     display: flex;
+    /* Stretch, not centre: the primary nav fills the row's height so its
+       links can sit on the bottom edge (see #primary-navigation below). */
     align-items: stretch;
     gap: var(--spacing-1);
     min-height: 2rem;
     padding: 0 var(--spacing-1);
     background: var(--background-3);
+    /* The row's own hairline. An inset shadow, not a border: a border would add
+       to the height and push the row past the min-height it is sized to. */
+    box-shadow: 0 1px 0 var(--border-color);
     z-index: 10;
   }
 
-  /* Logo on the left, spanning both header rows. */
+  /* Logo on the left of the single row. */
   #logo {
     display: flex;
     align-items: center;
@@ -571,25 +576,29 @@
     display: none;
   }
 
-  /* Two stacked rows; column-reverse puts the DOM-first primary nav on the
-     lower row and the secondary group on the top row (keeps primary nav first
-     in tab order for a11y). */
+  /* One row: the primary nav on the left, the tool group pushed to the right.
+     The DOM order (nav, then tools) is also the visual order, so no reverse
+     is needed and tab order still matches. */
   #nav-wrapper {
     flex: 1;
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: center;
-    gap: var(--spacing-1);
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+    min-width: 0;
     font-size: var(--small-font-size);
   }
 
-  /* Secondary row: server selector left, go-to centred, the rest right. A step
-     below the primary nav's font size, so it reads as the quieter row. */
+  /* Server / go-to / the options trigger, flush right and vertically
+     centred: they are controls, not tabs, so they do not ride the bottom
+     edge the way the nav links do. */
   #nav-wrapper > div:last-child {
     display: flex;
-    gap: var(--spacing-2);
+    gap: var(--spacing-1);
     align-items: center;
-    justify-content: space-between;
+    align-self: center;
+    justify-content: flex-end;
     font-size: var(--smaller-font-size);
   }
 
@@ -605,12 +614,22 @@
     align-items: center;
   }
 
-  /* One height for every control in the row: left to themselves a button sizes
-     from its line box plus padding while a select adds the UA's own metrics, so
-     the three pills end up a couple of pixels apart. */
+  /* The pills end up a couple of pixels apart when they size themselves: a
+     button comes from its line box plus padding while a select adds the UA's
+     own metrics, so one height is set for all of them.
+
+     `margin-top: 0` matters just as much: the global rule pads every button
+     with `margin-top: 1em`, and the usual exception only covers buttons inside
+     a form / menu / list, while this group is a plain div. Left in place, both
+     pills were pushed down by a full em — and since the offset is relative to
+     each button's own font size, the shorter one ended up sitting higher. */
+
   #nav-wrapper > div:last-child :is(button, select) {
     box-sizing: border-box;
-    height: 1.5rem;
+    height: 1.7rem;
+    /* Stated rather than inherited: both pills have to share one line box,
+       whatever font-size the row ends up giving them. */
+    line-height: 1;
     padding-block: 0;
     border: none;
   }
@@ -723,10 +742,11 @@
     color: var(--color-link);
   }
 
-  /* Main pages: normal left-aligned row on the lower row (the reverse is only
-     on the parent #nav-wrapper column, to stack this row below the secondary). */
+  /* The links sit on the row's bottom edge, the way a tab row reads, while
+     the tool group on the right stays vertically centred (see below). */
   #primary-navigation {
-    display: block;
+    display: flex;
+    align-items: flex-end;
     padding: 0;
   }
 
@@ -779,12 +799,14 @@
     height: 100%;
   }
 
+  /* The current page is a filled block that sits on the header surface, the
+     way a selected tab reads — the header's own grey is the unselected
+     background, so the fill has to be the surface above it. */
   #app > header nav menu > li > a[aria-current="page"] {
     color: var(--text);
-    /* The indicator ends flush with the header's bottom edge; the padding is
-       reduced by the border width so the link keeps its height. */
-    border-bottom: 0.2em solid var(--color-primary);
-    padding-bottom: calc(var(--spacing-1) - 0.2em);
+    background: var(--background-1);
+    border-radius: var(--border-radius);
+    font-weight: 600;
   }
 
   #app > header nav menu a {
@@ -1861,4 +1883,296 @@
 
 .instance-state.state-suspended {
   color: var(--color-warning);
+}
+
+
+/* ── header options menu ──────────────────────────────────────────────────
+   One trigger in the top row (server / theme / language / account / help all
+   live inside), so the row keeps only the primary nav plus this button. */
+#options-toggle {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  gap: var(--spacing-1);
+  /* The global button rule pads every button with `margin-top: 1em`, and its
+     exception covers only buttons inside a form / menu / list. This one sits in
+     a plain div, so it would otherwise drop a full em below #go-to. */
+  margin: 0;
+  padding: 0 var(--spacing-1);
+  border: none;
+  border-radius: 50em;
+  background: var(--button-background);
+  color: var(--text);
+  /* Inherit, like the go-to button beside it: the row sets 0.75rem on both. */
+  font-size: inherit;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  margin-right: 1em;
+}
+
+/* The trigger names what it opens: the backend, a dash, then the signed-in
+   user, then the caret. The icons ship at 1.5rem, which would blow the pill's
+   1.5rem height, so they are sized down here. */
+#options-toggle .options-toggle-part {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+#options-toggle .options-toggle-part svg {
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+  flex: none;
+}
+
+/* A long server or user name must not push the caret out of the pill. */
+#options-toggle .options-toggle-part {
+  max-inline-size: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#options-toggle .options-toggle-sep {
+  color: var(--color-muted, var(--muted, #666));
+  font-weight: 400;
+}
+
+#options-toggle .options-toggle-caret {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1em;
+}
+
+#options-toggle .options-toggle-caret svg {
+  inline-size: 0.75rem;
+  block-size: 0.75rem;
+}
+
+/* ── header options popover ───────────────────────────────────────────────
+   The panel hangs off the pill that opens it: a short settings list on top,
+   a hairline, then the plain links. Everything is sized to the row it sits in,
+   not to a page — the panel is a menu, not a window. */
+
+/* Anchored under the trigger: a modal centred in the viewport reads as a new
+   window rather than as this pill's own list. */
+.options-menu {
+  position: fixed;
+  inset-block-start: 3.1rem;
+  inset-inline-end: var(--spacing-2);
+  inset-inline-start: auto;
+  margin: 0;
+  /* The panel is the pill's own list, so it is as wide as the pill. Header
+     measures the pill when the panel opens and writes that width here;
+     the value below only carries the first paint and the tests. */
+  inline-size: 15rem;
+  min-inline-size: 0;
+  max-inline-size: none;
+  max-block-size: calc(100vh - 3rem);
+  overflow: auto;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  background: var(--background-1);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.18);
+  color: var(--text);
+  padding: 0;
+}
+
+/* A native dialog is centred by the UA; the panel is not a page, so the
+   default `inset: 0` + `margin: auto` centring is dropped. */
+.options-menu[open] {
+  inset-block-end: auto;
+  inset-inline-start: auto;
+}
+
+.options-menu::backdrop {
+  background: transparent;
+  /* The normalize layer blurs every dialog backdrop; this panel is a menu, not
+     a modal, so the page behind it stays sharp and the effect of a pick is
+     visible without closing the panel. */
+  backdrop-filter: none;
+}
+
+/* The header row still names the signed-in user, so the panel does not need to
+   repeat it. */
+.options-menu > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-bottom: var(--border);
+}
+
+.options-menu > header h2 {
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--small-font-size);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.options-menu > header button {
+  margin: 0;
+  padding: var(--spacing-1);
+  border: none;
+  background: transparent;
+  color: var(--text);
+}
+
+.options-menu > menu {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: var(--spacing-1) 0;
+  list-style: none;
+}
+
+/* One settings row: the name, then the value in use and a caret. */
+.options-menu .options-row {
+  display: block;
+  padding: 0 var(--spacing-2);
+}
+
+.options-menu .options-row-head {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  min-block-size: 2rem;
+}
+
+.options-menu .options-label {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  font-size: var(--small-font-size);
+  font-weight: 600;
+}
+
+.options-menu .options-value {
+  max-inline-size: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.options-menu .options-caret svg {
+  inline-size: 0.625rem;
+  block-size: 0.625rem;
+  transition: transform 0.15s ease;
+}
+
+/* The caret points where the list will appear: right while the row is shut,
+   down once it is open. */
+.options-menu .options-row-toggle[aria-expanded="false"] .options-caret svg {
+  transform: rotate(-90deg);
+}
+
+/* The row head that toggles its list: a button by behaviour only, so it
+   must not pick up the global button chrome (border, padding, background)
+   that would set it apart from the Server row's plain <select>. */
+.options-menu .options-row-toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-muted, var(--muted, var(--text)));
+  font: inherit;
+  font-size: var(--small-font-size);
+  cursor: pointer;
+}
+
+.options-menu .options-row-toggle:hover .options-value {
+  color: var(--text);
+}
+
+/* The list a row owns: indented under it, so the panel keeps one column. */
+.options-menu .options-submenu {
+  margin: 0 0 var(--spacing-1);
+  /* A choice sits under the row it belongs to, so the list is indented by the
+     row's own padding instead of sitting flush with it. The <li> is a block at
+     auto width, so the padding comes out of the panel's width, not on top. */
+  padding: 0;
+  list-style: none;
+}
+
+.options-menu .options-submenu-list {
+  inline-size: 100%;
+  margin: 0 0 var(--spacing-1);
+  padding: 0;
+  font-size: var(--small-font-size);
+  list-style: none;
+}
+
+.options-menu .options-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-1);
+  inline-size: 100%;
+  margin: 0;
+  padding: 0.375rem var(--spacing-2);
+  /* The row is padded as well as sized, and there is no global border-box
+     reset, so without this the padding is added on top of 100% and the row
+     overflows the panel by the width of its own padding. */
+  box-sizing: border-box;
+  border: none;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: inherit;
+  font-size: var(--small-font-size);
+  text-align: start;
+}
+
+.options-menu .options-item:hover {
+  background: var(--background-2);
+}
+
+/* The choice in use keeps a tinted row, so the list can be read at a glance
+   without reopening the row it belongs to. It stays tinted under the pointer
+   too, or hovering the current choice would read as a different one. */
+.options-menu .options-item[aria-current="true"],
+.options-menu .options-item[aria-current="true"]:hover {
+  background: var(--background-3);
+}
+
+.options-menu .options-check {
+  flex: 0 0 auto;
+  inline-size: 2rem;
+  color: var(--color-primary, var(--text));
+  font-size: var(--small-font-size);
+  text-align: center;
+}
+
+/* The ruled-off links: plain, underlined, one per line. */
+.options-menu .options-rule {
+  margin: var(--spacing-1) 0;
+  border: none;
+  border-block-start: var(--border);
+}
+
+.options-menu .options-link {
+  display: block;
+  margin: 0;
+  padding: 0.25rem var(--spacing-2);
+  font-size: var(--small-font-size);
+  text-decoration: underline;
+}
+
+.options-menu .options-link:hover {
+  background: var(--background-3);
+}
+
+.options-menu #logout {
+  inline-size: 100%;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
 }

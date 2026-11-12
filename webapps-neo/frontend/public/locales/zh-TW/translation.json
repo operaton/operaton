@@ -59,7 +59,8 @@
     "skip-to-content": "跳至主要內容",
     "go-to": "跳轉",
     "server": "伺服器",
-    "choose-server": "選擇伺服器"
+    "choose-server": "選擇伺服器",
+    "options": "選項"
   },
   "goto": {
     "title": "跳轉",

@@ -49,7 +49,11 @@
     "skip-to-content": "Ga naar inhoud",
     "skip-to-navigation": "Ga naar hoofdnavigatie",
     "go-to": "Ga naar",
-    "choose-server": "Kies een server"
+    "choose-server": "Kies een server",
+    "options": "Opties",
+    "server": "Server",
+    "logout": "Afmelden",
+    "main-navigation": "Hoofdnavigatie"
   },
   "goto": {
     "title": "Ga naar",

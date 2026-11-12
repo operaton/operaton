@@ -59,7 +59,8 @@
     "skip-to-content": "Zum Inhalt springen",
     "go-to": "Gehe zu",
     "server": "Server",
-    "choose-server": "Server auswählen"
+    "choose-server": "Server auswählen",
+    "options": "Optionen"
   },
   "goto": {
     "title": "Gehe zu",

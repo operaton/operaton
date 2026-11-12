@@ -49,7 +49,11 @@
     "skip-to-content": "Ir al contenido",
     "skip-to-navigation": "Ir a la navegación principal",
     "go-to": "Ir a",
-    "choose-server": "Elegir un servidor"
+    "choose-server": "Elegir un servidor",
+    "options": "Opciones",
+    "server": "Servidor",
+    "logout": "Cerrar sesión",
+    "main-navigation": "Navegación principal"
   },
   "goto": {
     "title": "Ir a",

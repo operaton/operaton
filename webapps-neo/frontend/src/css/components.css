@@ -1744,7 +1744,7 @@ nav:has(> .breadcrumbs) {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-2);
-  min-width: 24ch;
+  min-width: 18ch;
   margin: 0;
   color: var(--text);
   padding: 0.25em var(--spacing-1);

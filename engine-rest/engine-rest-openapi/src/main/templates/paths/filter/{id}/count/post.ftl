@@ -6,7 +6,7 @@
       tag = "Filter"
       summary = "Execute Filter Count"
       desc = "Executes the saved query of the filter by id and returns the count. This method is
-              slightly more powerful then the [Get Execute Filter Count](${docsUrl}/reference/rest/filter/get-execute-count/) 
+              slightly more powerful then the [Get Execute Filter Count](#tag/Filter/operation/executeFilterCount) 
               method because it allows to extend the saved query of the filter."
   />
 

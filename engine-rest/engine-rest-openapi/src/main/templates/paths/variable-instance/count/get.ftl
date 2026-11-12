@@ -7,7 +7,7 @@
       summary = "Get Variable Instance Count"
       desc = "Query for the number of variable instances that fulfill given parameters. Takes the
               same parameters as the [Get Variable
-              Instances](${docsUrl}/reference/rest/variable-instance/get-query/)
+              Instances](#tag/Variable-Instance/operation/getVariableInstances)
               method."
   />
 

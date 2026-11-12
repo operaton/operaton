@@ -6,7 +6,7 @@
       tag = "Group"
       summary = "List Groups"
       desc = "Queries for a list of groups using a list of parameters. The size of the result set can be retrieved
-              by using the [Get Group Count](${docsUrl}/reference/rest/group/get-query-count) method." />
+              by using the [Get Group Count](#tag/Group/operation/getGroupCount) method." />
 
   "parameters" : [
 

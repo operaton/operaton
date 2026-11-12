@@ -7,9 +7,9 @@
       summary = "Count Historic Job Logs"
       desc = "Queries for the number of historic job logs that fulfill the given parameters.
               This method takes the same message body as the
-              [Get Job Logs (POST)](${docsUrl}/reference/rest/history/job-log/post-job-log-query/)
+              [Get Job Logs (POST)](#tag/Historic-Job-Log/operation/queryHistoricJobLogs)
               method and therefore it is slightly more powerful than the
-              [Get Job Log Count](${docsUrl}/reference/rest/history/job-log/get-job-log-query-count/)
+              [Get Job Log Count](#tag/Historic-Job-Log/operation/getHistoricJobLogsCount)
               method."
   />
 

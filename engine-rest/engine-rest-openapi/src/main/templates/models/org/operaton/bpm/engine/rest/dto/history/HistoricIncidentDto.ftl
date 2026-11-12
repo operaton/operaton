@@ -68,8 +68,8 @@
         type = "string"
         desc = "The type of incident, for example: `failedJobs` will be returned in case of an
                 incident which identified a failed job during the execution of a
-                process instance. See the [User Guide](/manual/develop/user-
-                guide/process-engine/incidents/#incident-types) for a list of
+                process instance. See the [User Guide](${docsUrl}/user-guide/process-engine/incidents/#incident-types)
+                for a list of
                 incident types."
     />
 

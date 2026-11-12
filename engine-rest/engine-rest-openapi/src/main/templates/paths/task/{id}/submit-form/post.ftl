@@ -13,7 +13,7 @@
               * If the task has Form Field Metadata defined, the process engine will perform backend
                 validation for any form fields which have validators defined.
                 See the
-                [Generated Task Forms](${docsUrl}/user-guide/task-forms/_index/#generated-task-forms)
+                [Generated Task Forms](${docsUrl}/user-guide/task-forms/#generated-task-forms)
                 section of the [User Guide](${docsUrl}/user-guide/) for more information." />
 
   "parameters" : [

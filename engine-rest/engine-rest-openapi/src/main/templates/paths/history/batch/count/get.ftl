@@ -7,7 +7,7 @@
       summary = "Get Historic Batch Count"
       desc = "Requests the number of historic batches that fulfill the query criteria.
               Takes the same filtering parameters as the
-              [Get Historic Batches](${docsUrl}/reference/rest/history/batch/get-query/)
+              [Get Historic Batches](#tag/Historic-Batch/operation/getHistoricBatches)
               method."
   />
 

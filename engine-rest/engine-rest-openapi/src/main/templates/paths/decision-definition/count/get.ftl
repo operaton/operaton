@@ -6,7 +6,7 @@
       summary = "Count Decision Definitions"
       desc = "Requests the number of decision definitions that fulfill the query criteria.
               Takes the same filtering parameters as the
-              [Get Decision Definition](${docsUrl}/reference/rest/decision-definition/get-query/) method." />
+              [Get Decision Definition](#tag/Decision-Definition/operation/getDecisionDefinitions) method." />
 
   "parameters" : [
 

@@ -6,7 +6,7 @@
       tag = "Job"
       summary = "List Jobs"
       desc = "Queries for jobs that fulfill given parameters. This method is slightly more
-              powerful than the [Get Jobs](${docsUrl}/reference/rest/job/get-query/)
+              powerful than the [Get Jobs](#tag/Job/operation/getJobs)
               method because it allows filtering by multiple jobs of types `String`,
               `Number` or `Boolean`."
   />

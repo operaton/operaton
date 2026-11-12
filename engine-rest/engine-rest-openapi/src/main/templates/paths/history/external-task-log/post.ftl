@@ -7,7 +7,7 @@
       summary = "List Historic External Task Logs"
       desc = "Queries for historic external task logs that fulfill the given parameters.
               This method is slightly more powerful than the
-              [Get External Task Logs](${docsUrl}/reference/rest/history/external-task-log/get-external-task-log-query/)
+              [Get External Task Logs](#tag/Historic-External-Task-Log/operation/getHistoricExternalTaskLogs)
               method because it allows filtering by historic external task logs
               values of the different types `String`, `Number` or `Boolean`."
   />

@@ -6,7 +6,7 @@
       summary = "List Historic Process Instances"
       desc = "Queries for historic process instances that fulfill the given parameters.
               The size of the result set can be retrieved by using the
-              [Get Process Instance Count](${docsUrl}/reference/rest/history/process-instance/get-process-instance-query-count/) method." />
+              [Get Process Instance Count](#tag/Historic-Process-Instance/operation/getHistoricProcessInstancesCount) method." />
 
   "parameters" : [
 

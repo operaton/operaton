@@ -7,7 +7,7 @@
       summary = "Set Assignee"
       desc = "Changes the assignee of a task to a specific user.
 
-              **Note:** The difference with the [Claim Task](${docsUrl}/reference/rest/task/post-claim/)
+              **Note:** The difference with the [Claim Task](#tag/Task/operation/claim)
               method is that this method does not check if the task already has a user
               assigned to it." />
 

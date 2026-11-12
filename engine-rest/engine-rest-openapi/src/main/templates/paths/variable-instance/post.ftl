@@ -7,8 +7,7 @@
       summary = "List Variable Instances"
       desc = "Query for variable instances that fulfill given parameters through a JSON object.
               This method is slightly more powerful than the
-              [Get Variable Instances](${docsUrl}/reference/rest/variable-
-              instance/get-query/) method because it allows filtering by multiple
+              [Get Variable Instances](#tag/Variable-Instance/operation/getVariableInstances) method because it allows filtering by multiple
               variable instances of types `String`, `Number` or `Boolean`."
   />
 

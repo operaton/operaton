@@ -5,10 +5,10 @@
       tag = "Historic Task Instance"
       summary = "List Historic Task Instances"
       desc = "Queries for historic tasks that fulfill the given parameters. This method is slightly more powerful
-              than the [Get Tasks (Historic)](${docsUrl}/reference/rest/history/task/get-task-query/) method because
+              than the [Get Tasks (Historic)](#tag/Historic-Task-Instance/operation/getHistoricTaskInstances) method because
               it allows filtering by multiple process or task variables of types `String`, `Number` or `Boolean`.
               The size of the result set can be retrieved by using the
-              [Get Task Count (POST)](${docsUrl}/reference/rest/history/task/post-task-query-count/)
+              [Get Task Count (POST)](#tag/Historic-Task-Instance/operation/queryHistoricTaskInstancesCount)
               method."
   />
 

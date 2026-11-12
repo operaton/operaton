@@ -7,10 +7,9 @@
       summary = "Count Variable Instances"
       desc = "Query for the number of variable instances that fulfill given parameters. This
               method takes the same message body as the
-              [Get Variable Instances POST](${docsUrl}/reference/rest/variable-
-              instance/post-query/) method and therefore it is slightly more
+              [Get Variable Instances POST](#tag/Variable-Instance/operation/queryVariableInstances) method and therefore it is slightly more
               powerful than the [Get Variable Instance
-              Count](${docsUrl}/reference/rest/variable-instance/get-query-count/)
+              Count](#tag/Variable-Instance/operation/getVariableInstancesCount)
               method."
   />
 

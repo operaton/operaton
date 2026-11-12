@@ -35,16 +35,16 @@ test.describe("keyboard navigation", () => {
     );
   });
 
-  test("the server selector is reachable and has an accessible name", async ({
+  test("the options pill is reachable and has an accessible name", async ({
     page,
   }) => {
     await page.goto("/tasks");
-    // The desktop selector — scoped so it doesn't clash with the mobile one.
-    // Its accessible name comes from the visible "Server" label wrapping it.
-    const select = page.locator("#server-selector select");
-    await expect(select).toHaveAccessibleName(/server/i);
-    await select.focus();
-    await expect(select).toBeFocused();
+    // The server row lives in the options pill now, not in a desktop <select>.
+    // Its accessible name carries the server and the signed-in user.
+    const pill = page.locator("#options-toggle");
+    await expect(pill).toHaveAccessibleName(/.+/);
+    await pill.focus();
+    await expect(pill).toBeFocused();
   });
 
   test("the global search dialog opens, traps focus, and Escape closes it", async ({

@@ -170,26 +170,26 @@ test.describe("theme-painted chrome", () => {
     expect(await body_brightness(page)).toBeLessThan(120);
   });
 
-  test("the server menu is set in the select's own type size", async ({
+  test("the server name is set at the pill's own type size", async ({
     page,
   }) => {
     await goto_signed_in(page, "/processes");
-    await page.waitForSelector("#server-selector select", { timeout: 15_000 });
+    await page.waitForSelector("#options-toggle", { timeout: 15_000 });
 
-    // A base-select list renders its options as real elements, so they inherit
-    // the global `option { font-size: 1rem }` and grow — the native popup this
-    // replaces used the select's size instead. The two must still agree, and a
-    // long server name must stay on one line rather than wrap the row.
+    // A base-select list rendered the server name as a real option, which
+    // inherited the global `option { font-size: 1rem }` and grew — the native
+    // popup this replaces used the select's own size. The name is a span now, so
+    // it must sit at the pill's own size, and a long name must stay on one line.
     const sizes = await page.evaluate(() => {
-      const select = document.querySelector("#server-selector select");
-      const option = getComputedStyle(select.querySelector("option"));
+      const pill = document.querySelector("#options-toggle");
+      const name = document.querySelector("#options-toggle-server");
       return {
-        control: getComputedStyle(select).fontSize,
-        option: option.fontSize,
-        wrap: option.whiteSpace,
+        pill: getComputedStyle(pill).fontSize,
+        name: getComputedStyle(name).fontSize,
+        wrap: getComputedStyle(name).whiteSpace,
       };
     });
-    expect(sizes.option).toBe(sizes.control);
+    expect(sizes.name).toBe(sizes.pill);
     expect(sizes.wrap).toBe("nowrap");
   });
 });

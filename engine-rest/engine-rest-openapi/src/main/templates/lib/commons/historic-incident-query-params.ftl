@@ -30,7 +30,7 @@
   "incidentType": {
     "type": "string",
     "desc": "Restricts to incidents that belong to the given incident type. See the [User
-             Guide](/manual/develop/user-guide/process-engine/incidents/#incident-types)
+             Guide](${docsUrl}/user-guide/process-engine/incidents/#incident-types)
              for a list of incident types."
   },
   "incidentMessage": {

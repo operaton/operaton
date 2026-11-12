@@ -6,7 +6,7 @@
       tag = "Incident"
       summary = "List Incidents"
       desc = "Queries for incidents that fulfill given parameters. The size of the result set can be retrieved by using
-              the [Get Incident Count](${docsUrl}/reference/rest/incident/get-query-count/) method." />
+              the [Get Incident Count](#tag/Incident/operation/getIncidentsCount) method." />
 
   "parameters": [
     <#assign last = false >

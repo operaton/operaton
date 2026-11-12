@@ -6,10 +6,10 @@
       tag = "Task"
       summary = "List Tasks"
       desc = "Queries for tasks that fulfill a given filter. This method is slightly more powerful
-              than the [Get Tasks](${docsUrl}/reference/rest/task/get-query/) method because it
+              than the [Get Tasks](#tag/Task/operation/getTasks) method because it
               allows filtering by multiple process or task variables of types `String`, `Number`
               or `Boolean`. The size of the result set can be retrieved by using the
-              [Get Task Count (POST)](${docsUrl}/reference/rest/task/post-query-count/) method.
+              [Get Task Count (POST)](#tag/Task/operation/queryTasksCount) method.
 
               **Security Consideration**:
               There are several parameters (such as `assigneeExpression`) for specifying an EL

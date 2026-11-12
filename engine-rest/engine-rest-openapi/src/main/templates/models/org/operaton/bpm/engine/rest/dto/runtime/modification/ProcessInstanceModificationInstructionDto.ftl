@@ -42,13 +42,13 @@
         name = "activityInstanceId"
         type = "string"
         desc = "Can be used with instructions of type `cancel`. Specifies the activity instance to cancel.
-                Valid values are the activity instance IDs supplied by the [Get Activity Instance request](${docsUrl}/reference/rest/process-instance/get-activity-instances/)." />
+                Valid values are the activity instance IDs supplied by the [Get Activity Instance request](#tag/Process-Instance/operation/getActivityInstanceTree)." />
 
     <@lib.property
         name = "transitionInstanceId"
         type = "string"
         desc = "Can be used with instructions of type `cancel`. Specifies the transition instance to cancel.
-                Valid values are the transition instance IDs supplied by the [Get Activity Instance request](${docsUrl}/reference/rest/process-instance/get-activity-instances/)." />
+                Valid values are the transition instance IDs supplied by the [Get Activity Instance request](#tag/Process-Instance/operation/getActivityInstanceTree)." />
 
     <@lib.property
         name = "ancestorActivityInstanceId"

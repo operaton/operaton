@@ -7,9 +7,9 @@
       summary = "Count Job Definitions"
       desc = "Queries for the number of job definitions that fulfill given parameters. This
               method takes the same message body as the
-              [Get Job Definitions (POST)](${docsUrl}/reference/rest/job-definition/post-query/)
+              [Get Job Definitions (POST)](#tag/Job-Definition/operation/queryJobDefinitions)
               method and therefore it is slightly more powerful than the
-              [Get Job Definition Count](${docsUrl}/reference/rest/job-definition/get-query-count/)
+              [Get Job Definition Count](#tag/Job-Definition/operation/getJobDefinitionsCount)
               method."
   />
 

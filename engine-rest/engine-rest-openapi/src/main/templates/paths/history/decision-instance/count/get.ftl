@@ -7,7 +7,7 @@
       summary = "Get Historic Decision Instance Count"
       desc = "Queries for the number of historic decision instances that fulfill the given parameters. 
               Takes the same parameters as the 
-              [Get Historic Decision Instances](${docsUrl}/reference/rest/history/decision-instance/get-decision-instance-query/) 
+              [Get Historic Decision Instances](#tag/Historic-Decision-Instance/operation/getHistoricDecisionInstances) 
               method."
   />
 

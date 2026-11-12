@@ -6,7 +6,7 @@
       summary = "Get Authorizations"
       desc = "Queries for a list of authorizations using a list of parameters.
               The size of the result set can be retrieved by using the
-              [Get Authorization Count](${docsUrl}/reference/rest/authorization/get-query-count/) method."
+              [Get Authorization Count](#tag/Authorization/operation/getAuthorizationCount) method."
   />
 
   "parameters" : [

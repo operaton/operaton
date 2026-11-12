@@ -6,9 +6,8 @@
       tag = "Job"
       summary = "Count Jobs"
       desc = "Queries for jobs that fulfill given parameters. This method takes the same message
-              body as the [Get Jobs POST](${docsUrl}/reference/rest/job/post-
-              query/) method and therefore it is slightly more powerful than the
-              [Get Job Count](${docsUrl}/reference/rest/job/get-query-count/)
+              body as the [Get Jobs POST](#tag/Job/operation/queryJobs) method and therefore it is slightly more powerful than the
+              [Get Job Count](#tag/Job/operation/getJobsCount)
               method."
   />
 

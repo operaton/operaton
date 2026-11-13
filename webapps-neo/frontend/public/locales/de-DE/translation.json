@@ -306,6 +306,13 @@
     }
   },
   "processes": {
+    "pagination": {
+      "label": "Seiten der Prozessdefinitionen",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "range": "{{first}}–{{last}} von {{total}} Definitionen"
+    },
+    "instances-status-unavailable": "Instanzstatus wird geladen oder ist nicht verfügbar",
     "title": "Prozessdefinitionen",
     "subnav-label": "Unternavigation",
     "version": "Version",

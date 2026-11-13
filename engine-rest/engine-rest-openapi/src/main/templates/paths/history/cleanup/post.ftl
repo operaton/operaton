@@ -10,7 +10,7 @@
 
               **Note:** This endpoint will return at most a single history cleanup job.
               Since version `7.9.0` it is possible to configure multiple
-              [parallel history cleanup jobs](${docsUrl}/user-guide/process-engine/history/#parallel-execution). Use
+              [parallel history cleanup jobs](${docsUrl}/user-guide/process-engine/history/history-cleanup/#parallel-execution). Use
               [`GET /history/cleanup/jobs`](${docsUrl}/reference/rest/history/history-cleanup/get-history-cleanup-jobs)
               to find all the available history cleanup jobs."
   />

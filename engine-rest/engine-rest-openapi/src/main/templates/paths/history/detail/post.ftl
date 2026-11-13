@@ -5,9 +5,9 @@
       tag = "Historic Detail"
       summary = "List Historic Details"
       desc = "Queries for historic details that fulfill the given parameters. This method is slightly more
-              powerful than the [Get Historic Details](${docsUrl}/reference/rest/history/detail/get-detail-query/)
+              powerful than the [Get Historic Details](#tag/Historic-Detail/operation/getHistoricDetails)
               method because it allows sorting by multiple parameters. The size of the result set can be retrieved by
-              using the [Get Historic Detail Count](${docsUrl}/reference/rest/history/detail/get-detail-query-count/)
+              using the [Get Historic Detail Count](#tag/Historic-Detail/operation/getHistoricDetailsCount)
               method."
   />
 

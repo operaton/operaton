@@ -6,7 +6,7 @@
       tag = "Task"
       summary = "Count Tasks"
       desc = "Retrieves the number of tasks that fulfill the given filter. Corresponds to the size
-              of the result set of the [Get Tasks (POST)](${docsUrl}/reference/rest/task/post-query/)
+              of the result set of the [Get Tasks (POST)](#tag/Task/operation/queryTasks)
               method and takes the same parameters.
 
               **Security Consideration**:

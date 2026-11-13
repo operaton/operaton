@@ -19,7 +19,7 @@
         dto = "JobQueryDto"
         last = true
         desc = "A job query like the request body for the
-                [Get Jobs (POST)](${docsUrl}/reference/rest/job/post-query/#request-body)
+                [Get Jobs (POST)](#tag/Job/operation/queryJobs)
                 method."
     />
 

@@ -6,7 +6,7 @@
       summary = "List Historic Process Instances"
       desc = "Queries for historic process instances that fulfill the given parameters.
               This method is slightly more powerful than the
-              [Get Process Instance](${docsUrl}/reference/rest/history/process-instance/get-process-instance-query/)
+              [Get Process Instance](#tag/Historic-Process-Instance/operation/getHistoricProcessInstances)
               because it allows filtering by multiple process variables of types `String`, `Number` or `Boolean`." />
 
   "parameters" : [

@@ -12,11 +12,11 @@
               These reports include the count of the finished batches, cleanable
               batches and type of the batch.
               The size of the result set can be retrieved by using the
-              [Get Cleanable Batch Report Count](${docsUrl}/reference/rest/history/batch/get-cleanable-batch-report-count/)
+              [Get Cleanable Batch Report Count](#tag/Historic-Batch/operation/getCleanableHistoricBatchesReportCount)
               method.
 
               **Please note:**
-              The history time to live for batch operations does not support [Multi-Tenancy](${docsUrl}/user-guide/process-engine/multi-tenancy.md).
+              The history time to live for batch operations does not support [Multi-Tenancy](${docsUrl}/user-guide/process-engine/multi-tenancy/).
               The report will return an information for all batch operations (for all tenants) if you have permissions
               to see the history.
               "

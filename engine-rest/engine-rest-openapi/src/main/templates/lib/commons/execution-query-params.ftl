@@ -110,7 +110,7 @@
   },
   "incidentType": {
     "type": "string",
-    "desc": "Filter by the incident type. See the [User Guide](/manual/develop/user-guide/process-engine/incidents/#incident-types) for a list of incident types."
+    "desc": "Filter by the incident type. See the [User Guide](${docsUrl}/user-guide/process-engine/incidents/#incident-types) for a list of incident types."
   },
   "incidentMessage": {
     "type": "string",

@@ -7,7 +7,7 @@
       summary = "List User Operation Log Entries"
       desc = "Queries for user operation log entries that fulfill the given parameters.
               The size of the result set can be retrieved by using the
-              [Get User Operation Log Count](${docsUrl}/reference/rest/history/user-operation-log/get-user-operation-log-query-count/)
+              [Get User Operation Log Count](#tag/Historic-User-Operation-Log/operation/queryUserOperationCount)
               method.
 
               Note that the properties of operation log entries are interpreted as

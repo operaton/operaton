@@ -7,7 +7,7 @@
       summary = "Get Identity Link Log Count"
       desc = "Queries for the number of historic identity link logs that fulfill the given
               parameters. Takes the same parameters as the
-              [Get Identity-Link-Logs](${docsUrl}/reference/rest/history/identity-links/get-identity-link-query/)
+              [Get Identity-Link-Logs](#tag/Historic-Identity-Link-Log/operation/getHistoricIdentityLinks)
               method."
   />
 

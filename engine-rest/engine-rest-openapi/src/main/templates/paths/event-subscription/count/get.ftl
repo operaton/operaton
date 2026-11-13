@@ -7,7 +7,7 @@
       summary = "Count Event Subscriptions"
       desc = "Queries for the number of event subscriptions that fulfill given parameters.
               Takes the same parameters as the
-              [Get Event Subscriptions](${docsUrl}/reference/rest/event-subscription/get-query/) method." />
+              [Get Event Subscriptions](#tag/Event-Subscription/operation/getEventSubscriptions) method." />
 
   "parameters" : [
 

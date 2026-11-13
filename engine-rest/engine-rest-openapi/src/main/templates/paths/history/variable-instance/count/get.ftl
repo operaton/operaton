@@ -8,7 +8,7 @@
       desc = "Queries for the number of historic variable instances that fulfill the given
               parameters.
               Takes the same parameters as the
-              [Get Variable Instances](${docsUrl}/reference/rest/history/variable-instance/get-variable-instance-query/)
+              [Get Variable Instances](#tag/Historic-Variable-Instance/operation/getHistoricVariableInstances)
               method."
   />
 

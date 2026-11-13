@@ -8,7 +8,7 @@
       desc = "Queries for batch statistics that fulfill given parameters.
               Parameters may be the properties of batches, such as the id or type.
               The size of the result set can be retrieved by using the 
-              [Get Batch Statistics Count](${docsUrl}/reference/rest/batch/get-statistics-query-count/) method." />
+              [Get Batch Statistics Count](#tag/Batch/operation/getBatchStatisticsCount) method." />
 
   "parameters" : [
 

@@ -7,7 +7,7 @@
       summary = "Get External Task Logs"
       desc = "Queries for historic external task logs that fulfill the given parameters.
               The size of the result set can be retrieved by using the
-              [Get External Task Log Count](${docsUrl}/reference/rest/history/external-task-log/get-external-task-log-query-count/)
+              [Get External Task Log Count](#tag/Historic-External-Task-Log/operation/getHistoricExternalTaskLogsCount)
               method."
   />
 

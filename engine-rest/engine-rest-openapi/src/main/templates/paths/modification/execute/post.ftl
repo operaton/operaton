@@ -7,9 +7,9 @@
       summary = "Execute Modification"
       desc = "Executes a modification synchronously for multiple process instances.
               To modify a single process instance, use the
-              [Modify Process Instance Execution State](${docsUrl}/reference/rest/process-instance/post-modification/) method.
+              [Modify Process Instance Execution State](#tag/Process-Instance/operation/modifyProcessInstance) method.
               To execute a modification asynchronously, use the
-              [Execute Modification Async (Batch)](${docsUrl}/reference/rest/modification/post-modification-async/) method.
+              [Execute Modification Async (Batch)](#tag/Modification/operation/executeModificationAsync) method.
 
               For more information about the difference between synchronous and
               asynchronous execution of a modification, please refer to the related

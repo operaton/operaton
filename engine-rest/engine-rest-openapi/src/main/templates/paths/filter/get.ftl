@@ -7,7 +7,7 @@
       summary = "Get Filters"
       desc = "Queries for a list of filters using a list of parameters. The size of the result
               set can be retrieved
-              by using the [Get Filter Count](${docsUrl}/reference/rest/filter/get-query-count/) method."
+              by using the [Get Filter Count](#tag/Filter/operation/getFilterCount) method."
   />
 
   "parameters" : [

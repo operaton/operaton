@@ -5,7 +5,7 @@
       tag = "Historic Process Instance"
       summary = "Count Historic Process Instances"
       desc = "Queries for the number of historic process instances that fulfill the given parameters.
-              Takes the same parameters as the [Get Process Instances](${docsUrl}/reference/rest/history/process-instance/get-process-instance-query/) method." />
+              Takes the same parameters as the [Get Process Instances](#tag/Historic-Process-Instance/operation/getHistoricProcessInstances) method." />
 
   "parameters": [
     <#assign requestMethod="GET"/>

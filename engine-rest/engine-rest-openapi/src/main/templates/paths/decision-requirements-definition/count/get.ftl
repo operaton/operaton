@@ -8,7 +8,7 @@
       desc = "Requests the number of decision requirements definitions that fulfill the query
               criteria.
               Takes the same filtering parameters as the
-              [Get Decision Requirements Definitions](${docsUrl}/reference/rest/decision-requirements-definition/get-query/)
+              [Get Decision Requirements Definitions](#tag/Decision-Requirements-Definition/operation/getDecisionRequirementsDefinitions)
               method."
   />
 

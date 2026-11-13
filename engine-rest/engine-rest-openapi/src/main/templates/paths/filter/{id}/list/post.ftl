@@ -7,7 +7,7 @@
       summary = "Execute Filter List"
       desc = "Executes the saved query of the filter by id and returns the result list. This
               method is slightly more powerful then the 
-              [Get Execute FilterList](${docsUrl}/reference/rest/filter/get-execute-list/) method
+              [Get Execute FilterList](#tag/Filter/operation/executeFilterList) method
               because it allows to extend the saved query of the filter."
   />
 

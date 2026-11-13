@@ -7,7 +7,7 @@
       summary = "List Historic Activity Instances"
       desc = "Queries for historic activity instances that fulfill the given parameters.
               The size of the result set can be retrieved by using the
-              [Get Historic Activity Instance Count](${docsUrl}/reference/rest/history/activity-instance/get-activity-instance-query-count/) method." />
+              [Get Historic Activity Instance Count](#tag/Historic-Activity-Instance/operation/getHistoricActivityInstancesCount) method." />
 
   "parameters" : [
     <#assign last = true >

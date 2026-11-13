@@ -7,7 +7,7 @@
       summary = "Get Statistics Count"
       desc = "Requests the number of batch statistics that fulfill the query criteria.
               Takes the same filtering parameters as the
-              [Get Batch Statistics](${docsUrl}/reference/rest/batch/get-statistics-query/) method." />
+              [Get Batch Statistics](#tag/Batch/operation/getBatchStatistics) method." />
 
   "parameters" : [
 

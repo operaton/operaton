@@ -7,9 +7,9 @@
       summary = "Count Executions"
       desc = "Queries for the number of executions that fulfill given parameters. This method
               takes the same message body as the [Get Executions
-              POST](${docsUrl}/reference/rest/execution/post-query/) method and
+              POST](#tag/Execution/operation/queryExecutions) method and
               therefore it is slightly more powerful than the [Get Execution
-              Count](${docsUrl}/reference/rest/execution/get-query-count/) method."
+              Count](#tag/Execution/operation/getExecutionsCount) method."
   />
 
   <@lib.requestBody

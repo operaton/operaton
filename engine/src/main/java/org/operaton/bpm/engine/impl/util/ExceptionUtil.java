@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -52,6 +53,11 @@ public final class ExceptionUtil {
   public static final String PERSISTENCE_CONNECTION_ERROR_CLASS = "08";
 
   private ExceptionUtil() {
+  }
+
+  // Locale.ROOT, e.g. Turkish breaks "I"
+  private static String toLowerCase(@Nullable String message) {
+    return message == null ? "" : message.toLowerCase(Locale.ROOT);
   }
 
   public static String getExceptionStacktrace(Throwable exception) {
@@ -134,12 +140,18 @@ public final class ExceptionUtil {
   }
 
   public static boolean checkValueTooLongException(SQLException sqlException) {
-    String message = sqlException.getMessage();
-    if (message == null) {
-      return false;
+    String sqlState = sqlException.getSQLState();
+    int errorCode = sqlException.getErrorCode();
+
+    // SQL standard: string data, right truncation
+    if ("22001".equals(sqlState)
+        // Oracle
+        || errorCode == 12899 || errorCode == 1461 || errorCode == 1401) {
+      return true;
     }
 
-    message = message.toLowerCase();
+    // Fallback for drivers without the codes above
+    String message = toLowerCase(sqlException.getMessage());
     return message.contains("too long") ||
         message.contains("too large") ||
         message.contains("ora-01461") ||
@@ -161,11 +173,18 @@ public final class ExceptionUtil {
   public static boolean checkConstraintViolationException(ProcessEngineException genericPersistenceException) {
     SQLException sqlException = unwrapException(genericPersistenceException);
 
-    if (sqlException == null || sqlException.getMessage() == null) {
+    if (sqlException == null) {
       return false;
     }
 
-    String message = sqlException.getMessage().toLowerCase();
+    // SQL standard: integrity constraint violation
+    String sqlState = sqlException.getSQLState();
+    if (sqlState != null && sqlState.startsWith("23")) {
+      return true;
+    }
+
+    // Fallback for drivers without the codes above
+    String message = toLowerCase(sqlException.getMessage());
     return message.contains("constraint") ||
         message.contains("violat") ||
         message.contains("duplicate") ||
@@ -184,31 +203,28 @@ public final class ExceptionUtil {
   }
 
   public static boolean checkForeignKeyConstraintViolation(SQLException sqlException) {
-    String message = sqlException.getMessage();
-    if (message == null) {
-      return false;
-    }
-
-    message = message.toLowerCase();
     String sqlState = sqlException.getSQLState();
     int errorCode = sqlException.getErrorCode();
 
-    // SqlServer & PostgreSQL
-    return message.contains("foreign key constraint") ||
-        "23000".equals(sqlState) && errorCode == 547 ||
-        // MySql & MariaDB & PostgreSQL
-        "23000".equals(sqlState) && errorCode == 1452 ||
-        // Oracle & H2
-        message.contains("integrity constraint") ||
-        // Oracle
-        "23000".equals(sqlState) && errorCode == 2291 ||
+    // SQL standard: PostgreSQL, DB2, H2
+    if ("23503".equals(sqlState)
         // H2
-        "23506".equals(sqlState) && errorCode == 23506 ||
+        || "23506".equals(sqlState)
         // DB2
-        "23503".equals(sqlState) && errorCode == -530 ||
-        "23504".equals(sqlState) && errorCode == -532 ||
-        // PostgreSQL
-        "23503".equals(sqlState) && errorCode == 0;
+        || "23504".equals(sqlState) && errorCode == -532
+        // SqlServer
+        || "23000".equals(sqlState) && errorCode == 547
+        // MySql & MariaDB
+        || "23000".equals(sqlState) && (errorCode == 1451 || errorCode == 1452)
+        // Oracle
+        || "23000".equals(sqlState) && (errorCode == 2291 || errorCode == 2292)) {
+      return true;
+    }
+
+    // Fallback for drivers without the codes above
+    String message = toLowerCase(sqlException.getMessage());
+    return message.contains("foreign key constraint") ||
+        message.contains("integrity constraint");
   }
 
   public static boolean checkVariableIntegrityViolation(PersistenceException persistenceException) {
@@ -218,7 +234,7 @@ public final class ExceptionUtil {
       return false;
     }
 
-    String message = sqlException.getMessage().toLowerCase();
+    String message = toLowerCase(sqlException.getMessage());
     String sqlState = sqlException.getSQLState();
     int errorCode = sqlException.getErrorCode();
 

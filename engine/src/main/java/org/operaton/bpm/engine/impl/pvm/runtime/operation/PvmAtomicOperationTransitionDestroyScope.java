@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
@@ -77,13 +77,20 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
       }
     }
 
+    takeTransitions(propagatingExecution, transitionsToTake, false);
+  }
+
+  /** Continue after activity end without repeating an already passed async-after boundary. */
+  public static void takeTransitions(PvmExecutionImpl propagatingExecution, List<PvmTransition> transitionsToTake,
+      boolean asyncAfterCompleted) {
+    PvmActivity activity = propagatingExecution.getActivity();
     // take the specified transitions
     if (transitionsToTake.isEmpty()) {
-      throw new ProcessEngineException("%s: No outgoing transitions from activity %s".formatted(execution.toString(), activity));
+      throw new ProcessEngineException("%s: No outgoing transitions from activity %s".formatted(propagatingExecution.toString(), activity));
     }
     else if (transitionsToTake.size() == 1) {
       propagatingExecution.setTransition(transitionsToTake.get(0));
-      propagatingExecution.take();
+      takeTransition(propagatingExecution, asyncAfterCompleted);
     }
     else {
       propagatingExecution.inactivate();
@@ -95,10 +102,32 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
       Collections.reverse(outgoingExecutions);
 
       for (OutgoingExecution outgoingExecution : outgoingExecutions) {
-        outgoingExecution.take();
+        if (asyncAfterCompleted) {
+          takeTransition(outgoingExecution.getOutgoingExecution(), true);
+        } else {
+          outgoingExecution.take();
+        }
       }
     }
 
+  }
+
+  private static void takeTransition(PvmExecutionImpl execution, boolean asyncAfterCompleted) {
+    if (!asyncAfterCompleted) {
+      execution.take();
+      return;
+    }
+    if (execution.getReplacedBy() != null) {
+      execution = execution.getReplacedBy();
+    }
+    if (!execution.isEnded()) {
+      execution.setActivity(execution.getTransition().getSource());
+      execution.setActivityInstanceId(null);
+      execution.setActive(true);
+      // Only bypass this activity's async-after. The target's async-before
+      // remains effective; do not set the execution-wide ignoreAsync flag.
+      execution.performOperationSync(TRANSITION_NOTIFY_LISTENER_TAKE);
+    }
   }
 
   private static List<OutgoingExecution> collectOutgoingExecutions(List<PvmTransition> transitionsToTake,

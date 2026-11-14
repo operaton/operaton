@@ -23,7 +23,13 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  */
 public class AsyncAfterMessageJobDeclaration extends MessageJobDeclaration {
 
-  private static final String[] asyncAfterOperations = new String[] {PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName(), PvmAtomicOperation.ACTIVITY_END.getCanonicalName()};
+  private static final String[] asyncAfterOperations = new String[] {
+    PvmAtomicOperation.TRANSITION_NOTIFY_LISTENER_TAKE.getCanonicalName(),
+    PvmAtomicOperation.ACTIVITY_END.getCanonicalName(),
+    PvmAtomicOperation.ACTIVITY_END_DEFERRED.getCanonicalName(),
+    PvmAtomicOperation.ACTIVITY_END_RETIRE.getCanonicalName(),
+    PvmAtomicOperation.ACTIVITY_END_DISPOSED.getCanonicalName()
+  };
 
   public AsyncAfterMessageJobDeclaration() {
     super(asyncAfterOperations);

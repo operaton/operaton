@@ -20,8 +20,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
+import org.operaton.bpm.engine.impl.migration.instance.MigratingAdHocState;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
@@ -84,6 +87,11 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
     parseTransitionInstances(parseContext, migratingInstance);
 
     parseDependentInstances(parseContext, migratingInstance);
+
+    if (sourceActivityBehavior instanceof AdHocSubProcessActivityBehavior
+        || sourceActivityBehavior instanceof SubProcessActivityBehavior && MigratingAdHocState.hasRetiredContext(representativeExecution)) {
+      migratingInstance.addMigratingDependentInstance(new MigratingAdHocState(migratingInstance, parseContext));
+    }
   }
 
   public void parseTransitionInstances(MigratingInstanceParseContext parseContext, MigratingActivityInstance migratingInstance) {
@@ -93,7 +101,18 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
   }
 
   public void parseDependentInstances(MigratingInstanceParseContext parseContext, MigratingActivityInstance migratingInstance) {
-    parseContext.handleDependentVariables(migratingInstance, collectActivityInstanceVariables(migratingInstance));
+    List<VariableInstanceEntity> variables = collectActivityInstanceVariables(migratingInstance);
+    ExecutionEntity execution = migratingInstance.resolveRepresentativeExecution();
+    if (migratingInstance.getSourceScope().getActivityBehavior() instanceof SubProcessActivityBehavior
+        && migratingInstance.getTargetScope() != null
+        && migratingInstance.getTargetScope().getActivityBehavior() instanceof AdHocSubProcessActivityBehavior
+        && MigratingAdHocState.hasRetiredContext(execution)) {
+      // Restoring the owner deletes this marker. Migrating it afterwards would resurrect its history.
+      VariableInstanceEntity marker = (VariableInstanceEntity) execution.getVariableInstanceLocal(MigratingAdHocState.RETIRED_CONTEXT);
+      variables.remove(marker);
+      parseContext.consume(marker);
+    }
+    parseContext.handleDependentVariables(migratingInstance, variables);
     parseContext.handleDependentActivityInstanceJobs(migratingInstance, collectActivityInstanceJobs(migratingInstance));
     parseContext.handleDependentEventSubscriptions(migratingInstance, collectActivityInstanceEventSubscriptions(migratingInstance));
   }

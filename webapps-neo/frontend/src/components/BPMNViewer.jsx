@@ -15,19 +15,7 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import * as Icons from '../assets/icons.jsx'
 import { resolved_theme } from '../theme.js'
 
-// bpmn-js writes shape fill, stroke and label colour inline while rendering,
-// so they cannot be themed from CSS. Read the resolved tokens off <html> and
-// hand them to the renderer instead; they are re-read whenever the viewer is
-// rebuilt, which is exactly what a theme change triggers.
-const canvas_colors = () => {
-  const css = getComputedStyle(document.documentElement)
-  const read = (name, fallback) => css.getPropertyValue(name).trim() || fallback
-  return {
-    defaultFillColor: read('--canvas-fill', '#ffffff'),
-    defaultStrokeColor: read('--canvas-stroke', '#333333'),
-    defaultLabelColor: read('--canvas-label', '#222222'),
-  }
-}
+import { canvas_colors } from '../bpmn_theme.js'
 import { app_path } from '../config.js'
 import {
   build_single_modification,

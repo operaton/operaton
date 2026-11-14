@@ -35,7 +35,7 @@ This project uses:
 - [Preact](https://preactjs.com/guide/v10/getting-started)
     - [preact-iso (routing)](https://github.com/preactjs/preact-iso)
     - [Preact Signals](https://preactjs.com/guide/v10/signals/)
-- [react-bpmn](https://github.com/bpmn-io/react-bpmn)
+- [bpmn-js](https://github.com/bpmn-io/bpmn-js)
 - [Vite](https://vite.dev/guide/)
 - [Operaton API (currently C7 docs)](https://docs.camunda.org/rest/camunda-bpm-platform/7.22/#)
 
@@ -65,4 +65,4 @@ Most important folders and files for getting started with development.
 - `form.css`: Everything related to `<form>` elements and its children
 - `layout.css`: General layout and generic layout helper classes
 - `normalize.css`: Style overwrite for default HTML tags
-- `variables.css`: Custom properties for reuse in other CSS classes 
+- `variables.css`: Custom properties for reuse in other CSS classes

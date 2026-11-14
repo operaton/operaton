@@ -13,6 +13,9 @@ import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import * as Icons from '../assets/icons.jsx'
+import { resolved_theme } from '../theme.js'
+
+import { canvas_colors } from '../bpmn_theme.js'
 import { app_path } from '../config.js'
 import {
   build_single_modification,
@@ -87,12 +90,18 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
     viewerRef = useRef(null),
     containerEl = document.getElementById(container),
     modify_request = useSignal(null),
+    // Read the signal during render so this component actually subscribes to
+    // it. Referencing `resolved_theme.value` only inside the effect's dependency
+    // array creates no subscription, so a theme switch would never rebuild the
+    // viewer and the canvas would keep its colours.
+    theme = resolved_theme.value,
 
     get_viewer = () => {
       if (!viewerRef.current) {
         viewerRef.current = new NavigatedViewer({
           container: containerEl,
           additionalModules: [OutlineModule],
+          bpmnRenderer: canvas_colors(),
         })
       }
       return viewerRef.current
@@ -357,7 +366,7 @@ export const BPMNViewer = ({ xml, container, tokens, highlight, mode = 'definiti
       viewer.destroy()
       viewerRef.current = null
     }
-  }, [container, definition_id, xml, mode, tokens])
+  }, [container, definition_id, xml, mode, tokens, theme])
 
   const controls = (
     <div class="bpmn-controls">

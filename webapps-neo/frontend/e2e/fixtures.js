@@ -33,4 +33,8 @@ export const login_via_form = async (page) => {
   await page.getByLabel(/user name/i).fill(CREDENTIALS.username);
   await page.getByLabel(/password/i).fill(CREDENTIALS.password);
   await page.getByRole("button", { name: /login/i }).click();
+  // The click only submits the form; the session lands on a later tick. Without
+  // this wait the next page.goto() cuts the request short and the spec runs on
+  // the login screen — which is how the canvas and keyboard specs failed.
+  await page.locator("#top").waitFor({ state: "visible" });
 };

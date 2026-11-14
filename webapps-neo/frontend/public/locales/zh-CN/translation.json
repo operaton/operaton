@@ -52,13 +52,15 @@
     "account": "账户",
     "logout": "退出登录",
     "menu": "菜单",
+    "language": "语言",
     "close-menu": "关闭菜单",
     "mobile-navigation": "移动端导航",
     "main-navigation": "主导航",
     "skip-to-content": "跳到主要内容",
     "go-to": "跳转",
     "server": "服务器",
-    "choose-server": "选择服务器"
+    "choose-server": "选择服务器",
+    "options": "选项"
   },
   "goto": {
     "title": "跳转",
@@ -850,6 +852,14 @@
     "language": "语言",
     "language-hint": "选择应用程序的显示语言。"
   },
+  "theme": {
+    "label": "主题",
+    "hint": "选择浅色、深色，或跟随系统设置。",
+    "auto": "跟随系统",
+    "light": "浅色",
+    "dark": "深色"
+  },
+
   "home": {
     "welcome": "欢迎使用 Operaton！",
     "info-text": "你可以在以下网站找到 Operaton 的通用信息：",

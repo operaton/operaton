@@ -30,6 +30,10 @@ const collect_failures = (page) => {
       url.origin === ORIGIN &&
       response.status() >= 400 &&
       !url.pathname.startsWith(`${APP_PATH}/locales/`)
+      &&
+      // Asking who is signed in returns 404 while signed out; that is the
+      // expected answer, not a broken deployment.
+      !url.pathname.startsWith(`${APP_PATH}/api/admin/auth/user/`)
     ) {
       failures.push(`${response.status()} ${url.pathname}`);
     }
@@ -59,7 +63,11 @@ test.describe("sub-path deployment", () => {
     // A hard reload on a deep route: the server answers with the shell and the
     // router has to land on the same page rather than the 404 component.
     await page.reload();
-    await login_via_form(page);
+    // The session survives a reload (same-origin cookie), so the shell usually
+    // comes back authenticated; drive the form only if it did not.
+    if (await page.getByLabel(/user name/i).isVisible().catch(() => false)) {
+      await login_via_form(page);
+    }
     await expect(page.locator("main.processes")).toBeVisible();
 
     expect(failures, "no same-origin request may fail").toEqual([]);

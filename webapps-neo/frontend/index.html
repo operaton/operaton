@@ -18,6 +18,35 @@
         <meta name="color-scheme" content="light dark" />
         <title>Operaton</title>
 
+        <!--
+          Resolve the stored theme before the first paint. The stylesheets key
+          off html[data-theme], so a dark user must not see a light frame while
+          the bundle loads. Keep the key and the auto-resolution in sync with
+          src/theme.js.
+        -->
+        <script>
+            (function () {
+                var root = document.documentElement;
+                var stored = null;
+                try {
+                    stored = window.localStorage.getItem("theme");
+                } catch (e) {
+                    /* storage blocked — fall back to the system preference */
+                }
+                var pref = stored === "light" || stored === "dark" ? stored : "auto";
+                var dark = false;
+                try {
+                    dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                } catch (e) {
+                    /* no matchMedia — stay light */
+                }
+                if (pref === "light") dark = false;
+                if (pref === "dark") dark = true;
+                root.setAttribute("data-theme", dark ? "dark" : "light");
+                root.style.colorScheme = dark ? "dark" : "light";
+            })();
+        </script>
+
         <!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
 
         <link rel="stylesheet" type="text/css" href="css/dmn/dmn-js-shared.css" media="screen">

@@ -8,9 +8,9 @@
       desc = "Queries for the number of historic external task logs that fulfill the given
               parameters.
               This method takes the same message body as the
-              [Get External Task Logs (POST)](${docsUrl}/reference/rest/history/external-task-log/post-external-task-log-query/)
+              [Get External Task Logs (POST)](#tag/Historic-External-Task-Log/operation/queryHistoricExternalTaskLogs)
               method and therefore it is slightly more powerful than the
-              [Get External Task Log Count](${docsUrl}/reference/rest/history/external-task-log/get-external-task-log-query-count/)
+              [Get External Task Log Count](#tag/Historic-External-Task-Log/operation/getHistoricExternalTaskLogsCount)
               method."
   />
 

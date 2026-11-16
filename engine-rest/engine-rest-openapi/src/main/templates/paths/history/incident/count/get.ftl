@@ -7,7 +7,7 @@
       summary = "Get Incident Count"
       desc = "Queries for the number of historic incidents that fulfill the given parameters.
               Takes the same parameters as the
-              [Get Incidents](${docsUrl}/reference/rest/history/incident/get-incident-query/)
+              [Get Incidents](#tag/Historic-Incident/operation/getHistoricIncidents)
               method."
   />
 

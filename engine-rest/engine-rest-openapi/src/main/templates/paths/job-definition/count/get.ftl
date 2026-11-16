@@ -7,7 +7,7 @@
       summary = "Get Job Definition Count"
       desc = "Queries for the number of job definitions that fulfill given parameters.
               Takes the same parameters as the
-              [Get Job Definitions](${docsUrl}/reference/rest/job-definition/get-query/)
+              [Get Job Definitions](#tag/Job-Definition/operation/getJobDefinitions)
               method."
   />
 

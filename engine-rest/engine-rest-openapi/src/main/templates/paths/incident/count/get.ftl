@@ -6,7 +6,7 @@
       tag = "Incident"
       summary = "Count Incidents"
       desc = "Queries for the number of incidents that fulfill given parameters. Takes the same parameters as the
-      [Get Incidents](${docsUrl}/reference/rest/incident/get-query/) method." />
+      [Get Incidents](#tag/Incident/operation/getIncidents) method." />
 
   "parameters": [
     <#assign last = true >

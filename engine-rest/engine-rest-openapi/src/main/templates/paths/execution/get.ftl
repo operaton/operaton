@@ -9,7 +9,7 @@
               Parameters may be static as well as dynamic runtime properties of
               executions.
               The size of the result set can be retrieved by using the [Get
-              Execution Count](${docsUrl}/reference/rest/execution/get-query-count/)
+              Execution Count](#tag/Execution/operation/getExecutionsCount)
               method."
   />
 

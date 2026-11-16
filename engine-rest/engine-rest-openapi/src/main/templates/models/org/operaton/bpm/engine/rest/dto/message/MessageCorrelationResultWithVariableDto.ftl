@@ -2,11 +2,11 @@
 <@lib.dto
     desc="The `processInstance` property only has a value if the resultType is set to `ProcessDefinition`.
           The processInstance with the properties as described in the
-          [get single instance](${docsUrl}/reference/rest/process-instance/get/) method.
+          [get single instance](#tag/Process-Instance/operation/getProcessInstance) method.
 
           The `execution` property only has a value if the resultType is set to `Execution`.
           The execution with the properties as described in the
-          [get single execution](${docsUrl}/reference/rest/execution/get/) method.">
+          [get single execution](#tag/Execution/operation/getExecution) method.">
 
     <@lib.property
         name = "resultType"

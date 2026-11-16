@@ -6,7 +6,7 @@
       tag = "External Task"
       summary = "Count External Tasks"
       desc = "Queries for the number of external tasks that fulfill given parameters. This method takes the same message
-              body as the [Get External Tasks (POST)](${docsUrl}/reference/rest/external-task/post-query/) method." />
+              body as the [Get External Tasks (POST)](#tag/External-Task/operation/queryExternalTasks) method." />
 
   <@lib.requestBody
       mediaType = "application/json"

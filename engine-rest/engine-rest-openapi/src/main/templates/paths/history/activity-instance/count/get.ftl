@@ -5,7 +5,7 @@
       tag = "Historic Activity Instance"
       summary = "Count Historic Activity Instances"
       desc = "Queries for the number of historic activity instances that fulfill the given parameters.
-              Takes the same parameters as the [Get Historic Activity Instance](${docsUrl}/reference/rest/history/activity-instance/get-activity-instance-query/)  method." />
+              Takes the same parameters as the [Get Historic Activity Instance](#tag/Historic-Activity-Instance/operation/getHistoricActivityInstances)  method." />
 
   "parameters": [
     <#assign requestMethod="GET"/>

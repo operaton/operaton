@@ -7,7 +7,7 @@
       summary = "List Executions"
       desc = "Queries for executions that fulfill given parameters through a JSON object.
               This method is slightly more powerful than the [Get
-              Executions](${docsUrl}/reference/rest/execution/get-query/) method
+              Executions](#tag/Execution/operation/getExecutions) method
               because it allows
               to filter by multiple instance and execution variables of types
               `String`, `Number` or `Boolean`."

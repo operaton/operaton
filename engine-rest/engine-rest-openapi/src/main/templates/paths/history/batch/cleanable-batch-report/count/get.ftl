@@ -10,7 +10,7 @@
               [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)
               ).
               Takes the same parameters as the
-              [Get Cleanable Batch Report](${docsUrl}/reference/rest/history/batch/get-cleanable-batch-report/)
+              [Get Cleanable Batch Report](#tag/Historic-Batch/operation/getCleanableHistoricBatchesReport)
               method."
   />
 

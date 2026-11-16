@@ -8,7 +8,7 @@
       desc = "Queries for external tasks that fulfill given parameters in the form of a JSON object.
 
               This method is slightly more powerful than the
-              [Get External Tasks](${docsUrl}/reference/rest/external-task/get-query/) method because it allows to
+              [Get External Tasks](#tag/External-Task/operation/getExternalTasks) method because it allows to
               specify a hierarchical result sorting." />
 
   "parameters" : [

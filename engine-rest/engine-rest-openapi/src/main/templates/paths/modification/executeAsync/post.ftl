@@ -7,7 +7,7 @@
       summary = "Execute Modification Async (Batch)"
       desc = "Executes a modification asynchronously for multiple process instances. To execute a
               modification synchronously, use the
-              [Execute Modification](${docsUrl}/reference/rest/modification/post-modification-sync/) method.
+              [Execute Modification](#tag/Modification/operation/executeModification) method.
 
               For more information about the difference between synchronous and
               asynchronous execution of a modification, please refer to the related

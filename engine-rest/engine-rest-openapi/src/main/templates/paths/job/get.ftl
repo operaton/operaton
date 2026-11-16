@@ -7,7 +7,7 @@
       summary = "Get Jobs"
       desc = "Queries for jobs that fulfill given parameters.
               The size of the result set can be retrieved by using the [Get Job
-              Count](${docsUrl}/reference/rest/job/get-query-count/) method."
+              Count](#tag/Job/operation/getJobsCount) method."
   />
 
   "parameters" : [

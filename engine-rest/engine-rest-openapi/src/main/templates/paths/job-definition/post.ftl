@@ -7,7 +7,7 @@
       summary = "List Job Definitions"
       desc = "Queries for job definitions that fulfill given parameters. This method is slightly
               more powerful than the
-              [Get Job Definitions](${docsUrl}/reference/rest/job-definition/get-query/)
+              [Get Job Definitions](#tag/Job-Definition/operation/getJobDefinitions)
               method because it allows filtering by multiple job definitions of
               types `String`, `Number` or `Boolean`."
   />

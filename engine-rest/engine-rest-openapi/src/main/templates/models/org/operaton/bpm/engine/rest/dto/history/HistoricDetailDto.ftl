@@ -100,7 +100,7 @@
         name = "userOperationId"
         type = "string"
         desc = "The id of user operation which links historic detail with
-                [user operation log](${docsUrl}/reference/rest/history/user-operation-log/)
+                [user operation log](#tag/Historic-User-Operation-Log)
                 entries."
     />
 

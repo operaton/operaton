@@ -7,7 +7,7 @@
       summary = "List Historic Variable Instances"
       desc = "Queries for historic variable instances that fulfill the given parameters.
               This method is slightly more powerful than the
-              [Get Variable Instances](${docsUrl}/reference/rest/history/variable-instance/get-variable-instance-query/)
+              [Get Variable Instances](#tag/Historic-Variable-Instance/operation/getHistoricVariableInstances)
               method because it allows filtering by variable values of the different
               types `String`, `Number` or `Boolean`."
   />

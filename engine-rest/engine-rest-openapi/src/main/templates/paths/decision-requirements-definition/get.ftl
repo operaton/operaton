@@ -8,7 +8,7 @@
       desc = "Queries for decision requirements definitions that fulfill given parameters.
               Parameters may be the properties of decision requirements definitions, such as the name,
               key or version.  The size of the result set can be retrieved by using the
-              [Get Decision Requirements Definition Count](${docsUrl}/reference/rest/decision-requirements-definition/get-query-count/)
+              [Get Decision Requirements Definition Count](#tag/Decision-Requirements-Definition/operation/getDecisionRequirementsDefinitionsCount)
               method."
   />
 

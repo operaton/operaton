@@ -6,7 +6,7 @@
       tag = "Deployment"
       summary = "Count Deployments"
       desc = "Queries for the number of deployments that fulfill given parameters. Takes the same parameters as the
-              [Get Deployments](${docsUrl}/reference/rest/deployment/get-query/) method." />
+              [Get Deployments](#tag/Deployment/operation/getDeployments) method." />
 
   "parameters" : [
 

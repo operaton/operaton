@@ -6,7 +6,7 @@
       tag = "Task"
       summary = "Count Tasks"
       desc = "Retrieves the number of tasks that fulfill a provided filter. Corresponds to the size
-              of the result set when using the [Get Tasks](${docsUrl}/reference/rest/task/) method.
+              of the result set when using the [Get Tasks](#tag/Task/operation/getTasks) method.
 
               **Security Consideration:** There are several query parameters (such as
               assigneeExpression) for specifying an EL expression. These are disabled by default to

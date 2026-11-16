@@ -7,7 +7,7 @@
       summary = "Get User Operation Log Count"
       desc = "Queries for the number of user operation log entries that fulfill the given parameters.
               Takes the same parameters as the
-              [Get User Operation Log (Historic)](${docsUrl}/reference/rest/history/user-operation-log/get-user-operation-log-query/)
+              [Get User Operation Log (Historic)](#tag/Historic-User-Operation-Log/operation/queryUserOperationEntries)
               method."
   />
 

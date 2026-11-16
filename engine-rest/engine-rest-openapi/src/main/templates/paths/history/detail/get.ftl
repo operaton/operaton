@@ -6,7 +6,7 @@
       summary = "Get Historic Details"
       desc = "Queries for historic details that fulfill the given parameters.
               The size of the result set can be retrieved by using the
-              [Get Historic Detail Count](${docsUrl}/reference/rest/history/detail/get-detail-query-count/) method."
+              [Get Historic Detail Count](#tag/Historic-Detail/operation/getHistoricDetailsCount) method."
   />
 
   "parameters" : [

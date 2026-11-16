@@ -7,7 +7,7 @@
       summary = "Get Historic Decision Instances"
       desc = "Queries for historic decision instances that fulfill the given parameters. 
               The size of the result set can be retrieved by using the 
-              [Get Historic Decision Instance Count](${docsUrl}/reference/rest/history/decision-instance/get-decision-instance-query-count/) 
+              [Get Historic Decision Instance Count](#tag/Historic-Decision-Instance/operation/getHistoricDecisionInstancesCount) 
               method."
   />
 

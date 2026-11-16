@@ -15,7 +15,7 @@
         type = "ref"
         dto = "HistoricDecisionInstanceQueryDto"
         desc = "A historic decision instance query like the request body described by 
-                [POST /history/decision-instance](${docsUrl}/reference/rest/history/decision-instance/get-decision-instance-query/#query-parameters)."
+                [POST /history/decision-instance](#tag/Historic-Decision-Instance/operation/getHistoricDecisionInstances)."
     />
 
     

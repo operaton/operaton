@@ -5,8 +5,8 @@
       tag = "Historic Process Instance"
       summary = "Count Historic Process Instances"
       desc = "Queries for the number of historic process instances that fulfill the given parameters.
-              This method takes the same message body as the [Get Process Instances (POST)](${docsUrl}/reference/rest/history/process-instance/get-process-instance-query/) method and
-              therefore it is slightly more powerful than the [Get Process Instance Count](${docsUrl}/reference/rest/history/process-instance/post-process-instance-query-count/) method." />
+              This method takes the same message body as the [Get Process Instances (POST)](#tag/Historic-Process-Instance/operation/queryHistoricProcessInstances) method and
+              therefore it is slightly more powerful than the [Get Process Instance Count](#tag/Historic-Process-Instance/operation/getHistoricProcessInstancesCount) method." />
 
   <#assign requestMethod="POST"/>
   <@lib.requestBody

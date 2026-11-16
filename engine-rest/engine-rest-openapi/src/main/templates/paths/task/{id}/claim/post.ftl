@@ -8,7 +8,7 @@
       desc = "Claims a task for a specific user.
 
               **Note:** The difference with the
-              [Set Assignee](${docsUrl}/reference/rest/task/post-assignee/)
+              [Set Assignee](#tag/Task/operation/setAssignee)
               method is that here a check is performed to see if the task already has a user
               assigned to it." />
 

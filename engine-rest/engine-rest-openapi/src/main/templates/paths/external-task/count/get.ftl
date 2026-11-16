@@ -6,7 +6,7 @@
       tag = "External Task"
       summary = "Count External Tasks"
       desc = "Queries for the number of external tasks that fulfill given parameters. Takes the same parameters as the
-              [Get External Tasks](${docsUrl}/reference/rest/external-task/get-query/) method." />
+              [Get External Tasks](#tag/External-Task/operation/getExternalTasks) method." />
 
   "parameters" : [
 

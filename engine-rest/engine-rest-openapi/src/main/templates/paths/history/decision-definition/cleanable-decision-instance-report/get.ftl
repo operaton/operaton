@@ -13,7 +13,7 @@
               instances, cleanable decision instances and basic decision definition
               data - id, key, name and version.
               The size of the result set can be retrieved by using the 
-              [Get Cleanable Decision Instance Report Count](${docsUrl}/reference/rest/history/decision-definition/get-cleanable-decision-instance-report-count/) method."
+              [Get Cleanable Decision Instance Report Count](#tag/Historic-Decision-Definition/operation/getCleanableHistoricDecisionInstanceReportCount) method."
   />
 
   "parameters" : [

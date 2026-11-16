@@ -6,7 +6,7 @@
       tag = "Process Definition"
       summary = "Count Process Definitions"
       desc = "Requests the number of process definitions that fulfill the query criteria.
-              Takes the same filtering parameters as the [Get Definitions](${docsUrl}/reference/rest/process-definition/get-query/) method." />
+              Takes the same filtering parameters as the [Get Definitions](#tag/Process-Definition/operation/getProcessDefinitions) method." />
 
   "parameters" : [
 

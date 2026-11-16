@@ -7,10 +7,10 @@
       summary = "Count Historic Variable Instances"
       desc = "Queries for historic variable instances that fulfill the given parameters.
               This method takes the same message body as the
-              [Get Variable Instances (POST)](${docsUrl}/reference/rest/history/variable-instance/post-variable-instance-query/)
+              [Get Variable Instances (POST)](#tag/Historic-Variable-Instance/operation/queryHistoricVariableInstances)
               method and therefore it is more powerful regarding variable values
               than the
-              [Get Variable Instance Count](${docsUrl}/reference/rest/history/variable-instance/get-variable-instance-query-count/)
+              [Get Variable Instance Count](#tag/Historic-Variable-Instance/operation/getHistoricVariableInstancesCount)
               method."
   />
 

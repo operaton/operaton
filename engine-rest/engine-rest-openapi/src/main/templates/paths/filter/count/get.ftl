@@ -7,7 +7,7 @@
       summary = "Get Filter Count"
       desc = "Retrieves the number of filters that fulfill a provided query. Corresponds to the
               size of the result set when using the 
-              [Get Filters](${docsUrl}/reference/rest/filter/get-query/) method."
+              [Get Filters](#tag/Filter/operation/getFilterList) method."
   />
 
   "parameters" : [

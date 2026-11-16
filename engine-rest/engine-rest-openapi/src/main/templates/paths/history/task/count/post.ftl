@@ -6,9 +6,9 @@
       tag = "Historic Task Instance"
       summary = "Count Historic Task Instances"
       desc = "Queries for the number of historic tasks that fulfill the given parameters. Takes the
-              same parameters as the [Get Tasks (Historic)](${docsUrl}/reference/rest/history/task/get-task-query/)
+              same parameters as the [Get Tasks (Historic)](#tag/Historic-Task-Instance/operation/getHistoricTaskInstances)
               method. Corresponds to the size of the result set of the
-              [Get Tasks (Historic) (POST)](${docsUrl}/reference/rest/history/task/post-task-query/)
+              [Get Tasks (Historic) (POST)](#tag/Historic-Task-Instance/operation/queryHistoricTaskInstances)
               method and takes the same parameters."
   />
 

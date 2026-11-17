@@ -16,6 +16,9 @@ on:
       - 'webapps/frontend/package-lock.json'
       - 'webapps-neo/frontend/package.json'
       - 'webapps-neo/frontend/package-lock.json'
+      - '.devenv/scripts/build/build-sbom.sh'
+      - '.devenv/scripts/build/check-sbom-coverage.sh'
+      - '.github/workflows/update-sbom.yml'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
@@ -52,6 +55,16 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+
+      - name: Build distributions
+        # build-sbom.sh scans the assembled distributions and needs every
+        # Operaton module installed. Same profiles as the release build.
+        run: |
+          ./mvnw \
+            -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-webjar-neo,distro-starter,distro-serverless \
+            -DskipTests \
+            -Dskip.frontend.build=true \
+            install
 
       - name: Generate SBOMs
         run: .devenv/scripts/build/build-sbom.sh

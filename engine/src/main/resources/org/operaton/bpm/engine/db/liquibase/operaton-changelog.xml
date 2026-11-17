@@ -177,4 +177,16 @@
     <tagDatabase tag="7.25.0"/>
   </changeSet>
 
+  <changeSet author="Operaton" id="7.25-to-7.26">
+    <sqlFile path="upgrade/${db.name}_engine_7.25_to_7.26.sql"
+             encoding="UTF-8"
+             relativeToChangelogFile="true"
+             splitStatements="true"
+             stripComments="true"/>
+  </changeSet>
+
+  <changeSet author="Operaton" id="7.26.0-tag">
+    <tagDatabase tag="7.26.0"/>
+  </changeSet>
+
 </databaseChangeLog>

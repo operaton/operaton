@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:ab52a715-0384-49ac-9a45-9ea2200609ba",
+  "serialNumber": "urn:uuid:5119ad81-ada5-47c1-845a-c438dbdcb53c",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-16T19:10:38Z",
+    "timestamp": "2026-11-17T10:46:01Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-bcbed5b0e"
+          "version": "0.76.2"
         }
       ]
     },
@@ -9914,6 +9914,40 @@
       "version": "2.3.0-SNAPSHOT",
       "description": "Operaton - Engine",
       "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "3d154a7cd1cd4cc866a1cfb9a3557f67"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "818c3ee2b281b90f412303b627b9be65a6dfbb49"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "447ac61cace1ee34ba055217787cd65fb74a572301b3da1ca9aaf9709cb26e57"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "ecfb4aae504274d08fdf0c634c263e2e0d06805b65a6328e5d3f152c0b0db8767160d574522d59302812f3660836d4f20de0a332e8d7975279918bb670645483"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "d7f26057c12148cb54da4e15a3aa68e48d303255b8b91b2fa9be8b4c0eff186bf408c26406fd90cdf1d587ce5af58d30"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "840e657851a69d9a68874343e93c42f90138382a7936684d56b354419e0b4422054ac57d290c9cbb1a7db6a6531ad9f0"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "315c64179c4eac80e776bf576a76e257c5991c03499c5166bfd6c0b72358ceb1"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "a50819a32512303346ce42ebf35493017214f9d581362c36fb3ecf7b703b72e58b1b51317c472d154182f704fc102da4497e30e28b20859826e16853c5c23f20"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -16483,6 +16517,40 @@
       "version": "2.3.0-SNAPSHOT",
       "description": "Operaton - Engine - REST",
       "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "2ba89ad9b2e6845c329919254910d17e"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "8ed7a4cae27408b964a46a72cf68343bf0a3c0d9"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "b41c1c97cb2eb6ed7335e521ad9e60a4d1b0a12dcac704cdace69bd8476587fa"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "44e2990aa2b838019ae7433ed38ac704b063753ec8e2a60255859a63bebc2985616e56979b0f3b6a12aa26a5490390060acaa1767bb904e7eb5f27899c6959f9"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "e70650d72897dc1c69587bd9bc9060a935437ed07c3e45499cad2719e15a2a1d1e8f9dbe4f16bf8b32ccdb15dc0dfaf1"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "c7903f76e54541fb9de935e659bc284848ee8c889a3d87f4bfa5125e2c167a371892520f32255bb297b6f5fca7a36d5e"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "f1fd390328e0a94c2722b0a6c20ef37d98d81b510b4b80007d2eb153d6738e5b"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "3b9f1cf1d88f5df05b61cbb9ae110183922f6f6efd54bb42ccb9df519be7448465ebd12293a36903183f68905a6f9fb2407ffb87938fc165f55bd8e0eb0a3bce"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -16515,6 +16583,40 @@
       "version": "2.3.0-SNAPSHOT",
       "description": "Operaton - Engine - REST",
       "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "0ba5e97e936cb140a72472fdf71cca39"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "1f6ad98f19e7526969cb64a08c3d0eaba2ef57cd"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "39ef7a4bc9f15ea9d00a6377c0fe1c630e226fb62a74e119a428ccfed81bd592"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "f044db20f18891560cb147c54b161887f6625f51d672b463e457f2e879a9ab9960220e271cdd9fe5172baa28654c613c7ec56d360e3966e962fb6e00ec0be18b"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "c8166369905fbeceb9c0d6d157f97f3631480336559689ab62d19a37fc1dde5f57d9f96a5fe72c845add49e383cbb2ab"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "8433e60280e5386a90fb58d925b421202bc8ce9337577f5fe9e13cf93542ab1199700780825b26847e42d0050ff0ecbd"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "d49023262f6941240e8093821b01b3ab471237d4b3a8baddd548aa03ef3531fe"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "c72a7603d8e844882b36a5ad58fa827e09dd68ce9486ae84c14054e652af6b4aa3597e22be90190c28d82ffb9a0450b00b2b62803b6ec0f425875b38878fb373"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -16995,6 +17097,40 @@
       "version": "2.3.0-SNAPSHOT",
       "description": "Operaton - Engine",
       "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "3d154a7cd1cd4cc866a1cfb9a3557f67"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "818c3ee2b281b90f412303b627b9be65a6dfbb49"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "447ac61cace1ee34ba055217787cd65fb74a572301b3da1ca9aaf9709cb26e57"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "ecfb4aae504274d08fdf0c634c263e2e0d06805b65a6328e5d3f152c0b0db8767160d574522d59302812f3660836d4f20de0a332e8d7975279918bb670645483"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "d7f26057c12148cb54da4e15a3aa68e48d303255b8b91b2fa9be8b4c0eff186bf408c26406fd90cdf1d587ce5af58d30"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "840e657851a69d9a68874343e93c42f90138382a7936684d56b354419e0b4422054ac57d290c9cbb1a7db6a6531ad9f0"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "315c64179c4eac80e776bf576a76e257c5991c03499c5166bfd6c0b72358ceb1"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "a50819a32512303346ce42ebf35493017214f9d581362c36fb3ecf7b703b72e58b1b51317c472d154182f704fc102da4497e30e28b20859826e16853c5c23f20"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -17503,6 +17639,40 @@
       "version": "2.3.0-SNAPSHOT",
       "description": "Operaton - Client",
       "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "7257e31333ba49e457b36f97a02d5541"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "c78768c2877e03a2668d0a2802d7aef558c120b6"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "2392a0a3193a8fc9dc1da3f05cb355c419b3d676f7b0f140b1c723b1c85a049c"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "a862990e6ee8414dd3c4b0727adfbfa5f10798db99fc29ab204e25ce01bc083404b977c827edc42cd710afaa1ab0495d389f7d8077623f35c4120d3126b92429"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "07348885f5550f16e23864003ab79a2da046494ec29dab4babebe1b10d9e1c1ee9a9a946db93f41c30a2e3273d8acd37"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "2a590f39d7b4e99896fbd2a682e62305c79661f81124c29faf8b67764c66894246f0e342b79b3b63a472cd790cb6a467"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "3462dd08ab207d1173930c30e54eb57de50652895fc86f9ebe6b333234e995bc"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "ee8665fb5277b332222ba70a501e3db95b9820bfc2ea2b5fe94d87d841f6b853938c6f7462bf159c35028067e03bd6e7563fb12ca80eabcdc6d478911d4198dd"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -19252,6 +19422,40 @@
       "version": "2.3.0-SNAPSHOT",
       "description": "Operaton - Engine - REST - Assembly",
       "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "026b9abd18960b10bc70e6a7ab930b4e"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "d518f5da77a94f8473ddc885e0be71e96a8f8662"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "5d9579cdbf4be00fec83ed36f35851e4fa30b15eccdce26d4852fe64c373c910"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "8e52f66ad3c1b263645766b79623e6fd5784b547a2435d6d33ab829ba1a6f2d5d9b91078b6de96375b4d8a679e1a52861699c5cfcc464644da6711bf74231407"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "bbe327ed9de7696a3be73b1117bfbf0695551dc04fbaefd1fd0d7a9a90d45c2a67632a6f250b5d1d50e9be8a0d89c867"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "6bd5ccc739a712ee1373f3f9b56fc3cb4fc55fa3bc195cdb17355339693cb976f8f701ca8d3dec3eade49358f56c0394"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "5268456d748d3aabaaaf4756d31e24bedf6d7036b63685cd43f21c61e42b179d"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "aee464c4e2067d14f139f93987dc2049f660af54b9bbf9b586d4cc39b64e3e4dde176621a234ea7e6d55886a894014e7b822d3e1709ee495a81d855c030c6fb3"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -19284,6 +19488,40 @@
       "version": "2.3.0-SNAPSHOT",
       "description": "Assembles the Operaton and makes it ready for qa. The assembly is installed to maven later in the reactor, if the integration tests pass sucessfully",
       "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "314661f34dad0f8b8bfc1dd5cc3e5e75"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "30e228763b7343594cf846d91a1d96727c4bc7b7"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "6340929e5072d58dda122fec46d811db61423e1978de7e22b80a9c955e18fc5a"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "e1b01ce8f7d580a91a628323676cc2230057c2c340971abd31a7c017aca57fcd376fb32f4e1d0da76e480e4e13e0091deab8160242bc44e8552a061b0c3bdec3"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "5c683baaabccdd30595e229ede5fb65ef0deb1634694d4295d92e434005095a9b38b185234ab35882d9496c38bc6b277"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "bc04d3aef0cf63d36ef4a475f5fa9f4ac88553d4f6036150c0cdeaa3be396e4e79127f69c5fbcb10e7b863414732b218"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "5c2f8fc47bf7c79bfb54db194466f5c14ad5090348129a2b20b94b24f8ced67a"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "976da52772f4b2c948c15fa1882ef8efcc83dd9543d67e3a8c6b348581365938464ec85bccf10c72d1d51ba43f4b57b410ed65738be08ca04048c1427e2a822e"
+        }
+      ],
       "licenses": [
         {
           "license": {
@@ -19433,7 +19671,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "15fa2f7b-cde8-4400-822f-b3533d079092",
+      "bom-ref": "8fdb3553-95b1-446e-bd05-b6fe49aedaaf",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24689,7 +24927,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c18b70f4-2b67-4da5-a3d5-2a7b222de7b4",
+      "bom-ref": "2ae8d30c-0355-4940-88ca-e15045f26334",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24700,7 +24938,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "160d985b-a0ef-491c-abb2-264348e6160b",
+      "bom-ref": "122d0388-3f02-403e-90c4-d550543e3914",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25833,12 +26071,881 @@
     },
     {
       "type": "application",
-      "bom-ref": "d5817e6e-f951-40d4-9071-5bf9205c64b4",
+      "bom-ref": "834dcf93-27a5-4a3f-bb8c-0352cbeb5655",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
           "name": "aquasecurity:trivy:SchemaVersion",
           "value": "2"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala@2.23.0",
+      "type": "library",
+      "group": "com.fasterxml.jackson.module",
+      "name": "jackson-module-scala",
+      "version": "2.23.0",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "b7b6c8bcb503010b1b95bf5f41a81d45f6f0c7d2"
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.module/jackson-module-scala@2.23.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/jackson-module-scala_2.13-2.23.0.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/commons-daemon/commons-daemon@1.6.1",
+      "type": "library",
+      "group": "commons-daemon",
+      "name": "commons-daemon",
+      "version": "1.6.1",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "dfac9bf8cf9cefb247a46ed6806539112c0e347b"
+        }
+      ],
+      "purl": "pkg:maven/commons-daemon/commons-daemon@1.6.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/bin/commons-daemon.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/ognl/ognl@3.4.4",
+      "type": "library",
+      "group": "ognl",
+      "name": "ognl",
+      "version": "3.4.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/ognl/ognl@3.4.4",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/mybatis-3.5.19.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.taglibs/taglibs-standard-impl@1.2.5",
+      "type": "library",
+      "group": "org.apache.taglibs",
+      "name": "taglibs-standard-impl",
+      "version": "1.2.5",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "6bc6265f361f8efd5f1fb230073983e2d2495cec"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.taglibs/taglibs-standard-impl@1.2.5",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/webapps/examples/WEB-INF/lib/taglibs-standard-impl-1.2.5-migrated-0.0.1.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.taglibs/taglibs-standard-spec@1.2.5",
+      "type": "library",
+      "group": "org.apache.taglibs",
+      "name": "taglibs-standard-spec",
+      "version": "1.2.5",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "a8dda6f938e91e18d47a6cb8593167222ba6abea"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.taglibs/taglibs-standard-spec@1.2.5",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/webapps/examples/WEB-INF/lib/taglibs-standard-spec-1.2.5-migrated-0.0.1.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/jakartaee-migration@1.0.13",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "jakartaee-migration",
+      "version": "1.0.13",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "0df690324834c7d943501ae70a645e3a2f5bba35"
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/jakartaee-migration@1.0.13",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/jakartaee-migration-1.0.13-shaded.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-catalina-ant@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-catalina-ant",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "98414a29fbfec89fe8c1b0e597986c57c8d5e5c2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-catalina-ant@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/catalina-ant.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-catalina-ha@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-catalina-ha",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "435a1175adbaee48d77bea15401fad5e0dc60612"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-catalina-ha@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/catalina-ha.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-coyote-ffm@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-coyote-ffm",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "7f07b694c5e51cb71fc6b8c178cbfbcc708bf445"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-coyote-ffm@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-coyote-ffm.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-dbcp@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-dbcp",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "bcf372ffd0ede38362f390ef2a1b76863e9a94f3"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-dbcp@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-dbcp.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-cs@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-cs",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "42aa4dc1f40065479ce2d3d3ab893ea322be0a4c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-cs@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-cs.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-de@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-de",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "befbaa46b0c029ea860413c73007ba22f94502ff"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-de@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-de.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-es@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-es",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "26e1263bb97e4641f0ea03560f5944d07516a55f"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-es@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-es.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-fr@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-fr",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "ff1a9a339a0af2609f71a78086f734430f940606"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-fr@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-fr.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-ja@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-ja",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "41c3b85923a1146e968125d06f67da01e64f8df4"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-ja@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-ja.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-ko@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-ko",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "d5f961ec82143de4c33e4f9722f185cc9884f8b2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-ko@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-ko.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-pt-BR@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-pt-BR",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "3f68b691c9749dbd4cd3df59003c1b022a6b6850"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-pt-BR@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-pt-BR.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-ru@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-ru",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "357a36bd78185e7db4555c382421f6add2c055a8"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-ru@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-ru.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-i18n-zh-CN@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-i18n-zh-CN",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "6b4423b6e05a0d33c60082bba1f8f872610cd349"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-i18n-zh-CN@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-i18n-zh-CN.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jasper-el@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-jasper-el",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "4a1cd38ba83e5040d4a55d2dc7b034959e43fc7c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jasper-el@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/jasper-el.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jasper@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-jasper",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "0cdaa6e2c3cb5bc0d78e534a2da7aeafc60870ad"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jasper@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/jasper.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-ssi@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-ssi",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "d132ac9bc46ea9a26a255c48108b85c362cce646"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-ssi@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/catalina-ssi.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-storeconfig@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-storeconfig",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "9bc42f398f6e2699ae58b8123868264883d0d7da"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-storeconfig@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/catalina-storeconfig.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-tribes@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-tribes",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "48baf526d330733161a8835fb207afb396fb3944"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-tribes@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/catalina-tribes.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-websocket-api@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-websocket-api",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "44e9b77d91ed88fa1f95b3bb0f2ebe2a2d46c73f"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-websocket-api@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/websocket-api.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-websocket-client-api@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-websocket-client-api",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "76272c8650fd937ad034873c05470b1e4929d894"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-websocket-client-api@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/websocket-client-api.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-websocket@11.0.29",
+      "type": "library",
+      "group": "org.apache.tomcat",
+      "name": "tomcat-websocket",
+      "version": "11.0.29",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "8b838f4a0b026a50e6fa39b2c974665532ab3edf"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-websocket@11.0.29",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/tomcat-websocket.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.eclipse.jdt/ecj@3.46.100",
+      "type": "library",
+      "group": "org.eclipse.jdt",
+      "name": "ecj",
+      "version": "3.46.100",
+      "hashes": [
+        {
+          "alg": "SHA-1",
+          "content": "a06c482cdb8601a94328aae668c7236e3818fbe9"
+        }
+      ],
+      "purl": "pkg:maven/org.eclipse.jdt/ecj@3.46.100",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/ecj-4.41.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.javassist/javassist@3.30.2-GA",
+      "type": "library",
+      "group": "org.javassist",
+      "name": "javassist",
+      "version": "3.30.2-GA",
+      "licenses": [
+        {
+          "license": {
+            "id": "MPL-1.1"
+          }
+        },
+        {
+          "license": {
+            "id": "LGPL-2.1-only"
+          }
+        },
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.javassist/javassist@3.30.2-GA",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:FilePath",
+          "value": "server/apache-tomcat-11.0.29/lib/mybatis-3.5.19.jar"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "jar"
         }
       ]
     }
@@ -28260,7 +29367,13 @@
       "dependsOn": []
     },
     {
-      "ref": "15fa2f7b-cde8-4400-822f-b3533d079092",
+      "ref": "2ae8d30c-0355-4940-88ca-e15045f26334",
+      "dependsOn": [
+        "8fdb3553-95b1-446e-bd05-b6fe49aedaaf"
+      ]
+    },
+    {
+      "ref": "8fdb3553-95b1-446e-bd05-b6fe49aedaaf",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -28307,12 +29420,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.2"
-      ]
-    },
-    {
-      "ref": "c18b70f4-2b67-4da5-a3d5-2a7b222de7b4",
-      "dependsOn": [
-        "15fa2f7b-cde8-4400-822f-b3533d079092"
       ]
     },
     {
@@ -29711,7 +30818,7 @@
       "dependsOn": []
     },
     {
-      "ref": "160d985b-a0ef-491c-abb2-264348e6160b",
+      "ref": "122d0388-3f02-403e-90c4-d550543e3914",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -29732,9 +30839,9 @@
       ]
     },
     {
-      "ref": "d5817e6e-f951-40d4-9071-5bf9205c64b4",
+      "ref": "834dcf93-27a5-4a3f-bb8c-0352cbeb5655",
       "dependsOn": [
-        "160d985b-a0ef-491c-abb2-264348e6160b"
+        "122d0388-3f02-403e-90c4-d550543e3914"
       ]
     },
     {

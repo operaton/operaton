@@ -56,7 +56,6 @@ import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
  * @author Frederik Heremans
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-@NullMarked
 public abstract @NullMarked class JobEntity extends AcquirableJobEntity
   implements Job, DbEntity,
     HasDbRevision, HasDbReferences, DbEntityLifecycleAware {

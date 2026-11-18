@@ -21,6 +21,7 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.bpmn.behavior.*;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
+import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
 /**
  * *Supported* refers to whether an activity instance of a certain activity type can be migrated.
@@ -32,6 +33,7 @@ public class SupportedActivityValidator implements MigrationActivityValidator {
 
   private static final List<Class<? extends ActivityBehavior>> SUPPORTED_ACTIVITY_BEHAVIORS = List.of(
     SubProcessActivityBehavior.class,
+    AdHocSubProcessActivityBehavior.class,
     UserTaskActivityBehavior.class,
     BoundaryEventActivityBehavior.class,
     ParallelMultiInstanceActivityBehavior.class,
@@ -53,11 +55,19 @@ public class SupportedActivityValidator implements MigrationActivityValidator {
 
   @Override
   public boolean valid(ActivityImpl activity) {
-    return activity != null && (isSupportedActivity(activity) || isAsync(activity));
+    return activity != null && (isSupportedActivity(activity) || isAsync(activity) || isAdHocEnabledTarget(activity));
   }
 
   public static boolean isSupportedActivity(ActivityImpl activity) {
     return SUPPORTED_ACTIVITY_BEHAVIORS.contains(activity.getActivityBehavior().getClass());
+  }
+
+  protected boolean isAdHocEnabledTarget(ActivityImpl activity) {
+    ScopeImpl scope = activity.getFlowScope();
+    while (scope != null && !(scope.getActivityBehavior() instanceof AdHocSubProcessActivityBehavior)) {
+      scope = scope.getFlowScope();
+    }
+    return scope != null && ((AdHocSubProcessActivityBehavior) scope.getActivityBehavior()).isCompletableActivity(activity);
   }
 
   protected boolean isAsync(ActivityImpl activity) {

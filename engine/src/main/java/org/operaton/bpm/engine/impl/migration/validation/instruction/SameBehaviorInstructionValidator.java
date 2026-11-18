@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
 import java.util.*;
 
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CaseCallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavior;
@@ -53,7 +54,11 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     Class<?> sourceBehaviorClass = sourceActivity.getActivityBehavior().getClass();
     Class<?> targetBehaviorClass = targetActivity.getActivityBehavior().getClass();
 
-    if (!sameBehavior(sourceBehaviorClass, targetBehaviorClass)) {
+    boolean ordinaryAdHocConversion = sourceBehaviorClass == AdHocSubProcessActivityBehavior.class
+        && targetBehaviorClass == SubProcessActivityBehavior.class
+        || sourceBehaviorClass == SubProcessActivityBehavior.class
+            && targetBehaviorClass == AdHocSubProcessActivityBehavior.class;
+    if (!ordinaryAdHocConversion && !sameBehavior(sourceBehaviorClass, targetBehaviorClass)) {
       report.addFailure("Activities have incompatible types (%s is not compatible with %s)".formatted(sourceBehaviorClass.getSimpleName(), targetBehaviorClass.getSimpleName()));
     }
   }

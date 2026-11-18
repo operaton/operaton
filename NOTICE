@@ -1,8 +1,11 @@
 Operaton
 Copyright Andreas Klein, Andreas Zill, Tim Zöller
 
+Fluxnova - FINOS
+Copyright 2025 - FINOS info@finos.org
+
 Camunda
-Copyright 2013-2024 Camunda Services GmbH
+Copyright 2013-2025 Camunda Services GmbH
 
 This product includes software developed by The Apache Software
 Foundation (http://www.apache.org/).
@@ -15,6 +18,9 @@ This product includes software developed by Quartz
 
 This product includes an architectural decision record template based on MADR (Markdown Architectural Decision Records)
 (https://adr.github.io/madr/).
+
+This product includes software developed at the Fintech Open Source Foundation
+(https://www.finos.org/).
 
 ========================================================
 

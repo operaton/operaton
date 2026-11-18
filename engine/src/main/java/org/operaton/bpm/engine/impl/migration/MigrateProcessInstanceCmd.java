@@ -26,9 +26,9 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
-import org.operaton.bpm.engine.BadUserRequestException;
-
 import org.jspecify.annotations.Nullable;
+
+import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -39,6 +39,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.migration.instance.DeleteUnmappedInstanceVisitor;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingActivityInstanceVisitor;
+import org.operaton.bpm.engine.impl.migration.instance.MigratingAdHocState;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingCompensationEventSubscriptionInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingEventScopeInstance;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessElementInstanceTopDownWalker;
@@ -334,13 +335,19 @@ public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements C
     MigratingProcessElementInstanceTopDownWalker walker =
         new MigratingProcessElementInstanceTopDownWalker(rootActivityInstance);
 
-    walker.addPreVisitor(
-        new MigratingActivityInstanceVisitor(
-            executionBuilder.isSkipCustomListeners(),
-            executionBuilder.isSkipIoMappings()));
+    MigratingActivityInstanceVisitor activityVisitor = new MigratingActivityInstanceVisitor(
+        executionBuilder.isSkipCustomListeners(), executionBuilder.isSkipIoMappings());
+    walker.addPreVisitor(activityVisitor);
     walker.addPreVisitor(new MigrationCompensationInstanceVisitor());
 
     walker.walkUntil();
+
+    for (MigratingActivityInstance instance : migratingProcessInstance.getMigratingActivityInstances()) {
+      MigratingAdHocState.refreshActiveState(instance);
+    }
+    for (MigratingActivityInstance instance : activityVisitor.getEmergingActivityInstances()) {
+      MigratingAdHocState.refreshActiveState(instance);
+    }
   }
 
   protected void ensureProcessInstanceExist(String processInstanceId,

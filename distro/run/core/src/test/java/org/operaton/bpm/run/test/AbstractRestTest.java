@@ -51,15 +51,11 @@ public abstract class AbstractRestTest {
   /**
    * The REST API resolves the engine by name from the static {@link ProcessEngines} registry. Closing another
    * cached context with an engine of the same name (e.g. via {@code @DirtiesContext}) unregisters that name, so
-   * register the engine of this context again before each test.
+   * register the engine of this context again before each test. Also enables request/response logging.
    */
   @BeforeEach
-  public void registerContextProcessEngine() {
+  public void setUpRestTest() {
     ProcessEngines.registerProcessEngine(contextProcessEngine);
-  }
-
-  @BeforeEach
-  public void enableRequestResponseLogging() {
     testRestTemplate.getRestTemplate().setInterceptors(Collections.singletonList(new LoggingInterceptor()));
   }
 }

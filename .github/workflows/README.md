@@ -25,6 +25,9 @@ serves a specific purpose in the CI/CD pipeline.
       `skip_tests` (Dependabot GitHub Actions / npm PRs), `skip_engine_tests` (no engine-related change) and `changed_modules`
       (every changed file maps to a Maven module, e.g. only `webapps-neo`). The `build` job turns them into `build.sh` flags.
       `changed_modules` is ignored when an integration stage needs the staged artifacts.
+      The job summary explains the decision (which file forced a full build, or which modules a build was narrowed to).
+      The job never blocks the build: on any error it emits the defaults (full build with all tests), and the job itself
+      is `continue-on-error`.
 
 ### Integration Build
 

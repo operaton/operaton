@@ -146,10 +146,13 @@ jobs:
 
   # Derives build shortcuts from the PR's changed files, actor and branch
   # (.github/actions/prepare-build/prepare_build.py). In doubt it emits the
-  # defaults, which mean a full build with all tests.
+  # defaults, which mean a full build with all tests. The job must never block
+  # the build: if it fails anyway (runner, checkout), its outputs stay empty
+  # and the build job falls back to the defaults.
   prepare:
     name: Prepare Build
     runs-on: ubuntu-slim
+    continue-on-error: true
     permissions:
       contents: read
       pull-requests: read

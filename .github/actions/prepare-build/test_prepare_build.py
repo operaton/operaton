@@ -1,12 +1,17 @@
+import io
+import json
 import os
+import subprocess
 import sys
 import tempfile
 import unittest
 import urllib.error
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(__file__))
+import prepare_build
 from prepare_build import (
     build_module_graph,
     changed_properties,
@@ -21,6 +26,8 @@ from prepare_build import (
     discover_test_jar_producers,
     decide,
     get_changed_files,
+    get_changed_files_from_git,
+    get_changed_files_with_patches,
     is_non_build_file,
     map_file_to_module,
     relevant_test_jar_producers,
@@ -709,6 +716,16 @@ class TestAgainstRealRepo(unittest.TestCase):
     def test_core_api_contains_imported_internal_bom(self):
         self.assertIn("bom/internal-dependencies", self.core)
 
+    def test_webapps_change_gets_profile_scoped_test_jar_producers(self):
+        # distro/run/qa/runtime consumes these test-jars in its no-test-skip
+        # profile; neither producer is rebuilt by -pl webapps/assembly -amd
+        graph = build_module_graph(REPO_ROOT)
+        certain = build_module_graph(REPO_ROOT, include_profiles=False)
+        relevant = relevant_test_jar_producers(
+            discover_test_jar_producers(REPO_ROOT), ["webapps/assembly"], graph, certain)
+        self.assertIn("distro/run/qa/integration-tests", relevant)
+        self.assertIn("qa/integration-tests-webapps", relevant)
+
     def test_node_bump_narrows_to_frontend_modules(self):
         _, _, modules = decide(
             ["parent/pom.xml"], REPO_ROOT,
@@ -742,6 +759,170 @@ class TestGetChangedFilesFallback(unittest.TestCase):
             mock_open.return_value.read.return_value = b"not-json{"
             result = get_changed_files("token", "org/repo", 123)
         self.assertEqual(result, [])
+
+
+def _api_page(n, start=0, rename_from=None):
+    """One page of the list-PR-files response with n files."""
+    page = [{"filename": f"mod/src/F{start + i}.java", "patch": "@@"} for i in range(n)]
+    if rename_from and page:
+        page[0]["previous_filename"] = rename_from
+    return page
+
+
+class TestGetChangedFilesWithPatches(unittest.TestCase):
+
+    def fetch(self, pages):
+        with patch("prepare_build._github_api", side_effect=pages) as api, \
+                redirect_stderr(io.StringIO()):
+            result = get_changed_files_with_patches("token", "org/repo", 1)
+        return result, api.call_count
+
+    def test_paginates_until_short_page(self):
+        result, calls = self.fetch([_api_page(100), _api_page(5, 100)])
+        self.assertEqual(len(result), 105)
+        self.assertEqual(calls, 2)
+
+    def test_exactly_one_full_page_stops_on_empty_page(self):
+        result, calls = self.fetch([_api_page(100), []])
+        self.assertEqual(len(result), 100)
+        self.assertEqual(calls, 2)
+
+    def test_api_file_limit_forces_full_build(self):
+        pages = [_api_page(100, i * 100) for i in range(30)]
+        result, _ = self.fetch(pages)
+        self.assertEqual(result, {})
+
+    def test_rename_reports_old_path_without_patch(self):
+        result, _ = self.fetch([_api_page(1, rename_from="old/src/F.java")])
+        self.assertIn("mod/src/F0.java", result)
+        self.assertIn("old/src/F.java", result)
+        self.assertIsNone(result["old/src/F.java"])
+
+
+class TestRenames(FixtureRepo):
+
+    def test_move_between_modules_builds_both(self):
+        # spin/core/src/X.java moved to clients/java/client/src/X.java
+        _, _, modules = decide(["clients/java/client/src/X.java", "spin/core/src/X.java"],
+                               self.root)
+        self.assertEqual(set(modules.split(",")), {"clients/java/client", "spin/core"})
+
+    def test_local_diff_reports_both_paths_of_a_rename(self):
+        with tempfile.TemporaryDirectory() as repo:
+            def git(*args):
+                subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t",
+                                *args], cwd=repo, check=True, capture_output=True)
+            git("init", "-q", "-b", "main")
+            Path(repo, "a").mkdir()
+            Path(repo, "a", "X.java").write_text("class X { int a; int b; int c; }\n")
+            git("add", ".")
+            git("commit", "-q", "-m", "init")
+            git("checkout", "-q", "-b", "feature")
+            Path(repo, "b").mkdir()
+            git("mv", "a/X.java", "b/X.java")
+            git("commit", "-q", "-m", "move")
+            self.assertEqual(get_changed_files_from_git("main", repo), ["a/X.java", "b/X.java"])
+
+
+class TestProfileDependencies(unittest.TestCase):
+    """Dependencies declared in a <profile> are edges of the module graph,
+    e.g. test-jar consumers that are moved into the no-test-skip profile."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        r = self.tmp.name
+        make_pom(r, ".", "g", "root")
+        make_pom(r, "lib", "g", "lib", parent=("g", "root"))
+        make_pom(r, "producer", "g", "producer", parent=("g", "root"),
+                 produces_test_jar=True,
+                 extra_xml="<profiles><profile><id>tomcat</id><dependencies>"
+                           "<dependency><groupId>g</groupId><artifactId>lib</artifactId>"
+                           "</dependency></dependencies></profile></profiles>")
+        make_pom(r, "consumer", "g", "consumer", parent=("g", "root"),
+                 deps=[("g", "lib")],
+                 extra_xml="<profiles><profile><id>no-test-skip</id><dependencies>"
+                           "<dependency><groupId>g</groupId><artifactId>producer</artifactId>"
+                           "</dependency></dependencies></profile></profiles>")
+        self.root = r
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_profile_dependency_is_an_edge(self):
+        self.assertIn("producer", build_module_graph(self.root)["consumer"])
+
+    def test_profile_dependency_excluded_from_certain_graph(self):
+        graph = build_module_graph(self.root, include_profiles=False)
+        self.assertNotIn("producer", graph["consumer"])
+
+    def test_producer_reached_only_via_profile_still_gets_real_test_jar(self):
+        # lib changed: consumer (top-level dep) is rebuilt and needs producer's
+        # test-jar; producer depends on lib only in an inactive profile, so
+        # Maven's -amd does not rebuild it
+        relevant = relevant_test_jar_producers(
+            ["producer"], ["lib"], build_module_graph(self.root),
+            build_module_graph(self.root, include_profiles=False))
+        self.assertEqual(relevant, ["producer"])
+
+
+class TestMain(FixtureRepo):
+    """main() in GitHub Actions mode: outputs, job summary and fail-safety."""
+
+    def run_main(self, env, decide_side_effect=None):
+        out = Path(self.root, "out.txt")
+        summary = Path(self.root, "summary.md")
+        event = Path(self.root, "event.json")
+        event.write_text(json.dumps({"pull_request": {"number": 7}}))
+        base_env = {"GITHUB_OUTPUT": str(out), "GITHUB_STEP_SUMMARY": str(summary),
+                    "GITHUB_EVENT_PATH": str(event), "GITHUB_REPOSITORY": "org/repo",
+                    "GITHUB_TOKEN": "t", "GITHUB_EVENT_NAME": "pull_request",
+                    "GITHUB_ACTOR": "someone", "GITHUB_HEAD_REF": "feature"}
+        base_env.update(env)
+        files = {"clients/java/client/src/X.java": "@@"}
+        patches = [patch.dict(os.environ, base_env, clear=True),
+                   patch.object(sys, "argv", ["prepare_build.py"]),
+                   patch("os.getcwd", return_value=self.root),
+                   patch("prepare_build.get_changed_files_with_patches", return_value=files)]
+        if decide_side_effect:
+            patches.append(patch("prepare_build.decide", side_effect=decide_side_effect))
+        for p in patches:
+            p.start()
+        try:
+            with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                prepare_build.main()
+        finally:
+            for p in reversed(patches):
+                p.stop()
+        outputs = dict(line.split("=", 1) for line in out.read_text().splitlines())
+        return outputs, summary.read_text()
+
+    def test_pr_narrows_and_explains(self):
+        outputs, summary = self.run_main({})
+        self.assertEqual(outputs["changed_modules"], "clients/java/client")
+        self.assertIn("narrowed build", summary)
+
+    def test_non_pr_event_emits_defaults(self):
+        outputs, summary = self.run_main({"GITHUB_EVENT_NAME": "push"})
+        self.assertEqual(outputs, {"skip_tests": "false", "skip_engine_tests": "false",
+                                   "changed_modules": ""})
+        self.assertIn("not a pull request", summary)
+
+    def test_missing_token_is_full_build(self):
+        outputs, summary = self.run_main({"GITHUB_TOKEN": ""})
+        self.assertEqual(outputs["changed_modules"], "")
+        self.assertEqual(outputs["skip_tests"], "false")
+        self.assertIn("full build", summary)
+
+    def test_dependabot_actions_pr_skips_tests(self):
+        outputs, _ = self.run_main({"GITHUB_ACTOR": "dependabot[bot]",
+                                    "GITHUB_HEAD_REF": "dependabot/github_actions/x"})
+        self.assertEqual(outputs["skip_tests"], "true")
+
+    def test_exception_emits_defaults(self):
+        outputs, summary = self.run_main({}, decide_side_effect=RuntimeError("boom"))
+        self.assertEqual(outputs, {"skip_tests": "false", "skip_engine_tests": "false",
+                                   "changed_modules": ""})
+        self.assertIn("Prepare failed", summary)
 
 
 if __name__ == "__main__":

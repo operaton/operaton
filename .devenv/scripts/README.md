@@ -34,6 +34,7 @@ The script has the following options:
   - Files that cannot change the build (`*.md` outside `src/`, `.claude/`, `docs/`, `.gitignore`, `jreleaser.yml`, workflows other than `pr-build.yml`, `.devenv/scripts/{maintenance,release,smoketest,tools}/`, …) are ignored. If nothing else changed, tests are skipped entirely.
   - A `pom.xml` whose diff only changes property values (e.g. `<version.nodejs>`) narrows to the modules referencing those properties: a reference inside a `pluginManagement` plugin configuration counts for the modules binding that plugin, any other reference (pom or filtered resource) for the module containing it. A Node.js bump therefore only rebuilds and tests the frontend modules.
   - Any other `pom.xml` change of a leaf module (one without `<modules>`) narrows to that module.
+  - A renamed or moved file counts under both its old and its new path, so the module it left is tested too.
   - Falls back to a full build whenever a change cannot be safely mapped to modules: other pom changes, `parent/`, `bom/`, `database/`, `qa/`, `.github/`, `.devenv/`, root-level files, or a property referenced in one of them (e.g. `version.jackson` in `bom/internal-dependencies`).
 
 Any further arguments will be passed to the Maven build. 

@@ -70,6 +70,10 @@ PROPERTY_SCAN_MAX_BYTES = 1_000_000
 
 SKIP_DIRS = {".git", "node_modules", "target", "src", ".idea"}
 
+# GitHub's list-PR-files endpoint returns at most this many files; a longer
+# list is silently truncated and must not be classified as complete.
+GITHUB_PR_FILES_LIMIT = 3000
+
 Classification = namedtuple("Classification", "full_build docs_only changed_modules")
 
 
@@ -80,9 +84,12 @@ def get_changed_files(token, repo, pr_number):
 
 def get_changed_files_with_patches(token, repo, pr_number):
     """{path: unified diff patch or None} for a PR. GitHub omits the patch
-    for large diffs; callers must treat None as "unknown change"."""
+    for large diffs; callers must treat None as "unknown change". A renamed
+    file contributes its old path too (patch None), so the module it left is
+    rebuilt and tested as well. Returns {} (full build) on any error or when
+    the PR exceeds the API's file limit."""
     files = {}
-    page = 1
+    page, count = 1, 0
     while True:
         url = (
             f"https://api.github.com/repos/{repo}/pulls/{pr_number}/files"
@@ -95,7 +102,15 @@ def get_changed_files_with_patches(token, repo, pr_number):
             return {}
         if not data:
             break
-        files.update((f["filename"], f.get("patch")) for f in data)
+        for f in data:
+            files[f["filename"]] = f.get("patch")
+            if f.get("previous_filename"):
+                files.setdefault(f["previous_filename"], None)
+            count += 1
+        if count >= GITHUB_PR_FILES_LIMIT:
+            print(f"Warning: PR lists {count} files, the API limit; the list may be "
+                  f"truncated — full build.", file=sys.stderr)
+            return {}
         if len(data) < 100:
             break
         page += 1
@@ -121,12 +136,13 @@ def git_toplevel():
 
 
 def get_changed_files_from_git(ref, repo_root):
-    """Changed files vs merge-base(ref, HEAD), incl. uncommitted and untracked."""
+    """Changed files vs merge-base(ref, HEAD), incl. uncommitted and untracked.
+    --no-renames reports a moved file under both its old and new path."""
     def git(*args):
         return subprocess.run(["git", *args], cwd=repo_root,
                               capture_output=True, text=True, check=True).stdout
     base = git("merge-base", ref, "HEAD").strip()
-    diff = git("diff", "--name-only", base).split()
+    diff = git("diff", "--name-only", "--no-renames", base).split()
     untracked = git("ls-files", "--others", "--exclude-standard").split()
     return sorted(set(diff) | set(untracked))
 
@@ -141,6 +157,12 @@ def get_patches_from_git(ref, repo_root, files):
             patches[f] = subprocess.run(["git", "diff", base, "--", f], cwd=repo_root,
                                         capture_output=True, text=True).stdout
     return patches
+
+
+def _note(trace, msg):
+    """Record why a decision was taken (shown in the job summary)."""
+    if trace is not None:
+        trace.append(msg)
 
 
 def is_non_build_file(path):
@@ -199,15 +221,22 @@ def discover_test_jar_producers(root):
     return sorted(producers)
 
 
-def relevant_test_jar_producers(producers, changed_modules, graph):
+def relevant_test_jar_producers(producers, changed_modules, graph, certain_graph=None):
     """Narrow producers to ones whose real test-jar actually matters for the
     current build: excludes producers with no consumer in the affected
     closure (nothing needs their test-jar), and producers that are
     themselves in the closure (phase 3 rebuilds them for real anyway, so no
-    preliminary pass is needed for those)."""
+    preliminary pass is needed for those).
+
+    graph may include profile-scoped edges (who *could* consume a test-jar).
+    certain_graph, if given, holds only always-active edges: a producer is
+    taken as rebuilt by phase 3 only if it is in that closure, because
+    Maven's -amd follows just the edges of the active profiles."""
+    certain_graph = graph if certain_graph is None else certain_graph
     closure = set(changed_modules) | compute_downstream(graph, changed_modules)
+    rebuilt = set(changed_modules) | compute_downstream(certain_graph, changed_modules)
     return [p for p in producers
-            if p not in closure and compute_downstream(graph, [p]) & closure]
+            if p not in rebuilt and compute_downstream(graph, [p]) & closure]
 
 
 def map_file_to_module(path, module_dirs):
@@ -393,17 +422,21 @@ def _classify_pom_change(path, root, module_dirs, patches):
     return None
 
 
-def classify_changes(changed_files, module_dirs, root=None, patches=None):
+def classify_changes(changed_files, module_dirs, root=None, patches=None, trace=None):
     """Decide between docs-only, narrowed module build, and full build.
 
     root enables the pom.xml rules (leaf module poms, property-only version
-    bumps); patches maps changed pom paths to their unified diff."""
+    bumps); patches maps changed pom paths to their unified diff; trace, if
+    given, collects the reasons for the decision."""
     if not changed_files:
+        _note(trace, "No changed files known: full build.")
         return Classification(full_build=True, docs_only=False, changed_modules=[])
     if check_docs_only(changed_files):
+        _note(trace, "Every changed file is documentation: tests skipped.")
         return Classification(full_build=False, docs_only=True, changed_modules=[])
     build_files = [f for f in changed_files if not is_non_build_file(f)]
     if not build_files:
+        _note(trace, "Every changed file is a non-build file: tests skipped.")
         return Classification(full_build=False, docs_only=True, changed_modules=[])
     modules = set()
     for f in build_files:
@@ -411,17 +444,24 @@ def classify_changes(changed_files, module_dirs, root=None, patches=None):
         if name == "pom.xml":
             affected = _classify_pom_change(f, root, module_dirs, patches)
             if affected is None:
+                _note(trace, f"`{f}`: pom change cannot be narrowed: full build.")
                 return Classification(True, False, [])
             modules |= affected
             continue
         if f.startswith(FULL_BUILD_PREFIXES) or "/" not in f:
+            _note(trace, f"`{f}`: build-wide path: full build.")
             return Classification(True, False, [])
         module = map_file_to_module(f, module_dirs)
         if module is None:
+            _note(trace, f"`{f}`: not inside a Maven module: full build.")
             return Classification(True, False, [])
         modules.add(module)
-    if any(m == "" or (m + "/").startswith(FULL_BUILD_PREFIXES) for m in modules):
+    build_wide = sorted(m for m in modules
+                        if m == "" or (m + "/").startswith(FULL_BUILD_PREFIXES))
+    if build_wide:
+        _note(trace, f"Affected module `{build_wide[0] or '<root>'}` is build-wide: full build.")
         return Classification(True, False, [])
+    _note(trace, f"Narrowed to {len(modules)} module(s) and their dependents.")
     return Classification(False, False, sorted(modules))
 
 
@@ -440,9 +480,12 @@ def _is_bom_import(dep):
     return scope is not None and scope.text and scope.text.strip() == "import"
 
 
-def build_module_graph(root):
+def build_module_graph(root, include_profiles=True):
     """Parse poms: {module_dir: set(module_dirs it depends on)}
-    (deps, parent and BOMs imported in <dependencyManagement>)."""
+    (deps, parent and BOMs imported in <dependencyManagement>). With
+    include_profiles, dependencies declared in any <profile> count too: which
+    profiles are active is unknown here, so this is the graph of edges that
+    *may* exist; without it, the graph of edges that always exist."""
     root = Path(root)
     poms = {}  # module_dir -> parsed data
     for module in discover_modules(root):
@@ -456,10 +499,12 @@ def build_module_graph(root):
         parent_coords = _pom_coords(parent_el) if parent_el is not None else None
         default_group = parent_coords[0] if parent_coords else None
         coords = _pom_coords(proj, default_group)
+        scopes = [proj] + (proj.findall("{*}profiles/{*}profile") if include_profiles else [])
         deps = [_pom_coords(d, coords[0])
-                for d in proj.findall("{*}dependencies/{*}dependency")]
+                for s in scopes for d in s.findall("{*}dependencies/{*}dependency")]
         deps += [_pom_coords(d, coords[0])
-                 for d in proj.findall("{*}dependencyManagement/{*}dependencies/{*}dependency")
+                 for s in scopes
+                 for d in s.findall("{*}dependencyManagement/{*}dependencies/{*}dependency")
                  if _is_bom_import(d)]
         if parent_coords:
             deps.append(parent_coords)
@@ -521,7 +566,7 @@ def check_needs_real_frontend(changed_modules, graph):
     return not closure.isdisjoint(frontend_sensitive)
 
 
-def check_skip_engine_tests(changed_files, core_api_modules):
+def check_skip_engine_tests(changed_files, core_api_modules, trace=None):
     """True if no change can affect engine behavior or engine-packaged tests."""
     changed_files = [f for f in changed_files if not is_non_build_file(f)]
     if not changed_files:
@@ -530,7 +575,9 @@ def check_skip_engine_tests(changed_files, core_api_modules):
                + NEVER_SKIP_ENGINE_PREFIXES)
     for f in changed_files:
         if f == "pom.xml" or f.startswith(guarded):
+            _note(trace, f"`{f}` can affect the engine: engine tests run.")
             return False
+    _note(trace, "No change can affect the engine: engine tests skipped.")
     return True
 
 
@@ -539,20 +586,22 @@ def _write_output(key, value, output_file):
         fh.write(f"{key}={value}\n")
 
 
-def decide(changed_files, repo_root, patches=None):
+def decide(changed_files, repo_root, patches=None, trace=None):
     """Full decision from a changed-file list: (skip_tests, skip_engine_tests, changed_modules).
-    patches ({pom path: unified diff}) enables the property-bump analysis."""
+    patches ({pom path: unified diff}) enables the property-bump analysis;
+    trace, if given, collects the reasons for the decision."""
     module_dirs = discover_modules(repo_root)
     if not module_dirs:
         print("Warning: no pom.xml files found — full build.", file=sys.stderr)
+        _note(trace, "No pom.xml files found: full build.")
         return "false", "false", ""
-    c = classify_changes(changed_files, module_dirs, repo_root, patches)
+    c = classify_changes(changed_files, module_dirs, repo_root, patches, trace)
     if c.docs_only:
         return "true", "false", ""
     if not c.full_build:
         return "false", "false", ",".join(c.changed_modules)
     core = compute_core_api(build_module_graph(repo_root))
-    skip_engine = check_skip_engine_tests(changed_files, core)
+    skip_engine = check_skip_engine_tests(changed_files, core, trace)
     return "false", "true" if skip_engine else "false", ""
 
 
@@ -613,7 +662,8 @@ def main():
         changed = [m for m in args.list_test_jar_producers.split(",") if m]
         if changed:
             producers = relevant_test_jar_producers(
-                producers, changed, build_module_graph(repo_root))
+                producers, changed, build_module_graph(repo_root),
+                build_module_graph(repo_root, include_profiles=False))
         print(",".join(producers))
         return
 
@@ -635,46 +685,82 @@ def main():
               f"{changed_files[:10]}{'...' if len(changed_files) > 10 else ''}",
               file=sys.stderr)
         patches = get_patches_from_git(args.diff_ref, repo_root, changed_files)
-        skip_tests, skip_engine, modules = decide(changed_files, repo_root, patches)
+        trace = []
+        skip_tests, skip_engine, modules = decide(changed_files, repo_root, patches, trace)
+        for t in trace:
+            print(f"  {t}", file=sys.stderr)
         _write_output("skip_tests", skip_tests, output_file)
         _write_output("skip_engine_tests", skip_engine, output_file)
         _write_output("changed_modules", modules, output_file)
         return
 
-    event_name = os.environ.get("GITHUB_EVENT_NAME", "")
-    actor = os.environ.get("GITHUB_ACTOR", "")
-    head_ref = os.environ.get("GITHUB_HEAD_REF", "")
-    event_path = os.environ.get("GITHUB_EVENT_PATH", "")
-
-    skip_tests, skip_engine, modules = "false", "false", ""
-
-    if event_name != "pull_request":
-        # push or workflow_dispatch: always full build
-        print(f"Event '{event_name}' is not pull_request — emitting defaults.")
-    elif check_skip_tests(actor, head_ref):
-        skip_tests = "true"
-        print(f"skip_tests=true — dependabot non-code PR: {head_ref}")
-    else:
-        pr_number = None
-        if event_path and os.path.exists(event_path):
-            with open(event_path) as fh:
-                pr_number = json.load(fh).get("pull_request", {}).get("number")
-        changed_files, patches = [], {}
-        if pr_number and token and repo:
-            patches = get_changed_files_with_patches(token, repo, pr_number)
-            changed_files = list(patches)
-            preview = changed_files[:10]
-            suffix = "..." if len(changed_files) > 10 else ""
-            print(f"Changed files ({len(changed_files)}): {preview}{suffix}")
-        else:
-            print("Warning: missing pr_number/token/repo — full build.", file=sys.stderr)
-        skip_tests, skip_engine, modules = decide(changed_files, os.getcwd(), patches)
+    trace = []
+    try:
+        skip_tests, skip_engine, modules = decide_pr(token, repo, os.getcwd(), trace)
+    except Exception as exc:
+        # in doubt, execute more: a bug here must never block the PR build
+        print(f"Warning: prepare failed ({exc!r}) — full build.", file=sys.stderr)
+        _note(trace, f"Prepare failed (`{exc!r}`): full build.")
+        skip_tests, skip_engine, modules = "false", "false", ""
 
     print(f"skip_tests={skip_tests}, skip_engine_tests={skip_engine}, "
           f"changed_modules={modules or '<full build>'}")
     _write_output("skip_tests", skip_tests, output_file)
     _write_output("skip_engine_tests", skip_engine, output_file)
     _write_output("changed_modules", modules, output_file)
+    _write_summary(trace, skip_tests, skip_engine, modules,
+                   os.environ.get("GITHUB_STEP_SUMMARY"))
+
+
+def decide_pr(token, repo, repo_root, trace=None):
+    """Decision for the current GitHub Actions event (see decide)."""
+    event_name = os.environ.get("GITHUB_EVENT_NAME", "")
+    actor = os.environ.get("GITHUB_ACTOR", "")
+    head_ref = os.environ.get("GITHUB_HEAD_REF", "")
+    event_path = os.environ.get("GITHUB_EVENT_PATH", "")
+
+    if event_name != "pull_request":
+        # push or workflow_dispatch: always full build
+        print(f"Event '{event_name}' is not pull_request — emitting defaults.")
+        _note(trace, f"Event `{event_name}` is not a pull request: full build.")
+        return "false", "false", ""
+    if check_skip_tests(actor, head_ref):
+        print(f"skip_tests=true — dependabot non-code PR: {head_ref}")
+        _note(trace, f"Dependabot PR `{head_ref}` changes no code: tests skipped.")
+        return "true", "false", ""
+    pr_number = None
+    if event_path and os.path.exists(event_path):
+        with open(event_path) as fh:
+            pr_number = json.load(fh).get("pull_request", {}).get("number")
+    changed_files, patches = [], {}
+    if pr_number and token and repo:
+        patches = get_changed_files_with_patches(token, repo, pr_number)
+        changed_files = list(patches)
+        preview = changed_files[:10]
+        suffix = "..." if len(changed_files) > 10 else ""
+        print(f"Changed files ({len(changed_files)}): {preview}{suffix}")
+    else:
+        print("Warning: missing pr_number/token/repo — full build.", file=sys.stderr)
+    return decide(changed_files, repo_root, patches, trace)
+
+
+def _write_summary(trace, skip_tests, skip_engine, modules, summary_file):
+    """Explain the decision in the job summary, so maintainers see why a PR
+    was (or was not) narrowed."""
+    if not summary_file:
+        return
+    if skip_tests == "true":
+        verdict = "skip all tests"
+    elif modules:
+        verdict = f"narrowed build: `-pl {modules} -amd`"
+    elif skip_engine == "true":
+        verdict = "full build without engine tests"
+    else:
+        verdict = "full build"
+    lines = ["### Prepare Build", "", f"**Decision:** {verdict}", ""]
+    lines += [f"- {t}" for t in trace]
+    with open(summary_file, "a") as fh:
+        fh.write("\n".join(lines) + "\n")
 
 
 if __name__ == "__main__":

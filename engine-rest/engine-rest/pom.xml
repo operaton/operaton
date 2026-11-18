@@ -308,12 +308,21 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
+        <!-- undertow-servlet is not published for 2.4.x; 2.3.27.Final is the latest release -->
+        <version.undertow-servlet>2.3.27.Final</version.undertow-servlet>
+        <!-- undertow-core 2.4.x fixes GHSA-3x3v-w654-m28m -->
         <version.undertow>2.4.4.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>
           <groupId>io.undertow</groupId>
           <artifactId>undertow-servlet</artifactId>
+          <version>${version.undertow-servlet}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>io.undertow</groupId>
+          <artifactId>undertow-core</artifactId>
           <version>${version.undertow}</version>
           <scope>test</scope>
         </dependency>

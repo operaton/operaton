@@ -63,6 +63,12 @@
     <!-- jacoco agent fills this at runtime -->
     <argLine/>
     <surefire.localeArgs>-Duser.language=en -Duser.country=US</surefire.localeArgs>
+    <!-- test class filtering, interpolated into the surefire excludes below:
+         -Dtest.excludes=<regex> (or a profile setting the property) skips matching
+         test classes in every module that inherits this configuration.
+         The default expression never matches. -->
+    <test.includes/>
+    <test.excludes>$.</test.excludes>
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
     <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} ${surefire.localeArgs} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
     <surefire.forkCount>1</surefire.forkCount>
@@ -96,6 +102,12 @@
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <forkCount>${surefire.forkCount}</forkCount>
             <argLine>@{argLine} ${surefire.localeArgs}</argLine>
+            <excludes>
+              <!-- surefire's documented default, restated because an explicit list replaces it -->
+              <exclude>**/*$*</exclude>
+              <!-- no .class suffix: Surefire 3.6.0 also matches against JUnit class names -->
+              <exclude>%regex[.*(${test.excludes}).*Test.*]</exclude>
+            </excludes>
           </configuration>
         </plugin>
         <plugin>

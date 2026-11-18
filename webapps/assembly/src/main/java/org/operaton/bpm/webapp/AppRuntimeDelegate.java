@@ -31,6 +31,7 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  * @author Daniel Meyer
  *
  */
+// CI test: exercises the narrowed PR build (webapps-only). Do not merge.
 public interface AppRuntimeDelegate<T extends AppPlugin> {
 
   /**

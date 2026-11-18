@@ -20,11 +20,6 @@
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-        <version>${version.selenium}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
   <profiles>

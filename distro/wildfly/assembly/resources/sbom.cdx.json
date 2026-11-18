@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:e2d98cb1-649c-41b1-927a-1aac83737590",
+  "serialNumber": "urn:uuid:3b729440-c6d8-404e-b445-d5097273147d",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-18T05:10:23Z",
+    "timestamp": "2026-11-18T05:30:34Z",
     "tools": {
       "components": [
         {
@@ -16077,152 +16077,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
-      "group": "org.jboss.xnio",
-      "name": "xnio-api",
-      "version": "3.8.16.Final",
-      "description": "The API JAR of the XNIO project",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "d249abddd0b2fb672d282388296ecb34"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "7c98c649a4583523c23cc0a7e62ddace1f486b54"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "3572098fe1687dabd90f0222080fb158f63ca771c42ef1d39974434849f78bc4"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "08a22fa1abe166b91c82a6a154efd1c3f6b1b2b56244a742eb421f981c6679c029b9c0adba95cc61362666d93607c044d4622b2d8f115573eaa7e5260c744f9e"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "b73558b6fe973aec00ae4038a55c3a680cc2ee32d05782a0954df38ef993ae0414a22033fa0eaca2f1ddfd991ab49f22"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "62c46ad019aaf5256bc235237a746c7824af44fcfd2141d2a00d6b57e74fb7a08a2859d53a5144e54de49a07e700631f"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "8b3e2ebd13a584b288e75a22b4365f9c7d81501ff8f79ef89b79e1ade6e257a1"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "fd894ee035714ecd1278c07ddc32e396a379e7d50e69da8d1c6bc33263f1b9b6ce7a860a97463a4b0a8fb53cf3441fb62e1b9bb8bcae621b7c7b5dd5e98e0b2e"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0",
-            "url": "https://www.apache.org/licenses/LICENSE-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://www.jboss.org/xnio",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.redhat.com/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://lists.jboss.org/pipermail/jboss-user/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "http://github.com/jboss/jboss-parent-pom",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
-      "group": "org.wildfly.client",
-      "name": "wildfly-client-config",
-      "version": "1.0.1.Final",
-      "description": "Library for supporting WildFly common client configuration",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "77f13d40c0fc70d05b48d43ac8ae2581"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "2a803b23c40a0de0f03a90d1fd3755747bc05f4b"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "80a4e963ce94ebb043ecb0f2c0e77d327f23dc87d81350b863752eedfa2c3bb3"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "3f442478c57f7dfac7039f6c7ae014bb2d45cdbd690ee631a3349edbca414adfe1984d065d1439f9b1546fa15fbd032c3a6bfe008f1ad50eef74201467b9f55f"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "fd6285cf6398f0395c538873c4e52292c467d5f752f47fb8040224b37ec4e39e410136bf040c33ba8b42b3d6cda58a05"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "a3f92b65c9914eba7d47ac858ff37d512852691df29d68dd01587e254dd370404a3f0243adf7821a677f1b88904124c9"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "6e6e537598960954ea18998ed44b696a21a662bfd5268c58dd1fab739882ce34"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "94f46f167853b771ead83d87a93e826512575cb5ef505b841b28d4d818a39f5fe0cbf8b9b155719b4b43569a6fbc4f2c36ab14bfca8fd43ab64963a547fdce74"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0",
-            "url": "https://www.apache.org/licenses/LICENSE-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://www.jboss.org/wildfly-client-config",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://issues.jboss.org/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://lists.jboss.org/pipermail/jboss-user/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "http://github.com/jboss/jboss-parent-pom/wildfly-client-config",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.6.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
@@ -16561,6 +16415,152 @@
         },
         {
           "url": "https://github.com/jakartaee/validation",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
+      "publisher": "JBoss by Red Hat",
+      "group": "org.jboss.xnio",
+      "name": "xnio-api",
+      "version": "3.8.16.Final",
+      "description": "The API JAR of the XNIO project",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "d249abddd0b2fb672d282388296ecb34"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7c98c649a4583523c23cc0a7e62ddace1f486b54"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "3572098fe1687dabd90f0222080fb158f63ca771c42ef1d39974434849f78bc4"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "08a22fa1abe166b91c82a6a154efd1c3f6b1b2b56244a742eb421f981c6679c029b9c0adba95cc61362666d93607c044d4622b2d8f115573eaa7e5260c744f9e"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "b73558b6fe973aec00ae4038a55c3a680cc2ee32d05782a0954df38ef993ae0414a22033fa0eaca2f1ddfd991ab49f22"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "62c46ad019aaf5256bc235237a746c7824af44fcfd2141d2a00d6b57e74fb7a08a2859d53a5144e54de49a07e700631f"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "8b3e2ebd13a584b288e75a22b4365f9c7d81501ff8f79ef89b79e1ade6e257a1"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "fd894ee035714ecd1278c07ddc32e396a379e7d50e69da8d1c6bc33263f1b9b6ce7a860a97463a4b0a8fb53cf3441fb62e1b9bb8bcae621b7c7b5dd5e98e0b2e"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://www.jboss.org/xnio",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.redhat.com/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://lists.jboss.org/pipermail/jboss-user/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "http://github.com/jboss/jboss-parent-pom",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
+      "publisher": "JBoss by Red Hat",
+      "group": "org.wildfly.client",
+      "name": "wildfly-client-config",
+      "version": "1.0.1.Final",
+      "description": "Library for supporting WildFly common client configuration",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "77f13d40c0fc70d05b48d43ac8ae2581"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "2a803b23c40a0de0f03a90d1fd3755747bc05f4b"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "80a4e963ce94ebb043ecb0f2c0e77d327f23dc87d81350b863752eedfa2c3bb3"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "3f442478c57f7dfac7039f6c7ae014bb2d45cdbd690ee631a3349edbca414adfe1984d065d1439f9b1546fa15fbd032c3a6bfe008f1ad50eef74201467b9f55f"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "fd6285cf6398f0395c538873c4e52292c467d5f752f47fb8040224b37ec4e39e410136bf040c33ba8b42b3d6cda58a05"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "a3f92b65c9914eba7d47ac858ff37d512852691df29d68dd01587e254dd370404a3f0243adf7821a677f1b88904124c9"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "6e6e537598960954ea18998ed44b696a21a662bfd5268c58dd1fab739882ce34"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "94f46f167853b771ead83d87a93e826512575cb5ef505b841b28d4d818a39f5fe0cbf8b9b155719b4b43569a6fbc4f2c36ab14bfca8fd43ab64963a547fdce74"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://www.jboss.org/wildfly-client-config",
+          "type": "website"
+        },
+        {
+          "url": "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://issues.jboss.org/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://lists.jboss.org/pipermail/jboss-user/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "http://github.com/jboss/jboss-parent-pom/wildfly-client-config",
           "type": "vcs"
         }
       ]
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "7cd0e332-bad5-4b5f-be73-5d3bc61cef0d",
+      "bom-ref": "7c9f14a6-9bfa-4df7-92a0-e238c685e70d",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36276,7 +36276,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "bcbe0ce7-0f8a-40bc-a213-a0a96cb49c48",
+      "bom-ref": "acdb4cc2-0325-458d-9bc6-e77878649750",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36287,7 +36287,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "15101c6d-bc13-4238-87e5-e7e5f220bf1e",
+      "bom-ref": "a13aeff8-a788-4257-8648-caa372b51b55",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37420,7 +37420,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e49c6214-0a48-45dc-8a94-63e103d6ff61",
+      "bom-ref": "707d46ee-0ae0-40e9-ad07-ffc1d03c26e0",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -41138,7 +41138,7 @@
       "dependsOn": []
     },
     {
-      "ref": "7cd0e332-bad5-4b5f-be73-5d3bc61cef0d",
+      "ref": "7c9f14a6-9bfa-4df7-92a0-e238c685e70d",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -41188,9 +41188,9 @@
       ]
     },
     {
-      "ref": "bcbe0ce7-0f8a-40bc-a213-a0a96cb49c48",
+      "ref": "acdb4cc2-0325-458d-9bc6-e77878649750",
       "dependsOn": [
-        "7cd0e332-bad5-4b5f-be73-5d3bc61cef0d"
+        "7c9f14a6-9bfa-4df7-92a0-e238c685e70d"
       ]
     },
     {
@@ -42589,7 +42589,13 @@
       "dependsOn": []
     },
     {
-      "ref": "15101c6d-bc13-4238-87e5-e7e5f220bf1e",
+      "ref": "707d46ee-0ae0-40e9-ad07-ffc1d03c26e0",
+      "dependsOn": [
+        "a13aeff8-a788-4257-8648-caa372b51b55"
+      ]
+    },
+    {
+      "ref": "a13aeff8-a788-4257-8648-caa372b51b55",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -42607,12 +42613,6 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "e49c6214-0a48-45dc-8a94-63e103d6ff61",
-      "dependsOn": [
-        "15101c6d-bc13-4238-87e5-e7e5f220bf1e"
       ]
     },
     {

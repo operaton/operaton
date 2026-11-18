@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:27b03f35-144d-456f-8169-20cc14a040bf",
+  "serialNumber": "urn:uuid:5357f514-df3c-47cb-b475-79f391260d77",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-18T05:30:58Z",
+    "timestamp": "2026-11-18T09:25:41Z",
     "tools": {
       "components": [
         {
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b754ed3e-5ede-43f6-9d27-d1ad4ea083a2",
+      "bom-ref": "db180cd6-018e-4f7f-b30c-3756ce8f60be",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36276,7 +36276,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "bfc5695c-6680-4e4a-86c7-c0a6a03f3c0f",
+      "bom-ref": "11a38e2b-b629-4aeb-8d3a-5f02d3919409",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36287,7 +36287,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ab2c66c6-9015-49a6-8bdc-4b4368628d27",
+      "bom-ref": "dcb8b539-73d2-47ce-a57a-f6b044a4b653",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37420,7 +37420,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "dab605d5-ca90-4419-8beb-0115e2b24c73",
+      "bom-ref": "a46a7f97-cafe-46dd-a62c-09ddc3899aee",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -41138,7 +41138,13 @@
       "dependsOn": []
     },
     {
-      "ref": "b754ed3e-5ede-43f6-9d27-d1ad4ea083a2",
+      "ref": "11a38e2b-b629-4aeb-8d3a-5f02d3919409",
+      "dependsOn": [
+        "db180cd6-018e-4f7f-b30c-3756ce8f60be"
+      ]
+    },
+    {
+      "ref": "db180cd6-018e-4f7f-b30c-3756ce8f60be",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -41185,12 +41191,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.2"
-      ]
-    },
-    {
-      "ref": "bfc5695c-6680-4e4a-86c7-c0a6a03f3c0f",
-      "dependsOn": [
-        "b754ed3e-5ede-43f6-9d27-d1ad4ea083a2"
       ]
     },
     {
@@ -42589,7 +42589,13 @@
       "dependsOn": []
     },
     {
-      "ref": "ab2c66c6-9015-49a6-8bdc-4b4368628d27",
+      "ref": "a46a7f97-cafe-46dd-a62c-09ddc3899aee",
+      "dependsOn": [
+        "dcb8b539-73d2-47ce-a57a-f6b044a4b653"
+      ]
+    },
+    {
+      "ref": "dcb8b539-73d2-47ce-a57a-f6b044a4b653",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -42607,12 +42613,6 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "dab605d5-ca90-4419-8beb-0115e2b24c73",
-      "dependsOn": [
-        "ab2c66c6-9015-49a6-8bdc-4b4368628d27"
       ]
     },
     {

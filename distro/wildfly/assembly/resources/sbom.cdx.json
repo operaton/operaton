@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:d228ea04-5328-4403-8961-49e224542dd0",
+  "serialNumber": "urn:uuid:eee1caec-d947-4e6e-9943-42c9ff92e4a6",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-18T10:03:04Z",
+    "timestamp": "2026-11-18T10:09:30Z",
     "tools": {
       "components": [
         {
@@ -16077,6 +16077,361 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
+      "publisher": "JBoss by Red Hat",
+      "group": "org.jboss.xnio",
+      "name": "xnio-api",
+      "version": "3.8.16.Final",
+      "description": "The API JAR of the XNIO project",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "d249abddd0b2fb672d282388296ecb34"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7c98c649a4583523c23cc0a7e62ddace1f486b54"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "3572098fe1687dabd90f0222080fb158f63ca771c42ef1d39974434849f78bc4"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "08a22fa1abe166b91c82a6a154efd1c3f6b1b2b56244a742eb421f981c6679c029b9c0adba95cc61362666d93607c044d4622b2d8f115573eaa7e5260c744f9e"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "b73558b6fe973aec00ae4038a55c3a680cc2ee32d05782a0954df38ef993ae0414a22033fa0eaca2f1ddfd991ab49f22"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "62c46ad019aaf5256bc235237a746c7824af44fcfd2141d2a00d6b57e74fb7a08a2859d53a5144e54de49a07e700631f"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "8b3e2ebd13a584b288e75a22b4365f9c7d81501ff8f79ef89b79e1ade6e257a1"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "fd894ee035714ecd1278c07ddc32e396a379e7d50e69da8d1c6bc33263f1b9b6ce7a860a97463a4b0a8fb53cf3441fb62e1b9bb8bcae621b7c7b5dd5e98e0b2e"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://www.jboss.org/xnio",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.redhat.com/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://lists.jboss.org/pipermail/jboss-user/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "http://github.com/jboss/jboss-parent-pom",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
+      "publisher": "JBoss by Red Hat",
+      "group": "org.wildfly.client",
+      "name": "wildfly-client-config",
+      "version": "1.0.1.Final",
+      "description": "Library for supporting WildFly common client configuration",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "77f13d40c0fc70d05b48d43ac8ae2581"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "2a803b23c40a0de0f03a90d1fd3755747bc05f4b"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "80a4e963ce94ebb043ecb0f2c0e77d327f23dc87d81350b863752eedfa2c3bb3"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "3f442478c57f7dfac7039f6c7ae014bb2d45cdbd690ee631a3349edbca414adfe1984d065d1439f9b1546fa15fbd032c3a6bfe008f1ad50eef74201467b9f55f"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "fd6285cf6398f0395c538873c4e52292c467d5f752f47fb8040224b37ec4e39e410136bf040c33ba8b42b3d6cda58a05"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "a3f92b65c9914eba7d47ac858ff37d512852691df29d68dd01587e254dd370404a3f0243adf7821a677f1b88904124c9"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "6e6e537598960954ea18998ed44b696a21a662bfd5268c58dd1fab739882ce34"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "94f46f167853b771ead83d87a93e826512575cb5ef505b841b28d4d818a39f5fe0cbf8b9b155719b4b43569a6fbc4f2c36ab14bfca8fd43ab64963a547fdce74"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://www.jboss.org/wildfly-client-config",
+          "type": "website"
+        },
+        {
+          "url": "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://issues.jboss.org/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://lists.jboss.org/pipermail/jboss-user/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "http://github.com/jboss/jboss-parent-pom/wildfly-client-config",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jboss.threads/jboss-threads@3.9.2?type=jar",
+      "publisher": "JBoss by Red Hat",
+      "group": "org.jboss.threads",
+      "name": "jboss-threads",
+      "version": "3.9.2",
+      "description": "Thread pool implementations and threading utilities",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "a439cbe3b888adf97682853c2aceddd6"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "ee52e069cee3c892de572b0011d80c9c9bd81fd4"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "ac0fd044686122014143267d3688245852ca07c6c4474320c9172062a5af6634"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "5bd3b77a1924f571eab43e1b7939869a50ad156e9c56715c749109696d04e03a80c2d6ae7f059424b7e033acb3ed417017381ca5675ca32ef75c4748d724e5b3"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "8fabc9455e27629dc88bf79cce6ca364a397062599559b73e15834f0ab9860ef3de923426fb582968cdb136f49f91248"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "fb26d9e7756f65bee249546ce1050c65a0a78c2bc7c056039fb079c03b8577f2471f8335e87d42cc69aabb0c952a0748"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "488d1d2a447e10155afeab1db9296b2d82cec6581bf5eb7a93643b90b18397c4"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "dc176652350ff7901455e9eea20705c0d0b58ba93d65a61b202e820c31de511b2b1943392ec6a48145754c5443e43eed5841321f522a3a5c6e22d70823f868df"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jboss.threads/jboss-threads@3.9.2?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/jbossas/jboss-threads",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.jboss.org/browse/JBTHR",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://lists.jboss.org/pipermail/jboss-user/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/jbossas/jboss-threads",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/io.smallrye.common/smallrye-common-constraint@2.14.0?type=jar",
+      "group": "io.smallrye.common",
+      "name": "smallrye-common-constraint",
+      "version": "2.14.0",
+      "description": "Common utilities for SmallRye",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "5ec5cba75d9736ba6df20ca4d74a006b"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "72145a1dc9b65e805dc82740f20a43817d4b21f0"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "10bb72443594c780a80e011c7b5a1ca246e13860447cce278b6ebc448baddfce"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "0d242f9fb074d95e367e7b865efc59c468d7790045d143838d1042d606f78eefdac80ebd8f35785fdfa4f73331957708fc1cc259f04411ceed1f13115758357d"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "542678751d7c01578c9777ba72f2baf7da21892520a029f235cb8e687ff1a43431c3ec8450c053d93fce9043558123dd"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "4710446fee6355e64ec1e8387857a6834e1702f5236c242b7a83442584dc21a17995295c8c03d55ec4e17c46c6b43b7d"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "3472abfac8a5013531fd0fc1ad277e4965843ee63ec9ce1232910ff51daec06a"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "dedc11d2649e7815fd2189cc0b37f5f2d2bd220e9a016a4cf04b2e670294263734e26e3f413ef8c2a795f1fee0e10ed13d06a8796b81e0ef393d360880dcd737"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/io.smallrye.common/smallrye-common-constraint@2.14.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://smallrye.io",
+          "type": "website"
+        },
+        {
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/smallrye/smallrye-common/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/smallrye/smallrye-common/smallrye-common-constraint/",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/io.smallrye.common/smallrye-common-function@2.14.0?type=jar",
+      "group": "io.smallrye.common",
+      "name": "smallrye-common-function",
+      "version": "2.14.0",
+      "description": "Common utilities for SmallRye",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "b8bbb6957d14860c46ca002ffdffe7de"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "e2ea1d1c5baf4794133b4ff06712096149527329"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "f0e0c6c213c40665b3c29cede733f668f37e38aa5f3ab4335c55191fdc0c359d"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "0b79d67d4a2f6cdb78a77fb7563325fa89a6c51b61eef118db9a07d313adcb04780ff69039c53fc7febeb259be7032fc2087052f1fc40b7719f402f28fb4b8f3"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "569af7902a6e7137ad2ed4269cd78c0fd111b375792f8e6867dec64517a9ccac1bf77d32e6f7348f4d6df46844afc1a3"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "da71e2e99dcbf00ac3becf3391048f1aeb6089d60ec65d55a580f0cd1fafc3ff4e942e83a3672827ce5d0a634477d19a"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "2714b496215ee7cb33ac9deab1ae263f51f63847058c310f7371c35fb3e9a7ce"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "7833aa7f37acd986fcbbaefe58446832b849407515236a7c50947decb48c41cb0d4aad248401ce63e1193edbde2ba724ad6b2b3e57699a8c8310b9515ae36d14"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/io.smallrye.common/smallrye-common-function@2.14.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://smallrye.io",
+          "type": "website"
+        },
+        {
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/smallrye/smallrye-common/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/smallrye/smallrye-common/smallrye-common-function/",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.6.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
@@ -16415,152 +16770,6 @@
         },
         {
           "url": "https://github.com/jakartaee/validation",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
-      "group": "org.jboss.xnio",
-      "name": "xnio-api",
-      "version": "3.8.16.Final",
-      "description": "The API JAR of the XNIO project",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "d249abddd0b2fb672d282388296ecb34"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "7c98c649a4583523c23cc0a7e62ddace1f486b54"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "3572098fe1687dabd90f0222080fb158f63ca771c42ef1d39974434849f78bc4"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "08a22fa1abe166b91c82a6a154efd1c3f6b1b2b56244a742eb421f981c6679c029b9c0adba95cc61362666d93607c044d4622b2d8f115573eaa7e5260c744f9e"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "b73558b6fe973aec00ae4038a55c3a680cc2ee32d05782a0954df38ef993ae0414a22033fa0eaca2f1ddfd991ab49f22"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "62c46ad019aaf5256bc235237a746c7824af44fcfd2141d2a00d6b57e74fb7a08a2859d53a5144e54de49a07e700631f"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "8b3e2ebd13a584b288e75a22b4365f9c7d81501ff8f79ef89b79e1ade6e257a1"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "fd894ee035714ecd1278c07ddc32e396a379e7d50e69da8d1c6bc33263f1b9b6ce7a860a97463a4b0a8fb53cf3441fb62e1b9bb8bcae621b7c7b5dd5e98e0b2e"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0",
-            "url": "https://www.apache.org/licenses/LICENSE-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://www.jboss.org/xnio",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.redhat.com/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://lists.jboss.org/pipermail/jboss-user/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "http://github.com/jboss/jboss-parent-pom",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
-      "group": "org.wildfly.client",
-      "name": "wildfly-client-config",
-      "version": "1.0.1.Final",
-      "description": "Library for supporting WildFly common client configuration",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "77f13d40c0fc70d05b48d43ac8ae2581"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "2a803b23c40a0de0f03a90d1fd3755747bc05f4b"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "80a4e963ce94ebb043ecb0f2c0e77d327f23dc87d81350b863752eedfa2c3bb3"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "3f442478c57f7dfac7039f6c7ae014bb2d45cdbd690ee631a3349edbca414adfe1984d065d1439f9b1546fa15fbd032c3a6bfe008f1ad50eef74201467b9f55f"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "fd6285cf6398f0395c538873c4e52292c467d5f752f47fb8040224b37ec4e39e410136bf040c33ba8b42b3d6cda58a05"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "a3f92b65c9914eba7d47ac858ff37d512852691df29d68dd01587e254dd370404a3f0243adf7821a677f1b88904124c9"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "6e6e537598960954ea18998ed44b696a21a662bfd5268c58dd1fab739882ce34"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "94f46f167853b771ead83d87a93e826512575cb5ef505b841b28d4d818a39f5fe0cbf8b9b155719b4b43569a6fbc4f2c36ab14bfca8fd43ab64963a547fdce74"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0",
-            "url": "https://www.apache.org/licenses/LICENSE-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.wildfly.client/wildfly-client-config@1.0.1.Final?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://www.jboss.org/wildfly-client-config",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://issues.jboss.org/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://lists.jboss.org/pipermail/jboss-user/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "http://github.com/jboss/jboss-parent-pom/wildfly-client-config",
           "type": "vcs"
         }
       ]
@@ -28886,215 +29095,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.threads/jboss-threads@3.9.2?type=jar",
-      "publisher": "JBoss by Red Hat",
-      "group": "org.jboss.threads",
-      "name": "jboss-threads",
-      "version": "3.9.2",
-      "description": "Thread pool implementations and threading utilities",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "a439cbe3b888adf97682853c2aceddd6"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "ee52e069cee3c892de572b0011d80c9c9bd81fd4"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "ac0fd044686122014143267d3688245852ca07c6c4474320c9172062a5af6634"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "5bd3b77a1924f571eab43e1b7939869a50ad156e9c56715c749109696d04e03a80c2d6ae7f059424b7e033acb3ed417017381ca5675ca32ef75c4748d724e5b3"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "8fabc9455e27629dc88bf79cce6ca364a397062599559b73e15834f0ab9860ef3de923426fb582968cdb136f49f91248"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "fb26d9e7756f65bee249546ce1050c65a0a78c2bc7c056039fb079c03b8577f2471f8335e87d42cc69aabb0c952a0748"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "488d1d2a447e10155afeab1db9296b2d82cec6581bf5eb7a93643b90b18397c4"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "dc176652350ff7901455e9eea20705c0d0b58ba93d65a61b202e820c31de511b2b1943392ec6a48145754c5443e43eed5841321f522a3a5c6e22d70823f868df"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0",
-            "url": "https://www.apache.org/licenses/LICENSE-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.jboss.threads/jboss-threads@3.9.2?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/jbossas/jboss-threads",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.jboss.org/browse/JBTHR",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://lists.jboss.org/pipermail/jboss-user/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/jbossas/jboss-threads",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/io.smallrye.common/smallrye-common-constraint@2.14.0?type=jar",
-      "group": "io.smallrye.common",
-      "name": "smallrye-common-constraint",
-      "version": "2.14.0",
-      "description": "Common utilities for SmallRye",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "5ec5cba75d9736ba6df20ca4d74a006b"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "72145a1dc9b65e805dc82740f20a43817d4b21f0"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "10bb72443594c780a80e011c7b5a1ca246e13860447cce278b6ebc448baddfce"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "0d242f9fb074d95e367e7b865efc59c468d7790045d143838d1042d606f78eefdac80ebd8f35785fdfa4f73331957708fc1cc259f04411ceed1f13115758357d"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "542678751d7c01578c9777ba72f2baf7da21892520a029f235cb8e687ff1a43431c3ec8450c053d93fce9043558123dd"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "4710446fee6355e64ec1e8387857a6834e1702f5236c242b7a83442584dc21a17995295c8c03d55ec4e17c46c6b43b7d"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "3472abfac8a5013531fd0fc1ad277e4965843ee63ec9ce1232910ff51daec06a"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "dedc11d2649e7815fd2189cc0b37f5f2d2bd220e9a016a4cf04b2e670294263734e26e3f413ef8c2a795f1fee0e10ed13d06a8796b81e0ef393d360880dcd737"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/io.smallrye.common/smallrye-common-constraint@2.14.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://smallrye.io",
-          "type": "website"
-        },
-        {
-          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/smallrye/smallrye-common/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/smallrye/smallrye-common/smallrye-common-constraint/",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/io.smallrye.common/smallrye-common-function@2.14.0?type=jar",
-      "group": "io.smallrye.common",
-      "name": "smallrye-common-function",
-      "version": "2.14.0",
-      "description": "Common utilities for SmallRye",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "b8bbb6957d14860c46ca002ffdffe7de"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "e2ea1d1c5baf4794133b4ff06712096149527329"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "f0e0c6c213c40665b3c29cede733f668f37e38aa5f3ab4335c55191fdc0c359d"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "0b79d67d4a2f6cdb78a77fb7563325fa89a6c51b61eef118db9a07d313adcb04780ff69039c53fc7febeb259be7032fc2087052f1fc40b7719f402f28fb4b8f3"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "569af7902a6e7137ad2ed4269cd78c0fd111b375792f8e6867dec64517a9ccac1bf77d32e6f7348f4d6df46844afc1a3"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "da71e2e99dcbf00ac3becf3391048f1aeb6089d60ec65d55a580f0cd1fafc3ff4e942e83a3672827ce5d0a634477d19a"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "2714b496215ee7cb33ac9deab1ae263f51f63847058c310f7371c35fb3e9a7ce"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "7833aa7f37acd986fcbbaefe58446832b849407515236a7c50947decb48c41cb0d4aad248401ce63e1193edbde2ba724ad6b2b3e57699a8c8310b9515ae36d14"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/io.smallrye.common/smallrye-common-function@2.14.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://smallrye.io",
-          "type": "website"
-        },
-        {
-          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/smallrye/smallrye-common/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/smallrye/smallrye-common/smallrye-common-function/",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/org.wildfly/wildfly-web-common@41.0.1.Final?type=jar",
       "publisher": "WildFly",
       "group": "org.wildfly",
@@ -31020,7 +31020,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b9224c6a-2346-4c9a-abec-9cc8c837c7e5",
+      "bom-ref": "e80c1552-2904-4138-88da-f3356b0cbe1b",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36276,7 +36276,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b520892c-8d5f-47af-9a5d-764a2e48d317",
+      "bom-ref": "57ffe2ee-9d75-470d-b137-f01a29b75c31",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -36287,7 +36287,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9a62f552-134b-442e-80af-943f3a22101c",
+      "bom-ref": "b99e6ec3-2b59-45be-bfd4-cf13b4e7f0de",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37420,7 +37420,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d408561b-b5b7-4916-8e98-5811e4a6b6f6",
+      "bom-ref": "b59a7df5-3550-4b23-9481-75e4ebda3ead",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -41138,13 +41138,13 @@
       "dependsOn": []
     },
     {
-      "ref": "b520892c-8d5f-47af-9a5d-764a2e48d317",
+      "ref": "57ffe2ee-9d75-470d-b137-f01a29b75c31",
       "dependsOn": [
-        "b9224c6a-2346-4c9a-abec-9cc8c837c7e5"
+        "e80c1552-2904-4138-88da-f3356b0cbe1b"
       ]
     },
     {
-      "ref": "b9224c6a-2346-4c9a-abec-9cc8c837c7e5",
+      "ref": "e80c1552-2904-4138-88da-f3356b0cbe1b",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -42589,7 +42589,13 @@
       "dependsOn": []
     },
     {
-      "ref": "9a62f552-134b-442e-80af-943f3a22101c",
+      "ref": "b59a7df5-3550-4b23-9481-75e4ebda3ead",
+      "dependsOn": [
+        "b99e6ec3-2b59-45be-bfd4-cf13b4e7f0de"
+      ]
+    },
+    {
+      "ref": "b99e6ec3-2b59-45be-bfd4-cf13b4e7f0de",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -42607,12 +42613,6 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "d408561b-b5b7-4916-8e98-5811e4a6b6f6",
-      "dependsOn": [
-        "9a62f552-134b-442e-80af-943f3a22101c"
       ]
     },
     {

@@ -172,6 +172,13 @@
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
         <version>${version.selenium}</version>
+        <exclusions>
+          <!-- only needed for tracing of RemoteWebDriver connections to a remote URL; tests use a local ChromeDriver -->
+          <exclusion>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <!-- Logging -->

@@ -39,12 +39,14 @@ export_env() {
 
 # --- Helper: number of dependabot entries for a target branch ---
 count_entries() {
-  yq '.updates[]."target-branch"' "$DEPENDABOT_FILE" | grep -Fcx "$1" || true
+  local branch="$1"
+  yq '.updates[]."target-branch"' "$DEPENDABOT_FILE" | grep -Fcx "$branch" || true
 }
 
 # --- Helper: number of the open milestone with the given title (empty if none) ---
 find_milestone() {
-  echo "$ALL_MILESTONES" | jq -r --arg title "$1" '.[] | select(.title == $title) | .number' | head -1
+  local title="$1"
+  echo "$ALL_MILESTONES" | jq -r --arg title "$title" '.[] | select(.title == $title) | .number' | head -1
 }
 
 # --- Helper: due date (YYYY-MM-DD) of 'Operaton <version>' in the release calendar (empty if none) ---

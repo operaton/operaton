@@ -24,6 +24,7 @@ import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
  *
  * @author Tassilo Weidner
  */
+// CI test: exercises the narrowed PR build (clients/java). Do not merge.
 public interface ExternalTaskClient {
 
   /**

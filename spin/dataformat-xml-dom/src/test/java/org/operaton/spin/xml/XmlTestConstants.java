@@ -82,7 +82,7 @@ public final class XmlTestConstants {
     Source ex = new StreamSource(exampleExtensionXsdFileAsStream());
 
     // Lesson learned: first imported schema extensions then main xsd in array
-    Source[] sources = new Source[] {ex, main};
+    Source[] sources = {ex, main};
     try {
       return sf.newSchema(sources);
     } catch (SAXException e) {

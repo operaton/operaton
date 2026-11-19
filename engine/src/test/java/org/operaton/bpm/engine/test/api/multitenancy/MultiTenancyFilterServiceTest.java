@@ -41,7 +41,7 @@ class MultiTenancyFilterServiceTest {
 
   protected static final String TENANT_ONE = "tenant1";
   protected static final String TENANT_TWO = "tenant2";
-  protected static final String[] TENANT_IDS = new String[] {TENANT_ONE, TENANT_TWO};
+  protected static final String[] TENANT_IDS = {TENANT_ONE, TENANT_TWO};
 
   protected String filterId;
   protected final List<String> taskIds = new ArrayList<>();

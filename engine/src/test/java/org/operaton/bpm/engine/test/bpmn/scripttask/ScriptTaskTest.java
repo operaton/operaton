@@ -618,7 +618,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
   void testGroovyScriptExecution() {
     // given
     processEngineConfiguration.setAutoStoreScriptVariables(true);
-    int[] inputArray = new int[] {1, 2, 3, 4, 5};
+    int[] inputArray = {1, 2, 3, 4, 5};
 
     // when
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("scriptExecution", CollectionUtil.singletonMap("inputArray", inputArray));

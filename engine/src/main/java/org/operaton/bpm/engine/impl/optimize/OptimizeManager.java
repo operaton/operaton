@@ -133,7 +133,7 @@ public class OptimizeManager extends AbstractManager {
                                                                   int maxResults) {
     checkIsAuthorizedToReadHistoryAndTenants();
 
-    String[] operationTypes = new String[]{
+    String[] operationTypes = {
       UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB,
       UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB,
       UserOperationLogEntry.OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION,

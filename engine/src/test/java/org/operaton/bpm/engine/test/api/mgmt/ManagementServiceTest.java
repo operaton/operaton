@@ -929,7 +929,7 @@ class ManagementServiceTest {
         .tableName(tablePrefix + "ACT_RU_TASK")
         .orderAsc("NAME_")
         .listPage(1, 7);
-    String[] expectedTaskNames = new String[]{"B", "C", "D", "E", "F", "G", "H"};
+    String[] expectedTaskNames = {"B", "C", "D", "E", "F", "G", "H"};
     verifyTaskNames(expectedTaskNames, tablePage.getRows());
 
     // With a descending sort

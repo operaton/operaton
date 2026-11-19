@@ -68,7 +68,7 @@ public class ProcessEngineTestsWithVariablesTest {
   }
 
   public static Collection<Object[]> data() {
-    Object[][] data = new Object[][]{
+    Object[][] data = {
       {"key1", 1, null, null, null, null},
       {"key1", 1, "key2", 2, null, null},
       {null, null, "key2", 2, null, null},

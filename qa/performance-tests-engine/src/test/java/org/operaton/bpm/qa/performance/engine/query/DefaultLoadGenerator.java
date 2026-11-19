@@ -55,7 +55,7 @@ public class DefaultLoadGenerator {
 
     final List<BpmnModelInstance> modelInstances = createProcesses(config.getNumberOfIterations());
 
-    Runnable[] setupTasks = new Runnable[] {
+    Runnable[] setupTasks = {
         new DeployModelInstancesTask(processEngine, modelInstances)
     };
     config.setSetupTasks(setupTasks);

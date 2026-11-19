@@ -66,7 +66,7 @@ class VfsProcessApplicationScannerTest {
   void testScanProcessArchivePathWithAdditionalResourceSuffixes() throws Exception {
     URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:")});
     String processRootPath = "classpath:org/operaton/bpm/container/impl/jmx/deployment/script/";
-    String[] additionalResourceSuffixes = new String[] { "py", "groovy", "rb" };
+    String[] additionalResourceSuffixes = { "py", "groovy", "rb" };
     Map<String, byte[]> scanResult = ProcessApplicationScanningUtil.findResources(classLoader, processRootPath, null, additionalResourceSuffixes);
 
     assertThat(scanResult).hasSize(4);

@@ -46,7 +46,7 @@ public enum SystemPermissions implements Permission {
   /** Indicates that DELETE interactions are permitted. */
   DELETE("DELETE", 8);
 
-  private static final Resource[] RESOURCES = new Resource[] { Resources.SYSTEM };
+  private static final Resource[] RESOURCES = { Resources.SYSTEM };
 
   private final String name;
   private final int id;

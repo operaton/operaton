@@ -258,7 +258,7 @@ public class ExecutionListenerTest {
       assertThat(count).isEqualTo(5);
 
       HistoricVariableInstance variableInstance;
-      String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
+      String[] variableNames = {"start-start", "start-end", "start-take", "end-start", "end-end"};
       for (String variableName : variableNames) {
         variableInstance = query.variableName(variableName).singleResult();
         assertThat(variableInstance).as("Unable to find variable with name '%s'".formatted(variableName)).isNotNull();
@@ -282,7 +282,7 @@ public class ExecutionListenerTest {
       assertThat(count).isEqualTo(5);
 
       HistoricVariableInstance variableInstance;
-      String[] variableNames = new String[]{"start-start", "start-end", "start-take", "end-start", "end-end"};
+      String[] variableNames = {"start-start", "start-end", "start-take", "end-start", "end-end"};
       for (String variableName : variableNames) {
         variableInstance = query.variableName(variableName).singleResult();
         assertThat(variableInstance).as("Unable to find variable with name '%s'".formatted(variableName)).isNotNull();

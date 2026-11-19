@@ -156,7 +156,7 @@ public class ClassPathScannerTest {
   void testScanClassPathWithAdditionalResourceSuffixes() throws Exception {
     URLClassLoader classLoader = getClassloader();
 
-    String[] additionalResourceSuffixes = new String[] {"py", "rb", "groovy"};
+    String[] additionalResourceSuffixes = {"py", "rb", "groovy"};
 
     Map<String, byte[]> scanResult = scanner.findResources(classLoader, null, new URL(url + "/META-INF/processes.xml"), additionalResourceSuffixes);
 

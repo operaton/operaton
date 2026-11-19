@@ -51,7 +51,7 @@ public final class DefaultElResolverLookup {
 
     } else {
       // sort providers first
-      Collections.sort(sortedProviders, new ProcessApplicationElResolver.ProcessApplicationElResolverSorter());
+      sortedProviders.sort(new ProcessApplicationElResolver.ProcessApplicationElResolverSorter());
 
       // add all providers to a composite resolver
       CompositeELResolver compositeResolver = new CompositeELResolver();

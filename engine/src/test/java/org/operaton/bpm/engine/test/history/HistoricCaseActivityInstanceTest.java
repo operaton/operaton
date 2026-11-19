@@ -1015,7 +1015,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     List<QueryOrderingProperty> orderProperties = queryImpl.getOrderingProperties();
 
     List<? extends Comparable> sortedList = Arrays.asList(items);
-    Collections.sort(sortedList);
+    sortedList.sort(null);
 
     // assert that the sorted list matches the query result
     List<?> instances = query.asc().list();

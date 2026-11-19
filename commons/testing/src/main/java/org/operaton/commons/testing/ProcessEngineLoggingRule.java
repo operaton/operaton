@@ -17,7 +17,6 @@
 package org.operaton.commons.testing;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +88,7 @@ public class ProcessEngineLoggingRule extends TestWatcher {
     for (String loggerName : allWatched.keySet()) {
       allLogs.addAll(getLog(loggerName));
     }
-    Collections.sort(allLogs, new LogEventComparator());
+    allLogs.sort(new LogEventComparator());
     return allLogs;
   }
 

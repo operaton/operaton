@@ -61,7 +61,7 @@ public abstract class HalCachingLinkResolver implements HalLinkResolver {
   protected void sortResolvedResources(List<HalResource<?>> resolvedResources) {
     Comparator<HalResource<?>> comparator = getResourceComparator();
     if (comparator != null) {
-      Collections.sort(resolvedResources, comparator);
+      resolvedResources.sort(comparator);
     }
   }
 

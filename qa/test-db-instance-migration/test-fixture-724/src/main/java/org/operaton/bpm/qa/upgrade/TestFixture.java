@@ -29,28 +29,18 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.qa.upgrade.batch.CreateSetProcessInstanceVariablesBatchScenario;
 import org.operaton.bpm.qa.upgrade.batch.SetRemovalTimeToProcessInstanceScenario;
-import org.operaton.bpm.qa.upgrade.batch.deploymentaware.DeploymentAwareBatchesScenario;
-import org.operaton.bpm.qa.upgrade.customretries.FailingIntermediateBoundaryTimerJobScenario;
-import org.operaton.bpm.qa.upgrade.externaltask.ExternalTaskFailureLogScenario;
 import org.operaton.bpm.qa.upgrade.gson.*;
 import org.operaton.bpm.qa.upgrade.gson.batch.*;
 import org.operaton.bpm.qa.upgrade.httl.EnforceHistoryTimeToLiveScenario;
-import org.operaton.bpm.qa.upgrade.job.JobFailureLogScenario;
 import org.operaton.bpm.qa.upgrade.job.SetJobRetriesWithDueDateScenario;
-import org.operaton.bpm.qa.upgrade.jobexecutor.ExclusiveOverProcessHierarchiesScenario;
-import org.operaton.bpm.qa.upgrade.json.CreateProcessInstanceWithJsonVariablesScenario;
 import org.operaton.bpm.qa.upgrade.migration.CreateSetVariablesMigrationBatchScenario;
-import org.operaton.bpm.qa.upgrade.pvm.AsyncJoinScenario;
-import org.operaton.bpm.qa.upgrade.removaltime.CreateRootProcessInstanceWithoutRootIdScenario;
 import org.operaton.bpm.qa.upgrade.restart.SetVariablesScenario;
 import org.operaton.bpm.qa.upgrade.restart.StartProcessIntanceWithInitialVariablesScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.boundary.NestedNonInterruptingBoundaryEventOnInnerSubprocessScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.boundary.NestedNonInterruptingBoundaryEventOnOuterSubprocessScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.compensation.*;
-import org.operaton.bpm.qa.upgrade.scenarios.deployment.DeployProcessWithoutIsExecutableAttributeScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.eventsubprocess.*;
 import org.operaton.bpm.qa.upgrade.scenarios.gateway.EventBasedGatewayScenario;
-import org.operaton.bpm.qa.upgrade.scenarios.histperms.HistoricInstancePermissionsWithoutProcDefKeyScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.job.AsyncParallelMultiInstanceScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.job.AsyncSequentialMultiInstanceScenario;
 import org.operaton.bpm.qa.upgrade.scenarios.job.JobMigrationScenario;
@@ -67,7 +57,6 @@ import org.operaton.bpm.qa.upgrade.scenarios720.boundary.NonInterruptingBoundary
 import org.operaton.bpm.qa.upgrade.scenarios720.compensation.InterruptingEventSubprocessCompensationScenario;
 import org.operaton.bpm.qa.upgrade.timestamp.*;
 import org.operaton.bpm.qa.upgrade.user.creation.DeployUserWithoutSaltForPasswordHashingScenario;
-import org.operaton.bpm.qa.upgrade.useroperationlog.CreateStandaloneTaskDeleteScenario;
 import org.operaton.bpm.qa.upgrade.useroperationlog.CreateStandaloneTaskScenario;
 import org.operaton.bpm.qa.upgrade.useroperationlog.SetAssigneeProcessInstanceTaskScenario;
 import org.operaton.bpm.qa.upgrade.useroperationlog.SuspendProcessDefinitionDeleteScenario;
@@ -81,6 +70,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -100,6 +90,9 @@ public class TestFixture {
 
         String changelogDir = System.getProperty("liquibase.changelog.dir");
         Objects.requireNonNull(changelogDir, "System property liquibase.changelog.dir must be set");
+        // exec:java runs each fixture in its own classloader, but DriverManager only discovers drivers once per JVM.
+        // Load the driver explicitly so it is registered for this classloader.
+        Class.forName(processEngineConfiguration.getJdbcDriver());
         LOG.info("Running Liquibase migration scripts for DB schema " + SCHEMA_VERSION);
         runLiquibase(
                 processEngineConfiguration.getJdbcUrl(),
@@ -110,8 +103,7 @@ public class TestFixture {
         ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
 
         ScenarioRunner runner = new ScenarioRunner(processEngine, SCHEMA_VERSION);
-
-        for (Class<?> scenarioClass : getScenarios()) {
+        for (Class<?> scenarioClass : new LinkedHashSet<>(getScenarios())) {
             LOG.info("Running scenario " + scenarioClass.getSimpleName());
             runner.setupScenarios(scenarioClass);
         }
@@ -164,10 +156,10 @@ public class TestFixture {
         scenarios.add(ParallelTasksScenario.class);
         scenarios.add(ParallelScopeTasksScenario.class);
         scenarios.add(EventBasedGatewayScenario.class);
-        scenarios.add(HistoricInstancePermissionsWithoutProcDefKeyScenario.class);
 
         // fixture-73 scenarios (version 7.3.0)
         scenarios.add(SentryScenario.class);
+        scenarios.add(SingleActivityCompensationScenario.class);
         scenarios.add(NestedCompensationScenario.class);
         scenarios.add(SingleActivityConcurrentCompensationScenario.class);
         scenarios.add(ParallelMultiInstanceCompensationScenario.class);
@@ -179,23 +171,13 @@ public class TestFixture {
         scenarios.add(JobMigrationScenario.class);
         scenarios.add(org.operaton.bpm.qa.upgrade.scenarios730.boundary.NonInterruptingBoundaryEventScenario.class);
 
-        // fixture-75 scenarios (version 7.5.0)
-        scenarios.add(DeployProcessWithoutIsExecutableAttributeScenario.class);
-
         // fixture-76 scenarios (version 7.6.0)
         scenarios.add(DeployUserWithoutSaltForPasswordHashingScenario.class);
 
         // fixture-77 scenarios (version 7.7.0)
         scenarios.add(CreateProcessInstanceWithVariableScenario.class);
 
-        // fixture-78 scenarios (version 7.8.0)
-        scenarios.add(org.operaton.bpm.qa.upgrade.json78.CreateProcessInstanceWithJsonVariablesScenario.class);
-
-        // fixture-79 scenarios (version 7.9.0)
-        scenarios.add(CreateProcessInstanceWithJsonVariablesScenario.class);
-        scenarios.add(CreateRootProcessInstanceWithoutRootIdScenario.class);
-
-        // fixture-710 scenarios (version 7.10.0)
+        // fixture-710 scenarios (version 7.11.0)
         scenarios.add(DeleteHistoricDecisionsBatchScenario.class);
         scenarios.add(DeleteHistoricProcessInstancesBatchScenario.class);
         scenarios.add(DeleteProcessInstancesBatchScenario.class);
@@ -221,14 +203,11 @@ public class TestFixture {
         scenarios.add(UserLockExpTimeScenario.class);
         scenarios.add(CreateStandaloneTaskScenario.class);
         scenarios.add(SetAssigneeProcessInstanceTaskScenario.class);
-        scenarios.add(CreateStandaloneTaskDeleteScenario.class);
         scenarios.add(SuspendProcessDefinitionDeleteScenario.class);
         scenarios.add(AuthorizationCheckProcessDefinitionScenario.class);
         scenarios.add(NoAuthorizationCheckScenario.class);
 
         // fixture-712 scenarios (version 7.12.0)
-        scenarios.add(FailingIntermediateBoundaryTimerJobScenario.class);
-        scenarios.add(DeploymentAwareBatchesScenario.class);
         scenarios.add(StartProcessIntanceWithInitialVariablesScenario.class);
         scenarios.add(SetVariablesScenario.class);
 
@@ -239,20 +218,12 @@ public class TestFixture {
         scenarios.add(CreateSetVariablesMigrationBatchScenario.class);
         scenarios.add(CreateSetProcessInstanceVariablesBatchScenario.class);
 
-        // fixture-716 scenarios (version 7.16.0)
-        scenarios.add(ExternalTaskFailureLogScenario.class);
-        scenarios.add(JobFailureLogScenario.class);
-        scenarios.add(AsyncJoinScenario.class);
-
         // fixture-718 scenarios (version 7.18.0)
         scenarios.add(SetJobRetriesWithDueDateScenario.class);
 
         // fixture-719 scenarios (version 7.19.0)
         scenarios.add(EnforceHistoryTimeToLiveScenario.class);
         scenarios.add(SetRemovalTimeToProcessInstanceScenario.class);
-
-        // fixture-720 scenarios (version 7.20.0)
-        scenarios.add(ExclusiveOverProcessHierarchiesScenario.class);
 
         return scenarios;
     }

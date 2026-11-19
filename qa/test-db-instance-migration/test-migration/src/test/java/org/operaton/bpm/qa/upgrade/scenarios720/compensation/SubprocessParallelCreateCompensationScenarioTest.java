@@ -21,13 +21,16 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @ScenarioUnderTest("SubprocessParallelCreateCompensationScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class SubprocessParallelCreateCompensationScenarioTest {
 
   @Rule

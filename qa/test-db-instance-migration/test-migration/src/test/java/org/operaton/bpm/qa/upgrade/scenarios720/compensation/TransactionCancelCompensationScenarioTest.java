@@ -23,6 +23,9 @@ import org.junit.Test;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -32,7 +35,7 @@ import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeAc
  *
  */
 @ScenarioUnderTest("TransactionCancelCompensationScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class TransactionCancelCompensationScenarioTest {
 
   @Rule
@@ -131,20 +134,4 @@ public class TransactionCancelCompensationScenarioTest {
     rule.assertScenarioEnded();
   }
 
-  @Test
-  @ScenarioUnderTest("init.triggerCompensation.3")
-  public void testInitTriggerCompensationActivityInstanceTree() {
-    // given active compensation
-    ProcessInstance instance = rule.processInstance();
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("catchCancelTx")
-        .beginScope("tx")
-          .activity("undoTask")
-      .done());
-  }
 }

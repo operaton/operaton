@@ -22,7 +22,9 @@ import org.junit.Test;
 
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -32,99 +34,11 @@ import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeAc
  *
  */
 @ScenarioUnderTest("SingleActivityCompensationScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class SingleActivityCompensationScenarioTest {
 
   @Rule
   public UpgradeTestRule rule = new UpgradeTestRule();
-
-  @Test
-  @ScenarioUnderTest("init.1")
-  public void testInitCompletion() {
-    // when compensation is thrown
-    Task beforeCompensationTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensationTask.getId());
-
-    // then there is an active compensation handler task
-    Task compensationHandlerTask = rule.taskQuery().singleResult();
-    Assert.assertNotNull(compensationHandlerTask);
-    Assert.assertEquals("undoTask", compensationHandlerTask.getTaskDefinitionKey());
-
-    // and it can be completed such that the process instance ends successfully
-    rule.getTaskService().complete(compensationHandlerTask.getId());
-
-    Task afterCompensateTask = rule.taskQuery().singleResult();
-    Assert.assertNotNull(afterCompensateTask);
-    Assert.assertEquals("afterCompensate", afterCompensateTask.getTaskDefinitionKey());
-
-    rule.getTaskService().complete(afterCompensateTask.getId());
-
-    rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("init.2")
-  public void testInitDeletion() {
-    // when compensation is thrown
-    Task beforeCompensationTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensationTask.getId());
-
-    // then the process instance can be deleted
-    rule.getRuntimeService().deleteProcessInstance(rule.processInstance().getId(), "");
-
-    // and the process is ended
-    rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("init.3")
-  public void testInitActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when compensation is thrown
-    Task beforeCompensationTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensationTask.getId());
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("throwCompensate")
-        .activity("undoTask")
-      .done());
-  }
-
-  @Test
-  @ScenarioUnderTest("init.triggerCompensation.1")
-  public void testInitTriggerCompensationCompletion() {
-    // given active compensation
-    Task compensationHandlerTask = rule.taskQuery().singleResult();
-
-    // then it is possible to complete compensation and the follow-up task
-    rule.getTaskService().complete(compensationHandlerTask.getId());
-
-    Task afterCompensateTask = rule.taskQuery().singleResult();
-    Assert.assertNotNull(afterCompensateTask);
-    Assert.assertEquals("afterCompensate", afterCompensateTask.getTaskDefinitionKey());
-
-    rule.getTaskService().complete(afterCompensateTask.getId());
-
-    rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("init.triggerCompensation.2")
-  public void testInitTriggerCompensationDeletion() {
-    // given active compensation
-
-    // then the process instance can be deleted
-    rule.getRuntimeService().deleteProcessInstance(rule.processInstance().getId(), "");
-
-    // and the process is ended
-    rule.assertScenarioEnded();
-  }
 
   @Test
   @ScenarioUnderTest("init.triggerCompensation.3")

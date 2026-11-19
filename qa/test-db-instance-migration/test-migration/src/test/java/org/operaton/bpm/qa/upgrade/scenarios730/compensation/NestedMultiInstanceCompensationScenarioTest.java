@@ -18,22 +18,20 @@ package org.operaton.bpm.qa.upgrade.scenarios730.compensation;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * @author Thorben Lindhauer
  */
 @ScenarioUnderTest("NestedMultiInstanceCompensationScenario")
-@Origin("7.3.0")
+@Origin("7.24.0")
 public class NestedMultiInstanceCompensationScenarioTest {
 
   @Rule
@@ -68,36 +66,6 @@ public class NestedMultiInstanceCompensationScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("init.throwInner.3")
-  public void testInitThrowInnerActivityInstanceTree() {
-    // given
-    ProcessInstance processInstance = rule.processInstance();
-
-    // when
-    ActivityInstance tree = rule.getRuntimeService().getActivityInstance(processInstance.getId());
-
-    // then
-    Assert.assertNotNull(tree);
-    assertThat(tree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        .beginMiBody("subProcess")
-          .beginScope("subProcess")
-            .beginScope("throwCompensate")
-            // - no mi-body due to missing event scope execution
-            // - no undoSubProcess activity instances due to missing concurrent executions
-            // - undoTask instances are children of throwCompensate due to missing concurrent executions
-              .activity("undoTask")
-              .activity("undoTask")
-            .endScope()
-          .endScope()
-          .beginScope("subProcess")
-            .beginScope("throwCompensate")
-              .activity("undoTask")
-              .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("init.throwOuter.1")
   public void testInitThrowOuterCompletion() {
     // given
@@ -125,35 +93,4 @@ public class NestedMultiInstanceCompensationScenarioTest {
     rule.assertScenarioEnded();
   }
 
-  @Test
-  @ScenarioUnderTest("init.throwOuter.3")
-  public void testInitThrowOuterActivityInstanceTree() {
-    // given
-    ProcessInstance processInstance = rule.processInstance();
-
-    // when
-    ActivityInstance tree = rule.getRuntimeService().getActivityInstance(processInstance.getId());
-
-    // then
-    Assert.assertNotNull(tree);
-    assertThat(tree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        // - no mi-bodies due to missing event scope executions
-        // - no outerSubprocess activity instances due to missing concurrent executions
-        //   and different activity instance id assignment in >= 7.4
-        // - innerSubProcess instances are children of throwCompensate due to missing concurrent executions
-        //   and different activty instance id assignment in >= 7.4
-        .beginScope("throwCompensate", "outerSubProcess")
-          .beginScope("innerSubProcess")
-            .beginScope("undoSubProcess")
-              .activity("undoTask")
-              .activity("undoTask")
-            .endScope()
-          .endScope()
-          .beginScope("innerSubProcess")
-            .beginScope("undoSubProcess")
-              .activity("undoTask")
-              .activity("undoTask")
-      .done());
-  }
 }

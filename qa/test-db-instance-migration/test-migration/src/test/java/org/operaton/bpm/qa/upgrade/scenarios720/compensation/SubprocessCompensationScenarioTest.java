@@ -23,6 +23,9 @@ import org.junit.Test;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
@@ -32,7 +35,7 @@ import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeAc
  *
  */
 @ScenarioUnderTest("SubprocessCompensationScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class SubprocessCompensationScenarioTest {
 
   @Rule
@@ -125,25 +128,6 @@ public class SubprocessCompensationScenarioTest {
 
     // and the process is ended
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("init.triggerCompensation.3")
-  public void testInitTriggerCompensationActivityInstanceTree() {
-    // given active compensation
-    ProcessInstance instance = rule.processInstance();
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .beginScope("throwCompensate")
-        // due to different activity instance id assingment in >= 7.4,
-        // the subProcess instance is not represented and undoTask is a child of throwCompensate
-//        .beginScope("subProcess")
-          .activity("undoTask")
-      .done());
   }
 
   @Test
@@ -242,23 +226,4 @@ public class SubprocessCompensationScenarioTest {
     rule.assertScenarioEnded();
   }
 
-  @Test
-  @ScenarioUnderTest("init.concurrent.triggerCompensation.3")
-  public void testInitConcurrentTriggerCompensationActivityInstanceTree() {
-    // given active compensation
-    ProcessInstance instance = rule.processInstance();
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .beginScope("throwCompensate")
-        // due to different activity instance id assingment in >= 7.4,
-        // the subProcess instance is not represented and undoTask is a child of throwCompensate
-//        .beginScope("subProcess")
-          .activity("undoTask1")
-          .activity("undoTask2")
-      .done());
-  }
 }

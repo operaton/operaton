@@ -24,13 +24,16 @@ import org.junit.Test;
 
 import org.operaton.bpm.engine.management.ActivityStatistics;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @ScenarioUnderTest("NonInterruptingBoundaryEventScenario")
-@Origin("7.3.0")
+@Origin("7.24.0")
 public class NonInterruptingBoundaryEventScenarioTest {
 
   @Rule

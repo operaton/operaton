@@ -28,12 +28,15 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ScenarioUnderTest("EnforceHistoryTimeToLiveScenario")
-@Origin("7.19.0")
+@Origin("7.24.0")
 public class EnforceHistoryTimeToLiveTest {
 
   private static final String SCENARIO_PROCESS = "processWithoutHTTL";

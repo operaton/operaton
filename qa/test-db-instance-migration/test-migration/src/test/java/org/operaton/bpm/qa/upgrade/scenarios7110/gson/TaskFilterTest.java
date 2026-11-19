@@ -33,6 +33,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.type.ValueType;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
@@ -42,7 +44,7 @@ import static org.junit.Assert.assertTrue;
  * @author Tassilo Weidner
  */
 @ScenarioUnderTest("TaskFilterScenario")
-@Origin("7.11.0")
+@Origin("7.24.0")
 public class TaskFilterTest {
 
   @Rule

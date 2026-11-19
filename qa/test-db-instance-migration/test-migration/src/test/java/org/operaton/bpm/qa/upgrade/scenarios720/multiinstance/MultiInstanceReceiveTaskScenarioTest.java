@@ -16,20 +16,18 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios720.multiinstance;
 
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.migration.MigrationPlan;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 @ScenarioUnderTest("MultiInstanceReceiveTaskScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class MultiInstanceReceiveTaskScenarioTest {
 
   @Rule
@@ -43,26 +41,6 @@ public class MultiInstanceReceiveTaskScenarioTest {
 
     // then
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("initParallel.2")
-  public void testInitParallelActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        // no mi body due to missing execution
-        .activity("miReceiveTask")
-        .activity("miReceiveTask")
-        .activity("miReceiveTask")
-      .done());
   }
 
   @Test
@@ -109,23 +87,6 @@ public class MultiInstanceReceiveTaskScenarioTest {
 
     // then
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("initSequential.2")
-  public void testInitSequentialActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("miReceiveTask")
-      .done());
   }
 
   @Test

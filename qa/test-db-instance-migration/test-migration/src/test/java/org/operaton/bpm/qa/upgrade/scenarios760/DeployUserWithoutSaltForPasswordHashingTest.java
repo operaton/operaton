@@ -21,6 +21,8 @@ import org.junit.Test;
 
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +30,7 @@ import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.nullValue;
 
 @ScenarioUnderTest("DeployUserWithoutSaltForPasswordHashingScenario")
-@Origin("7.6.0")
+@Origin("7.24.0")
 public class DeployUserWithoutSaltForPasswordHashingTest {
 
   @Rule

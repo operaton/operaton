@@ -12,7 +12,7 @@
   <name>operaton BPM - QA - upgrade - instance migration - test fixture - 7.25.0</name>
 
   <properties>
-    <operaton.version.current>2.2.0-SNAPSHOT</operaton.version.current>
+    <operaton.version.current>2.2.1</operaton.version.current>
     <operaton.schema_version.current>7.25.0</operaton.schema_version.current>
   </properties>
 
@@ -83,13 +83,13 @@
       <id>instance-migration</id>
       <build>
         <plugins>
-          <!-- provide sql scripts -->
+          <!-- provide the liquibase changelog of the released engine used by this fixture -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
               <execution>
-                <id>unpack-current-sql-scripts</id>
+                <id>unpack-liquibase-changelog</id>
                 <phase>generate-test-sources</phase>
                 <goals>
                   <goal>unpack</goal>
@@ -97,10 +97,11 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.operaton.bpm.distro</groupId>
-                      <artifactId>operaton-sql-scripts</artifactId>
-                      <version>${operaton.schema_version.current}</version>
-                      <type>test-jar</type>
+                      <groupId>org.operaton.bpm</groupId>
+                      <artifactId>operaton-engine</artifactId>
+                      <version>${operaton.version.current}</version>
+                      <type>jar</type>
+                      <includes>org/operaton/bpm/engine/db/liquibase/**</includes>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>
                     </artifactItem>
@@ -130,7 +131,7 @@
                   <systemProperties>
                     <systemProperty>
                       <key>liquibase.changelog.dir</key>
-                      <value>${project.build.directory}/scripts-current/sql/liquibase/</value>
+                      <value>${project.build.directory}/scripts-current/org/operaton/bpm/engine/db/liquibase/</value>
                     </systemProperty>
                   </systemProperties>
                 </configuration>

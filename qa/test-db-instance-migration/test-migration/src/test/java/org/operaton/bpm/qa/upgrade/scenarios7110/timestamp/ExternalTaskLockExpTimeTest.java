@@ -21,6 +21,8 @@ import java.util.Date;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.externaltask.ExternalTask;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,7 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Nikola Koevski
  */
 @ScenarioUnderTest("ExternalTaskLockExpTimeScenario")
-@Origin("7.11.0")
+@Origin("7.24.0")
 public class ExternalTaskLockExpTimeTest extends AbstractTimestampMigrationTest {
 
   protected static final Date LOCK_EXP_TIME =  new Date(TIME + 1000L);

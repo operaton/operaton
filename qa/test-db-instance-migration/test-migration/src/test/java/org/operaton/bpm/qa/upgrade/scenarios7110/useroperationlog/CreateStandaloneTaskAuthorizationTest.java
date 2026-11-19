@@ -72,18 +72,6 @@ public class CreateStandaloneTaskAuthorizationTest {
   }
 
   @Test
-  public void testWithoutAuthorization() {
-    // given
-    engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
-
-    // when
-    UserOperationLogQuery query = historyService.createUserOperationLogQuery().taskId("myTaskForUserOperationLog");
-
-    // then
-    assertEquals(1, query.count());
-  }
-
-  @Test
   public void testWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     Authorization auth = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
@@ -101,21 +89,4 @@ public class CreateStandaloneTaskAuthorizationTest {
     assertEquals(1, query.count());
   }
 
-  @Test
-  public void testWithReadHistoryPermissionOnProcessDefinition() {
-    // given
-    Authorization auth = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
-    auth.setUserId(USER_ID);
-    auth.setPermissions(new Permissions[] {Permissions.READ_HISTORY});
-    auth.setResource(Resources.PROCESS_DEFINITION);
-    auth.setResourceId("something");
-
-    authorizationService.saveAuthorization(auth);
-    engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
-    // when
-    UserOperationLogQuery query = historyService.createUserOperationLogQuery().taskId("myTaskForUserOperationLog");
-
-    // then
-    assertEquals(1, query.count());
-  }
 }

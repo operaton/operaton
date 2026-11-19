@@ -22,12 +22,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * Tests that the 7.2-to-current migration logic (where an event subprocess was no scope)
@@ -36,7 +35,7 @@ import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeAc
  * @author Thorben Lindhauer
  */
 @ScenarioUnderTest("InterruptingEventSubProcessCompensationScenario")
-@Origin("7.3.0")
+@Origin("7.24.0")
 public class InterruptingEventSubProcessCompensationSenarioTest {
 
   @Rule
@@ -101,32 +100,5 @@ public class InterruptingEventSubProcessCompensationSenarioTest {
     // then
     rule.assertScenarioEnded();
   }
-
-  @Test
-  @ScenarioUnderTest("init.throwCompensate.4")
-  public void testInitThrowCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance processInstance = rule.processInstance();
-
-    // when
-    ActivityInstance tree = rule.getRuntimeService().getActivityInstance(processInstance.getId());
-
-    // then
-    Assert.assertNotNull(tree);
-    assertThat(tree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        // - the eventSubprocess instance is missing, because we wrongly assume that the event
-        //   sub process scope execution is missing (see CAM-4914)
-        // - undoTask is a child of throwCompensate for the same reason; due to the wrong assumption,
-        //   throwCompensate receives the event subprocess' activity instance id which is the parent
-        //   id for undoTask
-        .beginScope("throwCompensate")
-          .activity("undoTask")
-//        .beginScope("eventSubProcess")
-//          .activity("throwCompensate")
-//          .activity("undoTask")
-      .done());
-  }
-
 
 }

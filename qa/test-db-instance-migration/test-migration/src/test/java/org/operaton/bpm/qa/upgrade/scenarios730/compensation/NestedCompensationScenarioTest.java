@@ -23,13 +23,16 @@ import org.junit.Test;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @ScenarioUnderTest("NestedCompensationScenario")
-@Origin("7.3.0")
+@Origin("7.24.0")
 public class NestedCompensationScenarioTest {
 
   @Rule

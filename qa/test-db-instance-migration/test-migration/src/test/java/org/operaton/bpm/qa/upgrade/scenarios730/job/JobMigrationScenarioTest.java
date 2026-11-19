@@ -21,6 +21,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * This actually tests migration from 7.0 jobs (where there was no suspension state)
@@ -29,7 +32,7 @@ import org.operaton.bpm.engine.runtime.Job;
  * @author Thorben Lindhauer
  */
 @ScenarioUnderTest("JobMigrationScenario")
-@Origin("7.3.0")
+@Origin("7.24.0")
 public class JobMigrationScenarioTest {
 
   @Rule

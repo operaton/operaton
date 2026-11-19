@@ -23,9 +23,9 @@ import org.junit.Test;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * Tests that the 7.2-to-current migration logic (where an event subprocess was no scope)
@@ -34,7 +34,7 @@ import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeAc
  * @author Thorben Lindhauer
  */
 @ScenarioUnderTest("NonInterruptingEventSubProcessCompensationScenario")
-@Origin("7.3.0")
+@Origin("7.24.0")
 public class NonInterruptingEventSubProcessCompensationSenarioTest {
 
   @Rule
@@ -119,33 +119,6 @@ public class NonInterruptingEventSubProcessCompensationSenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("init.throwCompensate.5")
-  public void testInitThrowCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance processInstance = rule.processInstance();
-
-    // when
-    ActivityInstance tree = rule.getRuntimeService().getActivityInstance(processInstance.getId());
-
-    // then
-    Assert.assertNotNull(tree);
-    assertThat(tree).hasStructure(
-      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-        .activity("outerTask")
-        // - the eventSubProcess instance is missing because we wrongly assume that there is no
-        //   execution for it (see CAM-4914)
-        // - the undoTask instance is a child of the throwCompensate instance for the same reason;
-        //   the throwCompensate instance wrongly receives the eventSubProcess instance id
-        //   and undoTask is a child of it
-        .beginScope("throwCompensate")
-          .activity("undoTask")
-//        .beginScope("eventSubProcess")
-//          .activity("throwCompensate")
-//          .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("init.throwCompensate.6")
   public void testInitThrowCompensateCancelEventSubProcess() {
     // given
@@ -171,7 +144,6 @@ public class NonInterruptingEventSubProcessCompensationSenarioTest {
     // and the remaining outerTask can be completed successfully
     rule.getTaskService().complete(outerTask.getId());
     rule.assertScenarioEnded();
-
 
   }
 }

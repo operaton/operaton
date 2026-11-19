@@ -19,6 +19,8 @@ package org.operaton.bpm.qa.upgrade.scenarios7110.timestamp;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.history.HistoricJobLog;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -28,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Nikola Koevski
  */
 @ScenarioUnderTest("JobTimestampsScenario")
-@Origin("7.11.0")
+@Origin("7.24.0")
 public class HistoricJobLogTimestampsTest extends AbstractTimestampMigrationTest {
 
   protected static final String PROCESS_DEFINITION_KEY = "jobTimestampsMigrationTestProcess";

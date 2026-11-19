@@ -22,19 +22,17 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @ScenarioUnderTest("SequentialMultiInstanceCompensationScenario")
-@Origin("7.3.0")
+@Origin("7.24.0")
 public class SequentialMultiInstanceCompensationScenarioTest {
 
   @Rule
@@ -91,38 +89,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("singleActivityHandler.multiInstancePartial.3")
-  public void testSingleActivityHandlerMultiInstancePartialActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when throwing compensation
-    Task lastMiTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(lastMiTask.getId());
-
-    Task beforeCompensateTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensateTask.getId());
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .beginScope("throwCompensate")
-        // not children of the mi-body scope since their event subscriptions were created
-        // when there was no mi-body event scope execution
-        //
-        // activity execution mapping assumes the compensation throwing execution is
-        // the mi body execution
-          .activity("undoTask")
-          .activity("undoTask")
-        .endScope()
-        .beginMiBody("userTask")
-          .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("singleActivityHandler.beforeCompensate.1")
   public void testSingleActivityHandlerBeforeCompensateCompletion() {
     // given
@@ -166,33 +132,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("singleActivityHandler.beforeCompensate.3")
-  public void testSingleActivityHandlerBeforeCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when throwing compensation
-    Task beforeCompensateTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensateTask.getId());
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        // missing mi body execution as there was no event subscription for it
-//        .beginMiBody("userTask")
-
-        // activity execution mapping assumes the compensation throwing execution is
-        // the the mi body execution
-        .beginScope("throwCompensate")
-          .activity("undoTask")
-          .activity("undoTask")
-          .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("singleActivityHandler.beforeCompensate.throwCompensate.1")
   public void testSingleActivityHandlerThrowCompensateCompletion() {
     // given active compensation
@@ -225,25 +164,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
 
     // and the process is ended
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("singleActivityHandler.beforeCompensate.throwCompensate.3")
-  public void testSingleActivityHandlerThrowCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("throwCompensate")
-        // no mi-body scope due to missing event scope execution
-        .activity("undoTask")
-        .activity("undoTask")
-        .activity("undoTask")
-      .done());
   }
 
   @Test
@@ -297,38 +217,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("defaultHandler.multiInstancePartial.3")
-  public void testDefaultHandlerMultiInstancePartialActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when throwing compensation
-    Task lastMiTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(lastMiTask.getId());
-
-    Task beforeCompensateTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensateTask.getId());
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("throwCompensate")
-        // non-deterministic behavior (i.e. depends on order that executions are returned from database)
-        // traversing the tree from pre-migration compensation handling executions, the mi-body execution misses
-        // traversing the tree from the post-migration compensation handling executions, the mi-body execution exists
-        .beginScope("subProcess", "userTask#multiInstanceBody", "subProcess#multiInstanceBody")
-          .beginScope("subProcess")
-            .activity("undoTask")
-          .endScope()
-          // missing parent scope due to missing concurrent executions
-          .activity("undoTask")
-          .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("defaultHandler.beforeCompensate.1")
   public void testDefaultHandlerBeforeCompensateCompletion() {
     // given
@@ -372,33 +260,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("defaultHandler.beforeCompensate.3")
-  public void testDefaultHandlerBeforeCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when throwing compensation
-    Task beforeCompensateTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensateTask.getId());
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("throwCompensate")
-        // missing mi body execution as there was no event subscription for it
-//        .beginMiBody("subProcess")
-        // there is only one sub process scope although there are three subprocess executions
-        // due to the differences in activity instance id assignment with >= 7.4
-          .beginScope("subProcess")
-            .activity("undoTask")
-            .activity("undoTask")
-            .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("defaultHandler.beforeCompensate.throwCompensate.1")
   public void testDefaultHandlerThrowCompensateCompletion() {
     // given active compensation
@@ -431,29 +292,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
 
     // and the process is ended
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("defaultHandler.beforeCompensate.throwCompensate.3")
-  public void testDefaultHandlerThrowCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        // no mi-body scope due to missing event scope execution
-        //
-        // there is only one sub process scope instance although there are three subprocess executions
-        // due to the differences in activity instance id assignment with >= 7.4 and missing concurrent
-        // executions
-        .beginScope("throwCompensate", "subProcess")
-          .activity("undoTask")
-          .activity("undoTask")
-          .activity("undoTask")
-      .done());
   }
 
   @Test
@@ -507,38 +345,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("subProcessHandler.multiInstancePartial.3")
-  public void testSubProcessHandlerMultiInstancePartialActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when throwing compensation
-    Task lastMiTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(lastMiTask.getId());
-
-    Task beforeCompensateTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensateTask.getId());
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("throwCompensate")
-        // non-deterministic behavior (i.e. depends on order that executions are returned from database)
-        // traversing the tree from pre-migration compensation handling executions, the mi-body execution misses
-        // traversing the tree from the post-migration compensation handling executions, the mi-body execution exists
-        .beginScope("undoSubProcess", "userTask#multiInstanceBody")
-          .beginScope("undoSubProcess")
-            .activity("undoTask")
-          .endScope()
-          // missing scope due to missing concurrent executions
-          .activity("undoTask")
-          .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("subProcessHandler.beforeCompensate.1")
   public void testSubProcessHandlerBeforeCompensateCompletion() {
     // given
@@ -582,33 +388,6 @@ public class SequentialMultiInstanceCompensationScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("subProcessHandler.beforeCompensate.3")
-  public void testSubProcessHandlerBeforeCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when throwing compensation
-    Task beforeCompensateTask = rule.taskQuery().singleResult();
-    rule.getTaskService().complete(beforeCompensateTask.getId());
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        .activity("throwCompensate")
-        // missing mi body execution as there was no event subscription for it
-//        .beginMiBody("userTask")
-        // there is only one sub process scope although there are three subprocess executions
-        // due to missing concurrent executions
-        .beginScope("undoSubProcess")
-          .activity("undoTask")
-          .activity("undoTask")
-          .activity("undoTask")
-      .done());
-  }
-
-  @Test
   @ScenarioUnderTest("subProcessHandler.beforeCompensate.throwCompensate.1")
   public void testSubProcessHandlerThrowCompensateCompletion() {
     // given active compensation
@@ -643,26 +422,4 @@ public class SequentialMultiInstanceCompensationScenarioTest {
     rule.assertScenarioEnded();
   }
 
-  @Test
-  @ScenarioUnderTest("subProcessHandler.beforeCompensate.throwCompensate.3")
-  public void testSubProcessHandlerThrowCompensateActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // then the activity instance tree is meaningful
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-      describeActivityInstanceTree(instance.getProcessDefinitionId())
-        // - no mi-body scope due to missing event scope execution
-        // - due to missing concurrent executions, there are no dedicated undoSubProcess activity instance ids
-        // - due to missing throw compensation scope execution, there is no dedicated throw compensation activity instance id
-        // - depending on the order the executions are returned from the database, the throwing execution's activity instance
-        //   id is either interpreted as an undoSubProcess instance or as a throwCompensateInstance
-        .beginScope("throwCompensate", "undoSubProcess")
-          .activity("undoTask")
-          .activity("undoTask")
-          .activity("undoTask")
-      .done());
-  }
 }

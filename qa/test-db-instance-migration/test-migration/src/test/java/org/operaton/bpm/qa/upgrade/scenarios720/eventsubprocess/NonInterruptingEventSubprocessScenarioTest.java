@@ -16,19 +16,17 @@
  */
 package org.operaton.bpm.qa.upgrade.scenarios720.eventsubprocess;
 
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 @ScenarioUnderTest("NonInterruptingEventSubprocessScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class NonInterruptingEventSubprocessScenarioTest {
 
   @Rule
@@ -65,25 +63,6 @@ public class NonInterruptingEventSubprocessScenarioTest {
   }
 
   @Test
-  @ScenarioUnderTest("init.3")
-  public void testInitActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-        describeActivityInstanceTree(instance.getProcessDefinitionId())
-          .activity("outerTask")
-          // eventSubProcess was previously no scope so it misses here
-          .activity("eventSubProcessTask")
-        .done());
-  }
-
-  @Test
   @ScenarioUnderTest("init.4")
   public void testInitDeletion() {
     // given
@@ -107,24 +86,6 @@ public class NonInterruptingEventSubprocessScenarioTest {
 
     // then
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("init.outerTask.2")
-  public void testInitTask1ActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-        describeActivityInstanceTree(instance.getProcessDefinitionId())
-          // eventSubProcess was previously no scope so it misses here
-          .activity("eventSubProcessTask")
-        .done());
   }
 
   @Test

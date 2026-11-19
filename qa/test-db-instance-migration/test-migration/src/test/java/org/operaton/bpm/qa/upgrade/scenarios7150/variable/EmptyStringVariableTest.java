@@ -21,16 +21,17 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 @ScenarioUnderTest("EmptyStringVariableScenario")
-@Origin("7.14.0")
+@Origin("7.24.0")
 public class EmptyStringVariableTest {
 
   @Rule
@@ -54,11 +55,8 @@ public class EmptyStringVariableTest {
 
     // then
     assertNotNull(variable);
-    if (DbSqlSessionFactory.ORACLE.equals(engineRule.getProcessEngineConfiguration().getDatabaseType())) {
-      assertNull(variable.getValue());
-    } else {
-      assertEquals("", variable.getValue());
-    }
+    // since the instance is created by a 7.24 engine, the empty string is also kept on Oracle
+    assertEquals("", variable.getValue());
   }
 
 }

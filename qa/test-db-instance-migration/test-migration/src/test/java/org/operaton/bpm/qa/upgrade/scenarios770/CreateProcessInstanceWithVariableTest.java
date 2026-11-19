@@ -24,11 +24,13 @@ import org.junit.Test;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.junit.Assert.assertEquals;
 
 @ScenarioUnderTest("CreateProcessInstanceWithVariableScenario")
-@Origin("7.7.0")
+@Origin("7.24.0")
 public class CreateProcessInstanceWithVariableTest {
 
   @Rule

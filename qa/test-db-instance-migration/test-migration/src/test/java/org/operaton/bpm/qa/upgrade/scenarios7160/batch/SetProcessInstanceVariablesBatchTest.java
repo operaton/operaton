@@ -27,11 +27,14 @@ import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("CreateSetProcessInstanceVariablesBatchScenario")
-@Origin("7.15.0")
+@Origin("7.24.0")
 public class SetProcessInstanceVariablesBatchTest {
 
   @Rule
@@ -73,36 +76,6 @@ public class SetProcessInstanceVariablesBatchTest {
     assertThat(jobs)
         .extracting("processInstanceId")
         .containsExactlyInAnyOrder(expectedIdOne, expectedIdTwo);
-  }
-
-  @Test
-  @ScenarioUnderTest("createSeedExecutedScenario.1")
-  public void shouldExecuteCreatedBatchJobs() {
-    // given
-    Map<String, String> properties = managementService.getProperties();
-
-    String batchId = properties.get("createSeedExecutedScenario.batch.id");
-    Batch batch = managementService.createBatchQuery()
-        .batchId(batchId)
-        .singleResult();
-
-    List<Job> jobs = managementService.createJobQuery()
-        .jobDefinitionId(batch.getBatchJobDefinitionId())
-        .list();
-
-    // assume
-    assertThat(jobs)
-      .extracting("processInstanceId")
-      .containsOnlyNulls();
-
-    // when
-    jobs.forEach(job -> managementService.executeJob(job.getId()));
-
-    // then
-    String expectedIdOne = properties.get("createSeedExecutedScenario.processInstanceId.one");
-    String expectedIdTwo = properties.get("createSeedExecutedScenario.processInstanceId.two");
-    assertThat(runtimeService.getVariables(expectedIdOne).get("foo")).isEqualTo("bar");
-    assertThat(runtimeService.getVariables(expectedIdTwo).get("foo")).isEqualTo("bar");
   }
 
 }

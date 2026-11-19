@@ -32,11 +32,14 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("SetRemovalTimeToProcessInstanceScenario")
-@Origin("7.19.0")
+@Origin("7.24.0")
 public class SetRemovalTimeToProcessInstanceTest {
 
   Logger LOG = LoggerFactory.getLogger(SetRemovalTimeToProcessInstanceTest.class);

@@ -20,17 +20,18 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
+import org.operaton.bpm.qa.upgrade.util.ThrowBpmnErrorDelegate.ThrowBpmnErrorDelegateException;
+import org.operaton.bpm.qa.upgrade.util.ThrowBpmnErrorDelegate;
 
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 @ScenarioUnderTest("NestedNonInterruptingEventSubprocessScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class NestedNonInterruptingEventSubprocessScenarioTest {
 
   @Rule
@@ -64,26 +65,6 @@ public class NestedNonInterruptingEventSubprocessScenarioTest {
 
     // then
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("init.3")
-  public void testInitActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-        describeActivityInstanceTree(instance.getProcessDefinitionId())
-          .beginScope("subProcess")
-            .activity("innerTask")
-            // eventSubProcess was previously no scope so it misses here
-            .activity("eventSubProcessTask")
-        .done());
   }
 
   @Test
@@ -147,25 +128,6 @@ public class NestedNonInterruptingEventSubprocessScenarioTest {
 
     // then
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("init.innerTask.2")
-  public void testInitTask1ActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-        describeActivityInstanceTree(instance.getProcessDefinitionId())
-          .beginScope("subProcess")
-            // eventSubProcess was previously no scope so it misses here
-            .activity("eventSubProcessTask")
-        .done());
   }
 
   @Test

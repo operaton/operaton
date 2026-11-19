@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -146,6 +145,6 @@ public class ProcessEngineLoggingRule extends TestWatcher {
   private List<ILoggingEvent> filterLog(List<ILoggingEvent> log, String subString){
     return log.stream()
       .filter(logEntry -> logEntry.getFormattedMessage().contains(subString))
-      .collect(Collectors.toList());
+      .toList();
   }
 }

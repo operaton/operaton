@@ -103,11 +103,11 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
 
   protected static List<Group> transformGroups() {
     return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(a -> {
-      var group = new GroupEntity();
+      Group group = new GroupEntity();
       group.setId(a.getAuthority());
       group.setName(a.getAuthority());
       return group;
-    }).collect(Collectors.toList());
+    }).toList();
   }
 
   public static class OAuth2UserQuery extends UserQueryImpl {

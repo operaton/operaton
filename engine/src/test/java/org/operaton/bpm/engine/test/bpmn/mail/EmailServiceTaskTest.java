@@ -62,7 +62,7 @@ class EmailServiceTaskTest extends EmailTestCase {
     for (Address receiver : messages.get(0).to()) {
       recipients.add(receiver.address());
     }
-    Collections.sort(recipients);
+    recipients.sort(null);
 
     assertThat(recipients.get(0)).isEqualTo("fozzie@operaton.org");
     assertThat(recipients.get(1)).isEqualTo("kermit@operaton.org");

@@ -212,7 +212,7 @@ public class TemplateParser {
       }
 
       if(operations.size() > 1) {
-        Collections.sort(operations);
+        operations.sort(null);
       }
     }
 

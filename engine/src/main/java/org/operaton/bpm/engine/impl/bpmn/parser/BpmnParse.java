@@ -3672,7 +3672,7 @@ public @NullMarked class BpmnParse extends Parse {
     catchingScope.getProperties().addListItem(BpmnProperties.ERROR_EVENT_DEFINITIONS, errorEventDefinition);
 
     List<ErrorEventDefinition> errorEventDefinitions = catchingScope.getProperties().get(BpmnProperties.ERROR_EVENT_DEFINITIONS);
-    Collections.sort(errorEventDefinitions, ErrorEventDefinition.comparator);
+    errorEventDefinitions.sort(ErrorEventDefinition.comparator);
   }
 
   protected void parseBoundaryEscalationEventDefinition(Element escalationEventDefinitionElement, boolean cancelActivity, ActivityImpl boundaryEventActivity) {

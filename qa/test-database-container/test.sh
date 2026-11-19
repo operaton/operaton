@@ -12,6 +12,10 @@ run_test() {
 
   MAX_RETRIES=30
   SLEEP_SEC=2
+  if [[ "$DB_TYPE" = "db2" ]]; then
+    # DB2 creates the database on first start, which takes several minutes
+    MAX_RETRIES=150
+  fi
   COMPOSE_FILE="./docker-compose.yaml"
   MAVEN_WRAPPER="../../mvnw"
 
@@ -77,7 +81,7 @@ check_suite() {
 
 check_db_type() {
   case "$1" in
-    mysql|mariadb|postgres|oracle|sqlserver)
+    mysql|mariadb|postgres|oracle|sqlserver|db2)
       ;;  # do nothing, valid case
     h2)
       if [[ "$2" != "instance-migration" ]]; then
@@ -86,7 +90,7 @@ check_db_type() {
       fi
       ;;
     *)
-      echo "Unknown database '$1' - supported databases are {mysql|mariadb|postgres|oracle|sqlserver} (and h2 for instance-migration)"
+      echo "Unknown database '$1' - supported databases are {mysql|mariadb|postgres|oracle|sqlserver|db2} (and h2 for instance-migration)"
       exit 1
       ;;
   esac
@@ -101,7 +105,7 @@ export_db_config_vars() {
     mysql)
       export MT_MYSQL_USERNAME="root"
       export MT_MYSQL_PASSWORD="123456"
-      export MT_MYSQL_HOST_PORT="33060"
+      export MT_MYSQL_HOST_PORT="33160"
       export MT_MYSQL_DATABASE="$DB_NAME"
       ;;
     mariadb)
@@ -128,8 +132,14 @@ export_db_config_vars() {
       export MT_MSSQL_HOST_PORT="14330"
       export MT_MSSQL_DATABASE="$DB_NAME"
       ;;
+    db2)
+      export MT_DB2_USERNAME="db2inst1"
+      export MT_DB2_PASSWORD="123456"
+      export MT_DB2_HOST_PORT="50000"
+      export MT_DB2_DATABASE="$DB_NAME"
+      ;;
     *)
-      echo "Usage: $0 {mysql|mariadb|postgres|oracle|sqlserver|h2} [rolling-update|instance-migration]"
+      echo "Usage: $0 {mysql|mariadb|postgres|oracle|sqlserver|db2|h2} [rolling-update|instance-migration]"
       exit 1
       ;;
   esac
@@ -151,6 +161,9 @@ wait_for_db() {
         ;;
       sqlserver)
         docker exec -i "$1" /opt/mssql-tools18/bin/sqlcmd -S localhost -C -N -U "$MT_MSSQL_USERNAME" -P "$MT_MSSQL_PASSWORD" -Q "SELECT 'i_am_up';"
+        ;;
+      db2)
+        docker exec -i "$1" su - "$MT_DB2_USERNAME" -c "db2 connect to $MT_DB2_DATABASE && db2 \"VALUES 'i_am_up'\""
         ;;
       *)
         echo "Unsupported database $1"

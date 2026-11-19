@@ -14,6 +14,7 @@ The script supports the following database types:
 - **PostgreSQL**
 - **Oracle**
 - **SQL Server**
+- **Db2**
 
 ---
 
@@ -41,7 +42,7 @@ Before using this script, make sure you have:
 
 - **Docker & Docker Compose** installed and running.  
 - **Java & Maven Wrapper (`mvnw`)** available in the project (expected at `../../mvnw`).  
-- **docker-compose.yaml** file with services named after the supported DB types (`mysql`, `mariadb`, `postgres`, `oracle`, `sqlserver`).  
+- **docker-compose.yaml** file with services named after the supported DB types (`mysql`, `mariadb`, `postgres`, `oracle`, `sqlserver`, `db2`).  
 - Sufficient permissions to run Docker commands.
 
 ---
@@ -59,6 +60,7 @@ Where `<db_type>` is one of:
 - `postgres`
 - `oracle`
 - `sqlserver`
+- `db2`
 
 ### Example
 
@@ -81,11 +83,12 @@ The script automatically sets and exports connection variables depending on the 
 
 | Database   | Username   | Password         | Port   | Database   |
 |------------|-----------|------------------|--------|------------|
-| MySQL      | root      | 123456           | 33060  | operaton   |
+| MySQL      | root      | 123456           | 33160  | operaton   |
 | MariaDB    | root      | 123456           | 33070  | operaton   |
 | PostgreSQL | root      | 123456           | 54320  | operaton   |
 | Oracle     | SYSTEM    | 123456           | 15210  | operaton   |
 | SQL Server | sa        | P@ssw0rd123ABC   | 14330  | operaton   |
+| Db2        | db2inst1  | 123456           | 50000  | operaton   |
 
 These are injected into the running tests automatically.
 

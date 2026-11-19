@@ -223,7 +223,7 @@ class MultiTenancyBatchQueryTest {
   @Test
   void testBatchQueryFailOnNullTenantIdCase2() {
 
-    String[] tenantIds = new String[]{ null };
+    String[] tenantIds = { null };
     var batchQuery = managementService.createBatchQuery();
     assertThatThrownBy(() -> batchQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }
@@ -294,7 +294,7 @@ class MultiTenancyBatchQueryTest {
   @Test
   void testBatchStatisticsQueryFailOnNullTenantIdCase2() {
 
-    String[] tenantIds = new String[]{ null };
+    String[] tenantIds = { null };
     var batchStatisticsQuery = managementService.createBatchStatisticsQuery();
     assertThatThrownBy(() -> batchStatisticsQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }

@@ -60,7 +60,7 @@ class JsonTreeMapJavaToJsonTest {
 
   @Test
   void shouldMapArrayToJson() {
-    String[] names = new String[] { "Waldo", "Hugo", "Kermit" };
+    String[] names = { "Waldo", "Hugo", "Kermit" };
 
     String json = JSON(names).toString();
 

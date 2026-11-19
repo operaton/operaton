@@ -99,7 +99,7 @@ public enum BatchPermissions implements Permission {
   /** Indicates that CREATE_BATCH_CORRELATE_MESSAGE interactions are permitted */
   CREATE_BATCH_CORRELATE_MESSAGE("CREATE_BATCH_CORRELATE_MESSAGE", 262_144);
 
-  protected static final Resource[] RESOURCES = new Resource[] { Resources.BATCH };
+  protected static final Resource[] RESOURCES = { Resources.BATCH };
 
   protected String name;
   protected int id;

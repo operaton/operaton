@@ -64,7 +64,7 @@ public enum ProcessInstancePermissions implements Permission {
   /** Indicates that UPDATE_VARIABLE interactions are permitted. */
   UPDATE_VARIABLE("UPDATE_VARIABLE", 128);
 
-  private static final Resource[] RESOURCES = new Resource[] { Resources.PROCESS_INSTANCE };
+  private static final Resource[] RESOURCES = { Resources.PROCESS_INSTANCE };
   private final String name;
   private final int id;
 

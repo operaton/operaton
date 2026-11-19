@@ -211,7 +211,7 @@ class MultiTenancyHistoricBatchQueryTest {
   @Test
   void testBatchQueryFailOnNullTenantIdCase2() {
 
-    String[] tenantIds = new String[]{ null };
+    String[] tenantIds = { null };
     var historicBatchQuery = historyService.createHistoricBatchQuery();
     assertThatThrownBy(() -> historicBatchQuery.tenantIdIn(tenantIds)).isInstanceOf(NullValueException.class);
   }

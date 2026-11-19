@@ -41,9 +41,9 @@ public class OperatonBpmProperties {
   public static final String UNIQUE_ENGINE_NAME_PREFIX = "processEngine";
   public static final String UNIQUE_APPLICATION_NAME_PREFIX = "processApplication";
 
-  private static final String[] DEFAULT_BPMN_RESOURCE_SUFFIXES = new String[]{"bpmn20.xml", "bpmn" };
-  private static final String[] DEFAULT_CMMN_RESOURCE_SUFFIXES = new String[]{"cmmn11.xml", "cmmn10.xml", "cmmn" };
-  private static final String[] DEFAULT_DMN_RESOURCE_SUFFIXES = new String[]{"dmn11.xml", "dmn" };
+  private static final String[] DEFAULT_BPMN_RESOURCE_SUFFIXES = {"bpmn20.xml", "bpmn" };
+  private static final String[] DEFAULT_CMMN_RESOURCE_SUFFIXES = {"cmmn11.xml", "cmmn10.xml", "cmmn" };
+  private static final String[] DEFAULT_DMN_RESOURCE_SUFFIXES = {"dmn11.xml", "dmn" };
 
   static String[] initDeploymentResourcePattern() {
     final Set<String> suffixes = new HashSet<>();

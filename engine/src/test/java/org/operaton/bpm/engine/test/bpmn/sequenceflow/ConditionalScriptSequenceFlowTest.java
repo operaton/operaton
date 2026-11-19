@@ -49,7 +49,7 @@ class ConditionalScriptSequenceFlowTest {
   @Deployment
   @Test
   void testScriptExpression() {
-    String[] directions = new String[] { "left", "right" };
+    String[] directions = { "left", "right" };
     Map<String, Object> variables = new HashMap<>();
 
     for (String direction : directions) {
@@ -78,7 +78,7 @@ class ConditionalScriptSequenceFlowTest {
   })
   @Test
   void testScriptResourceExpression() {
-    String[] directions = new String[] { "left", "right" };
+    String[] directions = { "left", "right" };
     Map<String, Object> variables = new HashMap<>();
 
     for (String direction : directions) {

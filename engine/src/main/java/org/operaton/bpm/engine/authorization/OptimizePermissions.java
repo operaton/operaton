@@ -48,7 +48,7 @@ public enum OptimizePermissions implements Permission {
   /** Indicates that SHARE interactions are permitted. */
   SHARE("SHARE", 4);
 
-  private static final Resource[] RESOURCES = new Resource[] { Resources.OPTIMIZE };
+  private static final Resource[] RESOURCES = { Resources.OPTIMIZE };
 
   private final String name;
   private final int id;

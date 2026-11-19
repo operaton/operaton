@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.standalone.StandaloneTransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContextInterceptor;
@@ -35,12 +33,12 @@ import org.operaton.bpm.engine.impl.interceptor.TxContextCommandContextFactory;
  * Base class for a JTA-based process engine configuration. Integrates with
  * transaction managers Java Enterprise environments.
  */
-public abstract @NullMarked class AbstractTransactionProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
+public abstract class AbstractTransactionProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
 
-  protected @Nullable String transactionManagerJndiName;
+  protected String transactionManagerJndiName;
 
   /** {@link CommandContextFactory} to be used for DbSchemaOperations */
-  protected @Nullable CommandContextFactory dbSchemaOperationsCommandContextFactory;
+  protected CommandContextFactory dbSchemaOperationsCommandContextFactory;
 
   protected AbstractTransactionProcessEngineConfiguration() {
     transactionsExternallyManaged = true;
@@ -95,9 +93,7 @@ public abstract @NullMarked class AbstractTransactionProcessEngineConfiguration 
       commandInterceptorsDbSchemaOperations.add(new LogInterceptor());
       commandInterceptorsDbSchemaOperations.add(new CommandCounterInterceptor(this));
       commandInterceptorsDbSchemaOperations.add(new CommandContextInterceptor(dbSchemaOperationsCommandContextFactory, this));
-      if (actualCommandExecutor != null) {
-        commandInterceptorsDbSchemaOperations.add(actualCommandExecutor);
-      }
+      commandInterceptorsDbSchemaOperations.add(actualCommandExecutor);
       commandExecutorSchemaOperations = initInterceptorChain(commandInterceptorsDbSchemaOperations);
     }
   }
@@ -111,8 +107,7 @@ public abstract @NullMarked class AbstractTransactionProcessEngineConfiguration 
     }
   }
 
-  @SuppressWarnings("unused")
-  public @Nullable String getTransactionManagerJndiName() {
+  public String getTransactionManagerJndiName() {
     return transactionManagerJndiName;
   }
 
@@ -120,12 +115,10 @@ public abstract @NullMarked class AbstractTransactionProcessEngineConfiguration 
     this.transactionManagerJndiName = transactionManagerJndiName;
   }
 
-  @SuppressWarnings("unused")
-  public @Nullable CommandContextFactory getDbSchemaOperationsCommandContextFactory() {
+  public CommandContextFactory getDbSchemaOperationsCommandContextFactory() {
     return dbSchemaOperationsCommandContextFactory;
   }
 
-  @SuppressWarnings("unused")
   public void setDbSchemaOperationsCommandContextFactory(CommandContextFactory dbSchemaOperationsCommandContextFactory) {
     this.dbSchemaOperationsCommandContextFactory = dbSchemaOperationsCommandContextFactory;
   }

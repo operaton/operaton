@@ -21,23 +21,19 @@ import jakarta.transaction.TransactionManager;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.jta.JakartaTransactionContextFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.JakartaTransactionInterceptor;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Jakarta Transactions-based implementation of the {@link AbstractTransactionProcessEngineConfiguration}
  */
-public @NullMarked class JakartaTransactionProcessEngineConfiguration extends AbstractTransactionProcessEngineConfiguration {
+public class JakartaTransactionProcessEngineConfiguration extends AbstractTransactionProcessEngineConfiguration {
 
   private static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
-  protected @Nullable TransactionManager transactionManager;
+  protected TransactionManager transactionManager;
 
   @Override
   protected CommandInterceptor createTransactionInterceptor(boolean requiresNew) {
@@ -61,11 +57,11 @@ public @NullMarked class JakartaTransactionProcessEngineConfiguration extends Ab
   @Override
   protected void initTransactionContextFactory() {
     if(transactionContextFactory == null) {
-      transactionContextFactory = new JakartaTransactionContextFactory(requireNonNull(transactionManager));
+      transactionContextFactory = new JakartaTransactionContextFactory(transactionManager);
     }
   }
 
-  public @Nullable TransactionManager getTransactionManager() {
+  public TransactionManager getTransactionManager() {
     return transactionManager;
   }
 

@@ -27,8 +27,6 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventProcessor;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * @author Thorben Lindhauer
  *
@@ -72,7 +70,6 @@ public @NullMarked class VariableInstanceHistoryListener implements VariableInst
   }
 
   protected HistoryLevel getHistoryLevel() {
-    HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
-    return requireNonNull(historyLevel);
+    return Context.getProcessEngineConfiguration().getHistoryLevel();
   }
 }

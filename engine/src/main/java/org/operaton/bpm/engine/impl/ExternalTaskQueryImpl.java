@@ -72,7 +72,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
   protected Long priorityLowerThanOrEquals;
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;
-  private List<QueryVariableValue> variables = new ArrayList<>();
+  private final List<QueryVariableValue> variables = new ArrayList<>();
   protected Boolean retriesLeft;
   protected String[] tenantIds;
 

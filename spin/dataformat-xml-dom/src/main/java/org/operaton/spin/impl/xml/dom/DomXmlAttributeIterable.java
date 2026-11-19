@@ -52,7 +52,7 @@ public class DomXmlAttributeIterable implements Iterable<SpinXmlAttribute> {
   public Iterator<SpinXmlAttribute> iterator() {
     return new DomXmlNodeIterator<>() {
 
-      private NodeList attributes = nodeList;
+      private final NodeList attributes = nodeList;
 
       @Override
       protected int getLength() {

@@ -45,7 +45,7 @@ import org.operaton.bpm.impl.juel.SimpleResolver;
 public class JuelScriptEngine extends AbstractScriptEngine {
 
   private ScriptEngineFactory scriptEngineFactory;
-  private ExpressionFactory expressionFactory;
+  private final ExpressionFactory expressionFactory;
 
   public JuelScriptEngine(ScriptEngineFactory scriptEngineFactory) {
     this.scriptEngineFactory = scriptEngineFactory;
@@ -211,7 +211,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
    */
   private class ScriptContextVariableMapper extends VariableMapper {
 
-    private ScriptContext scriptContext;
+    private final ScriptContext scriptContext;
 
     ScriptContextVariableMapper(ScriptContext scriptCtx) {
       this.scriptContext = scriptCtx;
@@ -248,7 +248,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
    */
   private class ScriptContextFunctionMapper extends FunctionMapper {
 
-    private ScriptContext scriptContext;
+    private final ScriptContext scriptContext;
 
     ScriptContextFunctionMapper(ScriptContext ctx) {
       this.scriptContext = ctx;

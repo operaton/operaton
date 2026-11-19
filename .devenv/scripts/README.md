@@ -250,6 +250,7 @@ This script automates the process of initializing and updating the database vers
 
 - `--new-version <version>`: Specify the new database version (semantic versioning: `major.minor.patch`). If omitted, the script proposes the next minor version.
 - `--database <db1,db2,...>`: Comma-separated list of databases to update. If omitted, all supported databases are selected.
+- `--previous-artifact-version <version>`: Operaton release delivering the previous database schema version (`operaton.dbscheme.previous.artifactVersion`). If omitted, the latest final release of `operaton-engine` on Maven Central is used.
 - `-y, --assume-yes`: Run non-interactively, accepting all default answers.
 
 **Example: Perform interactive update**
@@ -273,8 +274,9 @@ python3 .devenv/scripts/maintenance/init-database-version.py --new-version 7.25.
 ### What it does:
 
 - Reads and updates the current and previous database version in database/pom.xml.
+- Sets the previous artifact version in database/pom.xml to the latest Operaton release, which still uses the outgoing schema version. If the release tag exists locally, the script warns when its schema version differs.
 - Updates SQL and Liquibase changelog files for the selected databases.
-- Creates new upgrade scripts and test fixtures for the new version.
+- Creates new upgrade scripts and test fixtures for the new version. The new test fixture uses the project version from the root pom.xml as engine version; the release replaces it with the released version.
 - Updates references in QA and test modules.
 
 ### Notes

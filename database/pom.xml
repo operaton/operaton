@@ -30,7 +30,7 @@
     <operaton.dbscheme.current.version>7.25.0</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
-    <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-5</operaton.dbscheme.previous.artifactVersion>
+    <operaton.dbscheme.previous.artifactVersion>2.2.1</operaton.dbscheme.previous.artifactVersion>
     <operaton.dbscheme.previous.version>7.24.0</operaton.dbscheme.previous.version>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->

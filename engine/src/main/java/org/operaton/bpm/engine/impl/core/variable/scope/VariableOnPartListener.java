@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.model.cmmn.VariableTransition;
@@ -35,17 +36,17 @@ public @NullMarked class VariableOnPartListener implements VariableInstanceLifec
   }
 
   @Override
-  public void onCreate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onCreate(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     execution.handleVariableTransition(variable.getName(), VariableTransition.create.name());
   }
 
   @Override
-  public void onUpdate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onUpdate(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     execution.handleVariableTransition(variable.getName(), VariableTransition.update.name());
   }
 
   @Override
-  public void onDelete(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
+  public void onDelete(VariableInstanceEntity variable, @Nullable AbstractVariableScope sourceScope) {
     execution.handleVariableTransition(variable.getName(), VariableTransition.delete.name());
   }
 

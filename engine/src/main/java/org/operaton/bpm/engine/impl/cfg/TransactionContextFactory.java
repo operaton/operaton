@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 
 /**
  * @author Tom Baeyens
  */
-public interface TransactionContextFactory {
+public @NullMarked interface TransactionContextFactory {
 
   TransactionContext openTransactionContext(CommandContext commandContext);
 

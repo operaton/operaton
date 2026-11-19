@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
 import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
@@ -38,7 +39,7 @@ import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
  * @author Thorben Lindhauer
  *
  */
-public class SpinProcessEnginePlugin extends SpinConfiguration {
+public @NullMarked class SpinProcessEnginePlugin extends SpinConfiguration {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {

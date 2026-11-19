@@ -50,7 +50,7 @@ public @NullMarked interface DelegateExecution extends BaseDelegateExecution, Bp
    * The process definition key for the process instance this execution is
    * associated with.
    */
-  String getProcessDefinitionId();
+  @Nullable String getProcessDefinitionId();
 
   /**
    * Gets the id of the parent of this execution. If {@code null}, the execution

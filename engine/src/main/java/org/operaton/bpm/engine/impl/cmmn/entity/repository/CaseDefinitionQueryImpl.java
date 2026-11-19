@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 
+import org.jspecify.annotations.NullUnmarked;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.AbstractQuery;
 import org.operaton.bpm.engine.impl.Page;
@@ -36,7 +37,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
  * @author Roman Smirnov
  *
  */
-public class CaseDefinitionQueryImpl extends AbstractQuery<CaseDefinitionQuery, CaseDefinition> implements CaseDefinitionQuery {
+public @NullUnmarked class CaseDefinitionQueryImpl extends AbstractQuery<CaseDefinitionQuery, CaseDefinition> implements CaseDefinitionQuery {
 
   @Serial private static final long serialVersionUID = 1L;
 

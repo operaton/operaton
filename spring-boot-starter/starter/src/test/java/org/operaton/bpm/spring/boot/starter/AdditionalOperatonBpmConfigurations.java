@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestConfiguration
 @SuppressWarnings("unused")
-public class AdditionalOperatonBpmConfigurations {
+public @NullMarked class AdditionalOperatonBpmConfigurations {
 
   @Bean
   public ProcessEnginePlugin beforeStandardConfiguration() {

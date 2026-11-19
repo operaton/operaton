@@ -18,33 +18,35 @@ package org.operaton.bpm.engine.impl.calendar;
 
 import java.util.Date;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.bpm.engine.task.Task;
 
-public class CycleBusinessCalendar implements BusinessCalendar {
+public @NullMarked class CycleBusinessCalendar implements BusinessCalendar {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   public static final String NAME = "cycle";
 
   @Override
-  public Date resolveDuedate(String duedateDescription, Task task) {
+  public @Nullable Date resolveDuedate(String duedateDescription, Task task) {
     return resolveDuedate(duedateDescription);
   }
 
   @Override
-  public Date resolveDuedate(String duedateDescription) {
+  public @Nullable Date resolveDuedate(String duedateDescription) {
     return resolveDuedate(duedateDescription, (Date)null);
   }
 
   @Override
-  public Date resolveDuedate(String duedateDescription, Date startDate) {
+  public @Nullable Date resolveDuedate(String duedateDescription, @Nullable Date startDate) {
     return resolveDuedate(duedateDescription, startDate, 0L);
   }
 
-  public Date resolveDuedate(String duedateDescription, Date startDate, long repeatOffset) {
+  public @Nullable Date resolveDuedate(String duedateDescription, @Nullable Date startDate, long repeatOffset) {
     try {
       if (duedateDescription.startsWith("R")) {
         DurationHelper durationHelper = new DurationHelper(duedateDescription, startDate);
@@ -57,9 +59,8 @@ public class CycleBusinessCalendar implements BusinessCalendar {
 
     }
     catch (Exception e) {
-      throw LOG.exceptionWhileParsingCycleExpresison(duedateDescription, e);
+      throw LOG.exceptionWhileParsingCycleExpression(duedateDescription, e);
     }
-
   }
 
 }

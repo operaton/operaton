@@ -24,6 +24,8 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * For synchronizing gateways (inclusive; parallel), the situation in which
  *  more tokens end up at the target gateway than there are incoming sequence flows
@@ -46,7 +48,7 @@ public class GatewayMappingValidator implements MigrationInstructionValidator {
   public void validate(ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions,
       MigrationInstructionValidationReportImpl report) {
 
-    ActivityImpl targetActivity = instruction.getTargetActivity();
+    ActivityImpl targetActivity = requireNonNull(instruction.getTargetActivity());
 
     if (isWaitStateGateway(targetActivity)) {
       validateIncomingSequenceFlows(instruction, instructions, report);

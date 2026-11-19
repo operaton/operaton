@@ -17,9 +17,9 @@
 package org.operaton.bpm.engine.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
@@ -107,7 +107,7 @@ public @NullMarked class ModificationBuilderImpl implements ModificationBuilder 
       this.processInstanceIds = Collections.emptyList();
     }
     else {
-      this.processInstanceIds = Stream.of(processInstanceIds).toList();
+      this.processInstanceIds = Arrays.asList(processInstanceIds);
     }
     return this;
   }
@@ -199,6 +199,9 @@ public @NullMarked class ModificationBuilderImpl implements ModificationBuilder 
     return annotation;
   }
 
+  /** @deprecated Unused internal API */
+  @Deprecated(forRemoval = true, since = "2.3")
+  @SuppressWarnings("java:S1133")
   public void setAnnotationInternal(String annotation) {
     this.annotation = annotation;
   }

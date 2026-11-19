@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.core.variable.scope;
 
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 
 /**
@@ -26,9 +27,9 @@ import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
  */
 public @NullMarked interface VariableInstanceLifecycleListener<T extends CoreVariableInstance> {
 
-  default void onCreate(T variableInstance, AbstractVariableScope sourceScope) {}
+  default void onCreate(T variableInstance, @Nullable AbstractVariableScope sourceScope) {}
 
-  default void onDelete(T variableInstance, AbstractVariableScope sourceScope) {}
+  default void onDelete(T variableInstance, @Nullable AbstractVariableScope sourceScope) {}
 
-  default void onUpdate(T variableInstance, AbstractVariableScope sourceScope) {}
+  default void onUpdate(T variableInstance, @Nullable AbstractVariableScope sourceScope) {}
 }

@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEventDispatcher;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
+import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
@@ -209,7 +210,7 @@ public abstract @NullMarked class AbstractVariableScope implements Serializable,
   }
 
   public List<CoreVariableInstance> getVariableInstancesLocal(@Nullable Collection<String> variableNames) {
-    return getVariableStore().getVariables(variableNames);
+    return variableNames != null ? getVariableStore().getVariables(variableNames) : List.of();
   }
 
   @Override
@@ -368,6 +369,7 @@ public abstract @NullMarked class AbstractVariableScope implements Serializable,
       CoreVariableInstance existingInstance = variableStore.getVariable(variableName);
 
       TypedValue previousValue = requireNonNull(existingInstance).getTypedValue(false);
+      EnsureUtil.ensureNotNull("previousValue", previousValue);
 
       if (value.isTransient() != previousValue.isTransient()) {
         throw ProcessEngineLogger.CORE_LOGGER.transientVariableException(variableName);

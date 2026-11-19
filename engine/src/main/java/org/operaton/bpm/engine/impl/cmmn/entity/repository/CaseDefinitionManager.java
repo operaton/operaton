@@ -99,6 +99,7 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
     }
   }
 
+  @SuppressWarnings("ConstantConditions")
   public @Nullable CaseDefinitionEntity findCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, @Nullable Integer caseDefinitionVersion, @Nullable String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put(PARAM_CASE_DEFINITION_VERSION, caseDefinitionVersion);
@@ -114,6 +115,7 @@ public @NullMarked class CaseDefinitionManager extends AbstractManager implement
     return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectCaseDefinitionByDeploymentAndKey", parameters);
   }
 
+  @SuppressWarnings("ConstantConditions")
   public @Nullable String findPreviousCaseDefinitionId(String caseDefinitionKey, @Nullable Integer version, @Nullable String tenantId) {
     Map<String, Object> params = new HashMap<>();
     params.put(PARAM_KEY, caseDefinitionKey);

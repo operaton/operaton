@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
-
+import org.jspecify.annotations.NullMarked;
 
 /**
  * The transaction context is an abstraction for different transaction management strategies
@@ -29,7 +29,7 @@ package org.operaton.bpm.engine.impl.cfg;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public interface TransactionContext {
+public @NullMarked interface TransactionContext {
 
   /**
    * Commit the current transaction.

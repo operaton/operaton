@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.event;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -28,6 +29,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 
+import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
@@ -42,21 +44,23 @@ public class CompensationEventHandler implements EventHandler {
   }
 
   @Override
-  public void handleEvent(EventSubscriptionEntity eventSubscription, Object payload, Object localPayload, Object payloadToTriggeredScope, String businessKey, CommandContext commandContext) {
+  public void handleEvent(EventSubscriptionEntity eventSubscription, @Nullable Object payload, @Nullable Object localPayload, @Nullable Object payloadToTriggeredScope, @Nullable String businessKey, CommandContext commandContext) {
     eventSubscription.delete();
 
     String configuration = eventSubscription.getConfiguration();
     ensureNotNull("Compensating execution not set for compensate event subscription with id %s".formatted(eventSubscription.getId()), "configuration", configuration);
 
-    ExecutionEntity compensatingExecution = commandContext.getExecutionManager().findExecutionById(configuration);
+    ExecutionEntity compensatingExecution = requireNonNull(commandContext.getExecutionManager().findExecutionById(configuration));
 
     ActivityImpl compensationHandler = eventSubscription.getActivity();
 
     // activate execution
     compensatingExecution.setActive(true);
 
-    if (compensatingExecution.getActivity().getActivityBehavior() instanceof CompositeActivityBehavior) {
-      compensatingExecution.getParent().setActivityInstanceId(compensatingExecution.getActivityInstanceId());
+    ActivityImpl compensatingExecutionActivity = requireNonNull(compensatingExecution.getActivity());
+    if (compensatingExecutionActivity.getActivityBehavior() instanceof CompositeActivityBehavior) {
+      ExecutionEntity compensatingExecutionParent = requireNonNull(compensatingExecution.getParent());
+      compensatingExecutionParent.setActivityInstanceId(compensatingExecution.getActivityInstanceId());
     }
 
     if (compensationHandler.isScope() && !compensationHandler.isCompensationHandler()) {

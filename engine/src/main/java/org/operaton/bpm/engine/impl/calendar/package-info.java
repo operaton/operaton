@@ -3,4 +3,6 @@
  * Provides various business calendar strategies including default, duration-based,
  * and cycle-based calculations for BPMN timer events.
  */
-package org.operaton.bpm.engine.impl.calendar;
+@NullMarked package org.operaton.bpm.engine.impl.calendar;
+
+import org.jspecify.annotations.NullMarked;

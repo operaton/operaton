@@ -27,6 +27,8 @@ import org.operaton.bpm.engine.impl.migration.instance.MigratingVariableInstance
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Validates that when an activity instance has a variable with the same name twice (as a scope execution variable and
  * a concurrent variable parent execution variable), no situation occurs in which either one is overwritten.
@@ -39,11 +41,11 @@ public class VariableConflictActivityInstanceValidator implements MigratingActiv
   public void validate(MigratingActivityInstance migratingInstance, MigratingProcessInstance migratingProcessInstance,
       MigratingActivityInstanceValidationReportImpl instanceReport) {
 
-    ScopeImpl sourceScope = migratingInstance.getSourceScope();
+    ScopeImpl sourceScope = requireNonNull(migratingInstance.getSourceScope());
     ScopeImpl targetScope = migratingInstance.getTargetScope();
 
     if (migratingInstance.migrates()) {
-      boolean becomesNonScope = sourceScope.isScope() && !targetScope.isScope();
+      boolean becomesNonScope = sourceScope.isScope() && targetScope != null && !targetScope.isScope();
       if (becomesNonScope) {
         Map<String, List<MigratingVariableInstance>> dependentVariablesByName = getMigratingVariableInstancesByName(migratingInstance);
         for (var entry : dependentVariablesByName.entrySet()) {

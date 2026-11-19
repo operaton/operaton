@@ -31,7 +31,7 @@ public @NullMarked interface ParameterValueProvider {
    * @param variableScope the scope in which the value is to be resolved.
    * @return the value
    */
-  @Nullable Object getValue(VariableScope variableScope);
+  @Nullable Object getValue(@Nullable VariableScope variableScope);
 
   /**
   * @return true if the value provider:

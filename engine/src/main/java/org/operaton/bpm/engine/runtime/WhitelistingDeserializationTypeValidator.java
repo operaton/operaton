@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.runtime;
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Validate a type before deserialization against a whitelist of allowed types
  */
-public interface WhitelistingDeserializationTypeValidator extends DeserializationTypeValidator {
+public @NullMarked interface WhitelistingDeserializationTypeValidator extends DeserializationTypeValidator {
 
   /** Set the allowed class names */
   void setAllowedClasses(String deserializationAllowedClasses);

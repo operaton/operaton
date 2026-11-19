@@ -29,7 +29,7 @@ cd qa/test-database-container
 ./test.sh ${database} instance-migration
 ```
 
-where `${database}` is one of `h2`, `mysql`, `mariadb`, `postgres`, `oracle` or `sqlserver`.
+where `${database}` is one of `h2`, `mysql`, `mariadb`, `postgres`, `oracle`, `sqlserver` or `db2`.
 
 Project Structure
 -----------------

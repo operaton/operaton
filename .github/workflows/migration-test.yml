@@ -27,7 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         suite: [rolling-update, instance-migration]
-        db: [mysql, mariadb, postgres, oracle, sqlserver]
+        db: [mysql, mariadb, postgres, oracle, sqlserver, db2]
         include:
           # H2 runs file-based without a container and is only relevant for instance migration
           - suite: instance-migration

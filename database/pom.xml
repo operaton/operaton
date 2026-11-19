@@ -499,6 +499,45 @@
     </profile>
 
     <profile>
+      <id>mt-db2</id>
+      <properties>
+        <database.type>db2</database.type>
+        <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
+        <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
+        <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
+        <database.port>${env.MT_DB2_HOST_PORT}</database.port>
+        <database.name>${env.MT_DB2_DATABASE}</database.name>
+        <database.username>${env.MT_DB2_USERNAME}</database.username>
+        <database.password>${env.MT_DB2_PASSWORD}</database.password>
+        <database.url>jdbc:db2://localhost:${database.port}/${database.name}</database.url>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>com.ibm.db2</groupId>
+          <artifactId>jcc</artifactId>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>sql-maven-plugin</artifactId>
+              <dependencies>
+                <dependency>
+                  <groupId>com.ibm.db2</groupId>
+                  <artifactId>jcc</artifactId>
+                  <version>${version.db2}</version>
+                </dependency>
+              </dependencies>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+    <profile>
       <id>mt-oracle</id>
       <properties>
         <database.type>oracle</database.type>

@@ -1,8 +1,10 @@
 #!/bin/bash
 run_test() {
   DB_TYPE="$1"
-  check_db_type "$DB_TYPE"
-  echo Running migration tests with database "$1"...
+  SUITE="${2:-rolling-update}"
+  check_suite "$SUITE"
+  check_db_type "$DB_TYPE" "$SUITE"
+  echo Running "$SUITE" tests with database "$1"...
 
   export_db_config_vars "$DB_TYPE"
 
@@ -12,6 +14,16 @@ run_test() {
   SLEEP_SEC=2
   COMPOSE_FILE="./docker-compose.yaml"
   MAVEN_WRAPPER="../../mvnw"
+
+  MAVEN_PROFILES="$SUITE,mt-$DB_TYPE"
+
+  if [[ "$DB_TYPE" = "h2" ]]; then
+    # file-based H2 needs no container
+    MAVEN_PROFILES="$SUITE,h2"
+    set +e
+    "$MAVEN_WRAPPER" -f ../pom.xml clean install -P"$MAVEN_PROFILES"
+    exit $?
+  fi
 
   # Bring down possible running containers from a broken execution
   cleanup_containers
@@ -41,7 +53,7 @@ run_test() {
 
   # Run Maven build, capture exit code
   set +e  # allow Maven to fail without stopping the script
-  "$MAVEN_WRAPPER" -f ../pom.xml clean install -Prolling-update,mt-"$DB_TYPE"
+  "$MAVEN_WRAPPER" -f ../pom.xml clean install -P"$MAVEN_PROFILES"
   BUILD_EXIT_CODE=$?
   set -e
 
@@ -52,12 +64,29 @@ run_test() {
   exit $BUILD_EXIT_CODE
 }
 
+check_suite() {
+  case "$1" in
+    rolling-update|instance-migration)
+      ;;  # do nothing, valid case
+    *)
+      echo "Unknown suite '$1' - supported suites are {rolling-update|instance-migration}"
+      exit 1
+      ;;
+  esac
+}
+
 check_db_type() {
   case "$1" in
     mysql|mariadb|postgres|oracle|sqlserver)
       ;;  # do nothing, valid case
+    h2)
+      if [[ "$2" != "instance-migration" ]]; then
+        echo "Database 'h2' is only supported for the instance-migration suite"
+        exit 1
+      fi
+      ;;
     *)
-      echo "Unknown database '$1' - supported databases are {mysql|mariadb|postgres|oracle|sqlserver}"
+      echo "Unknown database '$1' - supported databases are {mysql|mariadb|postgres|oracle|sqlserver} (and h2 for instance-migration)"
       exit 1
       ;;
   esac
@@ -67,6 +96,8 @@ export_db_config_vars() {
   DB_NAME="operaton"
 
   case "$1" in
+    h2)
+      ;;  # file-based, no connection settings needed
     mysql)
       export MT_MYSQL_USERNAME="root"
       export MT_MYSQL_PASSWORD="123456"
@@ -98,7 +129,7 @@ export_db_config_vars() {
       export MT_MSSQL_DATABASE="$DB_NAME"
       ;;
     *)
-      echo "Usage: $0 {mysql|mariadb|postgres|oracle|sqlserver}"
+      echo "Usage: $0 {mysql|mariadb|postgres|oracle|sqlserver|h2} [rolling-update|instance-migration]"
       exit 1
       ;;
   esac
@@ -148,4 +179,4 @@ cleanup_containers() {
   docker compose -f "${COMPOSE_FILE}" down
 }
 
-run_test "$1"
+run_test "$1" "$2"

@@ -232,7 +232,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
     return serviceNames.stream()
         .map(serviceName -> (PlatformService<S>) servicesByName.get(getObjectName(serviceName)))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

@@ -31,7 +31,7 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     Set.of(SubProcessActivityBehavior.class, EventSubProcessActivityBehavior.class)
   );
 
-  private Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<>();
+  private final Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<>();
 
   public SameBehaviorInstructionValidator() {
     this(EQUIVALENT_BEHAVIORS);

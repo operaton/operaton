@@ -150,7 +150,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected String processInstanceBusinessKey;
   protected String[] processInstanceBusinessKeys;
   protected String processInstanceBusinessKeyLike;
-  private List<TaskQueryVariableValue> variables = new ArrayList<>();
+  private final List<TaskQueryVariableValue> variables = new ArrayList<>();
   protected Date dueDate;
   protected Date dueBefore;
   protected Date dueAfter;

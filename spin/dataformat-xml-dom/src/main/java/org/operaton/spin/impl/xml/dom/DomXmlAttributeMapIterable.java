@@ -53,7 +53,7 @@ public class DomXmlAttributeMapIterable implements Iterable<SpinXmlAttribute> {
   public Iterator<SpinXmlAttribute> iterator() {
     return new DomXmlNodeIterator<>() {
 
-      private NamedNodeMap attributes = domElement.getAttributes();
+      private final NamedNodeMap attributes = domElement.getAttributes();
 
       @Override
       protected int getLength() {

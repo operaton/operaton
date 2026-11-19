@@ -53,7 +53,7 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 
 	private ActivitiStateHandlerRegistry registry;
 
-	private int order = Ordered.LOWEST_PRECEDENCE;
+	private final int order = Ordered.LOWEST_PRECEDENCE;
 
 	private BeanFactory beanFactory;
 

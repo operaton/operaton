@@ -80,7 +80,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   protected boolean unfinished;
   protected boolean processFinished;
   protected boolean processUnfinished;
-  private List<TaskQueryVariableValue> variables = new ArrayList<>();
+  private final List<TaskQueryVariableValue> variables = new ArrayList<>();
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;
 

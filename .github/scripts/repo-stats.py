@@ -130,11 +130,11 @@ def resolve_output_dir(output_dir):
     # Only allow writing below the current working directory (prevents path traversal)
     base = os.path.realpath(os.getcwd())
     resolved = os.path.realpath(os.path.join(base, output_dir))
-    if os.path.commonpath([base, resolved]) != base:
-        print(f"Output directory must be inside {base}.")
-        sys.exit(1)
-    os.makedirs(resolved, exist_ok=True)
-    return resolved
+    if resolved == base or resolved.startswith(base + os.sep):
+        os.makedirs(resolved, exist_ok=True)
+        return resolved
+    print(f"Output directory must be inside {base}.")
+    sys.exit(1)
 
 def main():
     parser = argparse.ArgumentParser(description="Render Operaton repo history as SVG")

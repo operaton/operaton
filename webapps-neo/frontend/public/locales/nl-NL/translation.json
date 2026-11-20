@@ -256,6 +256,13 @@
     }
   },
   "processes": {
+    "pagination": {
+      "label": "Procesdefinitiepagina’s",
+      "previous": "Vorige",
+      "next": "Volgende",
+      "range": "{{first}}–{{last}} van {{total}} definities"
+    },
+    "instances-status-unavailable": "De instantiestatus wordt geladen of is niet beschikbaar",
     "title": "Procesdefinities",
     "version": "Versie",
     "change-definition": "Definitie wijzigen",

@@ -306,6 +306,13 @@
     }
   },
   "processes": {
+    "pagination": {
+      "label": "Process definition pages",
+      "previous": "Previous",
+      "next": "Next",
+      "range": "{{first}}–{{last}} of {{total}} definitions"
+    },
+    "instances-status-unavailable": "Instance status is loading or unavailable",
     "title": "Process Definitions",
     "subnav-label": "Sub-section navigation",
     "version": "Version",

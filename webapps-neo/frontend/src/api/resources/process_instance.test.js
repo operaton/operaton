@@ -1,10 +1,12 @@
-import { describe, it, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 vi.mock("../helper.jsx", () => ({
   GET: vi.fn(),
   POST: vi.fn(),
   PUT: vi.fn(),
   DELETE: vi.fn(),
+  _url_engine_rest: () => 'https://engine.test/engine-rest',
+  set_request_headers: (headers) => headers,
 }));
 
 import { GET, POST, PUT, DELETE } from "../helper.jsx";
@@ -182,5 +184,37 @@ describe("api/resources/process_instance", () => {
       state,
       signal: state.api.process.instance.delete,
     });
+  });
+});
+
+describe('process_instance suspended counts', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('passes abort, credentials and encoded IDs to fetch', async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValue({ ok: true, json: async () => ({ count: 7 }) });
+    vi.stubGlobal('fetch', fetch);
+    const signal = new AbortController().signal;
+    await expect(
+      process_instance.suspended_count(create_mock_state(), 'invoice:1&x', {
+        signal,
+      }),
+    ).resolves.toBe(7);
+    expect(fetch).toHaveBeenCalledWith(
+      'https://engine.test/engine-rest/process-instance/count' +
+        '?processDefinitionId=invoice%3A1%26x&suspended=true',
+      expect.objectContaining({ credentials: 'include', signal }),
+    );
+  });
+
+  it('rejects failed HTTP counts instead of returning zero', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: false, status: 503 }),
+    );
+    await expect(
+      process_instance.suspended_count(create_mock_state(), 'invoice:1'),
+    ).rejects.toThrow('503');
   });
 });

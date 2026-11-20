@@ -5,7 +5,12 @@ Drives `.github/workflows/release.yml` (which invokes JReleaser). **Only on an e
 ## Preconditions (hard gates)
 1. A **PREPARE** run for this version completed this session with a 🟢 GO (or 🟡 whose items the user accepts). If none was run → run PREPARE first. On 🔴 → refuse.
 2. Resolve `BRANCH` + qualifier (see SKILL.md "resolve the target").
-3. Working state: nothing to commit that would interfere; you are not pushing manually — the workflow does the version bump/commit.
+3. **Spring patch still current:** re-run `.devenv/scripts/release/check-spring-versions.py --branch BRANCH`
+   right before the dry run and again before the real run. Spring often ships the day before an Operaton release, so a
+   bump may land after PREPARE (or a new patch may appear). Exit `2` → stop: merge the bump, wait for green builds,
+   then dry-run again. If the bump landed after PREPARE, re-run the Docker smoke tests on the new SNAPSHOT images or on
+   the released `VER` images, and add the bump to the release notes' *Dependency Upgrades*.
+4. Working state: nothing to commit that would interfere; you are not pushing manually — the workflow does the version bump/commit.
 
 ## release.yml inputs (workflow_dispatch)
 | Input | Meaning | Value |

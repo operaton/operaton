@@ -38,7 +38,7 @@ Work the checklist in `references/prepare-checklist.md`. Create a TodoWrite item
 1. **Branch & version** — resolve as above; confirm pom version.
 2. **Build status** — `build.yml`, `integration-build.yml`, `migration-test.yml` green on the branch (`gh run list`).
 3. **Docker images** — `operaton/operaton`, `operaton/wildfly`, `operaton/tomcat` SNAPSHOT images current on Docker Hub.
-4. **Dependencies** — no open HIGH/CRITICAL Dependabot alerts (except legacy webapp deps).
+4. **Dependencies** — no open HIGH/CRITICAL Dependabot alerts (except legacy webapp deps). Latest Spring Boot / Spring Framework patch integrated: `.devenv/scripts/release/check-spring-versions.py --branch BRANCH` (Operaton releases the day after Spring; a missing patch = 🔴 unless the user waives it).
 4a. **Security advisories** — see `references/security-advisories.md`. Inventory open (triage/draft) advisories; merge approved private-fork PRs into `main` (advisory page button, user confirms); cherry-pick the fixes to `BRANCH` via PR; delete forks whose PRs are all merged (user confirms); set `patched_versions` to `VER`. Any open HIGH/CRITICAL advisory affecting the line and not fixed in `BRANCH` = 🔴.
 5. **Label & milestone hygiene** — closed issues/PRs without milestone; merged PRs in the milestone that look noteworthy but lack the `noteworthy` label. See `references/noteworthy.md`.
 6. **Documentation** — release notes correct for the type, including the *Database Schema* section from `.devenv/scripts/release/check-db-schema.py`. See `references/release-notes.md`.
@@ -54,7 +54,7 @@ End every PREPARE run with an explicit verdict:
 
 - 🟢 **GO** — all blocking checks pass; only non-blocking polish remains.
 - 🟡 **CONDITIONAL** — releasable after listed fixes; name each item and whether a PR was raised.
-- 🔴 **NO-GO** — a blocking check fails (build red, version mismatch, missing required release notes for a `.0`, open HIGH/CRITICAL Dependabot alert, open HIGH/CRITICAL security advisory not fixed in `BRANCH`). State exactly what blocks it.
+- 🔴 **NO-GO** — a blocking check fails (build red, version mismatch, missing required release notes for a `.0`, open HIGH/CRITICAL Dependabot alert, open HIGH/CRITICAL security advisory not fixed in `BRANCH`, newer Spring Boot / Spring Framework patch not integrated and not waived by the user). State exactly what blocks it.
 
 Always list: blocking items, non-blocking items, PRs raised (with links), and the remaining manual work the human must do.
 
@@ -100,6 +100,7 @@ PREPARE and PERFORM end with a structured report: per-release status, confidence
 - About to run PERFORM with `dry_run=false` without a prior dry-run or user confirmation → STOP.
 - Branch pom version ≠ target version → blocker, do not proceed.
 - Patch release whose schema check reports a database schema change → blocker; release branches take no schema updates.
+- About to dry-run or release while `check-spring-versions.py` exits `2` (newer Spring Boot / Spring Framework patch not on `BRANCH`) and the user has not waived it → **STOP**, merge the bump first.
 - About to delete a branch during ANNOUNCE (`git push origin --delete`, `git branch -D`) → **STOP.** List branches only; the human deletes them.
 - About to close a `release/X.Y.x` line (dependabot entries, SECURITY.md end of life, milestone, branch) without the user's explicit yes → **STOP**, ask first.
 - About to finish ANNOUNCE for a final `X.Y.0` without the `SECURITY.md` "Fully maintained" row, or for a line's last planned patch without asking about end of life and branch deletion → not done yet.

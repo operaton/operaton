@@ -69,8 +69,9 @@ See `references/perform-release.md`. In short:
 5. **Verify:** GitHub release created, Maven Central artifacts present, `operaton-docker` build dispatched / `latest` tag updated, Helm chart PR opened on `operaton-helm` (merge it → chart auto-published), next `-SNAPSHOT` version committed.
 5a. **Resolved vulnerabilities:** list every advisory whose `patched_versions` contains `VER` and whose fix is in tag `vVER` — in the report and the GitHub release body (`references/security-advisories.md` → 7).
 5b. **Publish advisories** once the Docker images for `VER` are on Docker Hub: show the list, get a yes, set each to `published` (`references/security-advisories.md` → 8).
+5c. **Documentation follow-ups** (mandatory, unasked): clean up the release body's contributors; PR the version references (`update_versions.py` in `operaton/documentation`); PR release-note additions for bumps that landed after PREPARE (see perform-release.md → "Documentation follow-ups").
 6. **Bump `main`** if `X.Y.0` was released from `release/X.Y.x`: ask the user for next minor vs. major, then `.github/scripts/set-project-version.sh` via PR (see perform-release.md → "Bump `main` after a minor release").
-7. **Report** run URLs, verification results, and the resolved/published advisories with URLs.
+7. **Report** run URLs, verification results, documentation PR URLs, and the resolved/published advisories with URLs.
 
 ## ANNOUNCE workflow
 
@@ -105,4 +106,5 @@ PREPARE and PERFORM end with a structured report: per-release status, confidence
 - About to close a `release/X.Y.x` line (dependabot entries, SECURITY.md end of life, milestone, branch) without the user's explicit yes → **STOP**, ask first.
 - About to finish ANNOUNCE for a final `X.Y.0` without the `SECURITY.md` "Fully maintained" row, or for a line's last planned patch without asking about end of life and branch deletion → not done yet.
 - About to post to Slack `@channel` or the forum without showing the user the draft first → STOP, draft and confirm.
+- About to report PERFORM done or start ANNOUNCE while a documentation follow-up has no PR URL or recorded "no change needed" → not done yet.
 - About to announce a release whose GitHub release / Maven Central / release-notes page is not yet live → STOP, verify the links resolve first.

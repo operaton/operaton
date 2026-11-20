@@ -33,11 +33,13 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
    gh run list --repo operaton/operaton --workflow release.yml -L 1
    gh run watch <run-id> --repo operaton/operaton
    ```
-3. Update the documentation. In repository operaton/documentation, update the versions by executing thd script `.devenv/scripts/update-version.py`.
+3. **Documentation follow-ups — part of PERFORM, not optional.** Do them as soon as the GitHub release exists and
+   Maven Central serves `VER` (see "Documentation follow-ups" below). PERFORM is not done, and ANNOUNCE must not
+   start, until each one has a PR URL or is recorded as "no change needed".
 
 ## Verification (after real run)
 - [ ] GitHub Release created with the tag (`gh release view vX.Y.Z --repo operaton/operaton`). For `-Mx`/`-RCx`, it should be a prerelease.
-- [ ] Update the release notes: Deduplicate contributor, remove bots & LLM users. Update also the RELEASE.md artifact.
+- [ ] GitHub release body cleaned up (contributors) and documentation PRs raised — see "Documentation follow-ups".
 - [ ] Artifacts on **Maven Central** (e.g. check `https://repo1.maven.org/maven2/org/operaton/bpm/operaton-engine/X.Y.Z/`).
 - [ ] **SQL scripts** (final releases): the release log ("Maven Build" step) prints either
   `No database changes detected since last release tag vA.B.C.` or `Database changes detected …`. It must match the
@@ -54,6 +56,43 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] **Resolved vulnerabilities** listed: advisories with `VER` in `patched_versions` and fix in tag `vVER` — in the report and under `## Security` in the GitHub release body (`security-advisories.md` → 7).
 - [ ] **Helm chart** published (see below): chart PR on `operaton/operaton-helm` opened, merged, and the new chart version listed in `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Snapshot pre-release tags cleaned up.
+
+## Documentation follow-ups
+
+Run all three right after the release, without waiting to be asked. Each ends with a PR URL (or a recorded
+"no change needed") in the PERFORM report.
+
+1. **GitHub release body — contributors.** JReleaser lists one person under several identities (git author name
+   without handle, plus the GitHub login, e.g. `Karsten Thoms` and `kthoms ([@kthoms](…))`) and includes bots and LLM
+   co-authors. Edit the *Contributors* section: one line per person as `Name ([@login](https://github.com/login))`,
+   no bots (`dependabot[bot]`, `github-actions[bot]`, `renovate[bot]`, …), no LLM/agent identities (`Claude`,
+   `Copilot`, `copilot-swe-agent`, …). Keep everything else unchanged:
+   ```bash
+   gh release view vVER --repo operaton/operaton --json body -q .body > body.md   # edit Contributors only
+   gh release edit vVER --repo operaton/operaton --notes-file body.md
+   ```
+   There is no separate `RELEASE.md` artifact; the release body is the only copy.
+2. **Version references** in `operaton/documentation` (needs Maven Central and the release zip; it reads the SBOM):
+   ```bash
+   git switch -c chore/update-versions-VER origin/main
+   GITHUB_TOKEN=$(gh auth token) python3 .devenv/scripts/update_versions.py
+   ```
+   Updates the get-started guides, the Spring Boot / Quarkus version-compatibility tables, and library versions.
+   Review the diff, then PR `chore(docs): update version references to Operaton VER`.
+3. **Release notes match what shipped.** Compare the release notes' `VER` section (patch) or `MM_` page (minor) with
+   the dependency changes in the tag: `git diff vPREV vVER -- pom.xml parent/pom.xml` (and `database/pom.xml`). Every
+   user-facing bump — Spring Boot / Spring Framework always, plus servers, Quarkus, logback, JDBC drivers — that landed
+   after PREPARE (typically the Spring bump on release day) must be added under *Dependency Upgrades*. PR on
+   `operaton/documentation` (label `documentation:release-notes`).
+
+## Recovering from post-release failures
+
+- **`operaton-docker` build failed** in some matrix jobs with `status code: 429, reason phrase: Too Many Requests`
+  (Maven Central rate limit) → transient: `gh run rerun <id> --repo operaton/operaton-docker --failed`. That re-runs
+  the failed jobs and the skipped `publish` job. Other errors → investigate, ask the user.
+- **Helm `update-operaton-release.yaml` timed out** waiting for `operaton/operaton:VER` (45 min) because Docker failed
+  or was slow → once the image is on Docker Hub, `gh run rerun <id> --repo operaton/operaton-helm --failed`.
+- Then repeat the Docker digest check (`latest*` == `VER*`) and run the smoke tests on `--tag=VER`.
 
 ## Docker `latest` with several releases on one day
 
@@ -169,6 +208,6 @@ Caveats:
   the Helm workflow manually, then re-run only the failed `post_release` job after fixing the token.
 
 ## Report
-List: run URL + result, release URL, Maven Central status, Docker status, next-version commit. Resolved vulnerabilities (GHSA, severity, CVE, summary) and their publish state + URL. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset — these are post-release items, not done here).
+List: run URL + result, documentation follow-up PR URLs (or "no change needed") and the contributor cleanup, release URL, Maven Central status, Docker status, next-version commit. Resolved vulnerabilities (GHSA, severity, CVE, summary) and their publish state + URL. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset — these are post-release items, not done here).
 
 Once the release is verified live, the post-release announcement is the **ANNOUNCE** action — see `announce.md` (website + blog, Slack, forum, branch-cleanup list, housekeeping).

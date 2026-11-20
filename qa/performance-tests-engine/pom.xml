@@ -10,9 +10,6 @@
   <name>Operaton - QA Performance Tests Engine</name>
   <description>${project.name}</description>
   <properties>
-    <test.includes/>
-    <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
-    <test.excludes>$.</test.excludes>
     <historyLevel>full</historyLevel>
     <jdbcBatchProcessing>true</jdbcBatchProcessing>
   </properties>

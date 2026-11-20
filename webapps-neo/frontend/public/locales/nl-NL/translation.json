@@ -43,12 +43,17 @@
     "help": "Help",
     "account": "Account",
     "menu": "Menu",
+    "language": "Taal",
     "close-menu": "Menu sluiten",
     "mobile-navigation": "Mobiele navigatie",
     "skip-to-content": "Ga naar inhoud",
     "skip-to-navigation": "Ga naar hoofdnavigatie",
     "go-to": "Ga naar",
-    "choose-server": "Kies een server"
+    "choose-server": "Kies een server",
+    "options": "Opties",
+    "server": "Server",
+    "logout": "Afmelden",
+    "main-navigation": "Hoofdnavigatie"
   },
   "goto": {
     "title": "Ga naar",
@@ -596,6 +601,14 @@
     "language": "Taal",
     "language-hint": "Kies de weergavetaal voor de applicatie."
   },
+  "theme": {
+    "label": "Thema",
+    "hint": "Kies licht, donker of volg de systeeminstelling.",
+    "auto": "Systeem",
+    "light": "Licht",
+    "dark": "Donker"
+  },
+
   "home": {
     "welcome": "Welkom bij Operaton!",
     "info-text": "U kunt algemene informatie over Operaton vinden op",

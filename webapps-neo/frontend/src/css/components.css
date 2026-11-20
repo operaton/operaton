@@ -1744,7 +1744,7 @@ nav:has(> .breadcrumbs) {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-2);
-  min-width: 24ch;
+  min-width: 18ch;
   margin: 0;
   color: var(--text);
   padding: 0.25em var(--spacing-1);
@@ -2021,4 +2021,207 @@ nav:has(> .breadcrumbs) {
 .date-time {
   display: flex;
   gap: var(--spacing-2);
+}
+
+/* ── Diagram canvases: dark mode ─────────────────────────────────────────
+   bpmn-js shape fills/strokes/labels are inlined at render time and handled
+   by --canvas-* (see BPMNViewer.jsx); these rules only take over the chrome
+   bpmn-js ships as CSS. dmn-js is fully variable-driven, so dark mode just
+   re-points its semantic variables — no edits to public/css/dmn needed.
+
+   Note the selectors: dmn-js declares these variables on the container
+   itself, and a custom property declared on an element wins over any value
+   inherited from <html>. Matching the container is therefore mandatory. */
+.bpmn-controls,
+.bpmn-controls button {
+  background: var(--background-1);
+  color: var(--text);
+}
+
+.bpmn-token-count {
+  box-shadow: 0 0 0 2px var(--background-1);
+}
+
+:root[data-theme="dark"] .bjs-powered-by img,
+:root[data-theme="dark"] .bjs-powered-by svg {
+  filter: invert(1) opacity(0.75);
+}
+
+:root[data-theme="dark"] .dmn-js-parent {
+  --select-options-background-color: var(--background-2);
+  --select-options-color: var(--text);
+  --select-options-border-color: var(--border-color-2);
+  --select-option-hover-background-color: var(--background-3);
+  --input-color: var(--text);
+  --input-border-color: var(--border-color-2);
+  --separator-color: var(--border-color-2);
+}
+
+:root[data-theme="dark"] .dmn-decision-table-container {
+  --decision-table-color: var(--text);
+  --decision-table-background-color: var(--background-1);
+  --decision-table-properties-color: var(--text);
+  --table-cell-color: var(--text);
+  --table-cell-border-color: var(--border-color-2);
+  --table-head-border-color: var(--border-color-3);
+  --table-head-clause-color: var(--text-2);
+  --table-head-variable-color: var(--text-2);
+  --table-head-separator-color: var(--border-color-2);
+  --table-row-alternative-background-color: var(--background-2);
+  --table-foot-add-rule-color: var(--text-2);
+  --table-foot-add-rule-border-color: var(--border-color-2);
+  --table-foot-add-rule-hover-color: var(--text);
+  --table-foot-add-rule-hover-border-color: var(--text);
+  --hit-policy-explanation-color: var(--text-2);
+  --simple-mode-button-color: var(--text);
+  --simple-mode-button-background-color: var(--background-2);
+  --simple-mode-button-border-color: var(--border-color-2);
+  --simple-mode-button-disabled-color: var(--text-disabled);
+  --view-drd-button-background-color: var(--background-2);
+  --view-drd-button-hover-background-color: var(--background-3);
+  --view-drd-button-border-color: var(--border-color-2);
+  --view-drd-button-color: var(--text);
+  --powered-by-overlay-content-background-color: var(--background-2);
+  --powered-by-overlay-content-color: var(--text);
+  --powered-by-overlay-content-border-color: var(--border-color-2);
+}
+
+:root[data-theme="dark"] .dmn-literal-expression-container {
+  --decision-properties-background-color: var(--background-2);
+  --decision-properties-border-color: var(--border-color-2);
+  --decision-properties-color: var(--text);
+  --literal-expression-color: var(--text);
+  --literal-expression-properties-border-color: var(--border-color-2);
+  --literal-expression-properties-color: var(--text);
+  --textarea-border-color: var(--border-color-2);
+  --textarea-color: var(--text);
+  --view-drd-button-background-color: var(--background-2);
+  --view-drd-button-hover-background-color: var(--background-3);
+  --view-drd-button-border-color: var(--border-color-2);
+  --view-drd-button-color: var(--text);
+  --powered-by-overlay-content-background-color: var(--background-2);
+  --powered-by-overlay-content-color: var(--text);
+  --powered-by-overlay-content-border-color: var(--border-color-2);
+}
+
+:root[data-theme="dark"] .dmn-drd-container {
+  --dmn-definitions-background-color: var(--background-2);
+  --dmn-definitions-border-color: var(--border-color-2);
+  --dmn-definitions-focus-border-color: var(--border-color-3);
+}
+
+/* dmn-js's DRD renderer writes fill/stroke inline ("fill: white; stroke:
+   rgb(34,36,42)"), so no custom property ever reaches the shapes — only
+   !important does. Scoped to the DRD container and to the shapes' first
+   geometry plus labels, leaving the decision icons their own fills. */
+:root[data-theme="dark"] .dmn-drd-container .djs-shape .djs-visual > rect {
+  fill: var(--canvas-fill) !important;
+  stroke: var(--canvas-stroke) !important;
+}
+
+:root[data-theme="dark"] .dmn-drd-container .djs-shape .djs-visual text,
+:root[data-theme="dark"] .dmn-drd-container .djs-shape .djs-visual tspan {
+  fill: var(--text) !important;
+}
+
+:root[data-theme="dark"] .dmn-drd-container .djs-connection .djs-visual > path {
+  stroke: var(--canvas-stroke) !important;
+}
+
+:root[data-theme="dark"] .dmn-drd-container marker path {
+  fill: var(--canvas-stroke) !important;
+}
+
+/* The bundled mark (see components/Logo.jsx) is painted through a mask, so its
+   colour is a theme token: it follows html[data-theme] whatever the OS prefers,
+   which an <img> pointing at that SVG cannot do (the SVG recolours itself with
+   its own prefers-color-scheme query). --logo-mask carries the
+   app_path()-resolved URL, since a CSS file cannot know a sub-path deployment. */
+.logo-default {
+  display: block;
+  width: 2.75em;
+  height: 2.75em;
+  background-color: var(--text);
+  -webkit-mask-image: var(--logo-mask);
+  mask-image: var(--logo-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.login-logo.logo-default {
+  width: 5rem;
+  height: 5rem;
+}
+
+/* The closed <select> follows color-scheme, but on Windows the popup list is
+   drawn by the browser UI and stays light. Where the customizable-select API
+   exists, theme the picker with the same tokens; other browsers keep the
+   native control (and its native popup). */
+@supports (appearance: base-select) {
+  #server-selector select,
+  #mobile-server-selector select {
+    appearance: base-select;
+  }
+
+  #server-selector select::picker-icon,
+  #mobile-server-selector select::picker-icon {
+    color: var(--text);
+  }
+
+  #server-selector select::picker(select),
+  #mobile-server-selector select::picker(select) {
+    appearance: base-select;
+    background: var(--background-2);
+    color: var(--text);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-1);
+    box-shadow: 0 0.4rem 1rem rgb(0 0 0 / 0.3);
+    /* The picker is its own rendering context and does not inherit the select's
+       typography, so state it here — otherwise the list falls back to the
+       browser's default font size and reads larger than the closed control.
+       Inheriting keeps the header row's own size (12px there, not 13.6px). */
+    font-family: inherit;
+    font-size: var(--small-font-size);
+    line-height: 1.2;
+  }
+
+  #server-selector select option,
+  #mobile-server-selector select option {
+    background: var(--background-2);
+    color: var(--text);
+    /* The global `option` rule sets 1rem. Native popups ignored it, but a
+       base-select list renders each option as a real element, so the list grew.
+       Inherit from the select instead, so the menu matches the closed control
+       exactly as the native popup used to. */
+    font-size: var(--small-font-size);
+    line-height: 1.2;
+    /* The native list kept every entry on one line, truncating rather than
+       wrapping long names. */
+    white-space: nowrap;
+    padding: 0.15em 0.5em;
+    border-radius: var(--border-radius);
+  }
+
+  #server-selector select option:hover,
+  #server-selector select option:focus,
+  #mobile-server-selector select option:hover,
+  #mobile-server-selector select option:focus {
+    background: var(--background-3);
+  }
+
+  #server-selector select option:checked,
+  #mobile-server-selector select option:checked {
+    background: var(--color-primary);
+    color: var(--text-inverted);
+  }
+
+  #server-selector select option:disabled,
+  #mobile-server-selector select option:disabled {
+    color: var(--text-disabled);
+  }
 }

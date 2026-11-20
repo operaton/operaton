@@ -60,7 +60,10 @@ describe("build_css", () => {
 
   it("emits a dark-mode block for colorsDark", () => {
     const css = build_css({ colorsDark: { primary: "#ff8a4c" } });
-    expect(css).toContain("prefers-color-scheme: dark");
+    expect(css).toContain(':root[data-theme="dark"]');
+    // The dark block must not depend on the OS preference: an explicit choice
+    // has to win over it.
+    expect(css).not.toContain("prefers-color-scheme");
     expect(css).toContain("--color-primary: #ff8a4c;");
   });
 

@@ -52,13 +52,15 @@
     "account": "Account",
     "logout": "Logout",
     "menu": "Menu",
+    "language": "Language",
     "close-menu": "Close menu",
     "mobile-navigation": "Mobile navigation",
     "main-navigation": "Main navigation",
     "skip-to-content": "Skip to content",
     "go-to": "Go To",
     "server": "Server",
-    "choose-server": "Choose a server"
+    "choose-server": "Choose a server",
+    "options": "Options"
   },
   "goto": {
     "title": "Go To",
@@ -849,6 +851,13 @@
     "settings": "Settings",
     "language": "Language",
     "language-hint": "Choose the display language for the application."
+  },
+  "theme": {
+    "label": "Theme",
+    "hint": "Choose light, dark, or follow the system setting.",
+    "auto": "System",
+    "light": "Light",
+    "dark": "Dark"
   },
   "home": {
     "welcome": "Welcome to Operaton!",

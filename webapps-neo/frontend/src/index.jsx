@@ -29,7 +29,11 @@ import engine_rest from "./api/engine_rest.jsx";
 import { useSignal } from "@preact/signals";
 import { is_oauth } from "./api/oauth.js";
 import { app_path, get_config, load_config } from "./config.js";
-import { apply_branding, logo_url, logo_alt } from "./branding.js";
+import { apply_branding } from "./branding.js";
+import { Logo } from "./components/Logo.jsx";
+import { ThemeToggle } from "./components/ThemeToggle.jsx";
+import { LANGUAGES } from "./helper/languages.js";
+import { start_theme } from "./theme.js";
 import { useTranslation } from "react-i18next";
 import { load_plugins } from "./plugins/loader.js";
 import { install_plugin_host } from "./plugins/host.js";
@@ -58,15 +62,8 @@ export const App = () => {
   );
 };
 
-// es-ES, fr-FR and nl-NL exist under public/locales but are only ~75% translated,
-// so offering them means a quarter of the UI silently falls back to English. They
-// stay in the repo and come back here once complete.
-const languages = [
-  { code: "en-US", label: "English" },
-  { code: "de-DE", label: "Deutsch" },
-  { code: "zh-CN", label: "简体中文" },
-  { code: "zh-TW", label: "繁體中文" },
-];
+// The offered languages live in one place — the login card, the account
+// settings and the header switcher all read helper/languages.js.
 
 const swap_server = (e, state) => {
   const server = get_config().backends.find((s) => s.url === e.target.value);
@@ -192,7 +189,10 @@ const Routing = () => {
 
     return (
       <section class="login-page">
-        <img class="login-logo" src={logo_url()} alt={logo_alt()} />
+        {/* Signed-out visitors get no header, so the login page carries the
+            same three-state switch in its top-right corner. */}
+        <ThemeToggle id="login-theme-toggle" class="login-theme-toggle" />
+        <Logo class="login-logo" />
 
         <div class="login-content">
           <h1>{t("login.title")}</h1>
@@ -276,7 +276,7 @@ const Routing = () => {
             <select
               onChange={(e) => i18n.changeLanguage(e.currentTarget.value)}
             >
-              {languages.map((lang) => (
+              {LANGUAGES.map((lang) => (
                 <option
                   key={lang.code}
                   value={lang.code}
@@ -307,6 +307,10 @@ const Routing = () => {
 // (bundled + remote) before the first render so the registry is frozen and
 // every seam — routes, nav, tabs, state — sees a stable plugin list. A broken
 // plugin server can never block boot; the loader guards itself with a timeout.
+// Publish the stored theme choice and start following the OS while `auto` is
+// selected. The inline script in index.html already painted it, so this only
+// has to bring the signal and the media listener in line with the DOM.
+start_theme();
 install_plugin_host();
 // The runtime configuration must be in place before anything reads it, and the
 // plugin loader needs it to know where the manifest lives.

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:a1c0c748-aa93-42d4-bdcf-d3256f22715f",
+  "serialNumber": "urn:uuid:bc976ba2-ff76-4feb-aa22-d05007f4d117",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-19T22:21:19Z",
+    "timestamp": "2026-11-20T04:40:54Z",
     "tools": {
       "components": [
         {
@@ -748,45 +748,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.6.7?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.6.8?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.6.7",
+      "version": "1.6.8",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "7d97f39f4d0f46bb1465be241eb64b71"
+          "content": "de6d7516aa31c313f4248188e8d8d48a"
         },
         {
           "alg": "SHA-1",
-          "content": "f5a24446f6c7c9cebb2b0aacc54c1013d5132bd6"
+          "content": "82b25e3c4cedddf7449a94f5a981a8e0aa9bf055"
         },
         {
           "alg": "SHA-256",
-          "content": "23c22387c0cec7ef3a8fe75fc9a443b87a9c88a57b30d441f92f20a843626ad8"
+          "content": "3fb623a3dd20bcc00790616165a0d53b40b3a7407d78e56d985ad3a7bd1d2ef0"
         },
         {
           "alg": "SHA-512",
-          "content": "6a0be37d98e099cce3f6cf323ec912759ce3a172656874dd2de4ee794268acc636832d788f87d60cb4dbb3c792dcdb6f937fc13ed667f49c67ab5822e3177a75"
+          "content": "7348f8c47a55a49474b254966f684d37589325fabfa2aaaaf15bab341dbc4255492a446593f2618f9686ea811e902571bc2b85bad433b5ce3c73ea0c1c0c20c4"
         },
         {
           "alg": "SHA-384",
-          "content": "5b10f3b7c8c921b195ebefc07eb62cc498b88bddeaf85113b1106914cdecbc2e938f91ff2aeb50390d121064ecf005ec"
+          "content": "55e2afc284a6f6ca3f9ba13f0bbc128217d0921283b3bcb789c6bae48ea9e96b01eb2569bc8dea0ec0baf07c1c134645"
         },
         {
           "alg": "SHA3-384",
-          "content": "3d4f3f085b52952b5f2ff5c8fd7b69261ee7901121e987560f33fa101398b981de173d4dce5f5ef9572c0da1f1a2d523"
+          "content": "a233cb9f8adca567433ff52665e85b94c1ed8eff30c74a8427ae0559237c344142176463db164d6c03d1909e0ccceee9"
         },
         {
           "alg": "SHA3-256",
-          "content": "38987abf98083eb4c35143966e5553a8d7ba602d035814532c291d83ef94b585"
+          "content": "865c41dedd431cfa73e83b4bee9a4263d81f7218fd863191082907abca582e06"
         },
         {
           "alg": "SHA3-512",
-          "content": "c7f311c70eb0a55e2f1aae1b15402f10b142f5f360c94a6c067982fbdf9d67fb10f628be3ef49ec8e8e7594e56c110c438bced4b05179563b586c618a81c6291"
+          "content": "4d5829a210eb757a90ebbf7e53ddadc4603ab3dd69047137faa32c986de69a31cba8fee2c70d4492e652c201cb04142ce04c7595131ca53986081579e2b28afa"
         }
       ],
       "licenses": [
@@ -803,7 +803,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.6.7?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.6.8?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -821,45 +821,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.6.7?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.6.8?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.6.7",
+      "version": "1.6.8",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "4f9d86d693c51af7b4fa40660b684948"
+          "content": "8b0e50d417e21f9307413c1c0d6fb165"
         },
         {
           "alg": "SHA-1",
-          "content": "649c214418556de431182fd7b92c366682238123"
+          "content": "94ee3132bae45be37709d0d563d7b5a4abd86428"
         },
         {
           "alg": "SHA-256",
-          "content": "1762e3b6cb3af6931ae6a9fcec05fb1176c044993e7cb423a365d842fd49e4f8"
+          "content": "dc59a732c3fcb60b9a5df01c459a705fccf7dbe3b4858267265ffc72706685fa"
         },
         {
           "alg": "SHA-512",
-          "content": "ecd8e7c56119c75b46b991cbb0da98b1bee8f1875077dcb10751b3c987f9c9fc58f351d65dff1ca42641da689adb58e72214b825648cb26b9e83eb5b525cfe88"
+          "content": "262e7f0ce016a0bcd99b975292c00e28ac3b01d30cbac3be142fd6a2e0fb9b2dc89930516dc61e221e0e5c608669e59badf0f74cc0b9e28b8ba4fba3b0b25804"
         },
         {
           "alg": "SHA-384",
-          "content": "348d0b80920c61690bf2d723ce34763f6d8de2bee13b7cc9de948d7fbfe32fd5611a52af3fa68cbc48d37def7d7be468"
+          "content": "8b07a1bd9cef8169ace99220569913328faaa12128339cf23f7fc4e9e459408b76c8a178c8d1dfe50565fee6f700030d"
         },
         {
           "alg": "SHA3-384",
-          "content": "babc28566aaab129ddd0fbd89bce133f2a4cc9431e425de04edc9fb7fa0a38bba6cdf4c1d05f0f7d39b4a9adb1311c50"
+          "content": "3fae79725282078ac9b9bcbfea78451420e6385e6ace82e27fd493b63f1b5df8df9985641acf5c43bf22b2244cfd2dab"
         },
         {
           "alg": "SHA3-256",
-          "content": "f35ce7a98e1599f47408cf9dce792ceffc6aa91b7156011fb71bff2001925d5c"
+          "content": "83e6c761fb44d4f36378a85aa81028f9344cfceefcc19dbc3dbebbe2bca81e4e"
         },
         {
           "alg": "SHA3-512",
-          "content": "1d86bb52fe7a2e4a51f95b97f8d56c81705f327c9e13e15c46e4b6ef8f1c984ab58982ca761ac1b8b412305bfc70e0ecd2606c27b27d6fa1fd7bb484b8fa7e27"
+          "content": "77dc9dc14c475d271fb639c9147c4bbb7ee43c94ea0c84df457b6451fe7441c9e307897e94f3662d67e58aff151fa14d7b73a68867b6daba2fd117b01ac48f1d"
         }
       ],
       "licenses": [
@@ -876,7 +876,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.6.7?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.6.8?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -956,44 +956,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/net.bytebuddy/byte-buddy@1.18.15?type=jar",
+      "bom-ref": "pkg:maven/net.bytebuddy/byte-buddy@1.18.17?type=jar",
       "group": "net.bytebuddy",
       "name": "byte-buddy",
-      "version": "1.18.15",
+      "version": "1.18.17",
       "description": "Byte Buddy is a Java library for creating Java classes at run time. This artifact is a build of Byte Buddy with all ASM dependencies repackaged into its own name space.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "36ebf60bade91fd4f25c187cf590937a"
+          "content": "0542dbaaefb42936a4e511ed164f8d26"
         },
         {
           "alg": "SHA-1",
-          "content": "ffff83d2b122d612acecd92029df4ed9b0472ffe"
+          "content": "b73eb3ff633c749f6c275cd96e780063a836dad5"
         },
         {
           "alg": "SHA-256",
-          "content": "e64ed8697df67cbce8158a6e926cbe841f97d01719d719b7b84784826a9b2b27"
+          "content": "bb78cc9d290d13e27e86fe89fb171521516a33c9822a528c0f151bece5790276"
         },
         {
           "alg": "SHA-512",
-          "content": "ff49f4533ecf6db122518c35cdc13aa27bbc4042cb451ff1ae778673c6f8626bda25bd143a76947df57d692710e858354e251c2e0d4bb144f42b754c9fb529a6"
+          "content": "3844f65c7f30332fcc860877f7efec88ea30635c7a81e143f757d5648e8f1cd066653539938f6024a7f324f0cb811daeeda266219ef713d7c01a054ed52f3e75"
         },
         {
           "alg": "SHA-384",
-          "content": "a6eb706f3449210a7b74adc30be4124a3d834b5f0fde960dde0ff9d75e8c58fd1db0fa70d4b9c111c1778d0db9629c91"
+          "content": "04df086b59ad830434dd96ace9bd4d6844342924553077a323f182889d54e48871e7778e37d2ee715b27fc0ef0fbad06"
         },
         {
           "alg": "SHA3-384",
-          "content": "7e38aafe7f6983dee96e79673ee1709645d5312c6010302fb58c877fc448d931cbb26db94e21ac09af88caa1afe06893"
+          "content": "d413bad525bdb11652f1daa4ce88600e8d60dc71af976dbdd61db14ec95ae2d8e7554a5cb12a289d8f26789b5b6e91cc"
         },
         {
           "alg": "SHA3-256",
-          "content": "a1fffc2f3de5dab1725c2544bf9b91f552323c2b5bde3d3b2f1ddd8cab4ad02e"
+          "content": "28143171aa70907bd56c3dd34cbbef82f88e411ce7565dca07d231436c27365b"
         },
         {
           "alg": "SHA3-512",
-          "content": "986089b96b1c38651643b3f8082aa2731d9d411498a2f6645c46894f0342e4c5acdf3d30fce3763aa92dda82f24be460d14a771946bdbb12f42aaee71456fda5"
+          "content": "01a069a71301b60f95addb1016847a329316058e888247994576841fd09ce838e1e10f8930e00b5f58daff5dfbe9f53832f18def517049ad2ad722d01a30ea7e"
         }
       ],
       "licenses": [
@@ -1003,7 +1003,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/net.bytebuddy/byte-buddy@1.18.15?type=jar",
+      "purl": "pkg:maven/net.bytebuddy/byte-buddy@1.18.17?type=jar",
       "externalReferences": [
         {
           "url": "https://bytebuddy.net/byte-buddy",
@@ -11285,44 +11285,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.17.2?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.17.3?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-observation",
-      "version": "1.17.2",
+      "version": "1.17.3",
       "description": "Module containing Observation related code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "3ab8f7e74224319d4c01ef87bab8a0db"
+          "content": "58cdcfa02f4dfa978c411cb2f97035be"
         },
         {
           "alg": "SHA-1",
-          "content": "b069be62d5d1a0f2f61fa8de6dede8f8f0ffc49a"
+          "content": "1288fa58154231ccbcdb804c19a36145f985c4d4"
         },
         {
           "alg": "SHA-256",
-          "content": "d3ff53cfa0532dc1af0de349073f9aeb985e01f4b88c1d904350178805859695"
+          "content": "d8dfb7b9af14fe0765c2ca69f7348a3e6d1821bdf0162bcd66441f81f1d65112"
         },
         {
           "alg": "SHA-512",
-          "content": "e4bd7297b369232053b1a1816f371841d77914f735fc651b711e840b627a787410bf7a4b3d2829d3b244cfcfe0cca71b1c635fda2273750679c3b1d2d8c35fe3"
+          "content": "247f477d1024e95c20f1d98dc17a00d701de94d6e57f5161fa2b249778c3bcd3d0a8591111252fb810bf863a384b029ae7ec1c259eff2d272eb8c248c436e553"
         },
         {
           "alg": "SHA-384",
-          "content": "ad10b4312377cab9c26a6d67f549409d31bda51ed4025f260c2d309a58c048983f8f5c26fb32eac38544af771b298a58"
+          "content": "74c3b2835a0886924c8ca7f8d28a3a7904d78faedc22ffef5bf99ece115ad0719ad069606cb39a19f6fe94aa47be5a57"
         },
         {
           "alg": "SHA3-384",
-          "content": "2d269616887799fa498f67dff6285ce54b4ef989f84a2e2da8d5f36bf11be30820819494a9485a5dc19336e96fd01974"
+          "content": "f22c4ebcfcc198b3e152da08fa7ca39d32f78a881b17e28f74066538e318b15b2374aa7afb66c57ea942fe2a5d8d8a41"
         },
         {
           "alg": "SHA3-256",
-          "content": "bbef966970925b77067dfd5a5b7158b3aff873462edf7386bb49ae663c7ec4ca"
+          "content": "7ce9c032a9eb80a6b55b9ff2f5d95a3487cc540ca57aa077bad6b663c3a23c94"
         },
         {
           "alg": "SHA3-512",
-          "content": "15a3aca5d0958d80b0106867eac083392ca91c1c9ad32bb53ca0947402b54c01e086e866d8cfb0dd0c83e088bfdbb9dade325243a61ed145d7c7ec5acfe1f6c6"
+          "content": "25e96ca12f0dd222f012107c2ade31c126a1d552d10959d20d56be4a2e03b3c90aa5a0393750dc93b487335830a0e85610f086ce7206f530b20031da286cfdb3"
         }
       ],
       "licenses": [
@@ -11332,7 +11332,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.17.2?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.17.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -11342,44 +11342,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.17.2?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.17.3?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-commons",
-      "version": "1.17.2",
+      "version": "1.17.3",
       "description": "Module containing common code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "755b78d949ed4fbb396494d14658a7b9"
+          "content": "1c8c3c12f1a688a91b5ff5d46f523366"
         },
         {
           "alg": "SHA-1",
-          "content": "713614728673cc0f57a88ac0a3c7ab7ff5a60824"
+          "content": "c5db5dbb7802f57a2f2f4873ad9fbf908d02e6a2"
         },
         {
           "alg": "SHA-256",
-          "content": "af8c85e879025ce30c381e6810e14c4f52b4150894e36c815860d14763271348"
+          "content": "2ac34ae35353e5ee6615dbb33988ef3c21c7374f99d38752292b0886d9a633da"
         },
         {
           "alg": "SHA-512",
-          "content": "22b08371d7eb514e2298f18b75f1e37af43c11ee081c3734cef5b96ca61dbac8d1e66fe74153b8fda5b41c501d782caeb6ecfc066b0362862116a0e621384214"
+          "content": "32586beda676cedbda1b822b313743ce7a89648ad1a6a3761a21d198b0e1661a564e551b7fca89553a302ca3717090f524261d743b21e50a1993a9faf1083c6c"
         },
         {
           "alg": "SHA-384",
-          "content": "3675235413322d8fd5e6b9dde78e1540bb73e0e90ee64ae9519eabb3ec97e5b45ebdfa8ff09fcc0f3b0b8ab5d1dd1137"
+          "content": "808fd87a24741b366823d9b1c7d4bc925b928e0fbdd604acbbdcffcefda22fc96e44ea0cb98ef57cdb02203aa2b5c91b"
         },
         {
           "alg": "SHA3-384",
-          "content": "be9359b05a2831f00df9fd3765ea8e6171f52fcaaa0e8d40ae38d4c66c6ae54407a786b887bd924b9e20f926b8f38038"
+          "content": "e6820c6046136cd5bb2a41f9023efe87b218ab6127447071bd7acc7f5be4e2281fdd47f55665a337f70dfad11d92c868"
         },
         {
           "alg": "SHA3-256",
-          "content": "e1b39792ac333cdd2d8fc75e8f7b83451d434015814616cb293e589a9a06e7db"
+          "content": "370bcff25b230d727d198d4cabbad0d9aaf354a992651231fb892b4da29b60cd"
         },
         {
           "alg": "SHA3-512",
-          "content": "826e3544cd06ee7a0bc02a05b00cfb74084a2ffe1c4719c3b7ea8ed5457afb0aa8e22e267d95db1485f0f00586022e07d5d8871d5b3c52e776b1d1309b4bc0d3"
+          "content": "e2122f96418d4c3c080c552cae377b6d87051f71685f7747f1066a6066c55f7fc801283da411c34ef20b0e906e8b473ea11106e3269bc2d58be6768f78c6feb0"
         }
       ],
       "licenses": [
@@ -11389,7 +11389,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.17.2?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.17.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -16695,44 +16695,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.11.9?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
       "group": "com.konghq",
       "name": "unirest-java-core",
-      "version": "4.11.9",
+      "version": "4.11.10",
       "description": "Simplified, lightweight HTTP client library.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e72d955c3ea0c6ccabf33ecda5db6207"
+          "content": "e8740bdc64bc2fc4a4df932ba93799a2"
         },
         {
           "alg": "SHA-1",
-          "content": "eaac4b9936c932dca697ccf1ba293dccdbf194e1"
+          "content": "555d18d335e4f8027dfa0cbabd66ce68327b789d"
         },
         {
           "alg": "SHA-256",
-          "content": "1ef46cd39fc6322da80cc05a2731130b373f22d5903bbb1ea63579701e926619"
+          "content": "13b8046ba79b3438a9e209bca065ec601c48bbe71bf9c600d81aed8f3f2864ad"
         },
         {
           "alg": "SHA-512",
-          "content": "2e7827e78b3470c6c63833f990ff33c041af53602816b9f2fb146a51871021d2b0ffc34d8a46a4e1e7478ae2bdedc4780e1ab290958036e7c984611bce70079f"
+          "content": "8b7a30a522ff051f1dc611a66f20cb7620f04c065633f4aded59059005fc93dd889f76a498ab00b3d3b48de926f55ff9805c94e20c9e901f042b698e3cec1625"
         },
         {
           "alg": "SHA-384",
-          "content": "5129adacc27ed9c886ce5486d2bd0a84db2bf93cdf8860aa453ccf0e7f313e40993b3e773107885546c47e81a18758a0"
+          "content": "968cad1e7b67fcb01c7bfde141aa294efc63ce6194cdc6601df1ed3e229208d7897cb3403d78b3456c9bf7180d1249a6"
         },
         {
           "alg": "SHA3-384",
-          "content": "bf06cd25c8925d2304bc40df2e5caebd33355026ec9a5ee92a9a209fcdd75f2aedb535b71448c93cf354217a636ad409"
+          "content": "8bc8689ad5399d8579e61b0bae699f746c91c0b803acff1678c6a9936a39ce9c1b7edb28e5f5eaaa53ae178e227b045e"
         },
         {
           "alg": "SHA3-256",
-          "content": "74b36fa78fbb42c4cf80c1389e9d50e71153aa15e7d83153a2d0a1e51e105b67"
+          "content": "f4281089f2a6cb2b9f943a5024383441150ce934e2b71c3579d11b7359ff3e9a"
         },
         {
           "alg": "SHA3-512",
-          "content": "5aeea0a55f2bf259e412630174c48f46048895acf042bd45224b7d4b7bad304146d41a84d95aea4077ebfbda96d4ae6b6036ce1c685f3c3940f87bdeba05ac7e"
+          "content": "7a7f238786b0571ac811e258acf05f7aa7b411b6a9b5bc6101c67a1719245a19a4ab569e5a5e46b54abb303b839bb1f1f5602d61344efc9f142490d9aadf6688"
         }
       ],
       "licenses": [
@@ -16743,7 +16743,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-java-core@4.11.9?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-java-core/",
@@ -16761,44 +16761,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.9?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
       "group": "com.konghq",
       "name": "unirest-modules-gson",
-      "version": "4.11.9",
+      "version": "4.11.10",
       "description": "Gson based object mapper for Unirest",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b443ebfab2621317189629a7a13188e9"
+          "content": "9a73d7018904c0924817234b69f79014"
         },
         {
           "alg": "SHA-1",
-          "content": "b991ed1ce40e82453384235ebba3cbba0e6ca2a1"
+          "content": "f4ca19ce1904f32b765982daaf4350ca3ebf35da"
         },
         {
           "alg": "SHA-256",
-          "content": "74ee14ffd667ea5f9ad4ffdede30a6c3a3e4c85d7bf961ac4b1e251ffd4e89e2"
+          "content": "d547b88bf3e18e640fb9cecc5d88831336bc1c0415858ace9122d4feea348b81"
         },
         {
           "alg": "SHA-512",
-          "content": "2eb88a14aa07d25b1c03d126ab1bdbe543c9fa4eeac9176a5fd52b8cc690eb5ce5aa09f58db46dd26b844808daf604509b22901240cfcebb9abe41cd5ae2f6b5"
+          "content": "5438de874252be3257a4c4320d2c175009752a9bff18d18e894f0f9f7d0bab04f30f8e91b9fc06271fbcabeba4e97b66941c5a1dce4112978da392ba40714045"
         },
         {
           "alg": "SHA-384",
-          "content": "4c726454179af9d8ea601b6c179aca0cf4c659aa48375a7d054ff380a7c2863ccbdb1e195ddd9cbc0387b9a7ad7b7de7"
+          "content": "d9b3eec995021b3e85e7653656947e71387c4b39769ca3f12b5d854c053c21c280ab58b3a43f83ac919959949544430c"
         },
         {
           "alg": "SHA3-384",
-          "content": "0fd6f14cc76ba92380c9f453feea075e9aca5fc8aca494feca9d67384976176f0b804be82c6b9331ab841a2f65eb8cdf"
+          "content": "fe819cf63014b062526914853fd6774381ea84a5a4a6f15075ad6fe2a47e61dd3619b15f6dea1abdbb118f8cb4cf59b6"
         },
         {
           "alg": "SHA3-256",
-          "content": "56d3525f6567039157dcfc7836c8d5bfa7a454a392a85aa150c9a1fb8c5aaaf9"
+          "content": "11c2f46beb8a0e43df3abbe52d2a6c65804a8b866ae0598d030fa7a11acda2fe"
         },
         {
           "alg": "SHA3-512",
-          "content": "4cd6e5fd70820f86540d4f004b8b82e5cc7b7958c79c659df0582e9a2aa4a19e9b6bf92e786edb5447e06bb16a480c51fbd5f64c20932f4cdc59c90c3fcc5f1b"
+          "content": "fe22c4effda66009e8b328b73d128cd83d93fcb352b5bf1354cfac03b1bdf2a1da2d36e1dbeb52d613214cedeac4af60a996c4babeadfba0638f41456b151fee"
         }
       ],
       "licenses": [
@@ -16809,7 +16809,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.11.9?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-modules-gson/",
@@ -18689,11 +18689,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.25.0?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.26.0?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.distro",
       "name": "operaton-sql-scripts",
-      "version": "7.25.0",
+      "version": "7.26.0",
       "description": "Operaton - SQL scripts",
       "licenses": [
         {
@@ -18702,7 +18702,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.25.0?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.26.0?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-sql-scripts",
@@ -19435,7 +19435,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d706f8cb-fab4-47cf-9653-d2d3b3d5ffa7",
+      "bom-ref": "0b167bd5-9675-412a-8c02-a4b487fbc06b",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24691,7 +24691,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c6524e13-0c45-481f-82e4-26080268a785",
+      "bom-ref": "5f9adfb0-f4d6-420e-92dd-50ec9f55cfb4",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24702,7 +24702,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2ce5f0e9-cad7-42cd-a29a-16df57bb68c9",
+      "bom-ref": "df13f015-98ac-4dd5-a5ce-896a883db5f3",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25835,7 +25835,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "52b91f11-3608-4cef-b4e0-748c4f9797ed",
+      "bom-ref": "dc852480-23e3-4359-8a6e-a0ecabff4738",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -25955,11 +25955,11 @@
     {
       "ref": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
       "dependsOn": [
-        "pkg:maven/net.bytebuddy/byte-buddy@1.18.15?type=jar"
+        "pkg:maven/net.bytebuddy/byte-buddy@1.18.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/net.bytebuddy/byte-buddy@1.18.15?type=jar",
+      "ref": "pkg:maven/net.bytebuddy/byte-buddy@1.18.17?type=jar",
       "dependsOn": []
     },
     {
@@ -26187,19 +26187,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.3.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.6.7?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.6.8?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.6.7?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.6.8?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.6.7?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.6.8?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.20?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.6.7?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.6.8?type=jar",
       "dependsOn": []
     },
     {
@@ -26217,7 +26217,7 @@
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.3.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo-root@2.3.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.3.0-SNAPSHOT?type=pom",
-        "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.25.0?type=jar",
+        "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.26.0?type=jar",
         "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.3.0-SNAPSHOT?type=pom"
       ]
     },
@@ -26374,8 +26374,8 @@
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-core@1.6.7?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.6.7?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.6.8?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.6.8?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar"
       ]
@@ -27115,8 +27115,8 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/com.konghq/unirest-java-core@4.11.9?type=jar",
-        "pkg:maven/com.konghq/unirest-modules-gson@4.11.9?type=jar",
+        "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
+        "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar"
       ]
     },
@@ -27581,11 +27581,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-java-core@4.11.9?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.9?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.code.gson/gson@2.15.0?type=jar"
       ]
@@ -27651,7 +27651,7 @@
         "pkg:maven/org.springframework/spring-beans@7.0.10?type=jar",
         "pkg:maven/org.springframework/spring-core@7.0.10?type=jar",
         "pkg:maven/org.springframework/spring-expression@7.0.10?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.17.2?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.17.3?type=jar"
       ]
     },
     {
@@ -27668,14 +27668,14 @@
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.17.2?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.17.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar",
-        "pkg:maven/io.micrometer/micrometer-commons@1.17.2?type=jar"
+        "pkg:maven/io.micrometer/micrometer-commons@1.17.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.17.2?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.17.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.jspecify/jspecify@1.0.1?type=jar"
       ]
@@ -27709,7 +27709,7 @@
       "dependsOn": [
         "pkg:maven/org.springframework/spring-beans@7.0.10?type=jar",
         "pkg:maven/org.springframework/spring-core@7.0.10?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.17.2?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.17.3?type=jar"
       ]
     },
     {
@@ -27763,7 +27763,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.29?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.29?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.6.7?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.6.8?type=jar"
       ]
     },
     {
@@ -27990,7 +27990,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.25.0?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.26.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@2.3.0-SNAPSHOT?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.3?type=jar"
@@ -28216,7 +28216,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.3.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.25.0?type=jar",
+        "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.26.0?type=jar",
         "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.3.0-SNAPSHOT?type=tar.gz",
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.3.0-SNAPSHOT?type=war",
         "pkg:maven/org.operaton.bpm.webapp-neo/operaton-webapp-neo-tomcat@2.3.0-SNAPSHOT?type=war",
@@ -28258,13 +28258,7 @@
       "dependsOn": []
     },
     {
-      "ref": "c6524e13-0c45-481f-82e4-26080268a785",
-      "dependsOn": [
-        "d706f8cb-fab4-47cf-9653-d2d3b3d5ffa7"
-      ]
-    },
-    {
-      "ref": "d706f8cb-fab4-47cf-9653-d2d3b3d5ffa7",
+      "ref": "0b167bd5-9675-412a-8c02-a4b487fbc06b",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -28311,6 +28305,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.4.2"
+      ]
+    },
+    {
+      "ref": "5f9adfb0-f4d6-420e-92dd-50ec9f55cfb4",
+      "dependsOn": [
+        "0b167bd5-9675-412a-8c02-a4b487fbc06b"
       ]
     },
     {
@@ -29709,7 +29709,13 @@
       "dependsOn": []
     },
     {
-      "ref": "2ce5f0e9-cad7-42cd-a29a-16df57bb68c9",
+      "ref": "dc852480-23e3-4359-8a6e-a0ecabff4738",
+      "dependsOn": [
+        "df13f015-98ac-4dd5-a5ce-896a883db5f3"
+      ]
+    },
+    {
+      "ref": "df13f015-98ac-4dd5-a5ce-896a883db5f3",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -29727,12 +29733,6 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
-      ]
-    },
-    {
-      "ref": "52b91f11-3608-4cef-b4e0-748c4f9797ed",
-      "dependsOn": [
-        "2ce5f0e9-cad7-42cd-a29a-16df57bb68c9"
       ]
     },
     {

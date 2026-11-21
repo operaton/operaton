@@ -13,5 +13,12 @@
 -- limitations under the License.
 --
 
+-- https://github.com/operaton/operaton/issues/4030
+-- Indexes are built concurrently (changeset runs with runInTransaction=false).
+-- A failed concurrent build leaves an INVALID index: drop it and re-run.
+create index concurrently if not exists ACT_IDX_TASK_PARENT_TASK_ID on ACT_RU_TASK(PARENT_TASK_ID_);
+create index concurrently if not exists ACT_IDX_HI_TASK_PARENT_TASK_ID on ACT_HI_TASKINST(PARENT_TASK_ID_);
+
+-- schema log last: the changeset is not transactional
 insert into ACT_GE_SCHEMA_LOG
 values ('1500', CURRENT_TIMESTAMP, '7.26.0');

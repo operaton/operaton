@@ -14,6 +14,17 @@ Schema files live in `engine/src/main/resources/org/operaton/bpm/engine/db/`.
 - Only in a **minor** release. Patch releases never change the schema. If an issue needs a schema change, tell the reporter it goes into the next minor schema version.
 - Released upgrade scripts are immutable. Fix mistakes with a new script in the next version.
 
+## Backward compatibility is mandatory
+
+During a rolling update, **older engine instances run together with newer ones on the already upgraded schema**. Every change must work for the previous engine version:
+- add, never remove or rename: new columns nullable or with a default, no dropping of tables/columns/indexes the old engine uses, no type narrowing, no new NOT NULL or unique constraints the old engine would violate
+- the `rolling-update` test suite is the gate for this (see Testing)
+
+Breaking schema changes:
+- only allowed for an upcoming **major** version; the root `pom.xml` version tells whether the next release is a major
+- even then, **ask the user explicitly** before doing one; avoid them whenever possible
+- they require an **approved ADR** (`operaton:adr`). Without one: no-go.
+
 ## Initializing a new schema version
 
 Do this once per minor schema version, **before the first change for it**. Check first: if `upgrade/*_engine_<prev>_to_<new>.sql` already exists on `origin/main` (fetch first), it is initialized, do not run it again.
@@ -69,16 +80,24 @@ Create scripts always use plain `create index` (the tables are empty).
 
 ## Testing
 
-Run what applies; state in the PR what was and was not run.
+Use the existing workflows, do not invent parallel ones. CI workflow `.github/workflows/migration-test.yml` runs on PRs touching `**/*.sql` or the `qa/test-db-*` modules, with a matrix of both suites over `mysql, mariadb, postgres, oracle, sqlserver, db2` (instance-migration also `h2`). It is the only place where Oracle, MSSQL and DB2 are exercised: **read its result on the PR** and fix failures that your change causes.
 
-1. **H2, create scripts + queries**: `./mvnw test -pl engine -Dtest=<affected tests>` (build dependencies first, see `AGENTS.md`).
-2. **Upgrade scripts on real databases**: create the schema from the create scripts, drop the new objects, run the upgrade script as written (autocommit), assert the objects exist (Postgres: also `pg_index.indisvalid`), then run the drop scripts without errors. Containers: `postgres:17`, `mysql:8.4`, `mariadb:11.4`.
-3. **Liquibase end to end** (needed whenever the changelog or `runInTransaction` changes): run the full changelog on an empty database, e.g. `liquibase/liquibase:4.33` with `JAVA_OPTS=-Ddb.name=postgres`, `--search-path` and workdir set to the `liquibase/` directory with `upgrade/` mounted beside it, then check the objects and the schema log row.
-4. **Instance migration**: `cd qa/test-database-container && ./test.sh <db> instance-migration` (needs a full `./mvnw clean install` first; see `qa/test-db-instance-migration/README.md`).
-5. Oracle, MSSQL and DB2 containers are heavy: when they were not run, say so and reason from the dialect (review the SQL against the pitfalls above).
+Run locally what applies, and state in the PR what was and was not run:
 
-## Documenting
+1. **Rolling update (backward compatibility gate)**: `cd qa/test-database-container && ./test.sh <db> rolling-update`. It creates the previous schema, upgrades with the **current upgrade scripts**, and runs the previous engine against the new schema. H2 runs without container. Needs a full `./mvnw clean install -DskipTests -Dskip.frontend.build=true` first. See `qa/test-db-rolling-update/README.md`.
+   - The harness applies upgrade scripts with `sql-maven-plugin`; statements that cannot run in a transaction (`create index concurrently`) need `<autocommit>true</autocommit>` there.
+2. **Instance migration**: `./test.sh <db> instance-migration` (see `qa/test-db-instance-migration/README.md`).
+3. **H2 engine tests**: `./mvnw test -pl engine -Dtest=<affected tests>` (build dependencies first, see `AGENTS.md`).
+4. **Manual checks on real databases** where the suites do not look at your change (e.g. that an index exists and is valid): create the schema from the create scripts, drop the new objects, run the upgrade script as written (autocommit), assert the objects exist (Postgres: `pg_index.indisvalid`), run the drop scripts. Containers: `postgres:17`, `mysql:8.4`, `mariadb:11.4`.
+5. **Liquibase end to end** whenever the changelog or `runInTransaction` changes: run the full changelog on an empty database, e.g. `liquibase/liquibase:4.33` with `JAVA_OPTS=-Ddb.name=postgres`, `--search-path` and workdir set to the `liquibase/` directory with `upgrade/` mounted beside it; check the objects and the schema log row.
 
-- Schema changes need an ADR when they change the persistence layer in a significant way (`docs/decisions/`, see `operaton:adr` and `AGENTS.md`). A single index or column usually does not.
+## Labels and documentation
+
+- Every PR (and issue) affecting the schema gets the label **`scope:db_schema`**.
+- Schema changes must be reflected in the user guide: https://github.com/operaton/documentation/tree/main/docs/documentation/user-guide/process-engine/database/database-schema
+  - `index.md`: the Operaton version to schema version mapping, and a note on what the new schema version changes
+  - `runtime.md` / `history.md` / `identity.md` / ...: columns of changed tables and their **Indexes:** lines
+  - open a PR in the documentation repository and link it from the schema PR
+- An ADR is required for breaking changes (see above) and for significant persistence-layer changes (`docs/decisions/`, `operaton:adr`). A single additive index or column usually does not need one.
 - Commit message: list per-database differences and why (online syntax, already-existing objects).
 - Mark the issue/PR for the release notes with the noteworthy label (see `operaton:release`) and call out manual steps for users, such as a long index build or an `INVALID` index.

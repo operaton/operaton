@@ -177,6 +177,8 @@
     <tagDatabase tag="7.25.0"/>
   </changeSet>
 
+  <!-- Not transactional: postgres builds indexes with "create index concurrently" (#4030).
+       Keep the ACT_GE_SCHEMA_LOG insert last in the 7.26 upgrade scripts. -->
   <changeSet author="Operaton" id="7.25-to-7.26" runInTransaction="false">
     <sqlFile path="upgrade/${db.name}_engine_7.25_to_7.26.sql"
              encoding="UTF-8"

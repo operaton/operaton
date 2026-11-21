@@ -15,7 +15,8 @@
 
 -- https://github.com/operaton/operaton/issues/4030
 -- Indexes are built concurrently (changeset runs with runInTransaction=false).
--- A failed concurrent build leaves an INVALID index: drop it and re-run.
+-- A failed concurrent build leaves an INVALID index that 'if not exists' skips on re-run: drop it and re-run.
+-- Check for invalid indexes with: select indexrelid::regclass from pg_index where not indisvalid;
 create index concurrently if not exists ACT_IDX_TASK_PARENT_TASK_ID on ACT_RU_TASK(PARENT_TASK_ID_);
 create index concurrently if not exists ACT_IDX_HI_TASK_PARENT_TASK_ID on ACT_HI_TASKINST(PARENT_TASK_ID_);
 

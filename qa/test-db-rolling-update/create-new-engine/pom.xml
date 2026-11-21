@@ -151,6 +151,8 @@
                   <goal>execute</goal>
                 </goals>
                 <configuration>
+                  <!-- required for statements that cannot run in a transaction, e.g. PostgreSQL create index concurrently -->
+                  <autocommit>true</autocommit>
                   <srcFiles>
                     <!-- now perform the schema migrations -->
                     <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql</srcFile>

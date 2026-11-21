@@ -51,6 +51,9 @@ public class TestFixture {
 
         String changelogDir = System.getProperty("liquibase.changelog.dir");
         Objects.requireNonNull(changelogDir, "System property liquibase.changelog.dir must be set");
+        // exec:java runs each fixture in its own classloader, but DriverManager only discovers drivers once per JVM.
+        // Load the driver explicitly so it is registered for this classloader.
+        Class.forName(processEngineConfiguration.getJdbcDriver());
         LOG.info("Running Liquibase migration scripts for DB schema " + SCHEMA_VERSION);
         runLiquibase(
                 processEngineConfiguration.getJdbcUrl(),

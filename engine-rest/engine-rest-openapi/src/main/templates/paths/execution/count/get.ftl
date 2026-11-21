@@ -7,7 +7,7 @@
       summary = "Get Execution Count"
       desc = "Queries for the number of executions that fulfill given parameters.
               Takes the same parameters as the [Get
-              Executions](${docsUrl}/reference/rest/execution/get-query/) method."
+              Executions](#tag/Execution/operation/getExecutions) method."
   />
 
   "parameters" : [

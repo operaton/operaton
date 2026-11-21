@@ -28,6 +28,9 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
       - dependency-name: "io.quarkus:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # MyBatis 3.6 changed default behavior (e.g. <bind> scoping inside <foreach>); observe how it evolves
+      - dependency-name: "org.mybatis:mybatis"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
     milestone: 32
@@ -55,6 +58,7 @@ updates:
           - "org.glassfish.jaxb:*"
       maven-plugins:
         patterns:
+          - "io.github.orhankupusoglu:sloc-maven-plugin"
           - "org.apache.maven.plugins:*"
           - "org.apache.maven.extensions:maven-build-cache-extension"
           - "org.apache.felix:maven-bundle-plugin"
@@ -188,7 +192,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 33
+    milestone: 34
     groups:
       all:
         patterns:
@@ -205,7 +209,7 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:npm"
-    milestone: 33
+    milestone: 34
     groups:
       all:
         patterns:
@@ -225,7 +229,7 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:npm"
-    milestone: 33
+    milestone: 34
     groups:
       all:
         patterns:
@@ -244,7 +248,7 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:github-action"
-    milestone: 33
+    milestone: 34
     groups:
       github-actions:
         patterns:
@@ -259,4 +263,4 @@ updates:
     target-branch: "release/2.2.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 33
+    milestone: 34

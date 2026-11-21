@@ -19,19 +19,19 @@
     <!-- database driver versions -->
     <version.h2>2.5.252</version.h2>
     <version.h2-v1>1.4.200</version.h2-v1><!-- used for instance migration qa -->
-    <version.oracle>23.26.3.0.0</version.oracle>
+    <version.oracle>23.26.4.0.0</version.oracle>
     <version.mariadb>3.5.11</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
-    <version.sqlserver>13.6.1.jre11</version.sqlserver>
+    <version.sqlserver>13.6.2.jre11</version.sqlserver>
     <version.mysql>9.7.0</version.mysql>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>12.1.5.0</version.db2>
     <version.postgresql>42.7.14</version.postgresql>
-    <operaton.dbscheme.current.version>7.25.0</operaton.dbscheme.current.version>
+    <operaton.dbscheme.current.version>7.26.0</operaton.dbscheme.current.version>
 
     <!-- needed for sql script and backward compatibility checks -->
-    <operaton.dbscheme.previous.artifactVersion>1.0.0-beta-5</operaton.dbscheme.previous.artifactVersion>
-    <operaton.dbscheme.previous.version>7.24.0</operaton.dbscheme.previous.version>
+    <operaton.dbscheme.previous.artifactVersion>2.2.1</operaton.dbscheme.previous.artifactVersion>
+    <operaton.dbscheme.previous.version>7.25.0</operaton.dbscheme.previous.version>
 
     <!-- Testcontainers JDBC URL parameters. By default, an empty string -->
     <database.tc.params>TC_DAEMON=true</database.tc.params>
@@ -46,7 +46,7 @@
       </dependency>
       <dependency>
         <groupId>com.oracle.database.jdbc</groupId>
-        <artifactId>ojdbc11</artifactId>
+        <artifactId>ojdbc17</artifactId>
         <version>${version.oracle}</version>
       </dependency>
       <dependency>
@@ -499,6 +499,45 @@
     </profile>
 
     <profile>
+      <id>mt-db2</id>
+      <properties>
+        <database.type>db2</database.type>
+        <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
+        <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
+        <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
+        <database.port>${env.MT_DB2_HOST_PORT}</database.port>
+        <database.name>${env.MT_DB2_DATABASE}</database.name>
+        <database.username>${env.MT_DB2_USERNAME}</database.username>
+        <database.password>${env.MT_DB2_PASSWORD}</database.password>
+        <database.url>jdbc:db2://localhost:${database.port}/${database.name}</database.url>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>com.ibm.db2</groupId>
+          <artifactId>jcc</artifactId>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>sql-maven-plugin</artifactId>
+              <dependencies>
+                <dependency>
+                  <groupId>com.ibm.db2</groupId>
+                  <artifactId>jcc</artifactId>
+                  <version>${version.db2}</version>
+                </dependency>
+              </dependencies>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+    <profile>
       <id>mt-oracle</id>
       <properties>
         <database.type>oracle</database.type>
@@ -515,7 +554,7 @@
       <dependencies>
         <dependency>
           <groupId>com.oracle.database.jdbc</groupId>
-          <artifactId>ojdbc11</artifactId>
+          <artifactId>ojdbc17</artifactId>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -529,7 +568,7 @@
               <dependencies>
                 <dependency>
                   <groupId>com.oracle.database.jdbc</groupId>
-                  <artifactId>ojdbc11</artifactId>
+                  <artifactId>ojdbc17</artifactId>
                   <version>${version.oracle}</version>
                 </dependency>
               </dependencies>
@@ -552,7 +591,7 @@
       <dependencies>
         <dependency>
           <groupId>com.oracle.database.jdbc</groupId>
-          <artifactId>ojdbc11</artifactId>
+          <artifactId>ojdbc17</artifactId>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -566,7 +605,7 @@
               <dependencies>
                 <dependency>
                   <groupId>com.oracle.database.jdbc</groupId>
-                  <artifactId>ojdbc11</artifactId>
+                  <artifactId>ojdbc17</artifactId>
                   <version>${version.oracle}</version>
                 </dependency>
               </dependencies>

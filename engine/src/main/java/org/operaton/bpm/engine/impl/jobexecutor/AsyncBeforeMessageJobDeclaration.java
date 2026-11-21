@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  */
 public @NullMarked class AsyncBeforeMessageJobDeclaration extends MessageJobDeclaration {
 
-  private static final String[] asyncBeforeOperations = new String[] {PvmAtomicOperation.TRANSITION_CREATE_SCOPE.getCanonicalName(),
+  private static final String[] asyncBeforeOperations = {PvmAtomicOperation.TRANSITION_CREATE_SCOPE.getCanonicalName(),
     PvmAtomicOperation.PROCESS_START.getCanonicalName(), PvmAtomicOperation.ACTIVITY_START_CREATE_SCOPE.getCanonicalName()};
 
   public AsyncBeforeMessageJobDeclaration() {

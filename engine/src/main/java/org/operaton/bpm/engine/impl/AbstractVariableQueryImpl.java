@@ -40,7 +40,7 @@ public abstract class AbstractVariableQueryImpl<T extends Query<?,?>, U> extends
 
   @Serial private static final long serialVersionUID = 1L;
 
-  private List<QueryVariableValue> queryVariableValues = new ArrayList<>();
+  private final List<QueryVariableValue> queryVariableValues = new ArrayList<>();
 
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;

@@ -42,6 +42,29 @@ Stale images (older than the latest green build) → 🟡, note it.
 ## 4. Dependency / security
 - [ ] No open HIGH/CRITICAL Dependabot alerts (legacy webapp deps excepted):
   `gh api repos/operaton/operaton/dependabot/alerts -X GET -f state=open -q '[.[]|select(.security_advisory.severity=="high" or .security_advisory.severity=="critical")]|length'`
+  Alerts for test-scoped dependencies are not blocking (not shipped). Check scope on `BRANCH` with all distro profiles:
+  `./mvnw -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-webjar-neo,distro-starter,h2-in-memory,check-api-compatibility,quarkus-tests,integration-test-operaton-run dependency:list | grep <artifactId>`
+  — only `:test` hits → non-blocking, list them.
+- [ ] Security advisories handled per `references/security-advisories.md` (steps 1–6):
+  - [ ] open (triage/draft) advisories inventoried; affecting ones classified
+  - [ ] you must not update the advisory data
+  - [ ] approved private-fork PRs merged into `main` via the advisory page (user confirmed); fix SHAs recorded
+  - [ ] fixes cherry-picked to `BRANCH` via PR (skip when `BRANCH == main`); PRs merged
+  - [ ] `patched_versions` = `VER` on every addressed advisory
+  - [ ] no HIGH/CRITICAL advisory with open PRs affecting the line remains unfixed in `BRANCH` (else 🔴)
+- [ ] **Latest Spring Boot / Spring Framework patch integrated** (every release type). Operaton usually releases
+  the day after Spring's monthly patch releases, so `BRANCH` must carry the newest patch of its Spring Boot and Spring
+  Framework lines:
+  ```bash
+  .devenv/scripts/release/check-spring-versions.py --branch BRANCH
+  ```
+  It compares `version.spring-boot` / `version.spring` in `pom.xml` with the newest GA patch of the same
+  `MAJOR.MINOR` line on Maven Central, lists open PRs against `BRANCH` mentioning Spring, and notes newer minor lines
+  (informational; patch releases never take a new Spring minor). Exit code `2` = a newer patch is missing → 🔴
+  blocker unless the user explicitly waives it. Fix: merge the Dependabot bump PR on `BRANCH`, or raise one. Spring
+  often ships on the day before the release, so the bump may land only on release day — run the check again
+  right before PERFORM (see `perform-release.md` → Preconditions).
+  A Spring bump is user-facing: list it under *Dependency Upgrades* in the patch section of the release notes.
 - [ ] (Milestone/minor only) dependency-updates report sane — flag if Spring/Quarkus/Tomcat/Wildfly need bumping. Heavy; for patches, skip unless asked.
 
 ## 5. Label & milestone hygiene

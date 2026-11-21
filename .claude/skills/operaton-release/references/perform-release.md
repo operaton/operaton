@@ -5,7 +5,12 @@ Drives `.github/workflows/release.yml` (which invokes JReleaser). **Only on an e
 ## Preconditions (hard gates)
 1. A **PREPARE** run for this version completed this session with a 🟢 GO (or 🟡 whose items the user accepts). If none was run → run PREPARE first. On 🔴 → refuse.
 2. Resolve `BRANCH` + qualifier (see SKILL.md "resolve the target").
-3. Working state: nothing to commit that would interfere; you are not pushing manually — the workflow does the version bump/commit.
+3. **Spring patch still current:** re-run `.devenv/scripts/release/check-spring-versions.py --branch BRANCH`
+   right before the dry run and again before the real run. Spring often ships the day before an Operaton release, so a
+   bump may land after PREPARE (or a new patch may appear). Exit `2` → stop: merge the bump, wait for green builds,
+   then dry-run again. If the bump landed after PREPARE, re-run the Docker smoke tests on the new SNAPSHOT images or on
+   the released `VER` images, and add the bump to the release notes' *Dependency Upgrades*.
+4. Working state: nothing to commit that would interfere; you are not pushing manually — the workflow does the version bump/commit.
 
 ## release.yml inputs (workflow_dispatch)
 | Input | Meaning | Value |
@@ -46,6 +51,7 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 - [ ] Watch the Docker build
 - [ ] Docker image pushed to Docker Hub (check `https://hub.docker.com/r/operaton/operaton/tags`).
 - [ ] Confirm version tags appear on Docker Hub, and `latest` points at the **highest** version released (see "Docker `latest` with several releases on one day").
+- [ ] **Resolved vulnerabilities** listed: advisories with `VER` in `patched_versions` and fix in tag `vVER` — in the report and under `## Security` in the GitHub release body (`security-advisories.md` → 7).
 - [ ] **Helm chart** published (see below): chart PR on `operaton/operaton-helm` opened, merged, and the new chart version listed in `https://operaton.github.io/operaton-helm/index.yaml`.
 - [ ] Snapshot pre-release tags cleaned up.
 
@@ -163,6 +169,6 @@ Caveats:
   the Helm workflow manually, then re-run only the failed `post_release` job after fixing the token.
 
 ## Report
-List: run URL + result, release URL, Maven Central status, Docker status, next-version commit. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset — these are post-release items, not done here).
+List: run URL + result, release URL, Maven Central status, Docker status, next-version commit. Resolved vulnerabilities (GHSA, severity, CVE, summary) and their publish state + URL. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset — these are post-release items, not done here).
 
 Once the release is verified live, the post-release announcement is the **ANNOUNCE** action — see `announce.md` (website + blog, Slack, forum, branch-cleanup list, housekeeping).

@@ -6,7 +6,7 @@
       tag = "User"
       summary = "Count Users"
       desc = "Queries for the number of deployments that fulfill given parameters. Takes the same parameters as the
-              [Get Users](${docsUrl}/reference/rest/user/get-query/) method." />
+              [Get Users](#tag/User/operation/getUsers) method." />
 
   "parameters" : [
 

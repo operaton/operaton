@@ -21,6 +21,7 @@
   <modules>
      <module>test-fixture-724</module>
     <module>test-fixture-725</module>
+    <module>test-fixture-726</module>
     <module>test-migration</module>
   </modules>
   <profiles>

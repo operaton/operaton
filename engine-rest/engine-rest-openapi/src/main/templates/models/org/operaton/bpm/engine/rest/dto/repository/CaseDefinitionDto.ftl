@@ -49,7 +49,7 @@
         minimum = 0
         last = true
         desc = "History time to live value of the case definition.
-                Is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)." />
+                Is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)." />
 
 </@lib.dto>
 </#macro>

@@ -17,12 +17,10 @@
 package org.operaton.commons.testing;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -89,7 +87,7 @@ public class ProcessEngineLoggingRule extends TestWatcher {
     for (String loggerName : allWatched.keySet()) {
       allLogs.addAll(getLog(loggerName));
     }
-    Collections.sort(allLogs, new LogEventComparator());
+    allLogs.sort(new LogEventComparator());
     return allLogs;
   }
 
@@ -147,6 +145,6 @@ public class ProcessEngineLoggingRule extends TestWatcher {
   private List<ILoggingEvent> filterLog(List<ILoggingEvent> log, String subString){
     return log.stream()
       .filter(logEntry -> logEntry.getFormattedMessage().contains(subString))
-      .collect(Collectors.toList());
+      .toList();
   }
 }

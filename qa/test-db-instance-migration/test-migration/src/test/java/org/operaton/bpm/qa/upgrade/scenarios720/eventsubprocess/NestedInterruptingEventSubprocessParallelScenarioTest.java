@@ -22,13 +22,17 @@ import org.junit.Test;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
+import org.operaton.bpm.qa.upgrade.util.CompleteTaskThread;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 @ScenarioUnderTest("NestedInterruptingEventSubprocessParallelScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class NestedInterruptingEventSubprocessParallelScenarioTest {
 
   @Rule

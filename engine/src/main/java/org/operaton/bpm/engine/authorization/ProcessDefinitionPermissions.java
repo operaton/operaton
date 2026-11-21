@@ -114,7 +114,7 @@ public @NullMarked enum ProcessDefinitionPermissions implements Permission {
   /** Indicates that UPDATE_HISTORY interactions are permitted. */
   UPDATE_HISTORY("UPDATE_HISTORY", 16_777_216);
 
-  private static final Resource[] RESOURCES = new Resource[] { Resources.PROCESS_DEFINITION };
+  private static final Resource[] RESOURCES = { Resources.PROCESS_DEFINITION };
 
   private final String name;
   private final int id;

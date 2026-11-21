@@ -9,7 +9,7 @@
               Can also restart completed process instances.
               It will create a new instance using the original instance information.
               To execute the restart asynchronously, use the
-              [Restart Process Instance Async](${docsUrl}/reference/rest/process-definition/post-restart-process-instance-async/) method.
+              [Restart Process Instance Async](#tag/Process-Definition/operation/restartProcessInstanceAsyncOperation) method.
 
               For more information about the difference between synchronous and asynchronous execution,
               please refer to the related section of the

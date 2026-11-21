@@ -7,13 +7,13 @@
       summary = "Get Cleanable Process Instance Report"
       desc = "Retrieves a report about a process definition and finished process instances
               relevant to history cleanup (see
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)) 
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup))
               so that you can tune the history time to live.
               These reports include the count of the finished historic process
               instances, cleanable process instances and basic process definition
               data - id, key, name and version.
               The size of the result set can be retrieved by using the
-              [Get Cleanable Process Instance Report Count](${docsUrl}/reference/rest/history/process-definition/get-cleanable-process-instance-report-count/)
+              [Get Cleanable Process Instance Report Count](#tag/Historic-Process-Definition/operation/getCleanableHistoricProcessInstanceReportCount)
               method."
   />
 

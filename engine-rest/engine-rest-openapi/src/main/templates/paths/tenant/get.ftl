@@ -7,7 +7,7 @@
       summary = "Get Tenants"
       desc = "Query for a list of tenants using a list of parameters. The size of the result set
               can be retrieved by using the [Get Tenant
-              Count](${docsUrl}/reference/rest/tenant/get-query-count/) method."
+              Count](#tag/Tenant/operation/getTenantCount) method."
   />
 
   "parameters" : [

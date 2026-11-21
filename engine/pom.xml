@@ -23,6 +23,8 @@
     <mail.server.port>5025</mail.server.port>
     <authorizationCheckRevokes>auto</authorizationCheckRevokes>
     <jdbcBatchProcessing>true</jdbcBatchProcessing>
+    <!-- Forks for H2 runs, lowered on CI -->
+    <engine.test.forkCount>4</engine.test.forkCount>
 
     <!-- We shade artifacts into the jar, so we need to generate a dependency BOM
     for the license book -->
@@ -456,6 +458,8 @@
           </includes>
           <excludes combine.children="append">
             <exclude>**/*TestCase.java</exclude>
+            <!-- Nested classes run with their outer class -->
+            <exclude>**/*$*</exclude>
             <exclude>%regex[.*(${test.excludes}).*Test.*]</exclude>
             <!-- Nashorn is not part of the JDK anymore in Java 15+ -->
             <exclude>**/*NashornTest.java</exclude>
@@ -780,22 +784,23 @@
     </profile>
 
     <profile>
+      <!-- GitHub runners have only 4 vCPU -->
+      <id>ci-forks</id>
+      <activation>
+        <property>
+          <name>env.CI</name>
+        </property>
+      </activation>
+      <properties>
+        <engine.test.forkCount>2</engine.test.forkCount>
+      </properties>
+    </profile>
+
+    <profile>
       <id>h2-in-memory</id>
       <properties>
-        <!-- Run tests across multiple concurrent JVM forks (0.5 * available CPU cores).
-             Each fork stays single-threaded internally (execution order is unaffected);
-             only fork count changes. Safe here because this profile isolates each
-             fork's H2 database via ${surefire.forkNumber} in the JDBC URL below.
-             Scoped to this profile only: the container-backed profiles (postgresql,
-             mysql, mariadb, oracle, db2, sqlserver) use jdbc:tc: URLs whose Testcontainers
-             cache is JVM-local, so a higher fork count would start one database
-             container (plus the configured test heap) per fork.
-             0.5C was chosen empirically over higher multipliers: on a 10-core machine,
-             0.5C (5 forks) measured faster than 0.7C (7 forks), which was faster than 1C
-             (10 forks), which was faster than 1.5C (15 forks) - beyond a certain fork
-             count, oversubscription (JVM startup/classloading cost per fork, GC/memory
-             pressure) outweighs the added parallelism. -->
-        <surefire.forkCount>0.5C</surefire.forkCount>
+        <!-- Each fork gets its own in-memory database -->
+        <surefire.forkCount>${engine.test.forkCount}</surefire.forkCount>
       </properties>
       <build>
         <plugins>

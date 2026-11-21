@@ -109,11 +109,11 @@ public @NullMarked class OAuth2IdentityProvider extends DbIdentityServiceProvide
       return Collections.emptyList();
     }
     return authentication.getAuthorities().stream().map(a -> {
-      var group = new GroupEntity();
+      Group group = new GroupEntity();
       group.setId(a.getAuthority());
       group.setName(a.getAuthority());
       return group;
-    }).collect(Collectors.toList());
+    }).toList();
   }
 
   public static class OAuth2UserQuery extends UserQueryImpl {

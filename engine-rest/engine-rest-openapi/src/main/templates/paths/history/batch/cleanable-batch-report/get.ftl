@@ -7,16 +7,16 @@
       summary = "Get Cleanable Batch Report"
       desc = "Retrieves a report about a historic batch operations relevant to history cleanup
               (see
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)
               ) so that you can tune the history time to live.
               These reports include the count of the finished batches, cleanable
               batches and type of the batch.
               The size of the result set can be retrieved by using the
-              [Get Cleanable Batch Report Count](${docsUrl}/reference/rest/history/batch/get-cleanable-batch-report-count/)
+              [Get Cleanable Batch Report Count](#tag/Historic-Batch/operation/getCleanableHistoricBatchesReportCount)
               method.
 
               **Please note:**
-              The history time to live for batch operations does not support [Multi-Tenancy](${docsUrl}/user-guide/process-engine/multi-tenancy.md).
+              The history time to live for batch operations does not support [Multi-Tenancy](${docsUrl}/user-guide/process-engine/multi-tenancy/).
               The report will return an information for all batch operations (for all tenants) if you have permissions
               to see the history.
               "

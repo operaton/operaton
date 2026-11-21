@@ -69,6 +69,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
   @Override
   public AttachmentDto getAttachment(String attachmentId) {
     ensureHistoryEnabled(Status.NOT_FOUND);
+    ensureTaskExists(Status.NOT_FOUND);
 
     Attachment attachment = engine.getTaskService().getTaskAttachment(taskId, attachmentId);
 
@@ -82,6 +83,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
   @Override
   public InputStream getAttachmentData(String attachmentId) {
     ensureHistoryEnabled(Status.NOT_FOUND);
+    ensureTaskExists(Status.NOT_FOUND);
 
     InputStream attachmentData = engine.getTaskService().getTaskAttachmentContent(taskId, attachmentId);
 
@@ -96,6 +98,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
   @Override
   public void deleteAttachment(String attachmentId) {
     ensureHistoryEnabled(Status.FORBIDDEN);
+    ensureTaskExists(Status.NOT_FOUND);
 
     try {
       engine.getTaskService().deleteTaskAttachment(taskId, attachmentId);
@@ -176,6 +179,11 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
     }
   }
 
+  /**
+   * Resolves the task through the authorization-filtered historic task instance
+   * query, so that a caller without read access to the task cannot reach its
+   * attachments by id. Must be called by every endpoint of this resource.
+   */
   private void ensureTaskExists(Status status) {
     HistoricTaskInstance historicTaskInstance = engine.getHistoryService().createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
     if (historicTaskInstance == null) {

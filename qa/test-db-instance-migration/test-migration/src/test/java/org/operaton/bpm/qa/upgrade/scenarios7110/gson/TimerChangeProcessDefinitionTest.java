@@ -27,6 +27,8 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Tassilo Weidner
  */
 @ScenarioUnderTest("TimerChangeProcessDefinitionScenario")
-@Origin("7.11.0")
+@Origin("7.24.0")
 public class TimerChangeProcessDefinitionTest {
 
   protected static final Date FIXED_DATE_ONE = new Date(1363608000000L);

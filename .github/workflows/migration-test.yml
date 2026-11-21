@@ -11,18 +11,27 @@ on:
     paths:
       - '**/*.sql'
       - 'qa/test-db-rolling-update/**'
+      - 'qa/test-db-instance-migration/**'
+      - 'qa/test-db-util/**'
+      - 'qa/test-database-container/**'
   schedule:
     - cron: "15 1 * * 5"     # Runs at 1:15 AM UTC Friday
   workflow_dispatch:
 
 jobs:
   qa:
+    name: ${{ matrix.suite }} (${{ matrix.db }})
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        db: [mysql, mariadb, postgres, oracle, sqlserver]
+        suite: [rolling-update, instance-migration]
+        db: [mysql, mariadb, postgres, oracle, sqlserver, db2]
+        include:
+          # H2 runs file-based without a container and is only relevant for instance migration
+          - suite: instance-migration
+            db: h2
 
     steps:
       - name: Checkout repository
@@ -34,7 +43,10 @@ jobs:
         uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
 
       - name: Run QA script
+        env:
+          MATRIX_DB: ${{ matrix.db }}
+          MATRIX_SUITE: ${{ matrix.suite }}
         run: |
           ./mvnw clean install -DskipTests -Dskip.frontend.build=true
           cd qa/test-database-container
-          ./test.sh ${{ matrix.db }}
+          ./test.sh "$MATRIX_DB" "$MATRIX_SUITE"

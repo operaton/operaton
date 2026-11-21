@@ -144,7 +144,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testFirstNameLikeQuery() {
-    String[] testQueries = new String[] {"first%", "%Name", "%stNa%"};
+    String[] testQueries = {"first%", "%Name", "%stNa%"};
 
     for (String testQuery : testQueries) {
       Response response = given()
@@ -164,7 +164,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testLastNameLikeQuery() {
-    String[] testQueries = new String[] {"last%", "%Name", "%stNa%"};
+    String[] testQueries = {"last%", "%Name", "%stNa%"};
 
     for (String testQuery : testQueries) {
       Response response = given()
@@ -184,7 +184,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testEmailLikeQuery() {
-    String[] testQueries = new String[] {"test@%", "%example.org", "%@%"};
+    String[] testQueries = {"test@%", "%example.org", "%@%"};
 
     for (String testQuery : testQueries) {
       Response response = given()

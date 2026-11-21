@@ -7,13 +7,13 @@
       summary = "Get Cleanable Decision Instance Report"
       desc = "Retrieves a report about a decision definition and finished decision instances
               relevant to history cleanup (see
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)), 
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)),
               so that you can tune the history time to live.
               These reports include the count of the finished historic decision
               instances, cleanable decision instances and basic decision definition
               data - id, key, name and version.
               The size of the result set can be retrieved by using the 
-              [Get Cleanable Decision Instance Report Count](${docsUrl}/reference/rest/history/decision-definition/get-cleanable-decision-instance-report-count/) method."
+              [Get Cleanable Decision Instance Report Count](#tag/Historic-Decision-Definition/operation/getCleanableHistoricDecisionInstanceReportCount) method."
   />
 
   "parameters" : [

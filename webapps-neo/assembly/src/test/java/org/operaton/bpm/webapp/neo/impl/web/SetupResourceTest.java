@@ -23,12 +23,13 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Groups;
+import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
@@ -51,13 +52,17 @@ class SetupResourceTest {
   static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder()
       .configurationResource("operaton-test-engine.cfg.xml").build();
 
-  ProcessEngineConfiguration processEngineConfiguration;
+  protected static final String EXTRA_ADMIN_GROUP = "ops";
+
+  ProcessEngineConfigurationImpl processEngineConfiguration;
   IdentityService identityService;
   AuthorizationService authorizationService;
 
   @AfterEach
   void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
+    processEngineConfiguration.getAdminUsers().clear();
+    processEngineConfiguration.getAdminGroups().remove(EXTRA_ADMIN_GROUP);
 
     for (User user : identityService.createUserQuery().list()) {
       identityService.deleteUser(user.getId());
@@ -90,13 +95,13 @@ class SetupResourceTest {
     resource.createInitialUser(ENGINE_NAME, userDto("kermit", "kermitspassword"));
 
     // then
-    assertThat(identityService.createUserQuery().userId("kermit").count()).isEqualTo(1);
-    assertThat(identityService.createUserQuery().memberOfGroup(Groups.OPERATON_ADMIN).count()).isEqualTo(1);
+    assertThat(identityService.createUserQuery().userId("kermit").count()).isOne();
+    assertThat(identityService.createUserQuery().memberOfGroup(Groups.OPERATON_ADMIN).count()).isOne();
     assertThat(authorizationService.createAuthorizationQuery()
-        .groupIdIn(Groups.OPERATON_ADMIN)
-        .resourceType(Resources.APPLICATION)
-        .resourceId(Authorization.ANY)
-        .count()).isEqualTo(1);
+      .groupIdIn(Groups.OPERATON_ADMIN)
+      .resourceType(Resources.APPLICATION)
+      .resourceId(Authorization.ANY)
+      .count()).isOne();
   }
 
   @Test
@@ -130,6 +135,96 @@ class SetupResourceTest {
     assertThat(exception).isNotNull();
     assertThat(exception.getStatus().getStatusCode()).isEqualTo(403);
     assertThat(identityService.createUserQuery().userId("gonzo").count()).isZero();
+  }
+
+  /**
+   * Administrators that exist without a membership in {@code operaton-admin} must close the
+   * endpoints too; an open setup page next to a configured administrator lets anyone mint a
+   * second one.
+   */
+  @Test
+  void shouldRejectInitialUserWhenConfiguredAdministratorUserExists() throws Exception {
+    // given
+    processEngineConfiguration.setAuthorizationEnabled(true);
+    processEngineConfiguration.getAdminUsers().add("admin");
+    createUser("admin");
+
+    // then
+    assertSetupClosed();
+  }
+
+  @Test
+  void shouldRejectInitialUserWhenMemberOfConfiguredAdministratorGroupExists() throws Exception {
+    // given
+    processEngineConfiguration.setAuthorizationEnabled(true);
+    processEngineConfiguration.getAdminGroups().add(EXTRA_ADMIN_GROUP);
+    Group group = identityService.newGroup(EXTRA_ADMIN_GROUP);
+    identityService.saveGroup(group);
+    createUser("kermit");
+    identityService.createMembership("kermit", EXTRA_ADMIN_GROUP);
+
+    // then
+    assertSetupClosed();
+  }
+
+  @Test
+  void shouldRejectInitialUserWhenUserHoldsAllAuthorizationPermissions() throws Exception {
+    // given
+    processEngineConfiguration.setAuthorizationEnabled(true);
+    createUser("kermit");
+    Authorization authorization = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+    authorization.setUserId("kermit");
+    authorization.setResource(Resources.AUTHORIZATION);
+    authorization.setResourceId(Authorization.ANY);
+    authorization.addPermission(Permissions.ALL);
+    authorizationService.saveAuthorization(authorization);
+
+    // then
+    assertSetupClosed();
+  }
+
+  @Test
+  void shouldRejectInitialUserWhenExternalGroupHoldsAllAuthorizationPermissions() throws Exception {
+    // given a group managed by an identity provider: authorizations exist, no local group or members
+    processEngineConfiguration.setAuthorizationEnabled(true);
+    Authorization authorization = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+    authorization.setGroupId("idp-admins");
+    authorization.setResource(Resources.AUTHORIZATION);
+    authorization.setResourceId(Authorization.ANY);
+    authorization.addPermission(Permissions.ALL);
+    authorizationService.saveAuthorization(authorization);
+
+    // then
+    assertSetupClosed();
+  }
+
+  @Test
+  void shouldRejectInitialUserWhenAnyUserExistsWithoutAuthorization() throws Exception {
+    // given authorization disabled, every user is unrestricted
+    processEngineConfiguration.setAuthorizationEnabled(false);
+    createUser("kermit");
+
+    // then
+    assertSetupClosed();
+  }
+
+  protected void assertSetupClosed() throws Exception {
+    SetupResource resource = new SetupResource();
+
+    assertThat(resource.isSetupAvailable(ENGINE_NAME).setupAvailable()).isFalse();
+
+    InvalidRequestException exception = catchThrowableOfType(InvalidRequestException.class,
+        () -> resource.createInitialUser(ENGINE_NAME, userDto("gonzo", "gonzospassword")));
+
+    assertThat(exception).isNotNull();
+    assertThat(exception.getStatus().getStatusCode()).isEqualTo(403);
+    assertThat(identityService.createUserQuery().userId("gonzo").count()).isZero();
+  }
+
+  protected void createUser(String id) {
+    User user = identityService.newUser(id);
+    user.setPassword(id + "spassword");
+    identityService.saveUser(user);
   }
 
   protected UserDto userDto(String id, String password) {

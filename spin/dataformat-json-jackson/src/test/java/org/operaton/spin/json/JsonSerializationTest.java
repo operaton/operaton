@@ -77,7 +77,7 @@ class JsonSerializationTest {
 
   @Test
   void plainTypeArray() throws Exception {
-    int[] array = new int[]{5, 10};
+    int[] array = {5, 10};
 
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(array);
     assertThat(canonicalTypeString).isNotNull();

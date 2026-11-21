@@ -211,13 +211,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
     if (scope == null) {
       return Collections.emptyMap();
     }
-
-    Map<String, TimerDeclarationImpl> result = scope.getProperties().get(BpmnProperties.TIMER_DECLARATIONS);
-    if (result != null) {
-      return result;
-    } else {
-      return Collections.emptyMap();
-    }
+    return scope.getProperties().get(BpmnProperties.TIMER_DECLARATIONS);
   }
 
   /**

@@ -22,6 +22,22 @@ or structural, and the commits with their PRs and closed issues.
 Exit code `0` = no schema change, `2` = schema changed (read the verdict),
 `1` = error.
 
+## `check-spring-versions.py`
+
+Check that the branch integrates the newest Spring Boot and Spring Framework
+patch (PREPARE and right before PERFORM; Operaton usually releases the day
+after Spring). Compares `version.spring-boot` / `version.spring` in `pom.xml`
+with the newest GA patch of the same `MAJOR.MINOR` line on Maven Central, shows
+its publication date, open PRs against the branch mentioning Spring, and newer
+minor lines (informational). **Read-only** (`gh` + Maven Central).
+
+```bash
+.devenv/scripts/release/check-spring-versions.py --branch release/2.2.x
+```
+
+Exit code `0` = latest patches integrated, `2` = newer patch missing (read the
+verdict), `1` = error.
+
 ## `list-merged-branches.sh`
 
 List the branches of merged PRs in a release milestone, with links, so a human

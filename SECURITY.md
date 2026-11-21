@@ -12,7 +12,8 @@ the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 | Version | Maintained                           |
 |---------|--------------------------------------|
-| 2.1.x   | ✅ Fully maintained                  |
+| 2.2.x   | ✅ Fully maintained                   |
+| 2.1.x   | ❌ End of life (final release: 2.1.6) |
 | 1.1.x   | ❌ End of life (final release: 1.1.5) |
 | 1.0.x   | ❌ End of life (final release: 1.0.3) |
 

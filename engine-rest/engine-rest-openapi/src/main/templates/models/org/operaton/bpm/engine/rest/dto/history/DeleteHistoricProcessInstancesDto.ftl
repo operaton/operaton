@@ -12,7 +12,7 @@
       type = "ref"
       dto = "HistoricProcessInstanceQueryDto"
       desc = "A historic process instance query like the request body described by
-              [POST /history/process-instance](${docsUrl}/reference/rest/history/process-instance/post-process-instance-query/)."/>
+              [POST /history/process-instance](#tag/Historic-Process-Instance/operation/queryHistoricProcessInstances)."/>
 
   <@lib.property
       name = "deleteReason"

@@ -116,9 +116,9 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
       public <T> T execute(Command<T> command) {
 
         T executed = next.execute(command);
-        ThreadControl threadControl = syncBeforeFlush.get();
-        if (threadControl != null) {
-          threadControl.sync();
+        ThreadControl monitor = syncBeforeFlush.get();
+        if (monitor != null) {
+          monitor.sync();
         }
 
         return executed;

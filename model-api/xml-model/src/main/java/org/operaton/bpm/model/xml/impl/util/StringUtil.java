@@ -64,7 +64,7 @@ public final class StringUtil {
   }
 
   public static List<String> splitListBySeparator(@Nullable String text, String separator) {
-    String[] result = new String[]{};
+    String[] result = {};
     if (text != null) {
       result = text.split(separator);
     }

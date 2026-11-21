@@ -24,7 +24,7 @@
         type = "ref"
         dto = "ProcessInstanceQueryDto"
         desc = "A process instance query like the request body described by
-                [POST /process-instance](${docsUrl}/reference/rest/process-instance/post-query/#request-body)."
+                [POST /process-instance](#tag/Process-Instance/operation/queryProcessInstances)."
     />
 
     

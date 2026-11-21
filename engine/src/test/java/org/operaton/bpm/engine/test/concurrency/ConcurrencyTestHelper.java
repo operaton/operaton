@@ -52,11 +52,25 @@ public abstract class ConcurrencyTestHelper {
     for (ControllableCommand<?> controllableCommand : controllableCommands) {
       ThreadControl threadControl = controllableCommand.monitor;
       threadControl.executingThread.interrupt();
-      threadControl.executingThread.join();
+      joinIgnoringInterrupts(threadControl.executingThread);
     }
 
     // clear the test thread's interruption state
     Thread.interrupted();
+  }
+
+  /**
+   * A failing command interrupts the control thread after it has reported its exception, which may happen only
+   * after the test method has returned. Such a late interrupt must not abort waiting for the thread to end.
+   */
+  private static void joinIgnoringInterrupts(Thread thread) {
+    while (thread.isAlive()) {
+      try {
+        thread.join();
+      } catch (InterruptedException e) {
+        // late interrupt from a failing command, keep waiting
+      }
+    }
   }
 
   protected ThreadControl executeControllableCommand(final ControllableCommand<?> command) {

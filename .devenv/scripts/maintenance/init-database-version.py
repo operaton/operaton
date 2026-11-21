@@ -4,12 +4,16 @@ import argparse
 import os
 import re
 import shutil
+import subprocess
 import sys
+import urllib.request
 from lxml import etree as ET
 import datetime
 
 DATABASES = ["h2", "db2", "mariadb", "mssql", "mysql", "oracle", "postgres"]
 SELECTED_DATABASES = DATABASES.copy()
+
+ENGINE_METADATA_URL = "https://repo1.maven.org/maven2/org/operaton/bpm/operaton-engine/maven-metadata.xml"
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -34,6 +38,13 @@ def get_property_from_pom(pom_path, prop):
         if el.tag.endswith(prop):
             return el.text.strip()
     error(f"Property {prop} not found in {pom_path}")
+
+def get_project_version(pom_path="pom.xml"):
+    root = ET.parse(pom_path).getroot()
+    version = root.find("{http://maven.apache.org/POM/4.0.0}version")
+    if version is None or not version.text:
+        error(f"Project version not found in {pom_path}")
+    return version.text.strip()
 
 def set_property_in_pom(pom_path, prop, value):
     tree = ET.parse(pom_path)
@@ -84,6 +95,41 @@ def prompt_databases(assume_yes):
                 selected.add(db)
         else:
             print("Invalid input.")
+
+def find_latest_release_version():
+    """Returns the latest final (no milestone, RC, beta or snapshot) Operaton release on Maven Central, or None."""
+    try:
+        with urllib.request.urlopen(ENGINE_METADATA_URL, timeout=30) as response:
+            root = ET.fromstring(response.read())
+    except Exception as e:
+        print(f"Warning: Could not read released versions from {ENGINE_METADATA_URL}: {e}")
+        return None
+    releases = [v.text.strip() for v in root.iter("version") if v.text and validate_version(v.text.strip())]
+    if not releases:
+        return None
+    return max(releases, key=lambda v: tuple(int(p) for p in v.split(".")))
+
+def prompt_previous_artifact_version(assume_yes):
+    if assume_yes:
+        error("Could not determine the latest Operaton release. Specify it with --previous-artifact-version.")
+    while True:
+        v = input("Enter the latest released Operaton version: ").strip()
+        if validate_version(v):
+            return v
+        print("Invalid version format. Please use semantic versioning (major.minor.patch)")
+
+def check_release_schema_version(release_version, schema_version):
+    """Warns if the release tag is available locally and uses a different database schema version."""
+    try:
+        pom = subprocess.run(["git", "show", f"v{release_version}:database/pom.xml"],
+                             capture_output=True, text=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        print(f"Note: Tag v{release_version} not found locally, skipping database schema version check")
+        return
+    m = re.search(r"<operaton\.dbscheme\.current\.version>([^<]*)</operaton\.dbscheme\.current\.version>", pom)
+    if m and m.group(1).strip() != schema_version:
+        print(f"Warning: Operaton {release_version} uses database schema version {m.group(1).strip()}, "
+              f"expected {schema_version}. Check operaton.dbscheme.previous.artifactVersion in database/pom.xml.")
 
 def update_create_engine_file(db, new_version):
     path = f"engine/src/main/resources/org/operaton/bpm/engine/db/create/activiti.{db}.create.engine.sql"
@@ -229,6 +275,13 @@ def create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version):
             rf"\g<1>{current_version}\g<2>",
             content
         )
+        # The fixture is created with the engine under development; the
+        # release finalizes it to the released version
+        content = re.sub(
+            r"(<operaton\.version\.current>)[^<]*(</operaton\.version\.current>)",
+            rf"\g<1>{get_project_version()}\g<2>",
+            content
+        )
         with open(fixture_pom, "w", encoding="utf-8") as f:
             f.write(content)
     else:
@@ -256,21 +309,6 @@ def register_fixture_module(base, cur_vwpwd, new_vwpwd):
     else:
         print(f"Warning: could not find {cur_mod} in {parent_pom}; add {new_mod} manually")
 
-def update_old_engine_pom(current_version, previous_version):
-    pom = "qa/test-old-engine/pom.xml"
-    if not os.path.isfile(pom):
-        print(f"Warning: {pom} not found")
-        return
-    with open(pom, "r", encoding="utf-8") as f:
-        content = f.read()
-    content = re.sub(
-        r"<operaton.old.engine.version>[^<]*</operaton.old.engine.version>",
-        f"<operaton.old.engine.version>{previous_version}</operaton.old.engine.version>",
-        content
-    )
-    with open(pom, "w", encoding="utf-8") as f:
-        f.write(content)
-
 def update_sql_script_pom(new_version):
     pom_path = "distro/sql-script/pom.xml"
     tree = ET.parse(pom_path)
@@ -285,6 +323,7 @@ def main():
     parser = argparse.ArgumentParser(description="Initialize new database version for Operaton")
     parser.add_argument("--new-version", help="Specify the new database version (semantic versioning: major.minor.patch)")
     parser.add_argument("--database", help="Comma-separated list of databases to update")
+    parser.add_argument("--previous-artifact-version", help="Specify the Operaton release delivering the previous database schema version (default: latest release on Maven Central)")
     parser.add_argument("-y", "--assume-yes", action="store_true", help="Assume yes to all prompts (non-interactive)")
     args = parser.parse_args()
 
@@ -314,6 +353,15 @@ def main():
         print("\nSelect databases to update:")
         selected_databases = prompt_databases(args.assume_yes)
 
+    # The latest release still uses the current schema, which becomes the previous schema
+    if args.previous_artifact_version:
+        if not validate_version(args.previous_artifact_version):
+            error("Invalid previous artifact version format. Please use semantic versioning (major.minor.patch)")
+        previous_artifact_version = args.previous_artifact_version
+    else:
+        previous_artifact_version = find_latest_release_version() or prompt_previous_artifact_version(args.assume_yes)
+    check_release_schema_version(previous_artifact_version, current_version)
+
     cur_vwp = get_version_without_patch(current_version)
     cur_vwpwd = get_version_without_patch_without_dot(cur_vwp)
     prev_vwp = get_version_without_patch(previous_version)
@@ -324,6 +372,7 @@ def main():
     print(f"  Current version: {current_version}")
     print(f"  Previous version: {previous_version}")
     print(f"  New version: {new_version}")
+    print(f"  Previous artifact version: {previous_artifact_version}")
     print(f"  Selected databases: {', '.join(selected_databases)}")
     if not args.assume_yes:
         confirm = input("Proceed with these settings? [y/N]: ").strip().lower()
@@ -338,9 +387,9 @@ def main():
 
     set_property_in_pom(pom_path, "operaton.dbscheme.current.version", new_version)
     set_property_in_pom(pom_path, "operaton.dbscheme.previous.version", current_version)
+    set_property_in_pom(pom_path, "operaton.dbscheme.previous.artifactVersion", previous_artifact_version)
     update_liquibase_changelog(cur_vwp, new_vwp, new_version)
     create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version)
-    update_old_engine_pom(current_version, previous_version)
     update_sql_script_pom(new_version)
 
     print("\nDatabase version update completed successfully!")

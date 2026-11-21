@@ -46,7 +46,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
   protected static final String EXPECTED_STORED_QUERY_FAILURE_MESSAGE =
       "Expressions are forbidden in stored queries. This behavior can be toggled in the process engine configuration";
   public static final String STATE_MANIPULATING_EXPRESSION =
-      "${''.getClass().forName('" + TaskQueryDisabledStoredExpressionsTest.class.getName() + "').getField('MUTABLE_FIELD').setLong(null, 42)}";
+      "${''.getClass().forName('" + TaskQueryDisabledStoredExpressionsTest.class.getName() + "').getField('mutableField').setLong(null, 42)}";
 
   public static long mutableField;
 
@@ -115,6 +115,82 @@ public class TaskQueryDisabledStoredExpressionsTest {
 
     // cleanup
     filterService.deleteFilter(filter.getId());
+  }
+
+  @Test
+  void testStoreFilterWithExpressionInOrQuery() {
+    // given
+    TaskQuery taskQuery = taskService.createTaskQuery()
+        .or()
+          .dueAfterExpression(STATE_MANIPULATING_EXPRESSION)
+          .taskName("task")
+        .endOr();
+    Filter filter = filterService.newTaskFilter("filter");
+    filter.setQuery(taskQuery);
+
+    // when/then
+    assertThatThrownBy(() -> filterService.saveFilter(filter))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining(EXPECTED_STORED_QUERY_FAILURE_MESSAGE);
+    assertThat(fieldIsUnchanged()).isTrue();
+    assertThat(filterService.createFilterQuery().count()).isZero();
+  }
+
+  @Test
+  void testCannotExecuteStoredFilterWithExpressionInOrQuery() {
+    final TaskQuery filterQuery = taskService.createTaskQuery()
+        .or()
+          .dueAfterExpression(STATE_MANIPULATING_EXPRESSION)
+          .taskName("task")
+        .endOr();
+
+    // store a filter bypassing validation
+    String filterId = processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      FilterEntity filter = new FilterEntity(EntityTypes.TASK);
+      filter.setQuery(filterQuery);
+      filter.setName("filter");
+      commandContext.getDbEntityManager().insert(filter);
+      return filter.getId();
+    });
+
+    extendFilterAndValidateFailingQuery(filterId, null);
+
+    // the extended query, as used by Tasklist, carries the Or queries of the stored filter
+    extendFilterAndValidateFailingQuery(filterId, taskService.createTaskQuery().taskName("task"));
+
+    // cleanup
+    filterService.deleteFilter(filterId);
+  }
+
+  @Test
+  void testCannotSaveFilterWithExpressionInOrQueryAfterExtending() {
+    final TaskQuery filterQuery = taskService.createTaskQuery()
+        .or()
+          .dueAfterExpression(STATE_MANIPULATING_EXPRESSION)
+          .taskName("task")
+        .endOr();
+
+    // store a filter bypassing validation
+    String filterId = processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      FilterEntity filter = new FilterEntity(EntityTypes.TASK);
+      filter.setQuery(filterQuery);
+      filter.setName("filter");
+      commandContext.getDbEntityManager().insert(filter);
+      return filter.getId();
+    });
+
+    // when the loaded filter is extended, its query no longer starts with itself in the Or query list
+    Filter filter = filterService.getFilter(filterId);
+    filter.extend(taskService.createTaskQuery().taskName("task"));
+
+    // then saving the filter still validates the Or queries
+    assertThatThrownBy(() -> filterService.saveFilter(filter))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining(EXPECTED_STORED_QUERY_FAILURE_MESSAGE);
+    assertThat(fieldIsUnchanged()).isTrue();
+
+    // cleanup
+    filterService.deleteFilter(filterId);
   }
 
   @Test

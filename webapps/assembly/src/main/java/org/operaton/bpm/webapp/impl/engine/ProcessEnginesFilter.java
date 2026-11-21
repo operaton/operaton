@@ -34,7 +34,6 @@ import org.operaton.bpm.admin.AdminRuntimeDelegate;
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.cockpit.CockpitRuntimeDelegate;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.rest.util.WebApplicationUtil;
 import org.operaton.bpm.tasklist.Tasklist;
 import org.operaton.bpm.tasklist.TasklistRuntimeDelegate;
@@ -42,6 +41,7 @@ import org.operaton.bpm.webapp.impl.IllegalWebAppConfigurationException;
 import org.operaton.bpm.webapp.impl.filter.AbstractTemplateFilter;
 import org.operaton.bpm.webapp.impl.security.SecurityActions;
 import org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider;
+import org.operaton.bpm.webapp.impl.util.AdministratorUtil;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 import org.operaton.bpm.welcome.Welcome;
@@ -250,7 +250,7 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
     } else {
 
       return SecurityActions.runWithoutAuthentication(
-        () -> processEngine.getIdentityService().createUserQuery().memberOfGroup(Groups.OPERATON_ADMIN).count() == 0, processEngine);
+        () -> !AdministratorUtil.administratorExists(processEngine), processEngine);
 
     }
 

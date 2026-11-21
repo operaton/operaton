@@ -7,7 +7,7 @@
       summary = "Get Job Log Count"
       desc = "Queries for the number of historic job logs that fulfill the given parameters.
               Takes the same parameters as the
-              [Get Job Logs](${docsUrl}/reference/rest/history/job-log/get-job-log-query/)
+              [Get Job Logs](#tag/Historic-Job-Log/operation/getHistoricJobLogs)
               method."
   />
 

@@ -166,7 +166,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
   @Test
   void testEntityCaching() {
-    String[] userIds = new String[]{"test"};
+    String[] userIds = {"test"};
     // mock user and query
     User user = mock(User.class);
     when(user.getId()).thenReturn(userIds[0]);
@@ -233,7 +233,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
 
   @Test
   void testIdentityLinkCaching() {
-    String[] taskIds = new String[]{"test"};
+    String[] taskIds = {"test"};
     // mock identityLinks and query
     IdentityLink link1 = mock(IdentityLink.class);
     when(link1.getTaskId()).thenReturn(taskIds[0]);

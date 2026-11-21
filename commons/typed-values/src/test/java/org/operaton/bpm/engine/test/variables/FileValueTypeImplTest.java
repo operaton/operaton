@@ -235,7 +235,7 @@ class FileValueTypeImplTest {
   @Test
   void fileByteArrayIsEqualToFileValueContentCase2() {
 
-    byte[] bytes = new byte[]{ -16, -128, -128, -128 };
+    byte[] bytes = { -16, -128, -128, -128 };
     InputStream byteStream = new ByteArrayInputStream(bytes);
 
     String fileName = "simpleFile.txt";

@@ -64,6 +64,8 @@ export const App = () => {
 const languages = [
   { code: "en-US", label: "English" },
   { code: "de-DE", label: "Deutsch" },
+  { code: "zh-CN", label: "简体中文" },
+  { code: "zh-TW", label: "繁體中文" },
 ];
 
 const swap_server = (e, state) => {

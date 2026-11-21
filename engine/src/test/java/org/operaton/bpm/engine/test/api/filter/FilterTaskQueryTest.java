@@ -94,14 +94,14 @@ class FilterTaskQueryTest {
   protected Integer testInteger = 1;
   protected DelegationState testDelegationState = DelegationState.PENDING;
   protected Date testDate = new Date(0);
-  protected String[] testActivityInstances = new String[] {"a", "b", "c"};
-  protected String[] testKeys = new String[] {"d", "e"};
+  protected String[] testActivityInstances = {"a", "b", "c"};
+  protected String[] testKeys = {"d", "e"};
   protected List<String> testCandidateGroups = new ArrayList<>();
-  protected String[] testInstances = new String[] {"x", "y", "z"};
+  protected String[] testInstances = {"x", "y", "z"};
 
-  protected String[] variableNames = new String[] {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
-  protected Object[] variableValues = new Object[] {1, 2, "3", "4", "5", 6, 7, "8", "9"};
-  protected QueryOperator[] variableOperators = new QueryOperator[] {
+  protected String[] variableNames = {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
+  protected Object[] variableValues = {1, 2, "3", "4", "5", 6, 7, "8", "9"};
+  protected QueryOperator[] variableOperators = {
       QueryOperator.EQUALS,
       QueryOperator.GREATER_THAN_OR_EQUAL,
       QueryOperator.LESS_THAN,
@@ -112,8 +112,8 @@ class FilterTaskQueryTest {
       QueryOperator.LIKE,
       QueryOperator.NOT_LIKE
   };
-  protected boolean[] isTaskVariable = new boolean[] {true, true, false, false, false, false, false, false, false};
-  protected boolean[] isProcessVariable = new boolean[] {false, false, true, true, true, false, false, false, false};
+  protected boolean[] isTaskVariable = {true, true, false, false, false, false, false, false, false};
+  protected boolean[] isProcessVariable = {false, false, true, true, true, false, false, false, false};
   protected User testUser;
   protected Group testGroup;
 

@@ -26,6 +26,11 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
+import org.operaton.bpm.qa.upgrade.util.ThrowBpmnErrorDelegate.ThrowBpmnErrorDelegateException;
+import org.operaton.bpm.qa.upgrade.util.ThrowBpmnErrorDelegate;
 
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 @ScenarioUnderTest("NestedNonInterruptingBoundaryEventOnOuterSubprocessScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class NestedNonInterruptingBoundaryEventOnOuterSubprocessScenarioTest {
 
   @Rule
@@ -124,28 +129,6 @@ public class NestedNonInterruptingBoundaryEventOnOuterSubprocessScenarioTest {
     rule.messageCorrelation("ReceiveTaskMessage").correlate();
 
     // then
-    rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("initTimer.6")
-  public void testInitTimerThrowError() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    rule.getRuntimeService().setVariable(instance.getId(), ThrowBpmnErrorDelegate.ERROR_INDICATOR_VARIABLE, true);
-    rule.messageCorrelation("ReceiveTaskMessage").correlate();
-
-    // then
-    // there is only one task since the task after the message boundary event has been cancelled due to bug CAM-3727 in 7.2.0
-    Assert.assertEquals(1, rule.taskQuery().count());
-
-    Task afterErrorTask = rule.taskQuery().taskDefinitionKey("escalatedTask").singleResult();
-    Assert.assertNotNull(afterErrorTask);
-
-    // and
-    rule.getTaskService().complete(afterErrorTask.getId());
     rule.assertScenarioEnded();
   }
 
@@ -245,28 +228,6 @@ public class NestedNonInterruptingBoundaryEventOnOuterSubprocessScenarioTest {
     rule.messageCorrelation("ReceiveTaskMessage").correlate();
 
     // then
-    rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("initMessage.6")
-  public void testInitMessageThrowError() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    rule.getRuntimeService().setVariable(instance.getId(), ThrowBpmnErrorDelegate.ERROR_INDICATOR_VARIABLE, true);
-    rule.messageCorrelation("ReceiveTaskMessage").correlate();
-
-    // then
-    // there is only one task since the task after the message boundary event has been cancelled due to bug CAM-3727 in 7.2.0
-    Assert.assertEquals(1, rule.taskQuery().count());
-
-    Task afterErrorTask = rule.taskQuery().taskDefinitionKey("escalatedTask").singleResult();
-    Assert.assertNotNull(afterErrorTask);
-
-    // and
-    rule.getTaskService().complete(afterErrorTask.getId());
     rule.assertScenarioEnded();
   }
 

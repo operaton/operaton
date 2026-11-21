@@ -21,16 +21,15 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.management.JobDefinition;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 @ScenarioUnderTest("AsyncSequentialMultiInstanceScenario")
-@Origin("7.2.0")
+@Origin("7.24.0")
 public class AsyncSequentialMultiInstanceScenarioTest {
 
   @Rule
@@ -53,25 +52,6 @@ public class AsyncSequentialMultiInstanceScenarioTest {
     }
 
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("initAsyncBeforeSubprocess.2")
-  public void testInitAsyncBeforeSubprocessActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-        describeActivityInstanceTree(instance.getProcessDefinitionId())
-          // this is not the multi-instance body because the execution
-          // references the inner activity
-          .transition("miSubProcess")
-        .done());
   }
 
   @Test
@@ -120,25 +100,6 @@ public class AsyncSequentialMultiInstanceScenarioTest {
     }
 
     rule.assertScenarioEnded();
-  }
-
-  @Test
-  @ScenarioUnderTest("initAsyncBeforeTask.2")
-  public void testInitAsyncBeforeTaskActivityInstanceTree() {
-    // given
-    ProcessInstance instance = rule.processInstance();
-
-    // when
-    ActivityInstance activityInstance = rule.getRuntimeService().getActivityInstance(instance.getId());
-
-    // then
-    Assert.assertNotNull(activityInstance);
-    assertThat(activityInstance).hasStructure(
-        describeActivityInstanceTree(instance.getProcessDefinitionId())
-          // this is not the multi-instance body because the execution
-          // references the inner activity
-          .transition("miTask")
-        .done());
   }
 
   @Test

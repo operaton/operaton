@@ -38,6 +38,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoricTaskInstanceEventEntit
 import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.spring.boot.starter.event.TaskEvent;
@@ -75,6 +76,7 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
 
   @AfterEach
   void stop() {
+    ClockUtil.reset();
     if (instance != null) {
       // update stale instance
       instance = runtime.createProcessInstanceQuery().processInstanceId(instance.getProcessInstanceId()).active().singleResult();
@@ -266,9 +268,13 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     eventCaptor.clear();
 
     // when
+    advanceClock();
     taskService.addCandidateUser(task.getId(), "userId");
+    advanceClock();
     taskService.addCandidateGroup(task.getId(), "groupId");
+    advanceClock();
     taskService.deleteCandidateUser(task.getId(), "userId");
+    advanceClock();
     taskService.deleteCandidateGroup(task.getId(), "groupId");
 
     // then in reverse order
@@ -370,7 +376,9 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     eventCaptor.clear();
 
     // when
+    advanceClock();
     taskService.addCandidateUser(task.getId(), "user1");
+    advanceClock();
     taskService.addCandidateUser(task.getId(), "user2");
 
     // then in reverse order
@@ -522,8 +530,10 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     eventCaptor.clear();
 
     // when
+    advanceClock();
     String attachmentId = taskService.createAttachment(null, task.getId(), null, null, null,
         new ByteArrayInputStream("hello world".getBytes())).getId();
+    advanceClock();
     taskService.deleteAttachment(attachmentId);
 
     // then
@@ -580,6 +590,17 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     assertThat(taskEvent.getEventName()).isEqualTo(event);
     assertThat(taskEvent.getId()).isEqualTo(task.getId());
     assertThat(taskEvent.getProcessInstanceId()).isEqualTo(task.getProcessInstanceId());
+  }
+
+  /**
+   * A task update is only written to history (as an 'update' event) if the task is dirty. For commands that
+   * change nothing but the task's 'lastUpdated' timestamp, e.g. identity link or attachment changes, this is
+   * only the case if the timestamp differs from the one persisted by the previous command. Consecutive
+   * commands within the same millisecond would therefore not emit the expected event, so the clock is moved
+   * forward before each command.
+   */
+  protected void advanceClock() {
+    ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + 1000));
   }
 
   protected void startEventingInstance() {

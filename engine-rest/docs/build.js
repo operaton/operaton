@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-const {createElement} = require("react");
-const {renderToString} = require("react-dom/server");
-
-const {ServerStyleSheet} = require("styled-components");
 const {dirname, join} = require("path");
 
 const {
@@ -11,24 +7,15 @@ const {
     writeFileSync
 } = require("fs");
 
-const {Redoc, createStore, loadAndBundleSpec} = require("redoc");
+const SPEC_PATH = join(__dirname, "target", "dependency", "openapi.json");
 
-const SPEC_PATH = "docs/target/dependency/openapi.json";
-
+// Redoc 3 no longer offers server-side rendering, the page is rendered in the browser by the standalone bundle
 async function generateDocs() {
-    const spec = await loadAndBundleSpec(SPEC_PATH);
-    const store = await createStore(spec, null, {});
-
-    const styleSheet = new ServerStyleSheet();
-    const html = renderToString(
-        styleSheet.collectStyles(createElement(Redoc, {store}))
-    );
+    const spec = JSON.parse(readFileSync(SPEC_PATH, "utf8"));
 
     const redocJs = readFileSync(
-        join(dirname(require.resolve("redoc")), "redoc.standalone.js")
-    );
-
-    const state = await store.toJS();
+        join(dirname(require.resolve("redoc/package.json")), "bundles", "redoc.standalone.js")
+    ).toString().replace(/<\/script/gi, "<\\/script");
 
     const operatonVersion = require('./package.json').version;
 
@@ -55,21 +42,21 @@ async function generateDocs() {
         }
     </style>
 
-    ${styleSheet.getStyleTags()}
-
-    <script>${redocJs}</script>
+    <script type="module">${redocJs}
+    window.Redoc = {init};
+    </script>
 </head>
 
 <body>
-<div id="redoc">${html}</div>
-<script>
-    var container = document.getElementById('redoc');
-    Redoc.hydrate(${JSON.stringify(state)}, container);
+<div id="redoc"></div>
+<script type="module">
+    const spec = ${JSON.stringify(spec).replace(/</g, "\\u003c")};
+    window.Redoc.init(spec, {}, document.getElementById('redoc'));
 </script>
 </body>
 </html>`
 
-    writeFileSync('./target/index.html', page);
+    writeFileSync(join(__dirname, 'target', 'index.html'), page);
 }
 
 generateDocs();

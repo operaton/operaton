@@ -59,7 +59,7 @@
         desc = "The attachment for the given task and attachment id does not exist or the history of the engine is
                 disabled.
 
-                See the [Introduction](/reference/rest/overview/#error-handling) for the error response format." />
+                See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format." />
 
     <@lib.errorResponses docsUrl=docsUrl last = true />
 

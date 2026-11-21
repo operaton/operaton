@@ -6,7 +6,7 @@
       tag = "Batch"
       summary = "Count Batches"
       desc = "Requests the number of batches that fulfill the query criteria.
-              Takes the same filtering parameters as the [Get Batches](${docsUrl}/reference/rest/batch/get-query/) method." />
+              Takes the same filtering parameters as the [Get Batches](#tag/Batch/operation/getBatches) method." />
 
   "parameters" : [
 

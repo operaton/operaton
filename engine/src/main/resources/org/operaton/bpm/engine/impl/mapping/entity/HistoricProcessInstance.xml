@@ -400,37 +400,16 @@
         )
     </if>
 
-    <bind name="INC_JOIN" value="false" />
-    <bind name="HAI_JOIN" value="false" />
-    <bind name="RU_EXE_JOIN" value="false" />
-    <bind name="JOIN_TYPE" value="'inner join'" />
+    <bind name="joinFlags" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@computeHistoricProcessInstanceJoinFlags(queries)" />
 
-    <foreach collection="queries" item="query">
-
-      <if test="query != null &amp;&amp; (query.withIncidents || query.withRootIncidents || query.incidentStatus != null || query.incidentMessage != null || query.incidentMessageLike != null || query.incidentType != null || (incidentIds != null &amp;&amp; incidentIds.length > 0))">
-        <bind name="INC_JOIN" value="true" />
-        <if test="query.isOrQueryActive">
-          <bind name="JOIN_TYPE" value="'left join'" />
-        </if>
-      </if>
-
-      <if test="query != null &amp;&amp; (query.executedActivityIds != null and query.executedActivityIds.length > 0) || (query.activeActivityIds != null and query.activeActivityIds.length > 0)">
-        <bind name="HAI_JOIN" value="true" />
-      </if>
-
-      <if test="query != null &amp;&amp; (query.activityIds != null and query.activityIds.length > 0)">
-        <bind name="RU_EXE_JOIN" value="true" />
-      </if>
-    </foreach>
-
-    <if test="INC_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_HI_INCIDENT INC on SELF.PROC_INST_ID_ = INC.PROC_INST_ID_
+    <if test="joinFlags.incidentJoin">
+      ${joinFlags.joinType} ${prefix}ACT_HI_INCIDENT INC on SELF.PROC_INST_ID_ = INC.PROC_INST_ID_
     </if>
-    <if test="HAI_JOIN">
+    <if test="joinFlags.historicActivityInstanceJoin">
       LEFT JOIN ${prefix}ACT_HI_ACTINST HAI
       ON HAI.PROC_INST_ID_ = SELF.ID_
     </if>
-    <if test="RU_EXE_JOIN">
+    <if test="joinFlags.executionJoin">
       LEFT JOIN ${prefix}ACT_RU_EXECUTION EXE on SELF.PROC_INST_ID_ = EXE.PROC_INST_ID_
     </if>
 
@@ -438,16 +417,12 @@
        however here we must join once for every variable condition.
        It is important that in the WHERE part we use the same table
        names for the respective conditions (i.e. VI0, VI1, VI2, ...) -->
-    <bind name="variableConditionCounter" value="0" />
-    <foreach collection="queries" item="query">
-      <foreach collection="query.queryVariableNameToValuesMap">
-        LEFT JOIN ${prefix}ACT_HI_VARINST VI${variableConditionCounter}
-        ON SELF.PROC_INST_ID_ = VI${variableConditionCounter}.PROC_INST_ID_
-        <bind name="variableConditionCounter" value="variableConditionCounter + 1" />
-      </foreach>
+    <bind name="variableConditionGroups" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@computeVariableConditionGroups(queries)" />
+    <foreach collection="variableConditionGroups" item="group">
+      LEFT JOIN ${prefix}ACT_HI_VARINST VI${group.index}
+      ON SELF.PROC_INST_ID_ = VI${group.index}.PROC_INST_ID_
     </foreach>
 
-    <bind name="variableConditionCounter" value="0" />
     <where>
       <foreach collection="queries" item="query" index="i">
         <choose>
@@ -626,9 +601,10 @@
               ${queryType} SELF.PROC_INST_ID_ = (select SUPER_PROCESS_INSTANCE_ID_ from ${prefix}ACT_HI_CASEINST where
               CASE_INST_ID_ = #{query.subCaseInstanceId})
             </if>
-            <foreach collection="query.queryVariableNameToValuesMap" item="queryVariableValues">
-              <bind name="varPrefix" value="'VI' + variableConditionCounter + '.'"/>
-              <foreach collection="queryVariableValues" item="queryVariableValue">
+            <bind name="queryVariableConditionGroups" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@variableConditionGroupsForQuery(variableConditionGroups, query)" />
+            <foreach collection="queryVariableConditionGroups" item="group">
+              <bind name="varPrefix" value="'VI' + group.index + '.'"/>
+              <foreach collection="group.values" item="queryVariableValue">
                 ${queryType} (${varPrefix}ID_ IS NOT NULL
                 AND
 
@@ -640,7 +616,6 @@
                 </if>
                 )
               </foreach>
-              <bind name="variableConditionCounter" value="variableConditionCounter + 1" />
             </foreach>
 
             <if test="query.executedActivityAfter != null || query.executedActivityBefore != null">

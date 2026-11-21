@@ -19,6 +19,8 @@ package org.operaton.bpm.qa.upgrade.scenarios7110.timestamp;
 import org.junit.Test;
 
 import org.operaton.bpm.engine.runtime.EventSubscription;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,7 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Nikola Koevski
  */
 @ScenarioUnderTest("EventSubscriptionCreateTimeScenario")
-@Origin("7.11.0")
+@Origin("7.24.0")
 public class EventSubscriptionCreateTimeTest extends AbstractTimestampMigrationTest {
 
   protected static final String EVENT_NAME = "createTimeTestMessage";

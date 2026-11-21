@@ -6,12 +6,12 @@
       tag = "History Cleanup"
       summary = "Trigger History Cleanup"
       desc = "Schedules asynchronous history cleanup (See
-              [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)).
+              [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)).
 
               **Note:** This endpoint will return at most a single history cleanup job.
               Since version `7.9.0` it is possible to configure multiple
-              [parallel history cleanup jobs](${docsUrl}/user-guide/process-engine/history/#parallel-execution). Use
-              [`GET /history/cleanup/jobs`](${docsUrl}/reference/rest/history/history-cleanup/get-history-cleanup-jobs)
+              [parallel history cleanup jobs](${docsUrl}/user-guide/process-engine/history/history-cleanup/#parallel-execution). Use
+              [`GET /history/cleanup/jobs`](#tag/History-Cleanup/operation/findCleanupJobs)
               to find all the available history cleanup jobs."
   />
 
@@ -60,7 +60,7 @@
         dto = "ExceptionDto"
         desc = "Returned if some of the query parameters are invalid or the engine
                 does not participate in history cleanup. See
-                [Cleanup Execution Participation per Node](${docsUrl}/user-guide/process-engine/history/#cleanup-execution-participation-per-node)."
+                [Cleanup Execution Participation per Node](${docsUrl}/user-guide/process-engine/history/history-cleanup#cleanup-execution-participation-per-node)."
     />
 
     <@lib.errorResponses docsUrl=docsUrl last = true />

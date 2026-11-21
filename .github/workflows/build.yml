@@ -203,7 +203,7 @@ jobs:
       # legitimately produces none, so it skips the gate rather than failing it.
       - name: Publish Test Report
         if: always() && github.event.inputs.skip_tests != 'true'
-        uses: mikepenz/action-junit-report@6ef3fdcfcd5f0b5d14df3e659ef19b8c6820f93d #v6.6.1
+        uses: mikepenz/action-junit-report@a16be3a69023e9bd7e748ede768b3282ea7b30ce #v6.7.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true

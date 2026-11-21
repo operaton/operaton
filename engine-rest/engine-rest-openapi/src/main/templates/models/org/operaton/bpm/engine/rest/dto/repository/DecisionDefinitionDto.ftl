@@ -58,7 +58,7 @@
         format = "int32"
         minimum = 0
         desc = "History time to live value of the decision definition.
-                Is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)." />
+                Is used within [History cleanup](${docsUrl}/user-guide/process-engine/history/history-cleanup)." />
 
     <@lib.property
         name = "versionTag"

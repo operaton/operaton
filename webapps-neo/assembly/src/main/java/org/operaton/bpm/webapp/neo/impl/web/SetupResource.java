@@ -44,6 +44,7 @@ import org.operaton.bpm.engine.rest.util.ProvidersUtil;
 import org.operaton.bpm.webapp.neo.impl.WebappLogger;
 import org.operaton.bpm.webapp.neo.impl.security.SecurityActions;
 import org.operaton.bpm.webapp.neo.impl.security.SecurityActions.SecurityAction;
+import org.operaton.bpm.webapp.neo.impl.util.AdministratorUtil;
 import org.operaton.bpm.webapp.neo.impl.util.ProcessEngineUtil;
 
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
@@ -58,9 +59,9 @@ import static org.operaton.bpm.engine.authorization.Permissions.ALL;
  * {@code operaton.bpm.admin-user}) leaves the SPA with no way in at all.</p>
  *
  * <p>Both endpoints are reachable without authentication — they have to be, since by definition
- * nobody can log in yet. {@link #ensureSetupAvailable} is the guard: once any user belongs to
- * {@link Groups#OPERATON_ADMIN}, or the identity provider is read-only, the resource closes itself
- * permanently and answers {@code FORBIDDEN}.</p>
+ * nobody can log in yet. {@link #ensureSetupAvailable} is the guard: once any administrator exists
+ * (see {@link AdministratorUtil} for what counts as one), or the identity provider is read-only,
+ * the resource closes itself and answers {@code FORBIDDEN}.</p>
  */
 @Path("/setup/{engine}")
 public class SetupResource {
@@ -168,13 +169,18 @@ public class SetupResource {
   }
 
   protected boolean isSetupAvailableInternal(ProcessEngine processEngine) {
-    IdentityService identityService = processEngine.getIdentityService();
-    return !identityService.isReadOnly()
-        && identityService.createUserQuery().memberOfGroup(Groups.OPERATON_ADMIN).count() == 0;
+    return !processEngine.getIdentityService().isReadOnly()
+        && !AdministratorUtil.administratorExists(processEngine);
   }
 
   protected void ensureSetupAvailable(ProcessEngine processEngine) {
-    if (!isSetupAvailableInternal(processEngine)) {
+    if (processEngine.getIdentityService().isReadOnly()) {
+      throw LOGGER.setupActionNotAvailable();
+    }
+
+    String administrator = AdministratorUtil.findAdministrator(processEngine);
+    if (administrator != null) {
+      LOGGER.infoSetupRefusedAdministratorExists(administrator);
       throw LOGGER.setupActionNotAvailable();
     }
   }

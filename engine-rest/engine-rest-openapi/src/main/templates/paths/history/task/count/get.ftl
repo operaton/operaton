@@ -7,7 +7,7 @@
       summary = "Get Task Count"
       desc = "Queries for the number of historic tasks that fulfill the given parameters.
               Takes the same parameters as the
-              [Get Tasks (Historic)](${docsUrl}/reference/rest/history/task/get-task-query/)
+              [Get Tasks (Historic)](#tag/Historic-Task-Instance/operation/getHistoricTaskInstances)
               method."
   />
 

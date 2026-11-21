@@ -196,7 +196,7 @@ class FilterQueryTest {
   @Test
   void testQuerySorting() {
     List<String> sortedIds = new ArrayList<>(filterIds);
-    Collections.sort(sortedIds);
+    sortedIds.sort(null);
     assertThat(filterService.createFilterQuery().orderByFilterId().asc().list()).hasSize(4);
 
     assertThat(filterService.createFilterQuery().orderByFilterId().asc().list())

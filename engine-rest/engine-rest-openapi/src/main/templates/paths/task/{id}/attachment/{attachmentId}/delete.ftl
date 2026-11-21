@@ -35,14 +35,14 @@
     <@lib.response
         code = "403"
         dto = "AuthorizationExceptionDto"
-        desc = "The history of the engine is disabled. See the [Introduction](/reference/rest/overview/#error-handling)
+        desc = "The history of the engine is disabled. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
 
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
         desc = "A Task Attachment for the given task id and attachment id does not exist. See the
-                [Introduction](/reference/rest/overview/#error-handling)
+                [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
 
     <@lib.errorResponses docsUrl=docsUrl last = true />

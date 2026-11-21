@@ -126,6 +126,16 @@ def render_svg_single(months, values, ylabel, color, title, target_path):
     with open(target_path, "w") as f:
         f.write("\n".join(svg))
 
+def resolve_output_dir(output_dir):
+    # Only allow writing below the current working directory (prevents path traversal)
+    base = os.path.realpath(os.getcwd())
+    resolved = os.path.realpath(os.path.join(base, output_dir))
+    if resolved == base or resolved.startswith(base + os.sep):
+        os.makedirs(resolved, exist_ok=True)
+        return resolved
+    print(f"Output directory must be inside {base}.")
+    sys.exit(1)
+
 def main():
     parser = argparse.ArgumentParser(description="Render Operaton repo history as SVG")
     parser.add_argument("--start", type=str, default="2024-10", help="Start month (YYYY-MM)")
@@ -159,9 +169,10 @@ def main():
         total_contributors_set.update(contributors_by_month.get(m, set()))
         total_contributors[m] = len(total_contributors_set)
 
-    contrib_svg = os.path.join(args.output_dir, "repo-contributors.svg")
-    stars_svg = os.path.join(args.output_dir, "repo-stars.svg")
-    total_contrib_svg = os.path.join(args.output_dir, "repo-total-contributors.svg")
+    output_dir = resolve_output_dir(args.output_dir)
+    contrib_svg = os.path.join(output_dir, "repo-contributors.svg")
+    stars_svg = os.path.join(output_dir, "repo-stars.svg")
+    total_contrib_svg = os.path.join(output_dir, "repo-total-contributors.svg")
 
     print(f"Rendering contributors SVG to {contrib_svg}...")
     render_svg_single(months, contributors, "Contributors", "blue", "Operaton Contributors History", contrib_svg)

@@ -27,7 +27,7 @@
         type = "string"
         format = "date-time"
         desc = "The time when the comment was created.
-                [Default format]($(docsUrl)/reference/rest/overview/date-format/)
+                [Default format](${docsUrl}/reference/rest/overview/date-format/)
                 `yyyy-MM-dd'T'HH:mm:ss.SSSZ`." />
 
     <@lib.property
@@ -40,7 +40,7 @@
         type = "string"
         format = "date-time"
         desc = "The time after which the comment should be removed by the History Cleanup job.
-                [Default format]($(docsUrl)/reference/rest/overview/date-format/)
+                [Default format](${docsUrl}/reference/rest/overview/date-format/)
                 `yyyy-MM-dd'T'HH:mm:ss.SSSZ`." />
 
     <@lib.property

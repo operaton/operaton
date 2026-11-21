@@ -386,7 +386,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     // sort by case instance ids
     @SuppressWarnings("rawtypes")
     List<? extends Comparable> sortedList = Arrays.asList(oneCaseInstance.getId(), twoCaseInstance.getId());
-    Collections.sort(sortedList);
+    sortedList.sort(null);
 
     List<HistoricCaseInstance> instances = historicQuery().orderByCaseInstanceId().asc().list();
     assertThat(instances).hasSize(2);
@@ -398,7 +398,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // sort by case definition ids
     sortedList = Arrays.asList(oneCaseInstance.getCaseDefinitionId(), twoCaseInstance.getCaseDefinitionId());
-    Collections.sort(sortedList);
+    sortedList.sort(null);
 
     instances = historicQuery().orderByCaseDefinitionId().asc().list();
     assertThat(instances).hasSize(2);
@@ -410,7 +410,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // sort by business keys
     sortedList = Arrays.asList(oneCaseInstance.getBusinessKey(), twoCaseInstance.getBusinessKey());
-    Collections.sort(sortedList);
+    sortedList.sort(null);
 
     instances = historicQuery().orderByCaseInstanceBusinessKey().asc().list();
     assertThat(instances).hasSize(2);
@@ -422,7 +422,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // sort by create time
     sortedList = Arrays.asList(oneCaseInstance.getCreateTime(), twoCaseInstance.getCreateTime());
-    Collections.sort(sortedList);
+    sortedList.sort(null);
 
     instances = historicQuery().orderByCaseInstanceCreateTime().asc().list();
     assertThat(instances).hasSize(2);
@@ -434,7 +434,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // sort by close time
     sortedList = Arrays.asList(oneCaseInstance.getCloseTime(), twoCaseInstance.getCloseTime());
-    Collections.sort(sortedList);
+    sortedList.sort(null);
 
     instances = historicQuery().orderByCaseInstanceCloseTime().asc().list();
     assertThat(instances).hasSize(2);
@@ -446,7 +446,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // sort by duration
     sortedList = Arrays.asList(oneCaseInstance.getDurationInMillis(), twoCaseInstance.getDurationInMillis());
-    Collections.sort(sortedList);
+    sortedList.sort(null);
 
     instances = historicQuery().orderByCaseInstanceDuration().asc().list();
     assertThat(instances).hasSize(2);

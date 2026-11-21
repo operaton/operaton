@@ -13,6 +13,7 @@
   <name>Operaton - Wildfly</name>
   <description>${project.name}</description>
   <properties>
+    <version.accessors-smart>2.6.1</version.accessors-smart>
     <!-- Server distro assemblies are only repackaging steps, but their
       archives dominate the build cache volume (hundreds of MB per distro);
       storing them buys a few seconds of zip work for a lot of storage -->
@@ -33,6 +34,11 @@
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>net.minidev</groupId>
+        <artifactId>accessors-smart</artifactId>
+        <version>${version.accessors-smart}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -62,7 +62,7 @@
     </dependency>
     <dependency>
       <groupId>com.oracle.database.jdbc</groupId>
-      <artifactId>ojdbc11</artifactId>
+      <artifactId>ojdbc17</artifactId>
       <scope>runtime</scope>
     </dependency>
     <!--
@@ -186,7 +186,7 @@
                     <artifactItem>
                       <groupId>io.smallrye</groupId>
                       <artifactId>jandex</artifactId>
-                      <version>3.6.0</version>
+                      <version>3.6.1</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                     <artifactItem>

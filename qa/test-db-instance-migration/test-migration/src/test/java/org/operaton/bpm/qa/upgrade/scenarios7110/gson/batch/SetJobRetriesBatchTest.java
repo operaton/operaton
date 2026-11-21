@@ -24,6 +24,8 @@ import org.junit.Test;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,7 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Tassilo Weidner
  */
 @ScenarioUnderTest("SetJobRetriesBatchScenario")
-@Origin("7.11.0")
+@Origin("7.24.0")
 public class SetJobRetriesBatchTest {
 
   @Rule

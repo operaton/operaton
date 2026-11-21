@@ -6,7 +6,8 @@ import { get_config } from "../../config.js";
  *
  * These two calls are the only ones in the app that are made with nobody signed in — by
  * definition, since their whole purpose is to create the first account. The server guards
- * them: once any user belongs to the `operaton-admin` group, both stop answering.
+ * them: once any administrator exists (a member of an admin group, a configured admin user, or
+ * a holder of full authorization permissions), both stop answering.
  *
  * They talk to the webapp's own admin namespace, not to the engine API, so they go through
  * `_url_api()` the way `_url_auth()` does rather than through `_url_engine_rest`.

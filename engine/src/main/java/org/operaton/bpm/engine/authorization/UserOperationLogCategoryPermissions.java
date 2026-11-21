@@ -52,7 +52,7 @@ public enum UserOperationLogCategoryPermissions implements Permission {
   /** Indicates that DELETE interactions on defined categories are permitted. */
   DELETE("DELETE", 16);
 
-  private static final Resource[] RESOURCES = new Resource[] { Resources.OPERATION_LOG_CATEGORY };
+  private static final Resource[] RESOURCES = { Resources.OPERATION_LOG_CATEGORY };
 
   private final String name;
   private final int id;

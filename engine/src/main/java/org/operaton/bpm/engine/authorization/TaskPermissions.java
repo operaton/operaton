@@ -75,7 +75,7 @@ public enum TaskPermissions implements Permission {
   /** Indicates that READ_VARIABLE interactions are permitted. */
   READ_VARIABLE("READ_VARIABLE", 64);
 
-  private static final Resource[] RESOURCES = new Resource[] { Resources.TASK };
+  private static final Resource[] RESOURCES = { Resources.TASK };
 
   private final String name;
   private final int id;

@@ -7,7 +7,7 @@
       summary = "Execute Migration Plan"
       desc = "Executes a migration plan synchronously for multiple process instances. To execute
               a migration plan asynchronously, use the
-              [Execute Migration Plan Async(Batch)](${docsUrl}/reference/rest/migration/execute-migration-async/)
+              [Execute Migration Plan Async(Batch)](#tag/Migration/operation/executeMigrationPlanAsync)
               method.
 
               For more information about the difference between synchronous and asynchronous

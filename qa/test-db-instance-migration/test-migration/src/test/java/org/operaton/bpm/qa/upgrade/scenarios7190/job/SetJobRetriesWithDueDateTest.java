@@ -28,11 +28,14 @@ import org.slf4j.LoggerFactory;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.qa.upgrade.Origin;
+import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
+import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ScenarioUnderTest("SetJobRetriesWithDueDateScenario")
-@Origin("7.18.0")
+@Origin("7.24.0")
 public class SetJobRetriesWithDueDateTest {
 
   Logger LOG = LoggerFactory.getLogger(SetJobRetriesWithDueDateTest.class);

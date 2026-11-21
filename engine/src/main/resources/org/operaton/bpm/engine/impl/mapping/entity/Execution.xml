@@ -236,27 +236,13 @@
   <sql id="selectProcessInstanceByQueryCriteriaSql">
 
     from ${prefix}ACT_RU_EXECUTION RES
-    <bind name="INC_JOIN" value="false" />
-    <bind name="EXE_JOIN" value="false" />
-    <bind name="JOIN_TYPE" value="'inner join'" />
+    <bind name="joinFlags" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@computeProcessInstanceJoinFlags(queries)" />
 
-    <foreach collection="queries" item="query">
-      <if test="query.isOrQueryActive">
-        <bind name="JOIN_TYPE" value="'left join'" />
-      </if>
-      <if test="query != null &amp;&amp; (query.withIncident || query.incidentType != null || query.incidentId != null || query.incidentMessage != null || query.incidentMessageLike != null)">
-        <bind name="INC_JOIN" value="true" />
-      </if>
-      <if test="query != null &amp;&amp; (query.activityIds != null &amp;&amp; query.activityIds.length > 0)">
-        <bind name="EXE_JOIN" value="true" />
-      </if>
-    </foreach>
-
-    <if test="INC_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_RU_INCIDENT INC on RES.ID_ = INC.PROC_INST_ID_
+    <if test="joinFlags.incidentJoin">
+      ${joinFlags.joinType} ${prefix}ACT_RU_INCIDENT INC on RES.ID_ = INC.PROC_INST_ID_
     </if>
-    <if test="EXE_JOIN">
-      ${JOIN_TYPE} ${prefix}ACT_RU_EXECUTION EXE on RES.ID_ = EXE.PROC_INST_ID_
+    <if test="joinFlags.executionJoin">
+      ${joinFlags.joinType} ${prefix}ACT_RU_EXECUTION EXE on RES.ID_ = EXE.PROC_INST_ID_
     </if>
 
     inner join ${prefix}ACT_RE_PROCDEF P on RES.PROC_DEF_ID_ = P.ID_

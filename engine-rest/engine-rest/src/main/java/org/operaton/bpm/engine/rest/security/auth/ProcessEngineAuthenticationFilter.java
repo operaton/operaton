@@ -62,7 +62,7 @@ import org.operaton.bpm.engine.rest.util.EngineUtil;
 public class ProcessEngineAuthenticationFilter implements Filter {
 
   // regexes for urls that may be accessed unauthorized
-  protected static final Pattern[] WHITE_LISTED_URL_PATTERNS = new Pattern[] {
+  protected static final Pattern[] WHITE_LISTED_URL_PATTERNS = {
     Pattern.compile("^" + NamedProcessEngineRestServiceImpl.PATH + "/?")
   };
 

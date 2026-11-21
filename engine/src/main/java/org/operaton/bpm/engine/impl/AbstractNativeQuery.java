@@ -52,7 +52,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
   protected int firstResult;
   protected ResultType resultType;
 
-  private transient Map<String, Object> parameters = new HashMap<>();
+  private final transient Map<String, Object> parameters = new HashMap<>();
   private String sqlStatement;
 
   protected AbstractNativeQuery(CommandExecutor commandExecutor) {

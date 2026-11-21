@@ -8,7 +8,7 @@
       desc = "Queries for historic batches that fulfill given parameters. Parameters may be
               the properties of batches, such as the id or type. The
               size of the result set can be retrieved by using the
-              [Get Historic Batch Count](${docsUrl}/reference/rest/history/batch/get-query-count/)
+              [Get Historic Batch Count](#tag/Historic-Batch/operation/getHistoricBatchesCount)
               method."
   />
 

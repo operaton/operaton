@@ -67,6 +67,7 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
   @Override
   public CommentDto getComment(String commentId) {
     ensureHistoryEnabled(Status.NOT_FOUND);
+    ensureTaskExists(Status.NOT_FOUND);
 
     Comment comment = engine.getTaskService().getTaskComment(taskId, commentId);
     if (comment == null) {

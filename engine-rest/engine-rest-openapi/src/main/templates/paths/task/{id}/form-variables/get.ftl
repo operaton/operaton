@@ -39,7 +39,7 @@
                 custom Java objects) should be deserialized on server side (default true).
 
                 If set to true, a serializable variable will be deserialized on server side and
-                transformed to JSON using [Jackson's](http://jackson.codehaus.org/) POJO/bean
+                transformed to JSON using [Jackson's](https://github.com/FasterXML/jackson) POJO/bean
                 property introspection feature. Note that this requires the Java classes of the
                 variable value to be on the REST API's classpath.
 

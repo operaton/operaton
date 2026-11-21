@@ -177,7 +177,7 @@
     <tagDatabase tag="7.25.0"/>
   </changeSet>
 
-  <changeSet author="Operaton" id="7.25-to-7.26">
+  <changeSet author="Operaton" id="7.25-to-7.26" runInTransaction="false">
     <sqlFile path="upgrade/${db.name}_engine_7.25_to_7.26.sql"
              encoding="UTF-8"
              relativeToChangelogFile="true"

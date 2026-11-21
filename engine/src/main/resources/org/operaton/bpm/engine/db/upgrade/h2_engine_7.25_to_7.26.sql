@@ -14,8 +14,8 @@
 --
 
 -- https://github.com/operaton/operaton/issues/4030
-create index ACT_IDX_TASK_PARENT_TASK_ID on ACT_RU_TASK(PARENT_TASK_ID_);
-create index ACT_IDX_HI_TASK_PARENT_TASK_ID on ACT_HI_TASKINST(PARENT_TASK_ID_);
+create index if not exists ACT_IDX_TASK_PARENT_TASK_ID on ACT_RU_TASK(PARENT_TASK_ID_);
+create index if not exists ACT_IDX_HI_TASK_PARENT_TASK_ID on ACT_HI_TASKINST(PARENT_TASK_ID_);
 
 -- schema log last: the changeset is not transactional
 insert into ACT_GE_SCHEMA_LOG

@@ -2,8 +2,8 @@ name: Auto-Merge Eligible PRs
 
 on:
   schedule:
-    # Run at 4:00 AM UTC daily
-    - cron: '0 4 * * *'
+    - cron: '23 1 * * *'
+    - cron: '47 3 * * *'
   workflow_dispatch:
 
 jobs:

@@ -2,8 +2,12 @@ name: Auto-Merge Eligible PRs
 
 on:
   schedule:
-    # Run at 4:00 AM UTC daily
-    - cron: '0 4 * * *'
+    # GitHub delays scheduled runs under load, especially at the top of the hour
+    # (observed: 4:00 UTC runs started between 10:45 and 12:40 UTC). Use off-peak
+    # minutes and two redundant triggers so the PRs are merged before 6 AM CET.
+    # A second run is harmless: it only acts on PRs that are still open.
+    - cron: '23 1 * * *'
+    - cron: '47 3 * * *'
   workflow_dispatch:
 
 jobs:

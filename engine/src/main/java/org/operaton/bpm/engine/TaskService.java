@@ -1183,7 +1183,12 @@ public @NullMarked interface TaskService {
   /** The comments related to the given task. */
   List<Comment> getTaskComments(String taskId);
 
-  /** Retrieve a particular task comment */
+  /**
+   * Retrieves a particular task comment. A task that exists only in history must be visible through the historic task query.
+   * An absent artifact or a missing or non-visible historic task yields {@code null}.
+   *
+   * @throws AuthorizationException if the caller is not authorized to read a running task
+   */
   @Nullable Comment getTaskComment(String taskId, String commentId);
 
   /**
@@ -1245,13 +1250,23 @@ public @NullMarked interface TaskService {
   /** Retrieve a particular attachment */
   @Nullable Attachment getAttachment(String attachmentId);
 
-  /** Retrieve a particular attachment to the given task id and attachment id*/
+  /**
+   * Retrieves a particular task attachment. A task that exists only in history must be visible through the historic task query.
+   * An absent artifact or a missing or non-visible historic task yields {@code null}.
+   *
+   * @throws AuthorizationException if the caller is not authorized to read a running task
+   */
   @Nullable Attachment getTaskAttachment(String taskId, String attachmentId);
 
   /** Retrieve stream content of a particular attachment */
   @Nullable InputStream getAttachmentContent(String attachmentId);
 
-  /** Retrieve stream content of a particular attachment to the given task id and attachment id*/
+  /**
+   * Retrieves the stream content of a particular task attachment. A task that exists only in history must be visible through the historic task query.
+   * An absent artifact or a missing or non-visible historic task yields {@code null}.
+   *
+   * @throws AuthorizationException if the caller is not authorized to read a running task
+   */
   @Nullable InputStream getTaskAttachmentContent(String taskId, String attachmentId);
 
   /** The list of attachments associated to a task */

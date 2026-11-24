@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:3d1c27f6-653c-4876-a177-208ee72a8b83",
+  "serialNumber": "urn:uuid:f6953cad-471e-436f-966f-4a5a2a85f0c4",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-20T04:40:53Z",
+    "timestamp": "2026-11-24T13:13:38Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.76.0-SNAPSHOT-92f029f9f"
+          "version": "0.76.0-SNAPSHOT-19b7aa47c"
         }
       ]
     },
@@ -2732,44 +2732,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
+      "bom-ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.5?type=jar",
       "group": "com.lihaoyi",
       "name": "sourcecode_2.13",
-      "version": "0.4.4",
+      "version": "0.4.5",
       "description": "sourcecode",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a2985cf5644215014cfcd9ad4df781c7"
+          "content": "f1b54694f17c6582162330bc91e480be"
         },
         {
           "alg": "SHA-1",
-          "content": "9014066d23e4fe50911a366f2b85174ffc4bb2a1"
+          "content": "e5edc450e12178ffb6a5db7aa8f939c0a54e19d0"
         },
         {
           "alg": "SHA-256",
-          "content": "bd4e99aef8267a410b6ed716c487cf5256f801425f158a8c9cbd056eb032d80d"
+          "content": "0756c7f31d1b1b91d9dc714bfa7eb53b01927e90cae2f67e8196417add5dbbe0"
         },
         {
           "alg": "SHA-512",
-          "content": "8a2acc33e29003a5d48f5b768e51c5c581ecf73f9cd27d362dc466f812f3eaae524f2febc0ecab3a0283be2f9748b5d8fba0e41c207332282fdeb4f2d053b12f"
+          "content": "04b06b8ef3a339f5da38962398cf8b749f02159d6604367c8b9f3e13b1e9ccd789b31ad8c38bc11310c16f0780c895c7aaa473cf9edd8c2de7df4fb5d27687ec"
         },
         {
           "alg": "SHA-384",
-          "content": "13083566cf1cadbd605614c9137c9dce8c759461d0d7a044cbd24fbca9143b8cb84e24ed78df4ac945ff393bbf0135a2"
+          "content": "acd2b0bb75786a6b6769c69dfae4391b78b8ea2652f057ee41e57cf7211085ae7bb758ae82fa0ccf66a568f3be3c52fa"
         },
         {
           "alg": "SHA3-384",
-          "content": "aafaf3a8c48c2573b780f3f977af505421d44c6c3ee88c9fe0b4d4b358c2deb4ca769a63b1a812340a42c672cf70a572"
+          "content": "19ffa088d4154735674cfdb505d1c6e11f9f9014f9a15373f9aa99c1b843ba526afbf816d3d5241a5347731af352298b"
         },
         {
           "alg": "SHA3-256",
-          "content": "54f370f6504a055d60da50718e03795b2e38557524c353b2bd401a7236387c85"
+          "content": "3148d75ebdf7e5e80fc955f46dbb2afb188cc84dca37aad25b72f34ccc2f3b0b"
         },
         {
           "alg": "SHA3-512",
-          "content": "2121acd93c1ddfb5cfb41928432d30ea4008f397a67386b4bca108c31e58997c0cd87795aaadb525ad9bf12f62ee5ef60b083416f0e4a6247004c629b85836a4"
+          "content": "d79d25095bd86b676ea5966961437dc16e6558eb99252b542cd1a6d92f66424065c67a7381557f1aca738b2bb2274111919e183272722885da60b6de58ad8a8a"
         }
       ],
       "licenses": [
@@ -2780,7 +2780,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
+      "purl": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.5?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/com-lihaoyi/sourcecode",
@@ -18229,44 +18229,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-java-core@4.11.11?type=jar",
       "group": "com.konghq",
       "name": "unirest-java-core",
-      "version": "4.11.10",
+      "version": "4.11.11",
       "description": "Simplified, lightweight HTTP client library.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e8740bdc64bc2fc4a4df932ba93799a2"
+          "content": "dae7fa503dea182052e65f92339428a8"
         },
         {
           "alg": "SHA-1",
-          "content": "555d18d335e4f8027dfa0cbabd66ce68327b789d"
+          "content": "ce7428f31a01e1987e924cfcb2e524ac2b65f1ca"
         },
         {
           "alg": "SHA-256",
-          "content": "13b8046ba79b3438a9e209bca065ec601c48bbe71bf9c600d81aed8f3f2864ad"
+          "content": "3bfd6a0bf599b132e9cf0743547294f47bb4341534ac471c750b3ff6bfb2b5e1"
         },
         {
           "alg": "SHA-512",
-          "content": "8b7a30a522ff051f1dc611a66f20cb7620f04c065633f4aded59059005fc93dd889f76a498ab00b3d3b48de926f55ff9805c94e20c9e901f042b698e3cec1625"
+          "content": "f86ed81a27a8dd805cb00f81dc26ed1659b2059db916d5ab19f5208d613ce6c66a477251d914e4bf661bad56ea9030adfb4ab821babfcdcb07ae3517aa0538e7"
         },
         {
           "alg": "SHA-384",
-          "content": "968cad1e7b67fcb01c7bfde141aa294efc63ce6194cdc6601df1ed3e229208d7897cb3403d78b3456c9bf7180d1249a6"
+          "content": "c49ebed32aabc6852b0662b0657b05790ad3822252ae4bce3bae6d60164bf80b4e447abec059c10ff9bc34d732dadded"
         },
         {
           "alg": "SHA3-384",
-          "content": "8bc8689ad5399d8579e61b0bae699f746c91c0b803acff1678c6a9936a39ce9c1b7edb28e5f5eaaa53ae178e227b045e"
+          "content": "c407bbaec73dce8c5ea554e04ed568e961bac82bd6c9a90333377ea514dc6359684e42bfa8a5d581d2b659ab4c018207"
         },
         {
           "alg": "SHA3-256",
-          "content": "f4281089f2a6cb2b9f943a5024383441150ce934e2b71c3579d11b7359ff3e9a"
+          "content": "d6727c5fc53734da7b11a50964071ddeb262b00314a9c5a2302a16a495f60d41"
         },
         {
           "alg": "SHA3-512",
-          "content": "7a7f238786b0571ac811e258acf05f7aa7b411b6a9b5bc6101c67a1719245a19a4ab569e5a5e46b54abb303b839bb1f1f5602d61344efc9f142490d9aadf6688"
+          "content": "15a8ea00933cd32503bf7527219305bd691040543c9b99943346f23875a1504622842a00d75edd06eef08d9312a3b70b64dee3b42dc2a188b8a66c1346071886"
         }
       ],
       "licenses": [
@@ -18277,7 +18277,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-java-core@4.11.11?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-java-core/",
@@ -18295,44 +18295,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
+      "bom-ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.11?type=jar",
       "group": "com.konghq",
       "name": "unirest-modules-gson",
-      "version": "4.11.10",
+      "version": "4.11.11",
       "description": "Gson based object mapper for Unirest",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "9a73d7018904c0924817234b69f79014"
+          "content": "056d16163e6a57c36300f629965e0b1c"
         },
         {
           "alg": "SHA-1",
-          "content": "f4ca19ce1904f32b765982daaf4350ca3ebf35da"
+          "content": "5d81147d010b90fc6d1e91c8280ce2749479ae6e"
         },
         {
           "alg": "SHA-256",
-          "content": "d547b88bf3e18e640fb9cecc5d88831336bc1c0415858ace9122d4feea348b81"
+          "content": "9dc9d81f213b99fca90e1160b52d58667bce55a4624b38102b969324a204c51a"
         },
         {
           "alg": "SHA-512",
-          "content": "5438de874252be3257a4c4320d2c175009752a9bff18d18e894f0f9f7d0bab04f30f8e91b9fc06271fbcabeba4e97b66941c5a1dce4112978da392ba40714045"
+          "content": "ad62101ae268fd7355ac0e26651797b320195a1550195872fb8253fc05bc69a82770afa0e3219446b6e8dc20e69f7d2cd4b9a75ba48fabe2ffb465d29e59aec4"
         },
         {
           "alg": "SHA-384",
-          "content": "d9b3eec995021b3e85e7653656947e71387c4b39769ca3f12b5d854c053c21c280ab58b3a43f83ac919959949544430c"
+          "content": "c3ef2561eedd4dd6d6ecdb259064b6a52b7f86aaa31c04e32b0162a8c7351c6e3dda377ceb643a2d7471d6f07070d91b"
         },
         {
           "alg": "SHA3-384",
-          "content": "fe819cf63014b062526914853fd6774381ea84a5a4a6f15075ad6fe2a47e61dd3619b15f6dea1abdbb118f8cb4cf59b6"
+          "content": "855a4f50b044a32446dc3cc4db501ec934a4782e93bca5e3d5970a99d44731491ea518c52aa2e33e141e316e365a529f"
         },
         {
           "alg": "SHA3-256",
-          "content": "11c2f46beb8a0e43df3abbe52d2a6c65804a8b866ae0598d030fa7a11acda2fe"
+          "content": "955e15a5f6ec4a80fb1efeb2abbc82c1f96d77a17daea1ff496deb705d16d344"
         },
         {
           "alg": "SHA3-512",
-          "content": "fe22c4effda66009e8b328b73d128cd83d93fcb352b5bf1354cfac03b1bdf2a1da2d36e1dbeb52d613214cedeac4af60a996c4babeadfba0638f41456b151fee"
+          "content": "11ac8e32f24e2cb6ed484b00fc523ec0a872c44e9bb1e2f6b7f51cc016ee4a24f7546f7b60f426764d9d3052a759f3993501c42f55f322c61caea3e7bf9e8c0f"
         }
       ],
       "licenses": [
@@ -18343,7 +18343,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
+      "purl": "pkg:maven/com.konghq/unirest-modules-gson@4.11.11?type=jar",
       "externalReferences": [
         {
           "url": "http://github.com/Kong/unirest-java/unirest-modules-gson/",
@@ -22806,7 +22806,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0b167bd5-9675-412a-8c02-a4b487fbc06b",
+      "bom-ref": "2e9f19d7-3c16-462a-a929-7acfe4521615",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25680,19 +25680,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.17",
+      "bom-ref": "pkg:npm/dompurify@3.4.18",
       "name": "dompurify",
-      "version": "3.4.17",
+      "version": "3.4.18",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.17",
+      "purl": "pkg:npm/dompurify@3.4.18",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.17"
+          "value": "dompurify@3.4.18"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25918,9 +25918,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-builder@1.3.1",
+      "bom-ref": "pkg:npm/fast-xml-builder@1.3.2",
       "name": "fast-xml-builder",
-      "version": "1.3.1",
+      "version": "1.3.2",
       "licenses": [
         {
           "license": {
@@ -25928,11 +25928,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-builder@1.3.1",
+      "purl": "pkg:npm/fast-xml-builder@1.3.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-builder@1.3.1"
+          "value": "fast-xml-builder@1.3.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25942,9 +25942,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.12.0",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.12.1",
       "name": "fast-xml-parser",
-      "version": "5.12.0",
+      "version": "5.12.1",
       "licenses": [
         {
           "license": {
@@ -25952,11 +25952,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.12.0",
+      "purl": "pkg:npm/fast-xml-parser@5.12.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.12.0"
+          "value": "fast-xml-parser@5.12.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28062,7 +28062,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5f9adfb0-f4d6-420e-92dd-50ec9f55cfb4",
+      "bom-ref": "6215998f-2fbb-48cf-b132-aa6bb0c8c905",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28073,7 +28073,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "df13f015-98ac-4dd5-a5ce-896a883db5f3",
+      "bom-ref": "443de13f-0a9d-4c51-9fa5-871cc1d409de",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28726,6 +28726,28 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/dompurify@3.4.17",
+      "name": "dompurify",
+      "version": "3.4.17",
+      "licenses": [
+        {
+          "expression": "MPL-2.0 OR Apache-2.0"
+        }
+      ],
+      "purl": "pkg:npm/dompurify@3.4.17",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dompurify@3.4.17"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/html-parse-stringify@3.0.1",
       "name": "html-parse-stringify",
       "version": "3.0.1",
@@ -29206,7 +29228,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "dc852480-23e3-4359-8a6e-a0ecabff4738",
+      "bom-ref": "810624ac-feb8-43bb-8a8c-09f4fef17377",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -29467,13 +29489,13 @@
     {
       "ref": "pkg:maven/com.lihaoyi/fastparse_2.13@3.1.1?type=jar",
       "dependsOn": [
-        "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
+        "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.5?type=jar",
         "pkg:maven/com.lihaoyi/geny_2.13@1.1.1?type=jar",
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.4?type=jar",
+      "ref": "pkg:maven/com.lihaoyi/sourcecode_2.13@0.4.5?type=jar",
       "dependsOn": [
         "pkg:maven/org.scala-lang/scala-library@2.13.18?type=jar"
       ]
@@ -30486,8 +30508,8 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
-        "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
+        "pkg:maven/com.konghq/unirest-java-core@4.11.11?type=jar",
+        "pkg:maven/com.konghq/unirest-modules-gson@4.11.11?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar"
       ]
     },
@@ -30952,11 +30974,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-java-core@4.11.10?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-java-core@4.11.11?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.10?type=jar",
+      "ref": "pkg:maven/com.konghq/unirest-modules-gson@4.11.11?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.code.gson/gson@2.15.0?type=jar"
       ]
@@ -32021,7 +32043,7 @@
       "dependsOn": []
     },
     {
-      "ref": "0b167bd5-9675-412a-8c02-a4b487fbc06b",
+      "ref": "2e9f19d7-3c16-462a-a929-7acfe4521615",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -32055,9 +32077,9 @@
         "pkg:npm/dmn-js-shared@17.13.0",
         "pkg:npm/dmn-js@17.13.0",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.17",
+        "pkg:npm/dompurify@3.4.18",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.12.0",
+        "pkg:npm/fast-xml-parser@5.12.1",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.18.1",
@@ -32071,9 +32093,9 @@
       ]
     },
     {
-      "ref": "5f9adfb0-f4d6-420e-92dd-50ec9f55cfb4",
+      "ref": "6215998f-2fbb-48cf-b132-aa6bb0c8c905",
       "dependsOn": [
-        "0b167bd5-9675-412a-8c02-a4b487fbc06b"
+        "2e9f19d7-3c16-462a-a929-7acfe4521615"
       ]
     },
     {
@@ -32224,7 +32246,7 @@
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/diagram-js@15.28.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.17",
+        "pkg:npm/dompurify@3.4.18",
         "pkg:npm/feelers@3.1.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
@@ -32931,7 +32953,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.17",
+      "ref": "pkg:npm/dompurify@3.4.18",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -32984,17 +33006,17 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/fast-xml-builder@1.3.1",
+      "ref": "pkg:npm/fast-xml-builder@1.3.2",
       "dependsOn": [
         "pkg:npm/path-expression-matcher@1.6.2",
         "pkg:npm/xml-naming@0.3.0"
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.12.0",
+      "ref": "pkg:npm/fast-xml-parser@5.12.1",
       "dependsOn": [
         "pkg:npm/%40nodable/entities@3.1.0",
-        "pkg:npm/fast-xml-builder@1.3.1",
+        "pkg:npm/fast-xml-builder@1.3.2",
         "pkg:npm/is-unsafe@2.0.3",
         "pkg:npm/path-expression-matcher@1.6.2",
         "pkg:npm/strnum@2.5.1",
@@ -33472,13 +33494,7 @@
       "dependsOn": []
     },
     {
-      "ref": "dc852480-23e3-4359-8a6e-a0ecabff4738",
-      "dependsOn": [
-        "df13f015-98ac-4dd5-a5ce-896a883db5f3"
-      ]
-    },
-    {
-      "ref": "df13f015-98ac-4dd5-a5ce-896a883db5f3",
+      "ref": "443de13f-0a9d-4c51-9fa5-871cc1d409de",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -33496,6 +33512,12 @@
         "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
+      ]
+    },
+    {
+      "ref": "810624ac-feb8-43bb-8a8c-09f4fef17377",
+      "dependsOn": [
+        "443de13f-0a9d-4c51-9fa5-871cc1d409de"
       ]
     },
     {
@@ -33781,6 +33803,12 @@
         "pkg:npm/min-dash@5.1.0",
         "pkg:npm/moddle-xml@12.1.0",
         "pkg:npm/moddle@8.2.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dompurify@3.4.17",
+      "dependsOn": [
+        "pkg:npm/%40types/trusted-types@2.0.7"
       ]
     },
     {

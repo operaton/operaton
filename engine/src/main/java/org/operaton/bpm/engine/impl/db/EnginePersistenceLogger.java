@@ -803,6 +803,14 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
 
   // exception code 110 is already taken. See requiredOperatonAdminOrPermissionException() for details.
 
+  public OptimisticLockingException processInstanceDeletedConcurrently(String processInstanceId) {
+    return new OptimisticLockingException(exceptionMessage(
+      "111",
+      "Process instance '{}' was deleted by another transaction while its execution tree was loaded.",
+      processInstanceId
+    ));
+  }
+
   public static List<SQLException> findRelatedSqlExceptions(Throwable exception) {
     List<SQLException> sqlExceptionList = new ArrayList<>();
     Throwable cause = exception;

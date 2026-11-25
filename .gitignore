@@ -42,6 +42,7 @@ out/jreleaser
 *.gz
 *.class
 *.zip
+__pycache__/
 sloc.txt
 /docs/superpowers
 /.worktrees

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -28,7 +29,7 @@ import org.operaton.spin.DataFormats;
 import org.operaton.spin.plugin.impl.SpinProcessEnginePlugin;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
-public class SpringBootSpinProcessEnginePlugin extends SpinProcessEnginePlugin {
+public @NullMarked class SpringBootSpinProcessEnginePlugin extends SpinProcessEnginePlugin {
 
   protected Optional<OperatonJacksonFormatConfiguratorJSR310> dataFormatConfiguratorJsr310;
 

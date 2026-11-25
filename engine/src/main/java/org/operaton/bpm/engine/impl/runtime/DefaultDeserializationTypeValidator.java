@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
 
 /**
@@ -29,7 +31,7 @@ import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
  * Databind's <a href=
  * "https://github.com/FasterXML/jackson-databind/blob/master/src/main/java/com/fasterxml/jackson/databind/jsontype/impl/SubTypeValidator.java">SubTypeValidator</a>.
  */
-public class DefaultDeserializationTypeValidator implements WhitelistingDeserializationTypeValidator {
+public @NullMarked class DefaultDeserializationTypeValidator implements WhitelistingDeserializationTypeValidator {
 
   protected static final Collection<String> ALLOWED_PACKAGES = List.of("java.lang");
   protected static final Collection<String> ALLOWED_CLASSES = Set.of(
@@ -51,7 +53,7 @@ public class DefaultDeserializationTypeValidator implements WhitelistingDeserial
   }
 
   @Override
-  public boolean validate(String className) {
+  public boolean validate(@Nullable String className) {
     if (className == null || className.trim().isEmpty()) {
       return true;
     }
@@ -81,7 +83,7 @@ public class DefaultDeserializationTypeValidator implements WhitelistingDeserial
     return true;
   }
 
-  protected void extractElements(String allowedElements, Set<String> set) {
+  protected void extractElements(@Nullable String allowedElements, Set<String> set) {
     if (!set.isEmpty()) {
       set.clear();
     }

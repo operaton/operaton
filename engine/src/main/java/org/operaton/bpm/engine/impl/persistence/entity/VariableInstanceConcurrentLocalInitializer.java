@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
 
@@ -34,7 +35,7 @@ public @NullMarked class VariableInstanceConcurrentLocalInitializer
   }
 
   @Override
-  public void onCreate(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
+  public void onCreate(VariableInstanceEntity variableInstance, @Nullable AbstractVariableScope sourceScope) {
     variableInstance.setConcurrentLocal(!execution.isScope() || execution.getParent() != null && execution.isExecutingScopeLeafActivity());
   }
 

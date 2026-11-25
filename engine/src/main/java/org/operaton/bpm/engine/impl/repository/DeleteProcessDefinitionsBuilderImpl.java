@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.cmd.DeleteProcessDefinitionsByIdsCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteProcessDefinitionsByKeyCmd;
@@ -42,11 +43,11 @@ public class DeleteProcessDefinitionsBuilderImpl implements DeleteProcessDefinit
 
   private final CommandExecutor commandExecutor;
 
-  private String processDefinitionKey;
-  private List<String> processDefinitionIds;
+  private @Nullable String processDefinitionKey;
+  private @Nullable List<String> processDefinitionIds;
 
   private boolean cascade;
-  private String tenantId;
+  private @Nullable String tenantId;
   private boolean isTenantIdSet;
   private boolean skipCustomListeners;
   protected boolean skipIoMappings;
@@ -56,7 +57,7 @@ public class DeleteProcessDefinitionsBuilderImpl implements DeleteProcessDefinit
   }
 
   @Override
-  public DeleteProcessDefinitionsBuilderImpl byIds(String... processDefinitionId) {
+  public DeleteProcessDefinitionsBuilderImpl byIds(String @Nullable... processDefinitionId) {
     if (processDefinitionId != null) {
       this.processDefinitionIds = new ArrayList<>();
       this.processDefinitionIds.addAll(Arrays.asList(processDefinitionId));

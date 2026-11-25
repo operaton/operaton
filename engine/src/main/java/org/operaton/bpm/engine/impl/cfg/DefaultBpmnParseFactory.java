@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
 
@@ -23,7 +24,7 @@ import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParser;
 /**
  * @author Nico Rehwaldt
  */
-public class DefaultBpmnParseFactory implements BpmnParseFactory {
+public @NullMarked class DefaultBpmnParseFactory implements BpmnParseFactory {
 
   @Override
   public BpmnParse createBpmnParse(BpmnParser bpmnParser) {

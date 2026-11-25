@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.cmd.UpdateProcessInstancesSuspendStateBatchCmd;
@@ -28,13 +30,15 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.runtime.UpdateProcessInstancesSuspensionStateBuilder;
 
-public class UpdateProcessInstancesSuspensionStateBuilderImpl implements UpdateProcessInstancesSuspensionStateBuilder {
+import static java.util.Objects.requireNonNull;
+
+public @NullMarked class UpdateProcessInstancesSuspensionStateBuilderImpl implements UpdateProcessInstancesSuspensionStateBuilder {
 
   protected List<String> processInstanceIds;
-  protected ProcessInstanceQuery processInstanceQuery;
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery;
-  protected CommandExecutor commandExecutor;
-  protected String processDefinitionId;
+  protected @Nullable ProcessInstanceQuery processInstanceQuery;
+  protected @Nullable HistoricProcessInstanceQuery historicProcessInstanceQuery;
+  protected @Nullable CommandExecutor commandExecutor;
+  protected @Nullable String processDefinitionId;
 
   public UpdateProcessInstancesSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {
     this.processInstanceIds = new ArrayList<>();
@@ -43,6 +47,10 @@ public class UpdateProcessInstancesSuspensionStateBuilderImpl implements UpdateP
 
   public UpdateProcessInstancesSuspensionStateBuilderImpl(List<String> processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
+  }
+
+  private CommandExecutor getCommandExecutor() {
+    return requireNonNull(commandExecutor);
   }
 
   @Override
@@ -71,33 +79,33 @@ public class UpdateProcessInstancesSuspensionStateBuilderImpl implements UpdateP
 
   @Override
   public void suspend() {
-    commandExecutor.execute(new UpdateProcessInstancesSuspendStateCmd(commandExecutor, this, true));
+    getCommandExecutor().execute(new UpdateProcessInstancesSuspendStateCmd(getCommandExecutor(), this, true));
   }
 
   @Override
   public void activate() {
-    commandExecutor.execute(new UpdateProcessInstancesSuspendStateCmd(commandExecutor, this, false));
+    getCommandExecutor().execute(new UpdateProcessInstancesSuspendStateCmd(getCommandExecutor(), this, false));
   }
 
   @Override
   public Batch suspendAsync() {
-    return commandExecutor.execute(new UpdateProcessInstancesSuspendStateBatchCmd(commandExecutor, this, true));
+    return getCommandExecutor().execute(new UpdateProcessInstancesSuspendStateBatchCmd(getCommandExecutor(), this, true));
   }
 
   @Override
   public Batch activateAsync() {
-    return commandExecutor.execute(new UpdateProcessInstancesSuspendStateBatchCmd(commandExecutor, this, false));
+    return getCommandExecutor().execute(new UpdateProcessInstancesSuspendStateBatchCmd(getCommandExecutor(), this, false));
   }
 
   public List<String> getProcessInstanceIds() {
     return processInstanceIds;
   }
 
-  public ProcessInstanceQuery getProcessInstanceQuery() {
+  public @Nullable ProcessInstanceQuery getProcessInstanceQuery() {
     return processInstanceQuery;
   }
 
-  public HistoricProcessInstanceQuery getHistoricProcessInstanceQuery() {
+  public @Nullable HistoricProcessInstanceQuery getHistoricProcessInstanceQuery() {
     return historicProcessInstanceQuery;
   }
 

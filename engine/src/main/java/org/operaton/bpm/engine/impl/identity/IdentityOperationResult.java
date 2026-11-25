@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.identity;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.IdentityService;
 
 /**
@@ -43,15 +44,15 @@ public class IdentityOperationResult {
   public static final String OPERATION_UNLOCK = "unlock";
   public static final String OPERATION_NONE = "none";
 
-  protected Serializable value;
+  protected @Nullable Serializable value;
   protected String operation;
 
-  public IdentityOperationResult(Serializable value, String operation) {
+  public IdentityOperationResult(@Nullable Serializable value, String operation) {
     this.value = value;
     this.operation = operation;
   }
 
-  public Serializable getValue() {
+  public @Nullable Serializable getValue() {
     return value;
   }
 

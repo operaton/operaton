@@ -78,7 +78,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     return createProcessInstance(businessKey, caseInstanceId, this.initial);
   }
 
-  public PvmProcessInstance createProcessInstance(String businessKey, ActivityImpl initial) {
+  public PvmProcessInstance createProcessInstance(String businessKey, @Nullable ActivityImpl initial) {
     return createProcessInstance(businessKey, null, initial);
   }
 

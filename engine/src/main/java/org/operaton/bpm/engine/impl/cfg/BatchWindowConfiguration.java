@@ -18,7 +18,9 @@ package org.operaton.bpm.engine.impl.cfg;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Objects;
 
+import org.jspecify.annotations.NullMarked;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import org.jspecify.annotations.Nullable;
@@ -27,22 +29,22 @@ import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHel
 /**
  * @author Svetlana Dorokhova.
  */
-public class BatchWindowConfiguration {
+public @NullMarked class BatchWindowConfiguration {
 
   protected static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
-  private String startTime;
+  private @Nullable String startTime;
 
-  private Date startTimeAsDate;
+  private @Nullable Date startTimeAsDate;
 
-  private String endTime = "00:00";
+  private @Nullable String endTime = "00:00";
 
-  private Date endTimeAsDate;
+  private @Nullable Date endTimeAsDate;
 
   public BatchWindowConfiguration() {
   }
 
-  public BatchWindowConfiguration(String startTime, @Nullable String endTime) {
+  public BatchWindowConfiguration(@Nullable String startTime, @Nullable String endTime) {
     this.startTime = startTime;
     initStartTimeAsDate();
     if (endTime != null) {
@@ -67,7 +69,7 @@ public class BatchWindowConfiguration {
     }
   }
 
-  public String getStartTime() {
+  public @Nullable String getStartTime() {
     return startTime;
   }
 
@@ -76,7 +78,7 @@ public class BatchWindowConfiguration {
     initStartTimeAsDate();
   }
 
-  public String getEndTime() {
+  public @Nullable String getEndTime() {
     return endTime;
   }
 
@@ -85,16 +87,16 @@ public class BatchWindowConfiguration {
     initEndTimeAsDate();
   }
 
-  public Date getStartTimeAsDate() {
+  public @Nullable Date getStartTimeAsDate() {
     return startTimeAsDate;
   }
 
-  public Date getEndTimeAsDate() {
+  public @Nullable Date getEndTimeAsDate() {
     return endTimeAsDate;
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(@Nullable Object o) {
     if (this == o) {
       return true;
     }
@@ -104,15 +106,14 @@ public class BatchWindowConfiguration {
 
     BatchWindowConfiguration that = (BatchWindowConfiguration) o;
 
-    if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) {
+    if (!Objects.equals(startTime, that.startTime)) {
       return false;
     }
-    return endTime != null ? endTime.equals(that.endTime) : that.endTime == null;
+    return Objects.equals(endTime, that.endTime);
   }
 
   @Override
   public int hashCode() {
-    int result = startTime != null ? startTime.hashCode() : 0;
-    return 31 * result + (endTime != null ? endTime.hashCode() : 0);
+    return Objects.hash(startTime, endTime);
   }
 }

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.Map;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
@@ -74,7 +75,7 @@ public @NullMarked class SetTaskVariablesCmd extends AbstractSetVariableCmd impl
 
   @Override
   protected ExecutionEntity getContextExecution() {
-    return getEntity().getExecution();
+    return requireNonNull(getEntity().getExecution());
   }
 
   @Override
@@ -95,17 +96,17 @@ public @NullMarked class SetTaskVariablesCmd extends AbstractSetVariableCmd impl
   }
 
   @Override
-  public void onCreate(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
+  public void onCreate(VariableInstanceEntity variableInstance, @Nullable AbstractVariableScope sourceScope) {
     onLocalVariableChanged();
   }
 
   @Override
-  public void onDelete(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
+  public void onDelete(VariableInstanceEntity variableInstance, @Nullable AbstractVariableScope sourceScope) {
     onLocalVariableChanged();
   }
 
   @Override
-  public void onUpdate(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
+  public void onUpdate(VariableInstanceEntity variableInstance, @Nullable AbstractVariableScope sourceScope) {
     onLocalVariableChanged();
   }
 }

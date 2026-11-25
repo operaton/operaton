@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.errorcode;
 
 import java.sql.SQLException;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -56,7 +57,7 @@ public interface ExceptionCodeProvider {
    * @return an integer value representing the error code. When returning {@code null},
    * the {@link BuiltinExceptionCode#FALLBACK} gets assigned to the exception.
    */
-  default Integer provideCode(ProcessEngineException processEngineException) {
+  default @Nullable Integer provideCode(ProcessEngineException processEngineException) {
     if (processEngineException instanceof OptimisticLockingException) {
       return OPTIMISTIC_LOCKING.getCode();
 
@@ -78,7 +79,7 @@ public interface ExceptionCodeProvider {
    * @return an integer value representing the error code. When returning {@code null},
    * the {@link BuiltinExceptionCode#FALLBACK} gets assigned to the exception.
    */
-  default Integer provideCode(SQLException sqlException) {
+  default @Nullable Integer provideCode(SQLException sqlException) {
     boolean deadlockDetected = ExceptionUtil.checkDeadlockException(sqlException);
     if (deadlockDetected) {
       return DEADLOCK.getCode();

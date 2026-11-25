@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.event;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 
@@ -23,13 +25,13 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
  * @author Thorben Lindhauer
  *
  */
-public class VariableEvent {
+public @NullMarked class VariableEvent {
 
   protected VariableInstance variableInstance;
   protected String eventName;
-  protected AbstractVariableScope sourceScope;
+  protected @Nullable AbstractVariableScope sourceScope;
 
-  public VariableEvent(VariableInstance variableInstance, String eventName, AbstractVariableScope sourceScope) {
+  public VariableEvent(VariableInstance variableInstance, String eventName, @Nullable AbstractVariableScope sourceScope) {
     this.variableInstance = variableInstance;
     this.eventName = eventName;
     this.sourceScope = sourceScope;
@@ -43,7 +45,7 @@ public class VariableEvent {
     return eventName;
   }
 
-  public AbstractVariableScope getSourceScope() {
+  public @Nullable AbstractVariableScope getSourceScope() {
     return sourceScope;
   }
 }

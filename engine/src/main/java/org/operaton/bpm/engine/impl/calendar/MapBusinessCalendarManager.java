@@ -19,13 +19,14 @@ package org.operaton.bpm.engine.impl.calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 
 /**
  * @author Tom Baeyens
  */
-public class MapBusinessCalendarManager implements BusinessCalendarManager {
+public @NullMarked class MapBusinessCalendarManager implements BusinessCalendarManager {
 
   private final Map<String, BusinessCalendar> businessCalendars = new HashMap<>();
 
@@ -34,6 +35,7 @@ public class MapBusinessCalendarManager implements BusinessCalendarManager {
     return businessCalendars.get(businessCalendarRef);
   }
 
+  @SuppressWarnings("UnusedReturnValue")
   public BusinessCalendarManager addBusinessCalendar(String businessCalendarRef, BusinessCalendar businessCalendar) {
     businessCalendars.put(businessCalendarRef, businessCalendar);
     return this;

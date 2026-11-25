@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.calendar;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 /**
  * @author Tom Baeyens
  */
-public interface BusinessCalendarManager {
+public @NullMarked interface BusinessCalendarManager {
 
-  BusinessCalendar getBusinessCalendar(String businessCalendarRef);
+  @Nullable BusinessCalendar getBusinessCalendar(String businessCalendarRef);
 
 }

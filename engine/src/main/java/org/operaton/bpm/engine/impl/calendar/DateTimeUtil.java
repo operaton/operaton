@@ -23,6 +23,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Utility for {@link DateTime} that uses the JVM timezone
@@ -39,20 +40,16 @@ import org.joda.time.format.ISODateTimeFormat;
  *
  * @see CAM-1170
  */
-public final class DateTimeUtil {
+public final @NullMarked class DateTimeUtil {
 
   private static final DateTimeZone JVM_DEFAULT_DATE_TIME_ZONE = DateTimeZone.forTimeZone(TimeZone.getDefault());
 
-  private static DateTimeFormatter dateTimeFormatter;
+  private static final DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTimeParser().withZone(JVM_DEFAULT_DATE_TIME_ZONE);
 
   private DateTimeUtil() {
   }
 
   private static DateTimeFormatter getDataTimeFormater() {
-    if (dateTimeFormatter == null) {
-      dateTimeFormatter = ISODateTimeFormat.dateTimeParser().withZone(JVM_DEFAULT_DATE_TIME_ZONE);
-    }
-
     return dateTimeFormatter;
   }
 

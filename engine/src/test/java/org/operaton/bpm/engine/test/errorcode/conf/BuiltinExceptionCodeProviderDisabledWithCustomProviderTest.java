@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.errorcode.conf;
 import java.sql.SQLException;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -36,6 +37,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
@@ -50,12 +52,12 @@ class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
       c.setCustomExceptionCodeProvider(new ExceptionCodeProvider() {
         
         @Override
-        public Integer provideCode(SQLException sqlException) {
+        public @NonNull Integer provideCode(@NonNull SQLException sqlException) {
           return PROVIDED_CUSTOM_CODE;
         }
         
         @Override
-        public Integer provideCode(ProcessEngineException processEngineException) {
+        public @NonNull Integer provideCode(@NonNull ProcessEngineException processEngineException) {
           return PROVIDED_CUSTOM_CODE;
         }
         
@@ -98,8 +100,8 @@ class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
     User user = identityService.newUser("kermit");
     identityService.saveUser(user);
 
-    User user1 = identityService.createUserQuery().singleResult();
-    User user2 = identityService.createUserQuery().singleResult();
+    User user1 = requireNonNull(identityService.createUserQuery().singleResult());
+    User user2 = requireNonNull(identityService.createUserQuery().singleResult());
 
     user1.setFirstName("name one");
     identityService.saveUser(user1);

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.core.variable.mapping.value;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.delegate.VariableScope;
 
 /**
@@ -34,7 +35,7 @@ public @NullMarked class ConstantValueProvider implements ParameterValueProvider
   }
 
   @Override
-  public Object getValue(VariableScope scope) {
+  public Object getValue(@Nullable VariableScope scope) {
     return value;
   }
 

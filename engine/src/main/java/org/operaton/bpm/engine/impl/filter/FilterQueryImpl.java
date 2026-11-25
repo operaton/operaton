@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.filter;
 import java.io.Serial;
 import java.util.List;
 
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
@@ -33,7 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public @NullMarked class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implements FilterQuery {
+public class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implements FilterQuery {
 
   @Serial private static final long serialVersionUID = 1L;
   protected @Nullable String filterId;

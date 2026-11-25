@@ -3,7 +3,7 @@
 import { useLocation } from "preact-iso";
 import * as Icons from "../assets/icons.jsx";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useContext, useEffect, useState } from "preact/hooks";
+import { useContext, useEffect, useRef, useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
@@ -63,7 +63,9 @@ const OptionsMenu = ({ id = "options-menu" }) => {
     open_row = useState(null),
     show_row = open_row[0],
     set_row = open_row[1],
-    menu = () => document.getElementById(id),
+    menu_ref = useRef(null),
+    toggle_ref = useRef(null),
+    menu = () => menu_ref.current,
     pref = theme_pref.value,
     lang = language_for(i18n.resolvedLanguage ?? i18n.language),
     close = () => close_dialog(menu()),
@@ -127,11 +129,39 @@ const OptionsMenu = ({ id = "options-menu" }) => {
       </li>
     );
 
+  // A press anywhere outside the panel and its trigger dismisses the menu, the
+  // way a native <select> or a platform menu behaves — the X and Escape are no
+  // longer the only ways out.
+  useEffect(() => {
+    const on_press = (event) => {
+      const panel = menu_ref.current;
+      if (!panel?.open) return;
+      const box = panel.getBoundingClientRect();
+      const inside =
+        !!box.width &&
+        event.clientX >= box.left &&
+        event.clientX <= box.right &&
+        event.clientY >= box.top &&
+        event.clientY <= box.bottom;
+      if (inside) return;
+      if (toggle_ref.current?.contains(event.target)) return;
+      close();
+    };
+    document.addEventListener("mousedown", on_press, true);
+    document.addEventListener("click", on_press, true);
+    return () => {
+      document.removeEventListener("mousedown", on_press, true);
+      document.removeEventListener("click", on_press, true);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <button
         type="button"
         id="options-toggle"
+        ref={toggle_ref}
         aria-haspopup="dialog"
         aria-label={server_label(state) + " - " + (user_label(state) || t("nav.account"))}
         title={t("nav.options")}
@@ -170,7 +200,12 @@ const OptionsMenu = ({ id = "options-menu" }) => {
         </span>
       </button>
 
-      <dialog id={id} class="options-menu" aria-label={t("nav.options")}>
+      <dialog
+        id={id}
+        class="options-menu"
+        ref={menu_ref}
+        aria-label={t("nav.options")}
+      >
         <header>
           <h2>{user_label(state) || t("nav.options")}</h2>
           <button type="button" onClick={close} aria-label={t("nav.close-menu")}>

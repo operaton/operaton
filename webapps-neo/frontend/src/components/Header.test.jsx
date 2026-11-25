@@ -309,6 +309,61 @@ describe("Header", () => {
     // state is passed by reference; never compare structurally.
     expect(engine_rest.auth.logout.mock.lastCall[0]).toBe(state);
   });
+  // The panel is a modal <dialog>, so a press on the backdrop arrives with the
+  // <dialog> itself as the target; only the box tells inside from outside.
+  const stub_box = (element, box) =>
+    element.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      width: 0,
+      height: 0,
+      ...box,
+    });
+  const panel_box = {
+    left: 10,
+    top: 10,
+    right: 100,
+    bottom: 100,
+    width: 90,
+    height: 90,
+  };
+  const press_at = (target, x, y) =>
+    fireEvent.mouseDown(target, { clientX: x, clientY: y });
+
+  it("dismisses the options menu on a press outside it", () => {
+    const { container } = renderHeader(state);
+    fireEvent.click(container.querySelector("#options-toggle"));
+    const panel = container.querySelector("#options-menu");
+    stub_box(panel, panel_box);
+    expect(panel.open).toBe(true);
+    // The backdrop is the point of this: a press there must close the menu,
+    // so the X and Escape are not the only ways out.
+    press_at(document.body, 400, 400);
+    expect(panel.open).toBe(false);
+  });
+  it("keeps the options menu open on a press inside it", () => {
+    const { container } = renderHeader(state);
+    fireEvent.click(container.querySelector("#options-toggle"));
+    const panel = container.querySelector("#options-menu");
+    stub_box(panel, panel_box);
+    expect(panel.open).toBe(true);
+    // The panel's own padding and its children are inside, not backdrop.
+    press_at(container.querySelector("#options-menu header"), 50, 50);
+    expect(panel.open).toBe(true);
+    press_at(panel, 10, 10);
+    expect(panel.open).toBe(true);
+  });
+  it("ignores an outside press while the options menu is closed", () => {
+    const { container } = renderHeader(state);
+    const panel = container.querySelector("#options-menu");
+    stub_box(panel, panel_box);
+    expect(panel.open).toBe(false);
+    // Nothing to dismiss: a press on the page must not open or disturb it.
+    press_at(document.body, 400, 400);
+    expect(panel.open).toBe(false);
+  });
 });
 
 describe("Header — plugin nav", () => {

@@ -799,14 +799,12 @@
     height: 100%;
   }
 
-  /* The current page is a filled block that sits on the header surface, the
-     way a selected tab reads — the header's own grey is the unselected
-     background, so the fill has to be the surface above it. */
   #app > header nav menu > li > a[aria-current="page"] {
     color: var(--text);
-    background: var(--background-1);
-    border-radius: var(--border-radius);
-    font-weight: 600;
+    /* The indicator ends flush with the header's bottom edge; the padding is
+       reduced by the border width so the link keeps its height. */
+    border-bottom: 0.2em solid var(--color-primary);
+    padding-bottom: calc(var(--spacing-1) - 0.2em);
   }
 
   #app > header nav menu a {

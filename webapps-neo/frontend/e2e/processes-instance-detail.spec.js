@@ -33,7 +33,11 @@ const assert_clean = ({ page_errors, console_errors }) => {
 // Ask the engine for a real instance so the UI drive is deterministic, then
 // build the same detail href the instance list would render. Returns null if
 // the fixture engine has no instances (test then skips).
-const BACKEND = process.env.E2E_BACKEND ?? "http://localhost:8084/engine-rest";
+// Follows the backend the dev server proxies to (playwright.config.js), so the
+// engine the UI talks to and the one queried here stay in step.
+const BACKEND =
+  process.env.E2E_BACKEND ??
+  `${process.env.E2E_BACKEND_TARGET ?? "http://localhost:8080"}/engine-rest`;
 const find_instance_link = async (page) => {
   const res = await page.request.get(
     `${BACKEND}/history/process-instance?sortBy=startTime&sortOrder=desc&maxResults=1`,

@@ -4,9 +4,12 @@ import { useTranslation } from "react-i18next";
 import engine_rest, { RequestState } from "../api/engine_rest.jsx";
 import { AppState } from "../state.js";
 import { createContext } from "preact";
-import ReactBpmn from "react-bpmn";
+import { ThemedBpmn } from "../components/ThemedBpmn.jsx";
 import { BpmnModdle } from "bpmn-moddle";
 import { useLocation } from "preact-iso/router";
+import { resolved_theme } from "../theme.js";
+// Diagram previews are rendered by components/ThemedBpmn.jsx, which paints
+// them from the --canvas-* tokens.
 import { has_data } from "../api/helper.jsx";
 import {
   VARIABLE_TYPES,
@@ -458,9 +461,14 @@ const Diagrams = () => {
             </p>
           )}
           on_success={() => (
-            <ReactBpmn
-              diagramXML={migration_state.source_diagram.value.data?.bpmn20Xml}
+            (
+            <ThemedBpmn
+              key={resolved_theme.value}
+              diagramXML={
+                migration_state.source_diagram.value.data?.bpmn20Xml
+              }
             />
+          )
           )}
         />
       </div>
@@ -474,9 +482,14 @@ const Diagrams = () => {
             </p>
           )}
           on_success={() => (
-            <ReactBpmn
-              diagramXML={migration_state.target_diagram.value.data?.bpmn20Xml}
+            (
+            <ThemedBpmn
+              key={resolved_theme.value}
+              diagramXML={
+                migration_state.target_diagram.value.data?.bpmn20Xml
+              }
             />
+          )
           )}
         />
       </div>

@@ -43,12 +43,17 @@
     "help": "Ayuda",
     "account": "Cuenta",
     "menu": "Menú",
+    "language": "Idioma",
     "close-menu": "Cerrar menú",
     "mobile-navigation": "Navegación móvil",
     "skip-to-content": "Ir al contenido",
     "skip-to-navigation": "Ir a la navegación principal",
     "go-to": "Ir a",
-    "choose-server": "Elegir un servidor"
+    "choose-server": "Elegir un servidor",
+    "options": "Opciones",
+    "server": "Servidor",
+    "logout": "Cerrar sesión",
+    "main-navigation": "Navegación principal"
   },
   "goto": {
     "title": "Ir a",
@@ -596,6 +601,14 @@
     "language": "Idioma",
     "language-hint": "Elija el idioma de visualización de la aplicación."
   },
+  "theme": {
+    "label": "Tema",
+    "hint": "Elija claro, oscuro o siga la configuración del sistema.",
+    "auto": "Sistema",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+
   "home": {
     "welcome": "¡Bienvenido a Operaton!",
     "info-text": "Puede encontrar información general sobre Operaton en",

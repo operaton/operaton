@@ -34,12 +34,19 @@ vi.mock("../assets/icons.jsx", () => ({
   close: () => h("span", { "data-testid": "icon-close" }),
   search: () => h("span", { "data-testid": "icon-search" }),
   server: () => h("span", { "data-testid": "icon-server" }),
+  database: () => h("span", { "data-testid": "icon-database" }),
+  user: () => h("span", { "data-testid": "icon-user" }),
+  chevron_down: () => h("span", { "data-testid": "icon-chevron-down" }),
 }));
 
 import { AppState } from "../state.js";
 import engine_rest from "../api/engine_rest.jsx";
 import { Header } from "./Header.jsx";
-import { create_mock_state, with_base_uri } from "../test/helpers.js";
+import {
+  create_mock_state,
+  signal_response,
+  with_base_uri,
+} from "../test/helpers.js";
 import { register, _reset_registry } from "../plugins/registry.js";
 import { PLUGIN_POINTS } from "../plugins/points.js";
 
@@ -138,24 +145,30 @@ describe("Header", () => {
     expect(tasks.getAttribute("aria-current")).not.toBe("page");
   });
 
-  it("renders an option per VITE_BACKEND server in the selector", () => {
+  it("renders an option per VITE_BACKEND server in the menu", () => {
     const { container } = renderHeader(state);
-    const select = container.querySelector("#server-selector select");
-    const labels = Array.from(select.querySelectorAll("option")).map((o) =>
-      o.textContent.trim(),
-    );
-    // First option is the disabled placeholder, then the two backends.
-    expect(labels).toContain("nav.choose-server");
+    // The row opens on click, like the theme and language rows.
+    const toggle = container.querySelector("#options-server-toggle");
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(container.querySelector("#options-server-list")).toBeNull();
+
+    fireEvent.click(toggle);
+    const labels = Array.from(
+      container.querySelectorAll("#options-server-list .options-item"),
+    ).map((i) => i.textContent.trim());
     expect(labels.some((l) => l.startsWith("Test"))).toBe(true);
     expect(labels.some((l) => l.startsWith("Other"))).toBe(true);
     // c7_mode server is annotated with "(C7)".
     expect(labels.some((l) => l.includes("(C7)"))).toBe(true);
   });
 
-  it("updates state.server and persists to localStorage when the server changes", () => {
+  it("updates state.server and persists to localStorage when a server is picked", () => {
     const { container } = renderHeader(state);
-    const select = container.querySelector("#server-selector select");
-    fireEvent.change(select, { target: { value: "http://localhost:9090" } });
+    fireEvent.click(container.querySelector("#options-server-toggle"));
+    const other = Array.from(
+      container.querySelectorAll("#options-server-list .options-item"),
+    ).find((i) => i.textContent.trim().startsWith("Other"));
+    fireEvent.click(other);
     expect(state.server.value).toMatchObject({
       name: "Other",
       url: "http://localhost:9090",
@@ -165,6 +178,66 @@ describe("Header", () => {
     });
   });
 
+  it("offers the theme choices in the options menu, opened on click", () => {
+    const { container } = renderHeader(state);
+    // The top row no longer carries a language switch or a theme switch.
+    expect(container.querySelector("#language-toggle")).toBeNull();
+    expect(container.querySelector("#theme-toggle")).toBeNull();
+
+    // The choice list is closed until its row is clicked; aria-expanded
+    // announces the collapsed state and no theme choice is rendered yet.
+    const toggle = container.querySelector(
+      '#options-theme-toggle',
+    );
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(container.querySelector("#options-theme-list")).toBeNull();
+    expect(container.querySelector("#options-menu button[lang]")).toBeNull();
+
+    // Clicking the row opens the list, one choice per theme, the one in use
+    // marked as such.
+    fireEvent.click(toggle);
+    expect(
+      container
+        .querySelector('#options-theme-toggle')
+        .getAttribute("aria-expanded"),
+    ).toBe("true");
+    expect(container.querySelector("#options-theme-list")).not.toBeNull();
+    expect(
+      container.querySelectorAll("#options-menu button[lang]").length,
+    ).toBeGreaterThan(1);
+  });
+
+  it("offers the language choices in the options menu, opened on click", () => {
+    const { container } = renderHeader(state);
+    // The top row no longer carries a language switch or a theme switch.
+    expect(container.querySelector("#language-toggle")).toBeNull();
+    expect(container.querySelector("#theme-toggle")).toBeNull();
+
+    // The choice list is closed until its row is clicked; aria-expanded
+    // announces the collapsed state and no language choice is rendered yet.
+    const toggle = container.querySelector(
+      "#options-language-toggle",
+    );
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(container.querySelector("#options-language-list")).toBeNull();
+    expect(container.querySelector("#options-menu button[lang]")).toBeNull();
+
+    // Clicking the row opens the list, one choice per language, the one in use
+    // marked as such.
+    fireEvent.click(toggle);
+    expect(
+      container
+        .querySelector("#options-language-toggle")
+        .getAttribute("aria-expanded"),
+    ).toBe("true");
+    const current = container.querySelector(
+      '#options-menu [lang="en-US"][aria-current="true"]',
+    );
+    expect(current).not.toBeNull();
+    expect(
+      container.querySelectorAll("#options-menu button[lang]").length,
+    ).toBeGreaterThan(1);
+  });
   it("goes back to the start once the session has ended", async () => {
     mockUrl = "/tasks/t1/form";
     state.auth.user.id.value = "alice";
@@ -192,11 +265,33 @@ describe("Header", () => {
 
   it("names the signed-in user where the account link sits", () => {
     state.auth.user.id.value = "alice";
-    // Two: the desktop navigation and the mobile menu.
+    // Only the mobile menu: on the desktop the signed-in user names the
+    // options button, and the account entry inside that menu is a plain
+    // item without a title.
     const { getAllByTitle } = renderHeader(state);
     const links = getAllByTitle("nav.account");
-    expect(links).toHaveLength(2);
+    expect(links).toHaveLength(1);
     links.forEach((a) => expect(a.textContent.trim()).toBe("alice"));
+  });
+
+  it("names the signed-in user by profile name, given name first", () => {
+    state.auth.user.id.value = "demo";
+    signal_response(state.api.user.profile, {
+      id: "demo",
+      firstName: "Tom",
+      lastName: "Hanks",
+    });
+    const { container } = renderHeader(state);
+    expect(
+      container.querySelector("#options-toggle-user").textContent.trim(),
+    ).toBe("Tom Hanks");
+  });
+
+  it("separates server and account, and account and caret, by a dash", () => {
+    const { container } = renderHeader(state);
+    expect(
+      container.querySelectorAll("#options-toggle .options-toggle-sep"),
+    ).toHaveLength(2);
   });
 
   it("falls back to the account label when nobody is signed in", () => {
@@ -213,6 +308,61 @@ describe("Header", () => {
     expect(engine_rest.auth.logout).toHaveBeenCalled();
     // state is passed by reference; never compare structurally.
     expect(engine_rest.auth.logout.mock.lastCall[0]).toBe(state);
+  });
+  // The panel is a modal <dialog>, so a press on the backdrop arrives with the
+  // <dialog> itself as the target; only the box tells inside from outside.
+  const stub_box = (element, box) =>
+    element.getBoundingClientRect = () => ({
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      width: 0,
+      height: 0,
+      ...box,
+    });
+  const panel_box = {
+    left: 10,
+    top: 10,
+    right: 100,
+    bottom: 100,
+    width: 90,
+    height: 90,
+  };
+  const press_at = (target, x, y) =>
+    fireEvent.mouseDown(target, { clientX: x, clientY: y });
+
+  it("dismisses the options menu on a press outside it", () => {
+    const { container } = renderHeader(state);
+    fireEvent.click(container.querySelector("#options-toggle"));
+    const panel = container.querySelector("#options-menu");
+    stub_box(panel, panel_box);
+    expect(panel.open).toBe(true);
+    // The backdrop is the point of this: a press there must close the menu,
+    // so the X and Escape are not the only ways out.
+    press_at(document.body, 400, 400);
+    expect(panel.open).toBe(false);
+  });
+  it("keeps the options menu open on a press inside it", () => {
+    const { container } = renderHeader(state);
+    fireEvent.click(container.querySelector("#options-toggle"));
+    const panel = container.querySelector("#options-menu");
+    stub_box(panel, panel_box);
+    expect(panel.open).toBe(true);
+    // The panel's own padding and its children are inside, not backdrop.
+    press_at(container.querySelector("#options-menu header"), 50, 50);
+    expect(panel.open).toBe(true);
+    press_at(panel, 10, 10);
+    expect(panel.open).toBe(true);
+  });
+  it("ignores an outside press while the options menu is closed", () => {
+    const { container } = renderHeader(state);
+    const panel = container.querySelector("#options-menu");
+    stub_box(panel, panel_box);
+    expect(panel.open).toBe(false);
+    // Nothing to dismiss: a press on the page must not open or disturb it.
+    press_at(document.body, 400, 400);
+    expect(panel.open).toBe(false);
   });
 });
 

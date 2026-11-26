@@ -6,7 +6,7 @@ test.describe("login", () => {
   test("shows the login screen when unauthenticated", async ({ page }) => {
     await page.goto("/");
     await expect(
-      page.getByRole("heading", { name: /operaton web apps login/i }),
+      page.getByRole("heading", { name: /^login$/i }),
     ).toBeVisible();
     await expect(page.getByRole("button", { name: /login/i })).toBeVisible();
   });
@@ -19,7 +19,7 @@ test.describe("login", () => {
 
     // The login heading is gone and the app chrome (main navigation) appears.
     await expect(
-      page.getByRole("heading", { name: /operaton web apps login/i }),
+      page.getByRole("heading", { name: /^login$/i }),
     ).toBeHidden();
     await expect(page.locator("nav").first()).toBeVisible();
   });

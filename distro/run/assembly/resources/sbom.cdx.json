@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:d9788552-edfa-4a6b-b287-760781534e0a",
+  "serialNumber": "urn:uuid:3e4710d1-291b-4a6c-a47a-63e15196bd8d",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-26T12:27:11Z",
+    "timestamp": "2026-11-26T15:56:54Z",
     "tools": {
       "components": [
         {
@@ -22806,7 +22806,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ccb4b2b5-a2bc-43c4-b3a4-7d4c142563df",
+      "bom-ref": "b09b38ff-c026-4b4a-a5de-cf1281c781c5",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28062,7 +28062,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "092f01ef-2ba4-4e8b-b431-f497ff7fcccb",
+      "bom-ref": "01ca64a1-40ba-4353-89b6-84636f563439",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28073,7 +28073,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "db745184-8108-455a-8485-66d046dd10fd",
+      "bom-ref": "dd4eef51-5f3c-4afb-b9f1-a488ae707e8c",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28964,30 +28964,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/react-bpmn@0.2.0",
-      "name": "react-bpmn",
-      "version": "0.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/react-bpmn@0.2.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "react-bpmn@0.2.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/react-dom@19.2.8",
       "name": "react-dom",
       "version": "19.2.8",
@@ -29228,7 +29204,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "759cd612-4330-4624-be9c-eab650d8855c",
+      "bom-ref": "a68d572e-5d0b-4110-891f-f6bfbbad61b0",
       "name": "/repo/webapps-neo/frontend",
       "properties": [
         {
@@ -32043,13 +32019,13 @@
       "dependsOn": []
     },
     {
-      "ref": "092f01ef-2ba4-4e8b-b431-f497ff7fcccb",
+      "ref": "01ca64a1-40ba-4353-89b6-84636f563439",
       "dependsOn": [
-        "ccb4b2b5-a2bc-43c4-b3a4-7d4c142563df"
+        "b09b38ff-c026-4b4a-a5de-cf1281c781c5"
       ]
     },
     {
-      "ref": "ccb4b2b5-a2bc-43c4-b3a4-7d4c142563df",
+      "ref": "b09b38ff-c026-4b4a-a5de-cf1281c781c5",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.26.1",
@@ -33494,13 +33470,13 @@
       "dependsOn": []
     },
     {
-      "ref": "759cd612-4330-4624-be9c-eab650d8855c",
+      "ref": "a68d572e-5d0b-4110-891f-f6bfbbad61b0",
       "dependsOn": [
-        "db745184-8108-455a-8485-66d046dd10fd"
+        "dd4eef51-5f3c-4afb-b9f1-a488ae707e8c"
       ]
     },
     {
-      "ref": "db745184-8108-455a-8485-66d046dd10fd",
+      "ref": "dd4eef51-5f3c-4afb-b9f1-a488ae707e8c",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.24.0",
@@ -33515,7 +33491,6 @@
         "pkg:npm/i18next@26.3.6",
         "pkg:npm/preact-iso@2.12.1",
         "pkg:npm/preact@10.29.7",
-        "pkg:npm/react-bpmn@0.2.0",
         "pkg:npm/react-hotkeys-hook@5.3.3",
         "pkg:npm/react-i18next@17.0.10"
       ]
@@ -33874,10 +33849,6 @@
       "dependsOn": [
         "pkg:npm/preact-render-to-string@6.7.0"
       ]
-    },
-    {
-      "ref": "pkg:npm/react-bpmn@0.2.0",
-      "dependsOn": []
     },
     {
       "ref": "pkg:npm/react-dom@19.2.8",

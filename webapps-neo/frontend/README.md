@@ -51,6 +51,10 @@ The e2e tests need the backend running (`docker compose up`, or `podman compose
 up`) and drive the dev server, which they start automatically. They log in with
 `demo`/`demo`. Use `npx playwright test --ui` to watch the flows interactively.
 
+The process-definition pagination regression is included in `npm run test:e2e`.
+It uses mocked session and engine APIs to check 2,369 definition versions,
+page-scoped requests and bulk actions, search, sorting, and failed requests.
+
 ## Metrics
 
 The web apps include an **Engine Metrics** page — an at-a-glance dashboard of

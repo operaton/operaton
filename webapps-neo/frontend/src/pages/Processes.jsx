@@ -554,6 +554,8 @@ const ProcessDiagram = () => {
   );
 };
 
+const DEFINITION_PAGE_SIZE = 50;
+
 const ProcessDefinitionSelection = () => {
   const state = useContext(AppState),
     {
@@ -564,7 +566,8 @@ const ProcessDefinitionSelection = () => {
     [t] = useTranslation(),
     { query } = useRoute(),
     { route } = useLocation(),
-    selected = useSignal(new Set()),
+    selection = useSignal({ scope: null, ids: new Set() }),
+    pagination = useSignal({ query: null, page: 0 }),
     bulk_running = useSignal(false),
     // Suspending is not one decision but three: what, whether the instances go
     // with it, and when. The dialog asks before anything is sent. Declared with
@@ -595,12 +598,45 @@ const ProcessDefinitionSelection = () => {
   // which ignores sortBy. The sort controls would otherwise do nothing.
   const sortBy = parsed.sortBy ?? "name";
   const sortOrder = parsed.sortOrder ?? "asc";
-  const rows = [...filtered].sort(compare_definitions(sortBy));
-  if (sortOrder === "desc") rows.reverse();
+  const sorted_rows = [...filtered].sort(compare_definitions(sortBy));
+  if (sortOrder === "desc") sorted_rows.reverse();
+
+  // Keep all versions searchable, but only mount one page of rows. Each row
+  // needs a suspended-instance count; mounting the full statistics response
+  // can exhaust the browser's request pool on engines with many deployments.
+  const query_key = JSON.stringify(query);
+  const last_page = Math.max(
+    0,
+    Math.ceil(sorted_rows.length / DEFINITION_PAGE_SIZE) - 1,
+  );
+  const page =
+    pagination.value.query === query_key
+      ? Math.min(pagination.value.page, last_page)
+      : 0;
+  const offset = page * DEFINITION_PAGE_SIZE;
+  const rows = sorted_rows.slice(offset, offset + DEFINITION_PAGE_SIZE);
+  const scope = JSON.stringify([query_key, page]);
+  const selected =
+    selection.value.scope === scope ? selection.value.ids : new Set();
+  // A refreshed response can remove selected definitions. Bulk actions must
+  // never act on IDs that are not in the currently displayed page.
+  const selected_ids = rows
+    .map((row) => row.definition.id)
+    .filter((id) => selected.has(id));
+  const clear_selection = () => {
+    selection.value = { scope: null, ids: new Set() };
+    suspension_open.value = false;
+  };
+  const go_to_page = (next) => {
+    clear_selection();
+    pagination.value = { query: query_key, page: next };
+  };
   const has_data = list_value?.status === RESPONSE_STATE.SUCCESS;
   const is_empty = has_data && all_rows.length === 0 && !has_criteria;
 
   const apply_patch = (patch) => {
+    clear_selection();
+    pagination.value = { query: null, page: 0 };
     const next = write_list_query(window.location.href, patch);
     route(next, true);
   };
@@ -609,26 +645,25 @@ const ProcessDefinitionSelection = () => {
     apply_patch({ criteria: term ? { nameLike: `%${term}%` } : {} });
 
   const toggle_one = (id) => {
-    const next = new Set(selected.value);
+    const next = new Set(selected_ids);
     if (next.has(id)) next.delete(id);
     else next.add(id);
-    selected.value = next;
+    selection.value = { scope, ids: next };
   };
+  const all_selected = rows.length > 0 && selected_ids.length === rows.length;
   const toggle_all = () => {
-    if (selected.value.size === rows.length && rows.length > 0) {
-      selected.value = new Set();
-    } else {
-      selected.value = new Set(rows.map((r) => r.definition.id));
-    }
+    selection.value = {
+      scope,
+      ids: new Set(all_selected ? [] : rows.map((r) => r.definition.id)),
+    };
   };
-  const all_selected = rows.length > 0 && selected.value.size === rows.length;
 
   const run_bulk = async (op, options) => {
-    if (selected.value.size === 0 || bulk_running.value) return;
+    if (selected_ids.length === 0 || bulk_running.value) return;
     bulk_running.value = true;
     bulk_error.value = null;
     try {
-      const ids = [...selected.value];
+      const ids = selected_ids;
       // What the engine refused. Without this the action simply did nothing
       // visible — a definition the user may not suspend looked like a dead
       // button, the 403 only in the network tab.
@@ -651,7 +686,7 @@ const ProcessDefinitionSelection = () => {
           count: refused.length,
           reason: refused[0],
         });
-      selected.value = new Set();
+      clear_selection();
       // Refetch to reflect new state.
       load_definitions(state, query);
     } finally {
@@ -659,7 +694,7 @@ const ProcessDefinitionSelection = () => {
     }
   };
 
-  const has_selection = selected.value.size > 0;
+  const has_selection = selected_ids.length > 0;
 
   return (
     <div class="fade-in">
@@ -707,7 +742,7 @@ const ProcessDefinitionSelection = () => {
           />
           {has_selection && (
             <small>
-              {t("processes.bulk.count", { count: selected.value.size })}
+              {t("processes.bulk.count", { count: selected_ids.length })}
             </small>
           )}
         </div>
@@ -765,13 +800,41 @@ const ProcessDefinitionSelection = () => {
               {rows.map((entry) => (
                 <ProcessDefinition
                   key={entry.definition.id}
-                  checked={selected.value.has(entry.definition.id)}
+                  revision={list_value}
+                  checked={selected.has(entry.definition.id)}
                   onToggle={() => toggle_one(entry.definition.id)}
                   {...entry}
                 />
               ))}
             </tbody>
           </table>
+          {sorted_rows.length > 0 && (
+            <nav class="toolbar" aria-label={t('processes.pagination.label')}>
+              <button
+                type="button"
+                class="secondary"
+                disabled={page === 0 || bulk_running.value}
+                onClick={() => go_to_page(page - 1)}
+              >
+                {t('processes.pagination.previous')}
+              </button>
+              <span aria-live="polite">
+                {t('processes.pagination.range', {
+                  first: offset + 1,
+                  last: offset + rows.length,
+                  total: sorted_rows.length,
+                })}
+              </span>
+              <button
+                type="button"
+                class="secondary"
+                disabled={page === last_page || bulk_running.value}
+                onClick={() => go_to_page(page + 1)}
+              >
+                {t('processes.pagination.next')}
+              </button>
+            </nav>
+          )}
         </div>
       )}
     </div>
@@ -834,6 +897,7 @@ const ProcessDefinitionDetails = () => {
 
 const ProcessDefinition = ({
   definition: { id, name, key, version, tenantId },
+  revision,
   instances,
   incidents,
   checked,
@@ -841,23 +905,36 @@ const ProcessDefinition = ({
 }) => {
   const state = useContext(AppState),
     { query } = useRoute(),
+    [t] = useTranslation(),
     // statistics gives the running total; ask the engine how many are suspended
     // so the status column can show active vs. suspended.
     suspended = useSignal(null);
 
   useEffect(() => {
-    let alive = true;
-    void Promise.resolve(
-      engine_rest.process_instance.suspended_count(state, id),
-    ).then((n) => alive && (suspended.value = n ?? 0));
-    return () => {
-      alive = false;
+    suspended.value = null;
+    // Empty historic versions dominate large deployments and need no request.
+    if (!(instances > 0)) return;
+    const controller = new AbortController();
+    const load = async () => {
+      try {
+        const count = await engine_rest.process_instance.suspended_count(
+          state,
+          id,
+          { signal: controller.signal },
+        );
+        if (!controller.signal.aborted) suspended.value = count ?? 0;
+      } catch {
+        // Keep an unavailable count unknown. In particular, a failed request
+        // must not report all instances as active or leave an uncaught error.
+      }
     };
-  }, [id]);
+    void load();
+    return () => controller.abort();
+  }, [id, instances, revision, state, suspended]);
 
   const total = instances ?? 0,
-    susp = suspended.value ?? 0,
-    active = Math.max(total - susp, 0);
+    susp = total === 0 ? 0 : suspended.value,
+    active = susp === null ? null : Math.max(total - susp, 0);
 
   return (
     <tr aria-selected={checked}>
@@ -879,8 +956,15 @@ const ProcessDefinition = ({
         </a>
       </td>
       <td class="num">{incidents?.length ?? 0}</td>
-      <td class="num">
-        {active}/{susp}
+      <td
+        class="num"
+        title={
+          susp === null
+            ? t('processes.instances-status-unavailable')
+            : undefined
+        }
+      >
+        {active ?? '—'}/{susp ?? '—'}
       </td>
       <td>{key}</td>
       <td class="num">{version}</td>

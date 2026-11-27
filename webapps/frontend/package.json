@@ -17,7 +17,7 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@bpmn-io/dmn-migrate": "0.7.1",
+    "@bpmn-io/dmn-migrate": "0.8.0",
     "@bpmn-io/form-js": "1.26.1",
     "@ibm/plex": "6.4.1",
     "@popperjs/core": "2.11.8",
@@ -96,7 +96,7 @@
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.6.1",
     "ui-bootstrap4": "^3.0.7",
-    "webpack": "5.112.2",
+    "webpack": "5.113.0",
     "webpack-bundle-analyzer": "5.4.3",
     "webpack-cli": "6.0.1",
     "webpack-dev-server": "6.1.0",

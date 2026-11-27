@@ -23,7 +23,10 @@ import org.operaton.bpm.engine.ActivityTypes;
 
 import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceInputMappingExecution;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
@@ -235,7 +238,20 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       ActivityImpl currentActivity = (ActivityImpl) currentScope;
 
       if (currentActivity.getIoMapping() != null && !skipIoMapping) {
-        currentActivity.getIoMapping().executeInputParameters(this);
+        if (currentActivity.isMultiInstance()
+            && !currentActivity.getIoMapping().getInputParameters().isEmpty()
+            && currentActivity.getFlowScope() instanceof ActivityImpl multiInstanceBody
+            && multiInstanceBody.getActivityBehavior() instanceof MultiInstanceActivityBehavior multiInstanceBehavior) {
+          MultiInstanceInputMappingExecution evaluationScope = new MultiInstanceInputMappingExecution(
+              (DelegateExecution) getParentVariableScope(), this, multiInstanceBehavior.getCollectionElementVariable());
+          if (evaluationScope.hasIterationVariables()) {
+            currentActivity.getIoMapping().executeInputParameters(this, evaluationScope);
+          } else {
+            currentActivity.getIoMapping().executeInputParameters(this);
+          }
+        } else {
+          currentActivity.getIoMapping().executeInputParameters(this);
+        }
       }
     }
 

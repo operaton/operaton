@@ -13,5 +13,10 @@
 -- limitations under the License.
 --
 
+-- https://github.com/operaton/operaton/issues/4030
+create index if not exists ACT_IDX_TASK_PARENT_TASK_ID on ACT_RU_TASK(PARENT_TASK_ID_) algorithm=inplace lock=none;
+create index if not exists ACT_IDX_HI_TASK_PARENT_TASK_ID on ACT_HI_TASKINST(PARENT_TASK_ID_) algorithm=inplace lock=none;
+
+-- schema log last: the changeset is not transactional
 insert into ACT_GE_SCHEMA_LOG
 values ('1500', CURRENT_TIMESTAMP, '7.26.0');

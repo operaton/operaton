@@ -4969,6 +4969,36 @@ class TaskQueryTest {
       .hasMessage("ENGINE-03052 The form key / form reference is not initialized. You must call initializeFormKeys() on the task query before you can retrieve the form key or the form reference.");
   }
 
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/oneTaskWithInvalidFormKeyExpressionProcess.bpmn20.xml"})
+  @Test
+  void testInitializeFormKeyWithInvalidExpressionReturnsNullForSingleTask() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("invalidFormKeyExpressionProcess");
+
+    Task task = taskService.createTaskQuery()
+      .processInstanceId(processInstance.getId())
+      .initializeFormKeys()
+      .singleResult();
+
+    assertThat(task).isNotNull();
+    assertThat(task.getFormKey()).isNull();
+  }
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/oneTaskWithInvalidFormKeyExpressionProcess.bpmn20.xml"})
+  @Test
+  void testInitializeFormKeyWithInvalidExpressionDoesNotBlockTaskListRetrieval() {
+    runtimeService.startProcessInstanceByKey("invalidFormKeyExpressionProcess");
+    runtimeService.startProcessInstanceByKey("invalidFormKeyExpressionProcess");
+
+    List<Task> tasks = taskService.createTaskQuery()
+      .processDefinitionKey("invalidFormKeyExpressionProcess")
+      .initializeFormKeys()
+      .list();
+
+    assertThat(tasks)
+      .hasSize(2)
+      .allSatisfy(task -> assertThat(task.getFormKey()).isNull());
+  }
+
   @Test
   @Deployment
   void testInitializeFormKeysOperatonFormRef() {

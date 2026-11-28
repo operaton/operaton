@@ -20,9 +20,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.jspecify.annotations.NullMarked;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-
 import org.jspecify.annotations.Nullable;
+import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
@@ -31,16 +30,20 @@ import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
  * @author kristin.polenz@camunda.com
  */
 public @NullMarked class GetTaskAttachmentContentCmd implements Command<InputStream> {
-  protected String attachmentId;
-  protected String taskId;
+  protected @Nullable String attachmentId;
+  protected @Nullable String taskId;
 
-  public GetTaskAttachmentContentCmd(String taskId, String attachmentId) {
+  public GetTaskAttachmentContentCmd(@Nullable String taskId, @Nullable String attachmentId) {
     this.attachmentId = attachmentId;
     this.taskId = taskId;
   }
 
   @Override
   public @Nullable InputStream execute(CommandContext commandContext) {
+    if (taskId == null || attachmentId == null || !TaskArtifactReadAuthorization.canReadTask(commandContext, taskId)) {
+      return null;
+    }
+
     AttachmentEntity attachment = (AttachmentEntity) commandContext
         .getAttachmentManager()
         .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);

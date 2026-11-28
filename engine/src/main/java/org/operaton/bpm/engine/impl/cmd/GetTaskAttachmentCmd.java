@@ -26,16 +26,20 @@ import org.operaton.bpm.engine.task.Attachment;
  * @author kristin.polenz@camunda.com
  */
 public @NullMarked class GetTaskAttachmentCmd implements Command<Attachment> {
-  protected String attachmentId;
-  protected String taskId;
+  protected @Nullable String attachmentId;
+  protected @Nullable String taskId;
 
-  public GetTaskAttachmentCmd(String taskId, String attachmentId) {
+  public GetTaskAttachmentCmd(@Nullable String taskId, @Nullable String attachmentId) {
     this.attachmentId = attachmentId;
     this.taskId = taskId;
   }
 
   @Override
   public @Nullable Attachment execute(CommandContext commandContext) {
+    if (taskId == null || attachmentId == null || !TaskArtifactReadAuthorization.canReadTask(commandContext, taskId)) {
+      return null;
+    }
+
     return commandContext
       .getAttachmentManager()
       .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);

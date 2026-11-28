@@ -40,6 +40,9 @@ public @NullMarked class GetTaskCommentCmd implements Command<Comment> {
   public @Nullable Comment execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
     ensureNotNull("commentId", commentId);
+    if (!TaskArtifactReadAuthorization.canReadTask(commandContext, taskId)) {
+      return null;
+    }
 
     return commandContext
       .getCommentManager()

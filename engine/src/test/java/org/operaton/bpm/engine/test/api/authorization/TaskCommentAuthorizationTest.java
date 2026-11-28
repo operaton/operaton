@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.TASK_WORK;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
@@ -72,6 +73,7 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     taskService.deleteTaskComment(TASK_ID, createdComment.getId());
 
     // then
+    createGrantAuthorization(TASK, TASK_ID, userId, READ);
     Comment shouldBeDeleletedComment = taskService.getTaskComment(TASK_ID, createdComment.getId());
     assertThat(shouldBeDeleletedComment).isNull();
 
@@ -195,6 +197,7 @@ class TaskCommentAuthorizationTest extends AuthorizationTest {
     taskService.deleteTaskComment(task.getId(), createdComment.getId());
 
     // then
+    createGrantAuthorization(TASK, task.getId(), userId, READ);
     Comment shouldBeDeleletedComment = taskService.getTaskComment(task.getId(), createdComment.getId());
     assertThat(shouldBeDeleletedComment).isNull();
   }

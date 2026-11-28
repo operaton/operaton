@@ -5,6 +5,7 @@ This testsuite allows running different kinds of performance tests against the p
 **Table of Contents:**
 
 * [The Benchmark](#benchmark)
+* [Task Authorization EXISTS Benchmark](#task-authorization-exists-benchmark)
 * [The Sql Statement Log](#sql-statement-log)
 * [The Activity Log](#activity-log)
 * [Configuration](#configuration)
@@ -75,6 +76,61 @@ The results file may look like this:
 ![LongTermBenchmarkResult Screenshot][3]
 
 This feature works only in the benchmark profile.  
+
+<a id="task-authorization-exists-benchmark"></a>
+## Task Authorization EXISTS Benchmark
+
+The task authorization benchmark is a standalone entry point for comparing task query authorization SQL changes. It creates a simple user-task process,
+starts a configurable number of process instances, creates user and group `TASK/READ` authorizations, enables authorization, and measures:
+
+* `TaskQuery#listPage(0, pageSize)`
+* `TaskQuery#orderByTaskCreateTime().desc().listPage(0, pageSize)`
+* `TaskQuery#count()`
+
+Run it with the `task-auth-benchmark` profile and one database profile. The benchmark writes a CSV file and prints the measured average, p50, p95,
+and max values.
+
+```Shell
+mvn -f qa/performance-tests-engine/pom.xml \
+    -Ptask-auth-benchmark,h2 \
+    -Dbenchmark.branch="$(git rev-parse --abbrev-ref HEAD)" \
+    -Dbenchmark.commit="$(git rev-parse --short HEAD)" \
+    -Dbenchmark.database=h2 \
+    -Dbenchmark.tasks=5000 \
+    -Dbenchmark.groups=10 \
+    -Dbenchmark.pageSize=15 \
+    -Dbenchmark.warmup=50 \
+    -Dbenchmark.iterations=300 \
+    -Dbenchmark.outputFile=target/task-authorization-exists-benchmark.csv \
+    process-test-classes
+```
+
+For a managed PostgreSQL test database container, start the database and use the `mt-postgres` database profile:
+
+```Shell
+docker compose -f qa/test-database-container/docker-compose.yaml up -d postgres
+
+MT_POSTGRES_USERNAME=root \
+MT_POSTGRES_PASSWORD=123456 \
+MT_POSTGRES_HOST_PORT=54320 \
+MT_POSTGRES_DATABASE=operaton \
+mvn -f qa/performance-tests-engine/pom.xml \
+    -Ptask-auth-benchmark,mt-postgres \
+    -Dbenchmark.branch="$(git rev-parse --abbrev-ref HEAD)" \
+    -Dbenchmark.commit="$(git rev-parse --short HEAD)" \
+    -Dbenchmark.database=postgres \
+    -Dbenchmark.tasks=5000 \
+    -Dbenchmark.groups=10 \
+    -Dbenchmark.pageSize=15 \
+    -Dbenchmark.warmup=50 \
+    -Dbenchmark.iterations=300 \
+    -Dbenchmark.outputFile=target/task-authorization-exists-benchmark-postgres.csv \
+    process-test-classes
+```
+
+Use `mt-mysql` or `mt-mariadb` with the corresponding `MT_MYSQL_*` or `MT_MARIADB_*` environment variables for MySQL and MariaDB.
+The benchmark expects an otherwise empty task table; use a fresh database or remove unrelated task data for comparable results.
+By default, benchmark data created by the run is removed afterwards. Set `-Dbenchmark.cleanup=false` if the generated data should stay in the database for inspection.
 
 <a name="sql-statement-log"></a>
 ## The Sql Statement Log
